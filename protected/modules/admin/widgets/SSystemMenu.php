@@ -13,9 +13,6 @@ class SSystemMenu extends CWidget {
         $items = array(
             'users'=>array(
                 'label'=>'Система',
-                'items'=>array(
-                    array('label'=>'Пользователи', 'url'=>array('/admin/users/default'), 'position'=>1),
-                ),
             ),
         );
 

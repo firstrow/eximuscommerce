@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Admin menu items for core module
+ */
 return array(
     'users'=>array(
         'items'=>array(
