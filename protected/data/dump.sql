@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `AuthAssignment` (
 -- 
 
 INSERT INTO `AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
-  ('Admin', '1', NULL, 'N;');
+  ('Admin', '1', NULL, NULL);
 
 -- 
 -- Structure for table `AuthItem`
@@ -68,6 +68,21 @@ CREATE TABLE IF NOT EXISTS `AuthItemChild` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 
+-- Structure for table `Pages`
+-- 
+
+DROP TABLE IF EXISTS `Pages`;
+CREATE TABLE IF NOT EXISTS `Pages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `short_description` text NOT NULL,
+  `full_description` tinytext NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
 -- Structure for table `Rights`
 -- 
 
@@ -78,6 +93,28 @@ CREATE TABLE IF NOT EXISTS `Rights` (
   `weight` int(11) NOT NULL,
   PRIMARY KEY (`itemname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
+-- Structure for table `SystemModules`
+-- 
+
+DROP TABLE IF EXISTS `SystemModules`;
+CREATE TABLE IF NOT EXISTS `SystemModules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- 
+-- Data for table `SystemModules`
+-- 
+
+INSERT INTO `SystemModules` (`id`, `name`, `enabled`) VALUES
+  ('7', 'users', '1'),
+  ('8', 'tests', '1'),
+  ('9', 'pages', '1');
 
 -- 
 -- Structure for table `user`
@@ -100,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- 
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `created_at`, `last_login`, `login_ip`) VALUES
-  ('1', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'firstrow@gmail.com', '2011-08-21 10:17:15', '2011-08-29 23:46:19', '127.0.0.1'),
+  ('1', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'firstrow@gmail.com', '2011-08-21 10:17:15', '2011-10-23 22:29:10', '127.0.0.1'),
   ('10', 'tester', 'ab4d8d2a5f480a137067da17100271cd176607a1', 'tester@localhost.local', '2011-08-29 18:58:37', '2011-08-29 18:59:38', '127.0.0.1');
 
 
