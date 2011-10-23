@@ -7,6 +7,8 @@ class UsersModule extends BaseModule
 
     public function init()
     {
+        Yii::trace('Loaded "users" module.'); 
+
         $this->setImport(array(
             'users.models.*',
         ));
@@ -20,6 +22,7 @@ class UsersModule extends BaseModule
      */
     public function initAdmin()
     {
+        Yii::trace('Init users module admin resources.'); 
         parent::initAdmin();
     }
 

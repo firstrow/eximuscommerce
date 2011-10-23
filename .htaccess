@@ -4,5 +4,8 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
+RewriteCond $1 !^(favicon\.ico)
+RewriteRule ^(.*)$ /index.php/$1 [L]
+
 # otherwise forward it to index.php
-RewriteRule . index.php
+# RewriteRule . index.php
