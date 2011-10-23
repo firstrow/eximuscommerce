@@ -86,6 +86,9 @@ return array(
             'class'=>'RDbAuthManager',
             'connectionID'=>'db',
         ),
+        'cache'=>array(
+            'class'=>'CFileCache',
+        ),
         'log'=>array(
             'class'=>'CLogRouter',
             'routes'=>array(
