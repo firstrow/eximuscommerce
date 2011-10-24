@@ -118,4 +118,13 @@ class User extends CActiveRecord
 		return parent::beforeSave();
 	}
 	
+	/**
+	 * Generate admin link to edit user. 
+	 * @return type
+	 */
+	public function getUpdateLink()
+	{
+		// return CHtml::link($this->username,'/admin/users/default/update?id='.$this->id);
+		return CHtml::link($this->username, array('/users/admin/default/update', 'id'=>$this->id));
+	}
 }

@@ -1,7 +1,7 @@
 <?php
     // Page create/edit view
 
-    $this->sidebarContent = ';';
+    // $this->sidebarContent = ';';
 
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
         'form'=>$form,

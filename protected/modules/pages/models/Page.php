@@ -57,9 +57,8 @@ class Page extends CActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
+            'author'=>array(self::BELONGS_TO, 'User', 'user_id')
         );
     }
 
@@ -84,18 +83,16 @@ class Page extends CActiveRecord
     }
 
     /**
-     * Retrieves a list of models based on the current search/filter conditions.
+     * Retrieves a list of models based on the current search/filter conditions. Used in admin search.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria=new CDbCriteria;
 
+        $criteria->with = array('author');
         $criteria->compare('id',$this->id);
-        $criteria->compare('user_id',$this->user_id);
+        $criteria->compare('author.username',$this->user_id,true);
         $criteria->compare('title',$this->title,true);
         $criteria->compare('url',$this->url,true);
         $criteria->compare('short_description',$this->short_description,true);
@@ -109,5 +106,13 @@ class Page extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function beforeSave()
+    {
+        if (!Yii::app()->user->isGuest) 
+            $this->user_id = Yii::app()->user->id;
+
+        return parent::beforeSave();
     }
 }

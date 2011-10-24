@@ -40,7 +40,7 @@ class DefaultController extends SAdminController
             $model = User::model()->findByPk($_GET['id']);
         
         if (!$model) 
-            throw new CHttpException(400, 'Bed request.');           
+            throw new CHttpException(400, 'Bad request.');           
 
         $form = new SAdminForm('application.modules.users.views.admin.default.userForm', $model);
 

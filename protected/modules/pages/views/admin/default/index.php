@@ -26,9 +26,17 @@
         'filter'=>$model,
         'columns'=>array(
             'id',
-            'title',
+            array(
+                'name'=>'title',
+                'type'=>'raw',
+                'value'=>'CHtml::link($data->title, array("update", "id"=>$data->id))',
+            ),
             'url',
-            'user_id',
+            array(
+                'name'=>'user_id',
+                'type'=>'raw',
+                'value'=>'$data->author->getUpdateLink()',
+            ),
             'created',
             'updated',
             // Buttons

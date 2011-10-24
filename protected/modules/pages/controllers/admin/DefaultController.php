@@ -2,9 +2,16 @@
 
 class DefaultController extends SAdminController {
 	
+	
+	/**
+	 * Display pages list.
+	 */	
 	public function actionIndex()
 	{
 		$model = new Page('search');
+
+		if (!empty($_GET['Page']))
+			$model->attributes = $_GET['Page'];
 
 		$this->render('index', array(
 			'model'=>$model
@@ -16,6 +23,10 @@ class DefaultController extends SAdminController {
 		$this->actionUpdate(true);
 	}
 
+	/**
+	 * Create update new page
+	 * @param boolean $new
+	 */
 	public function actionUpdate($new = false)
 	{
 		if ($new === true)
@@ -32,15 +43,34 @@ class DefaultController extends SAdminController {
 		{
 			$model->attributes = $_POST['Page'];
 
+			if ($model->isNewRecord)
+				$model->created = date('Y-m-d H:i:s');
+			$model->updated = date('Y-m-d H:i:s');
+
 			if ($model->validate())
-			{
 				$model->save();
-			}
 		}
 
 		$this->render('update', array(
-			'form'=>$form,
 			'model'=>$model,
+			'form'=>$form,
 		));
 	}
+
+    /**
+     * Delete page by Pk
+     */
+    public function actionDelete()
+    {
+        if (Yii::app()->request->isPostRequest)
+        {
+            $model = Page::model()->findByPk($_GET['id']);
+
+            if ($model)
+                $model->delete();
+
+            if (!Yii::app()->request->isAjaxRequest)
+                $this->redirect('index');
+        }
+    }
 }
