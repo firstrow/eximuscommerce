@@ -8,6 +8,11 @@ class STabbedForm extends CForm {
 	public $tabs = array();
 	protected $activeTab = null;
 
+	/**
+	 * @var boolean Dipslay errors summary on each tab.
+	 */
+	public $summaryOnEachTab = true;
+
 	public function render()
 	{
 		$result = $this->renderBegin(); 
@@ -20,7 +25,23 @@ class STabbedForm extends CForm {
 	public function asTabs()
 	{
      	$this->render();
-		$result = $this->renderBegin(); 
+		$result = $this->renderBegin();
+		 
+		if($this->showErrorSummary && ($model=$this->getModel(false))!==null)
+		{
+			// Display errors summary on each tab.
+			$errorSummary = $this->getActiveFormWidget()->errorSummary($model)."\n";
+
+			if ($this->summaryOnEachTab === true)
+			{
+				foreach ($this->tabs as &$tab)
+					$tab = $errorSummary.$tab;
+			}
+			else
+			{
+				$result .= $errorSummary;
+			}
+		}
 
 		$result .= $this->owner->widget('zii.widgets.jui.CJuiTabs', array(
 			'tabs'=>$this->tabs,
