@@ -1,8 +1,7 @@
 <?php
 
 // uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
-
+// Yii::setPathOfAlias('local','path/to/local-folder')
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
@@ -18,6 +17,7 @@ return array(
         'application.components.*',
         'application.modules.core.models.*',
         'application.modules.users.models.User',
+        'application.extensions.simpleWorkflow.*',
         // Rights module
         'application.modules.rights.*',
         'application.modules.rights.components.*',
@@ -88,6 +88,9 @@ return array(
         ),
         'cache'=>array(
             'class'=>'CFileCache',
+        ),
+        'swSource'=> array(
+            'class'=>'application.extensions.simpleWorkflow.SWPhpWorkflowSource',
         ),
         'log'=>array(
             'class'=>'CLogRouter',

@@ -15,6 +15,10 @@
  * @property string $meta_keywords
  * @property string $created
  * @property string $updated
+ * @property string $publish_date
+ * @property string $status
+ * 
+ * TODO: Set DB indexes
  */
 class Page extends BaseModel
 {
@@ -45,10 +49,9 @@ class Page extends BaseModel
         return array(
             array('short_description, full_description', 'type'),
             array('title, url', 'required'),
-            array('title, url, meta_title, meta_description, meta_keywords', 'length', 'max'=>255),
+            array('title, url, meta_title, meta_description, meta_keywords, publish_date', 'length', 'max'=>255),
             // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('id, user_id, title, url, short_description, full_description, meta_title, meta_description, meta_keywords, created, updated', 'safe', 'on'=>'search'),
+            array('id, user_id, title, url, short_description, full_description, meta_title, meta_description, meta_keywords, created, updated, publish_date', 'safe', 'on'=>'search'),
         );
     }
 
@@ -69,16 +72,18 @@ class Page extends BaseModel
     {
         return array(
             'id' => 'ID',
-            'user_id' => 'User',
-            'title' => 'Title',
+            'user_id' => 'Автор',
+            'title' => 'Заглавление',
             'url' => 'Url',
-            'short_description' => 'Short Description',
-            'full_description' => 'Full Description',
-            'meta_title' => 'Meta Title',
-            'meta_description' => 'Meta Description',
-            'meta_keywords' => 'Meta Keywords',
-            'created' => 'Created',
-            'updated' => 'Updated',
+            'short_description' => 'Краткое описание',
+            'full_description' => 'Содержание',
+            'meta_title' => 'Title',
+            'meta_description' => 'Description',
+            'meta_keywords' => 'Keywords',
+            'created' => 'Дата создания',
+            'updated' => 'Дата обновления',
+            'publish_date' => 'Дата публикации',
+            'status' => 'Статус',
         );
     }
 
