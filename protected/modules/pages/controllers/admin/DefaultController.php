@@ -48,7 +48,16 @@ class DefaultController extends SAdminController {
 			$model->updated = date('Y-m-d H:i:s');
 
 			if ($model->validate())
+			{
 				$model->save();
+
+                $this->setFlashMessage(Yii::t('PagesModule.admin', 'Изменения успешно сохранены'));
+                
+                if (isset($_POST['REDIRECT']))
+                    $this->smartRedirect($model);
+                else
+                    $this->redirect(array('index'));
+			}
 		}
 
 		$this->render('update', array(

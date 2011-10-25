@@ -9,7 +9,7 @@
  * @property string $name
  * @property integer $enabled
  */
-class SystemModules extends CActiveRecord
+class SystemModules extends BaseModel
 {
     /**
      * Cache enabled modules

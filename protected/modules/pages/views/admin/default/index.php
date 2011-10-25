@@ -6,7 +6,7 @@
 
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('PagesModule.admin', 'Модули'),
+        Yii::t('PagesModule.admin', 'Страницы'),
     );
 
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(

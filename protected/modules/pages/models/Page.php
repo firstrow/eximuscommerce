@@ -16,7 +16,7 @@
  * @property string $created
  * @property string $updated
  */
-class Page extends CActiveRecord
+class Page extends BaseModel
 {
     /**
      * Returns the static model of the specified AR class.
@@ -91,7 +91,7 @@ class Page extends CActiveRecord
         $criteria=new CDbCriteria;
 
         $criteria->with = array('author');
-        $criteria->compare('id',$this->id);
+        $criteria->compare('t.id',$this->id);
         $criteria->compare('author.username',$this->user_id,true);
         $criteria->compare('title',$this->title,true);
         $criteria->compare('url',$this->url,true);

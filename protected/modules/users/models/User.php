@@ -12,7 +12,7 @@
  * @property integer $last_login
  * @property string $login_ip
  */
-class User extends CActiveRecord 
+class User extends BaseModel 
 {
 	
 	public $new_password;
