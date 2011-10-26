@@ -48,7 +48,8 @@ class Page extends BaseModel
         // will receive user inputs.
         return array(
             array('short_description, full_description', 'type'),
-            array('title, url', 'required'),
+            array('status', 'in', 'range'=>array_keys(self::statuses())),
+            array('title, url, status, publish_date', 'required'),
             array('title, url, meta_title, meta_description, meta_keywords, publish_date', 'length', 'max'=>255),
             // The following rule is used by search().
             array('id, user_id, title, url, short_description, full_description, meta_title, meta_description, meta_keywords, created, updated, publish_date', 'safe', 'on'=>'search'),
@@ -87,6 +88,16 @@ class Page extends BaseModel
         );
     }
 
+    public function statuses()
+    {
+        return array(
+            'published'=>'Опубликован',
+            'waiting'=>'Ждет одобрения',
+            'draft'=>'Черновик',
+            'archive'=>'Архив',
+        );
+    }
+
     /**
      * Retrieves a list of models based on the current search/filter conditions. Used in admin search.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -98,15 +109,16 @@ class Page extends BaseModel
         $criteria->with = array('author');
         $criteria->compare('t.id',$this->id);
         $criteria->compare('author.username',$this->user_id,true);
-        $criteria->compare('title',$this->title,true);
-        $criteria->compare('url',$this->url,true);
-        $criteria->compare('short_description',$this->short_description,true);
-        $criteria->compare('full_description',$this->full_description,true);
-        $criteria->compare('meta_title',$this->meta_title,true);
-        $criteria->compare('meta_description',$this->meta_description,true);
-        $criteria->compare('meta_keywords',$this->meta_keywords,true);
-        $criteria->compare('created',$this->created,true);
-        $criteria->compare('updated',$this->updated,true);
+        $criteria->compare('t.title',$this->title,true);
+        $criteria->compare('t.url',$this->url,true);
+        $criteria->compare('t.short_description',$this->short_description,true);
+        $criteria->compare('t.full_description',$this->full_description,true);
+        $criteria->compare('t.meta_title',$this->meta_title,true);
+        $criteria->compare('t.meta_description',$this->meta_description,true);
+        $criteria->compare('t.meta_keywords',$this->meta_keywords,true);
+        $criteria->compare('t.created',$this->created,true);
+        $criteria->compare('t.updated',$this->updated,true);
+        $criteria->compare('t.status',$this->status);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

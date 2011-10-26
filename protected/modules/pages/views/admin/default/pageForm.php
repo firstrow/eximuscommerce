@@ -1,5 +1,5 @@
 <?php
-
+Yii::import('zii.widgets.jui.CJuiDatePicker');
 /*** Create/update page form ***/
 
 return array(
@@ -16,6 +16,16 @@ return array(
 				'url'=>array(
 		            'type'=>'text',
 		        ),
+		        'status'=>array(
+		        	'type'=>'dropdownlist',
+		        	'items'=>Page::statuses()
+		        ),
+				'publish_date'=>array(
+                    'type'=>'CJuiDatePicker',
+                    'options'=>array(
+                        'dateFormat'=>'yy-mm-dd '.date('H:i:s'),
+                    ),
+                ),
 		        'short_description'=>array(
 		            'type'=>'textarea',
 		        ),

@@ -37,6 +37,11 @@
                 'type'=>'raw',
                 'value'=>'$data->author->getUpdateLink()',
             ),
+            array(
+                'name'=>'status',
+                'value'=>'$data->status',
+                'filter'=>Page::statuses()
+            ),
             'created',
             'updated',
             // Buttons
