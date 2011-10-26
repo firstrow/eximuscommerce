@@ -39,7 +39,7 @@
             ),
             array(
                 'name'=>'status',
-                'value'=>'$data->status',
+                'value'=>'$data->statusLabel',
                 'filter'=>Page::statuses()
             ),
             'created',

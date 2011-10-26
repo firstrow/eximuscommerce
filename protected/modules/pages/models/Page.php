@@ -22,6 +22,9 @@
  */
 class Page extends BaseModel
 {
+
+    public $_statusLabel;
+
     /**
      * Returns the static model of the specified AR class.
      * @return Pages the static model class
@@ -50,6 +53,7 @@ class Page extends BaseModel
             array('short_description, full_description', 'type'),
             array('status', 'in', 'range'=>array_keys(self::statuses())),
             array('title, url, status, publish_date', 'required'),
+            array('publish_date', 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'),
             array('title, url, meta_title, meta_description, meta_keywords, publish_date', 'length', 'max'=>255),
             // The following rule is used by search().
             array('id, user_id, title, url, short_description, full_description, meta_title, meta_description, meta_keywords, created, updated, publish_date', 'safe', 'on'=>'search'),
@@ -96,6 +100,12 @@ class Page extends BaseModel
             'draft'=>'Черновик',
             'archive'=>'Архив',
         );
+    }
+
+    public function getStatusLabel()
+    {
+        $statuses = $this->statuses();
+        return $statuses[$this->status];
     }
 
     /**
