@@ -8,7 +8,7 @@
     ));
 
     $title = ($model->isNewRecord) ? Yii::t('PagesModule.admin', 'Создание страницы') : 
-        Yii::t('PagesModule.admin', 'Редактирование редактирование');
+        Yii::t('PagesModule.admin', 'Редактирование страницы');
     
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),

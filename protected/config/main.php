@@ -89,9 +89,6 @@ return array(
         'cache'=>array(
             'class'=>'CFileCache',
         ),
-        'swSource'=> array(
-            'class'=>'application.extensions.simpleWorkflow.SWPhpWorkflowSource',
-        ),
         'log'=>array(
             'class'=>'CLogRouter',
             'routes'=>array(
