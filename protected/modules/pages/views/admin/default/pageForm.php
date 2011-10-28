@@ -1,6 +1,7 @@
 <?php
-Yii::import('zii.widgets.jui.CJuiDatePicker');
+
 /*** Create/update page form ***/
+Yii::import('zii.widgets.jui.CJuiDatePicker');
 
 return array(
 	'id'=>'pageUpdateForm',

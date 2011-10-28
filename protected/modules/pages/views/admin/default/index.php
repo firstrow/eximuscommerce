@@ -23,6 +23,10 @@
     $this->widget('application.modules.admin.widgets.SGridView', array(
         'dataProvider'=>$model->search(),
         'id'=>'pagesListGrid',
+        'afterAjaxUpdate'=>"function ddd(id, data){
+            jQuery('input[name=\"Page[created]\"]').datepicker({'dateFormat':'yy-mm-dd'});
+            jQuery('input[name=\"Page[updated]\"]').datepicker({'dateFormat':'yy-mm-dd'});
+        }",
         'filter'=>$model,
         'columns'=>array(
             'id',
@@ -42,7 +46,9 @@
                 'value'=>'$data->statusLabel',
                 'filter'=>Page::statuses()
             ),
-            'created',
+            array(
+                'name'=>'created',
+            ),
             'updated',
             // Buttons
             array(
@@ -51,3 +57,5 @@
             ),
         ),
     ));
+
+    echo 'OKOK';

@@ -79,7 +79,7 @@ class Page extends BaseModel
             'id' => 'ID',
             'user_id' => 'Автор',
             'title' => 'Заглавление',
-            'url' => 'Url',
+            'url' => 'URL',
             'short_description' => 'Краткое описание',
             'full_description' => 'Содержание',
             'meta_title' => 'Title',
