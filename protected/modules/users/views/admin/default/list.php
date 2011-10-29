@@ -19,12 +19,10 @@
         ),
     ));
 
-    $this->widget('zii.widgets.grid.CGridView', array(
+    $this->widget('application.modules.admin.widgets.SGridView', array(
         'dataProvider'=>$model->search(),
         'id'=>'usersListGrid',
-        'template'=>'{items}{summary}{pager}',
         'filter'=>$model,
-        'cssFile'=>false,
         'columns'=>array(
             'id' ,
             array(
