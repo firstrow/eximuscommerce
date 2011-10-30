@@ -1,0 +1,157 @@
+
+html, body {
+    font-size:small;
+    /*overflow:hidden;*/
+    margin: auto; /* center in viewport */
+    width: 100%;
+    min-height:100%;
+    font-family:"Lucida Grande", verdana, arial, helvetica, sans-serif; 
+    font-size:12px;
+    background-color:#F5F5F5;  
+    /*background-color: #D2D1D0;*/
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+}
+a:link, a:visited {
+    color: #309bbf;
+}
+a:hover, a:active, a.selected {
+    color: #444;
+}
+
+.marleft {
+    margin-left:10px;
+}
+
+.marright {
+    margin-right:10px;
+}
+
+.marleft20 {
+    margin-left:20px;
+}
+
+.marright20 {
+    margin-right:20px;
+}
+
+.margin-all {
+    margin: 10px;
+}
+
+.padding-all {
+    padding: 10px;
+}
+
+#doc3 {
+	margin: 0;
+}
+/* Header */
+#hd {
+    background-image:url(../images/panel_bg.png);
+    background-color:#363636;
+    color:#fff;
+    height:26px;
+    -moz-box-shadow: 0px 5px 5px #ccc;
+    -webkit-box-shadow: 0px 5px 5px #ccc;
+    box-shadow: 0px 5px 5px #ccc;
+}
+/* Body */
+#bd {
+	min-height:500px;
+}
+/* Footer */
+#ft {
+
+}
+
+#content {
+    /*padding:10px;*/
+    border:1px solid silver;
+    border-radius:5px;
+    background: #EEE;
+}
+
+#sidebar {
+
+}
+
+/* Breadcrumbs, buttons, etc.. */
+#navigation {
+    /*background-image:url(../images/navi_bg.jpg);*/
+    background-image:url('../images/header_bg.gif');
+    background-color:silver;
+    /*border-bottom:1px solid silver;*/
+    margin:0 0 5px 0;
+    height:38px; 
+    z-index:500;
+}
+
+#nav {
+    z-index:501;
+}
+
+#navigation .navigation-content-left {
+    margin:8px 0 0 10px;
+}
+
+#navigation .navigation-content-right {
+    margin:7px 10px 0 0;
+   
+}
+
+#navigation .navigation-content a{
+    font-size:11px;
+}
+
+#topMenu {
+    cursor:pointer;
+    margin:5px 0 0 10px;
+}
+
+.sidebarBlock {
+    margin-top:15px;
+    background:#F3F3F3;
+}
+
+.sidebarBlock h3 {
+    /*background:#E0E0E0;*/
+    /*background:#5C5C5C;*/
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+    padding:7px 0 7px 7px;
+    margin:0;
+    background: #DFE2E4;
+    background: -moz-linear-gradient(top, #E6ECEF 0%, #D0D6DA 99%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E6ECEF), color-stop(99%,#D0D6DA));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E6ECEF', endColorstr='#D0D6DA',GradientType=0 );
+    zoom: 1;    
+}
+
+#sidebar .sidebarBlock .blockContent {
+    border:1px solid #E0E0E0;
+    padding:5px;
+}
+
+#sidebar .sidebarBlock input[type=text], .sidebarBlock select {
+	width:200px;
+}
+
+#topRightMenu {
+    text-align:right;
+    margin-top:5px;
+}
+
+#topRightMenu a {
+    color:#A2A2A2;
+    padding:4px;
+    font-size:11px;
+}
+#topRightMenu a:hover {
+    color:#fff;
+}
