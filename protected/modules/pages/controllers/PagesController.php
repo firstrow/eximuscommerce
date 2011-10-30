@@ -1,23 +1,27 @@
 <?php 
-
+/**
+ * Display pages.
+ * @package modules.pages
+ */
 class PagesController extends Controller 
 {
 
 	/**
 	 * Display page by url.
-	 * TODO: Set title/keywords/etc...
+	 * Example url: /page/some-page-url
 	 * @param string $url page url 
 	 */
 	public function actionView($url)
 	{
-		$page = Page::model()
+		$model = Page::model()
 			->published()
 			->withUrl($url)
 			->find();
 
-		if (!$page)
-			throw new CHttpException(404, Yii::t('PagesModule.core', 'Страница не найдена.'));
+		if (!$model) throw new CHttpException(404, Yii::t('PagesModule.core', 'Страница не найдена.'));
 
-		var_dump($page);
+		$this->render('view', array(
+			'model'=>$model,
+		));
 	}
 }

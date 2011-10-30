@@ -118,6 +118,8 @@
 {
 	margin: 0 0 5px 0;
 	text-align: right;
+    font-size:11px;
+    padding:2px;
 }
 
 .grid-view .pager
