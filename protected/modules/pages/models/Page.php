@@ -26,6 +26,11 @@ class Page extends BaseModel
     public $_statusLabel;
 
     /**
+     * Status to allow display page on the front.
+     */
+    public $publishStatus = 'published';
+
+    /**
      * Returns the static model of the specified AR class.
      * @return Pages the static model class
      */
@@ -40,6 +45,34 @@ class Page extends BaseModel
     public function tableName()
     {
         return 'Page';
+    }
+
+    public function scopes()
+    {
+        return array(
+            'published'=>array(
+                'condition'=>'publish_date <= :date AND status = :status',
+                'params'=>array(
+                    ':date'=>date('Y-m-d H:i:s'),
+                    ':status'=>$this->publishStatus,
+                ),
+            ),
+        );
+    }
+
+    /**
+     * Find page by url.
+     * Scope.
+     * @return Page
+     */
+    public function withUrl($url)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'url=:url',
+            'params'=>array(':url'=>$url)
+        ));
+
+        return $this;
     }
 
     /**
