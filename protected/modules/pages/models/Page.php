@@ -162,6 +162,7 @@ class Page extends BaseModel
         $criteria->compare('t.meta_keywords',$this->meta_keywords,true);
         $criteria->compare('t.created',$this->created,true);
         $criteria->compare('t.updated',$this->updated,true);
+        $criteria->compare('t.publish_date',$this->publish_date,true);
         $criteria->compare('t.status',$this->status);
 
         return new CActiveDataProvider($this, array(

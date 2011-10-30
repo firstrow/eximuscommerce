@@ -1,10 +1,11 @@
 <?php 
 
-class DefaultController extends Controller 
+class PagesController extends Controller 
 {
 
 	/**
 	 * Display page by url.
+	 * TODO: Set title/keywords/etc...
 	 * @param string $url page url 
 	 */
 	public function actionView($url)

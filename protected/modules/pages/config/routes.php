@@ -1,6 +1,6 @@
 <?php
 
 return array(
-	// Dispay page by url
-	'page/<url>'=>'pages/default/view',
+	// Display page by url
+	'page/<url>'=>'pages/pages/view',
 );

@@ -43,10 +43,7 @@
                 'value'=>'$data->statusLabel',
                 'filter'=>Page::statuses()
             ),
-            array(
-                'name'=>'created',
-            ),
-            'updated',
+            'publish_date',
             // Buttons
             array(
                 'class'=>'CButtonColumn',
@@ -57,8 +54,7 @@
 
     Yii::app()->clientScript->registerScript("pageDatepickers", "
         function registerFilterDatePickers(id, data){
-            jQuery('input[name=\"Page[created]\"]').datepicker({'dateFormat':'yy-mm-dd'});
-            jQuery('input[name=\"Page[updated]\"]').datepicker({'dateFormat':'yy-mm-dd'});
+            jQuery('input[name=\"Page[publish_date]\"]').datepicker({'dateFormat':'yy-mm-dd'});
         }
         registerFilterDatePickers();
     ");
