@@ -24,13 +24,16 @@ class DefaultController extends SAdminController {
 	}
 
 	/**
-	 * Create update new page
+	 * Create or update new page
 	 * @param boolean $new
 	 */
 	public function actionUpdate($new = false)
 	{
 		if ($new === true)
+		{
 			$model = new Page;
+			$model->publish_date = date('Y-m-d H:i:s');
+		}
 		else
 			$model = Page::model()->findByPk($_GET['id']);
 

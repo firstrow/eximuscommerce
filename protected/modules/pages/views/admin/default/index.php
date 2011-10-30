@@ -14,7 +14,7 @@
         'elements'=>array(
             'create'=>array(
                 'link'=>$this->createUrl('create'),
-                'title'=>'Создать',
+                'title'=>'Создать страницу',
                 'icon'=>'plus',
             ),
         ),
@@ -23,10 +23,7 @@
     $this->widget('application.modules.admin.widgets.SGridView', array(
         'dataProvider'=>$model->search(),
         'id'=>'pagesListGrid',
-        'afterAjaxUpdate'=>"function ddd(id, data){
-            jQuery('input[name=\"Page[created]\"]').datepicker({'dateFormat':'yy-mm-dd'});
-            jQuery('input[name=\"Page[updated]\"]').datepicker({'dateFormat':'yy-mm-dd'});
-        }",
+        'afterAjaxUpdate'=>"function(){registerFilterDatePickers()}",
         'filter'=>$model,
         'columns'=>array(
             'id',
@@ -57,3 +54,11 @@
             ),
         ),
     ));
+
+    Yii::app()->clientScript->registerScript("pageDatepickers", "
+        function registerFilterDatePickers(id, data){
+            jQuery('input[name=\"Page[created]\"]').datepicker({'dateFormat':'yy-mm-dd'});
+            jQuery('input[name=\"Page[updated]\"]').datepicker({'dateFormat':'yy-mm-dd'});
+        }
+        registerFilterDatePickers();
+    ");
