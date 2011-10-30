@@ -15,6 +15,7 @@ return array(
     'import'=>array(
         'application.models.*',
         'application.components.*',
+        'application.components.validators.*',
         'application.modules.core.models.*',
         'application.modules.users.models.User',
         'application.extensions.simpleWorkflow.*',

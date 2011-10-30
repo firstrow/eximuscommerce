@@ -53,6 +53,7 @@ class Page extends BaseModel
             array('short_description, full_description', 'type'),
             array('status', 'in', 'range'=>array_keys(self::statuses())),
             array('title, url, status, publish_date', 'required'),
+            array('url', 'LocalUrlValidator'),
             array('publish_date', 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'),
             array('title, url, meta_title, meta_description, meta_keywords, publish_date', 'length', 'max'=>255),
             // The following rule is used by search().
