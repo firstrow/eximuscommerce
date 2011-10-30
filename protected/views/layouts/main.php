@@ -43,12 +43,18 @@
 
       <div class="content">
         <div>
-          <ul class="breadcrumb">
-            <li><a href="#">Home</a> <span class="divider">/</span></li>
-            <li><a href="#">Middle page</a> <span class="divider">/</span></li>
-            <li><a href="#">Another one</a> <span class="divider">/</span></li>
-            <li class="active">You are here</li>
-          </ul>
+          <?php 
+            $this->widget('zii.widgets.CBreadcrumbs', array(
+                'links'=>array(
+                    'Sample post'=>array('post/view', 'id'=>12),
+                    'Edit',
+                ),
+                'separator'=>'<span class="divider">/</span>',
+                'htmlOptions'=>array(
+                  'class'=>'breadcrumb',
+                )
+            ));
+          ?>
         </div>
 
         <div class="well"> 

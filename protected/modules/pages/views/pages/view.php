@@ -5,10 +5,10 @@
 	$this->pageDescription = $model->meta_description;
 ?>
 
-<h3><?php echo CHtml::encode($model->title) ?></h3>
+<h3><?php echo $model->title; ?></h3>
 <p>
-	<?php echo CHtml::encode($model->short_description) ?>
+	<?php echo $model->short_description; ?>
 </p>
 <p>
-	<?php echo CHtml::encode($model->full_description) ?>
+	<?php echo $model->full_description; ?>
 </p>
