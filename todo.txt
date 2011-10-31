@@ -1,0 +1,7 @@
+TODO:
+	1. Translate all existing modules.
+	2. Create module update page for "SystemModules".
+	3. Add to SGridView "Clear filter" link.
+	4. Add "translit button" on page update view.
+	6. Create initial "Pages migration" with table sctructure and indexes.
+	7. Seaxth and get done all "TODO" in source files.
