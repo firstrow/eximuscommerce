@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>CMS development theme</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title><?php echo $this->pageTitle ?></title>
+    <meta name="description" content="<?php echo $this->pageDescription ?>">
+    <meta name="keywords" content="<?php echo $this->pageKeywords ?>">
+    
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -12,7 +13,7 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/development/assets/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -45,10 +46,7 @@
         <div>
           <?php 
             $this->widget('zii.widgets.CBreadcrumbs', array(
-                'links'=>array(
-                    'Sample post'=>array('post/view', 'id'=>12),
-                    'Edit',
-                ),
+                'links'=>$this->breadcrumbs,
                 'separator'=>'<span class="divider">/</span>',
                 'htmlOptions'=>array(
                   'class'=>'breadcrumb',

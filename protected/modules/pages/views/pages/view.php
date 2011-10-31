@@ -3,6 +3,10 @@
 	$this->pageTitle = ($model->meta_title) ? $model->meta_title : $model->title;
 	$this->pageKeywords = $model->meta_keywords;
 	$this->pageDescription = $model->meta_description;
+
+	$this->breadcrumbs = array(
+		$model->title
+    );
 ?>
 
 <h3><?php echo $model->title; ?></h3>
