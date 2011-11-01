@@ -45,6 +45,10 @@ class SGridView extends CGridView {
 
 		Yii::app()->getClientScript()->registerScriptFile($this->baseScriptUrl.'/gridview.dropdown.js',CClientScript::POS_END);
 
+		$this->pager = array(
+			'cssFile'=>$this->baseScriptUrl.'/pager.css',
+		);
+
 		$this->initColumns();
 	}
 

@@ -1,0 +1,61 @@
+/* Styles for ClinkPager */
+ul.yiiPager
+{
+	font-size:.9em;
+	border:0;
+	margin:0;
+	padding:0;
+	line-height:100%;
+	display:inline;
+}
+
+ul.yiiPager li
+{
+	display:inline;
+}
+
+ul.yiiPager a:link,
+ul.yiiPager a:visited
+{
+	border:solid 1px #ccc;
+	color:inherit;
+	font-weight:bold;
+	padding:2px 8px;
+	text-decoration:none;
+	-moz-border-radius:3px; 
+	-webkit-border-radius:3px; 
+	border-radius: 3px;
+}
+
+ul.yiiPager .page a
+{
+	font-weight: 600;
+}
+
+ul.yiiPager a:hover
+{
+	background:#D0D6DA;
+}
+
+ul.yiiPager .selected a
+{
+	background:#D0D6DA;
+	color:#444;
+	font-weight:bold;
+}
+
+ul.yiiPager .hidden a
+{
+	border:1px solid #ccc;
+}
+
+ul.yiiPager .first,
+ul.yiiPager .last
+{
+	display:none;
+}
+
+.pager {
+	padding:5px 5px 10px 0px;
+	color:#444;
+}
