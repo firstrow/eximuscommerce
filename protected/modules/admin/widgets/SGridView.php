@@ -5,6 +5,7 @@ Yii::import('zii.widgets.grid.CGridView');
 class SGridView extends CGridView {
 	
 	public $template = '{items}{summary}{pager}';
+	public $selectableRows = 100;
 
 	/**
 	 * Initializes the grid view.
