@@ -15,7 +15,6 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/yui-grids/reset-fonts-grids.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/base.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/forms.css');
-    $assetsManager->registerCssFile($adminAssetsUrl.'/gridview/styles.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
     // $assetsManager->registerCssFile('http://taitems.github.com/Aristo-jQuery-UI-Theme/css/Aristo/Aristo.css');

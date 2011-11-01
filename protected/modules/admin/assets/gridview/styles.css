@@ -143,14 +143,53 @@
 .gridViewOptions {
     float:left;
     position:absolute;
-    padding:5px;
+    margin-top:3px;
     right:15px;
     background-image:url('gear.png');
-    background-color:#fff;
-    background-position:center 15%;
-    width:16px;
-    height:16px;
+    width:20px;
+    height:20px;
     background-repeat:no-repeat;
+    background-position:center center;
     cursor:pointer;
-    border-radius:5px;
+    z-index:100;
+    border-top:1px solid transparent;
+    border-left:1px solid transparent;
+    border-right:1px solid transparent;     
+}
+
+.gridViewOptions.active {
+    background-color:#EAEAEA;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;  
+    border-top:1px solid silver;
+    border-left:1px solid silver;
+    border-right:1px solid silver;
+}
+
+.gridViewOptionsMenu {
+    display:none;
+    float:left;
+    position:absolute;
+    margin-top:22px;
+    right:15px;
+    min-width:100px;
+    /*height:200px;*/
+    background-color:#EAEAEA;
+    cursor:pointer;
+    border:1px solid silver;
+    -webkit-border-radius: 5px;
+    -webkit-border-top-right-radius: 0;
+    -moz-border-radius: 5px;
+    -moz-border-radius-topright: 0;
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    padding:6px;
+
+    -moz-box-shadow: 3px 3px 4px silver;
+    -webkit-box-shadow: 3px 3px 4px silver;
+    box-shadow: 3px 3px 4px silver;
 }

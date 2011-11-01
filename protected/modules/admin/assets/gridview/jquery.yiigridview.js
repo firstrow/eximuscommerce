@@ -189,6 +189,10 @@
 					settings.afterAjaxUpdate(id, data);
 				$('#'+id).removeClass(settings.loadingClass);
 				$.fn.yiiGridView.selectCheckedRows(id);
+
+				// Added by firstrow@gmail.com
+				// Init dropdown menus.
+				gridViewDropdownInit();
 			},
 			error: function(XHR, textStatus, errorThrown) {
 				$('#'+id).removeClass(settings.loadingClass);
