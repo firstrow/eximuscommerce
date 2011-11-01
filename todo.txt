@@ -4,5 +4,8 @@ TODO:
 	3. Add to SGridView "Clear filter" link.
 	4. Add "translit button" on page update view.
 	6. Create initial "Pages migration" with table sctructure and indexes.
-	7. Seaxth and get done all "TODO" in source files.
-	8. Create "hooks/events" system.
+	7. Create "hooks/events" system.
+	8. Search and get done all "TODO" in source files.
+	9. Get styled gridview pagination.
+	10. Finish job with SGridView filet button.
+
