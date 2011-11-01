@@ -1,7 +1,6 @@
 TODO:
 	- Translate all existing modules.
 	- Create module update page for "SystemModules".
-	- Add to SGridView "Clear filter" link.
 	- Add "translit button" on page update view.
 	- Create initial "Pages migration" with table sctructure and indexes.
 	- Create "hooks/events" system.
@@ -9,8 +8,10 @@ TODO:
 	- Fix SGridView th gradient style to respect not only -moz* browsers.
 	- Fix buttons in opera browser.
 	- Fix SGridView tr left and right rounded corners in firefox and opera.
+	- Add to SGridView "save filter" link.
 
 	Done:
 	+ Finish job with SGridView filet button.
 	+ Get styled gridview pagination.
+	+ Add to SGridView "Clear filter" link.
 
