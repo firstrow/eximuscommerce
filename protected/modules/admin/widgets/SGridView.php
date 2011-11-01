@@ -69,11 +69,10 @@ class SGridView extends CGridView {
 		echo '
 			<div class="gridViewOptions">&nbsp;</div>
 			<div class="gridViewOptionsMenu">
-				<a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a><br/>
-				<a href="#">Сохранить фильтр</a><br/>
-				<hr/>
-				<a href="#">Most Popular</a><br/>
-				<a href="#">My pages</a><br/>				
+				<ul>
+				<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a></li>
+				<li><a href="#">Сохранить фильтр</a></li>
+				</ul>
 			</div>
 		';		
 	}
