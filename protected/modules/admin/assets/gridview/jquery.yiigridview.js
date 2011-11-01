@@ -191,8 +191,8 @@
 				$.fn.yiiGridView.selectCheckedRows(id);
 
 				// Added by firstrow@gmail.com
-				// Reini dropdown menus.
-				$('.gridViewOptions').fixedMenu();
+				// Init dropdown menus.
+				gridViewDropdownInit();
 			},
 			error: function(XHR, textStatus, errorThrown) {
 				$('#'+id).removeClass(settings.loadingClass);

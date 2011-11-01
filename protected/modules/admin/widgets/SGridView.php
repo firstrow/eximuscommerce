@@ -42,31 +42,18 @@ class SGridView extends CGridView {
 			Yii::app()->getClientScript()->registerCssFile($this->cssFile);
 		}
 
+		Yii::app()->getClientScript()->registerScriptFile($this->baseScriptUrl.'/gridview.dropdown.js',CClientScript::POS_END);
+
 		$this->initColumns();
 	}
-
 
 	/**
 	 * Renders the data items for the grid view.
 	 */
 	public function renderItems()
 	{
-		if($this->dataProvider->getItemCount()>0 || $this->showTableOnEmpty)
-		{
-			$this->insertDropdownHtml();
-			$this->registerDropdownScript();
-
-			echo "<table class=\"{$this->itemsCssClass}\">\n";
-			$this->renderTableHeader();
-			ob_start();
-			$this->renderTableBody();
-			$body=ob_get_clean();
-			$this->renderTableFooter();
-			echo $body; // TFOOT must appear before TBODY according to the standard.
-			echo "</table>";
-		}
-		else
-			$this->renderEmptyText();
+		$this->insertDropdownHtml();
+		parent::renderItems();
 	}
 
 	/**
@@ -85,45 +72,4 @@ class SGridView extends CGridView {
 			</div>
 		';		
 	}
-
-	public function registerDropdownScript()
-	{
-		Yii::app()->getClientScript()->registerScript("gridViewOptionsScript","
-			(function($){
-			    $.fn.fixedMenu=function(){
-			        return this.each(function(){
-			            var menu = $(this);
-			            menu.click(function(){
-			            	if (menu.hasClass('active'))
-			            	{
-			            		// hide
-			            		menu.removeClass('active');
-			            		menu.next('.gridViewOptionsMenu').css('display', 'none');
-			            	}else{
-			            		// show
-			            		menu.addClass('active');
-			            		menu.next('.gridViewOptionsMenu').css('display', 'block');				            		
-			            	}
-			            });
-
-						/* hide when clicked outside */
-						$(document.body).bind('click',function(e) {
-							if( !$(e.target).hasClass('gridViewOptions') && !$(e.target).hasClass('gridViewOptionsMenu') )
-							{
-			            		menu.removeClass('active');
-			            		menu.next('.gridViewOptionsMenu').css('display', 'none');									
-							}
-						});
-						            
-			        });
-			    }
-			})(jQuery);
-
-			$('document').ready(function(){
-	          	$('.gridViewOptions').fixedMenu();
-	        });
-
-		", CClientScript::POS_HEAD);
-	}
-
 }
