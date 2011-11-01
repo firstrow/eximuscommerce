@@ -143,11 +143,14 @@
 .gridViewOptions {
     float:left;
     position:absolute;
-    margin-top:5px;
+    padding:5px;
     right:15px;
     background-image:url('gear.png');
+    background-color:#fff;
+    background-position:center 15%;
     width:16px;
     height:16px;
     background-repeat:no-repeat;
     cursor:pointer;
+    border-radius:5px;
 }
