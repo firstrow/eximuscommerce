@@ -6,10 +6,11 @@ TODO:
 	- Create initial "Pages migration" with table sctructure and indexes.
 	- Create "hooks/events" system.
 	- Search and get done all "TODO" in source files.
-	- Get styled gridview pagination.
 	- Fix SGridView th gradient style to respect not only -moz* browsers.
 	- Fix buttons in opera browser.
 	- Fix SGridView tr left and right rounded corners in firefox and opera.
 
+	Done:
 	+ Finish job with SGridView filet button.
+	+ Get styled gridview pagination.
 
