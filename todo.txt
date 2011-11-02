@@ -9,6 +9,7 @@ TODO:
 	- Fix buttons in opera browser.
 	- Fix SGridView tr left and right rounded corners in firefox and opera.
 	- Add to SGridView "save filter" link.
+	- SGridView display filter button only when "$filterMenu" is enabled.
 
 	Done:
 	+ Finish job with SGridView filet button.
