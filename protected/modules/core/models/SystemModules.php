@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -7,7 +6,7 @@
  * The followings are the available columns in table 'SystemModules':
  * @property integer $id
  * @property string $name
- * @property integer $enabled
+ * @property integer $enabled Allow access by url.
  */
 class SystemModules extends BaseModel
 {

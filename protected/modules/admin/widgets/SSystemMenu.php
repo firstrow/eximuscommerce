@@ -39,15 +39,21 @@ class SSystemMenu extends CWidget {
 
     /**
      * Find and load module menu files.
-     * TODO: Load only menu files from installed modules and cache result. 
      */
     protected function findMenuFiles()
     {
         $result = array();
-        $files = glob(Yii::getPathOfAlias('application.modules.*') . '/*/config/menu.php');
 
-        foreach($files as $file)
-            $result = CMap::mergeArray($result, require($file));
+        $installedModules = SystemModules::model()->findAll(array(
+            'select'=>'name',
+        ));
+
+        foreach($installedModules as $module)
+        {
+            $filePath = Yii::getPathOfAlias('application.modules.'.$module->name.'.config').'/menu.php';
+            if (file_exists($filePath))
+                $result = CMap::mergeArray($result, require($filePath));
+        }
 
         return $result;
     }
