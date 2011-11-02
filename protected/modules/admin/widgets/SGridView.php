@@ -27,6 +27,12 @@ Yii::import('zii.widgets.grid.CGridView');
 //    'onclick'=>'$("#mydialog").dialog("open"); return false;',
 // ));
 
+/**
+ * Extends yii gridview and adds several new features as: "Clear/Save filter", 
+ * ability to add personal menu.
+ * 
+ * @package admin.widgets
+ */
 class SGridView extends CGridView {
 	
 	public $template = '{items}{summary}{pager}';
