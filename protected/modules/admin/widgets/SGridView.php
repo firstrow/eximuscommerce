@@ -151,8 +151,5 @@ class SGridView extends CGridView {
 		));
 		echo 'dialog content here';
 		$this->endWidget('zii.widgets.jui.CJuiDialog');
-
-		echo '<script type="text/javascript">alert(1);</script>';
-		
 	}
 }
