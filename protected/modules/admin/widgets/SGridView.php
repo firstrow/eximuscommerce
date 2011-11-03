@@ -89,7 +89,33 @@ class SGridView extends CGridView {
 	public function renderItems()
 	{
 		$this->insertDropdownHtml();
+		$this->insertModelAttributes();
 		parent::renderItems();
+	}
+
+	/**
+	 * Display current model attributes as json string in hidden block
+	 * for "save filter" js function.
+	 */
+	public function insertModelAttributes()
+	{
+		if ($this->filter->attributes)
+		{
+			$attrs = $this->filter->attributes;
+
+			foreach ($attrs as $key => $value) 
+				if(!$value) unset($attrs[$key]);
+
+			if (!empty($attrs))
+			{
+				echo Chtml::openTag('div', array(
+					'id'=>$this->getId().'HiddenJsonAttributes',
+					'style'=>'display:none',
+				));
+				echo json_encode($attrs);
+				echo CHtml::closeTag('div');
+			}
+		}
 	}
 
 	/**
@@ -102,9 +128,31 @@ class SGridView extends CGridView {
 			<div class="gridViewOptionsMenu">
 				<ul>
 				<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a></li>
-				<li><a href="#">Сохранить фильтр</a></li>
+				<li><a href="#" onClick="saveSGridViewFilter(\''.$this->getId().'\');">Сохранить фильтр</a></li>
 				</ul>
 			</div>
-		';		
+		';
+
+		
+		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+		    'id'=>'mydialog',
+		    // additional javascript options for the dialog plugin
+		    'options'=>array(
+		        'title'=>'Dialog box 1',
+		        'modal'=>true,
+		        'resizable'=>false,
+		        'draggable'=>false,
+		        'autoOpen'=>false,
+		        'buttons'=>array(
+		            'Сохранить'=>'js:function(){alert("ok")}',
+		            'Отмена'=>'js:function(){alert("cancel")}',
+		        ),
+		    ),
+		));
+		echo 'dialog content here';
+		$this->endWidget('zii.widgets.jui.CJuiDialog');
+
+		echo '<script type="text/javascript">alert(1);</script>';
+		
 	}
 }

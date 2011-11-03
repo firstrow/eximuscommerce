@@ -68,3 +68,21 @@
 	        return false;
 	    }
 	}
+
+	// Remember filter
+	function loadSGridViewFilterById(gridId, filterId)
+	{
+		first = $('#'+ gridId +' :input').first();
+		$("<input type='hidden' value='1' name='loadFilter'>").appendTo(first);
+		first.trigger('change');
+	}
+
+
+	function saveSGridViewFilter(gridId)
+	{
+		// Get serialized grid attributes
+		// Show promt
+		// Save
+		// Reload grid
+		$("#mydialog").dialog("open"); return false;
+	}

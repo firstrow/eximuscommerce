@@ -184,6 +184,8 @@
 				$.each(settings.ajaxUpdate, function(i,v) {
 					var id='#'+v;
 					$(id).replaceWith($(id,'<div>'+data+'</div>'));
+					// Replace line above to eval respone
+					// $(id).html(data);
 				});
 				if(settings.afterAjaxUpdate !== undefined)
 					settings.afterAjaxUpdate(id, data);
