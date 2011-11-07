@@ -94,7 +94,7 @@
     </style>
 
 </head>
-<body>
+<body style="text-align:left;">
 
 <div id="doc3" class="yui-t6">
 	<div id="hd">

@@ -136,13 +136,21 @@ class SGridView extends CGridView {
 		echo CHtml::openTag('div', array(
 			'id'=>'mydialog',
 		));
-		echo 'dialog content here';
+		//echo CHtml::textField('filterName');
+		echo '
+			<div class="form">
+				<div class="row">
+					<input name="Page[meta_title]" id="Page_meta_title" type="text" maxlength="255">
+					<div class="hint">Enter field name and press enter</div>
+				</div>
+			</div>
+		';
 		echo CHtml::closeTag('div');
 		
 		echo Chtml::script("jQuery('#mydialog').dialog({
-			'title':'Dialog box 1',
+			'title':'Сохранить фильтр',
 			'modal':true,
-			'resizable':false,
+			'resizable':true,
 			'draggable':false,
 			'autoOpen':false,
 			'buttons':{
