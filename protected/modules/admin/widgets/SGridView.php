@@ -133,23 +133,23 @@ class SGridView extends CGridView {
 			</div>
 		';
 
-		
-		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-		    'id'=>'mydialog',
-		    // additional javascript options for the dialog plugin
-		    'options'=>array(
-		        'title'=>'Dialog box 1',
-		        'modal'=>true,
-		        'resizable'=>false,
-		        'draggable'=>false,
-		        'autoOpen'=>false,
-		        'buttons'=>array(
-		            'Сохранить'=>'js:function(){alert("ok")}',
-		            'Отмена'=>'js:function(){alert("cancel")}',
-		        ),
-		    ),
+		echo CHtml::openTag('div', array(
+			'id'=>'mydialog',
 		));
 		echo 'dialog content here';
-		$this->endWidget('zii.widgets.jui.CJuiDialog');
+		echo CHtml::closeTag('div');
+		
+		echo Chtml::script("jQuery('#mydialog').dialog({
+			'title':'Dialog box 1',
+			'modal':true,
+			'resizable':false,
+			'draggable':false,
+			'autoOpen':false,
+			'buttons':{
+				'Сохранить':function(){alert(\"ok\")},
+				'Отмена':function(){alert(\"cancel\")}
+				}
+			});");
+
 	}
 }

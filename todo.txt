@@ -10,6 +10,7 @@ TODO:
 	- Fix SGridView tr left and right rounded corners in firefox and opera.
 	- Add to SGridView "save filter" link.
 	- SGridView display filter button only when "$filterMenu" is enabled.
+	- Fix css3button to not hover on jquery buttons in dialog.
 
 	Done:
 	+ Finish job with SGridView filet button.

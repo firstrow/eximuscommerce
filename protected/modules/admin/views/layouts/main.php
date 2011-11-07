@@ -17,6 +17,7 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/forms.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
+    //$assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/ui-lightness/jquery-ui-1.8.14.custom.css');
     // $assetsManager->registerCssFile('http://taitems.github.com/Aristo-jQuery-UI-Theme/css/Aristo/Aristo.css');
 
 ?>
