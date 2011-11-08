@@ -69,7 +69,9 @@
 	    }
 	}
 
+	///////////////////
 	// Remember filter
+	///////////////////
 	function loadSGridViewFilterById(gridId, filterId)
 	{
 		first = $('#'+ gridId +' :input').first();
@@ -77,12 +79,28 @@
 		first.trigger('change');
 	}
 
-
 	function saveSGridViewFilter(gridId)
 	{
-		// Get serialized grid attributes
-		// Show promt
-		// Save
-		// Reload grid
-		$("#mydialog").dialog("open"); return false;
+		var filterJsonData = $('#'+gridId+'HiddenJsonAttributes').text();
+		var filterName = $('#'+gridId+'FilterBox').val();
+		
+		if (filterJsonData != '' && filterName != '') 
+		{
+			$.ajax({
+				url: "saveFilter.php",
+				type: "POST",
+				data: {
+					gridId: gridId,
+					filterName: filterName,
+					filterJsonData: filterJsonData
+				},
+				success:function(data) {
+					alert(data);
+				},						
+			});
+		}
+
+		// Close dialog
+		$("#"+gridId+"saveFilterDialog").dialog("close"); return false;
+		// Reload filter
 	}

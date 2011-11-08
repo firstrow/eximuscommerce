@@ -128,36 +128,33 @@ class SGridView extends CGridView {
 			<div class="gridViewOptionsMenu">
 				<ul>
 				<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a></li>
-				<li><a href="#" onClick="saveSGridViewFilter(\''.$this->getId().'\');">Сохранить фильтр</a></li>
+				<li><a href="#" onClick="$(\'#'.$this->getId().'saveFilterDialog\').dialog(\'open\');">Сохранить фильтр</a></li>
 				</ul>
 			</div>
 		';
 
 		echo CHtml::openTag('div', array(
-			'id'=>'mydialog',
+			'id'=>$this->getId().'saveFilterDialog',
 		));
-		//echo CHtml::textField('filterName');
 		echo '
 			<div class="form">
 				<div class="row">
-					<input name="Page[meta_title]" id="Page_meta_title" type="text" maxlength="255">
+					<input type="text" id="'.$this->getId().'FilterBox" maxlength="255">
 					<div class="hint">Enter field name and press enter</div>
 				</div>
 			</div>
 		';
 		echo CHtml::closeTag('div');
-		
-		echo Chtml::script("jQuery('#mydialog').dialog({
+		echo Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
 			'title':'Сохранить фильтр',
 			'modal':true,
 			'resizable':true,
 			'draggable':false,
 			'autoOpen':false,
 			'buttons':{
-				'Сохранить':function(){alert(\"ok\")},
-				'Отмена':function(){alert(\"cancel\")}
+				'Сохранить':function(){saveSGridViewFilter('".$this->getId()."')},
+				'Отмена':function(){\$(this).dialog('close');}
 				}
 			});");
-
 	}
 }

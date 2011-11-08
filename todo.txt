@@ -11,6 +11,7 @@ TODO:
 	- Add to SGridView "save filter" link.
 	- SGridView display filter button only when "$filterMenu" is enabled.
 	- Fix css3button to not hover on jquery buttons in dialog.
+	- Fix grid view loading css loading class.
 
 	Done:
 	+ Finish job with SGridView filet button.
