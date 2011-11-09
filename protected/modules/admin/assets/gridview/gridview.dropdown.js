@@ -75,8 +75,9 @@
 	function loadSGridViewFilterById(gridId, filterId)
 	{
 		first = $('#'+ gridId +' :input').first();
-		$("<input type='hidden' value='1' name='loadFilter'>").appendTo(first);
+		$("<input type='hidden' value='"+filterId+"' name='loadFilter'>").appendTo(first);
 		first.trigger('change');
+		return false;
 	}
 
 	function saveSGridViewFilter(gridId)
@@ -87,15 +88,16 @@
 		if (filterJsonData != '' && filterName != '') 
 		{
 			$.ajax({
-				url: "saveFilter.php",
+				url: "/admin/core/GridView/saveFilterData",
 				type: "POST",
 				data: {
+					YII_CSRF_TOKEN: $("#"+gridId+"saveFilterDialog").dialog("option", "YII_CSRF_TOKEN"),
 					gridId: gridId,
 					filterName: filterName,
 					filterJsonData: filterJsonData
 				},
 				success:function(data) {
-					alert(data);
+					// alert(data);
 				},						
 			});
 		}
@@ -103,4 +105,5 @@
 		// Close dialog
 		$("#"+gridId+"saveFilterDialog").dialog("close"); return false;
 		// Reload filter
+		$('#'+ gridId +' :input').first().trigger('change');
 	}

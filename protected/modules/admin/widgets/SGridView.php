@@ -1,31 +1,7 @@
 <?php 
 
 Yii::import('zii.widgets.grid.CGridView');
-
-// $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-//     'id'=>'mydialog',
-//     // additional javascript options for the dialog plugin
-//     'options'=>array(
-//         'title'=>'Dialog box 1',
-//         'modal'=>true,
-//         'resizable'=>false,
-//         'draggable'=>false,
-//         'autoOpen'=>false,
-//         'buttons'=>array(
-//             'Сохранить'=>'js:function(){alert("ok")}',
-//             'Отмена'=>'js:function(){alert("cancel")}',
-//         ),
-//     ),
-// ));
-
-// echo 'dialog content here';
-
-// $this->endWidget('zii.widgets.jui.CJuiDialog');
-
-// // the link that may open the dialog
-// echo CHtml::link('open dialog', '#', array(
-//    'onclick'=>'$("#mydialog").dialog("open"); return false;',
-// ));
+Yii::import('application.modules.core.models.GridViewFilter');
 
 /**
  * Extends yii gridview and adds several new features as: "Clear/Save filter", 
@@ -80,6 +56,24 @@ class SGridView extends CGridView {
 			'cssFile'=>$this->baseScriptUrl.'/pager.css',
 		);
 
+		// Load custom filter.
+		if (isset($_GET['loadFilter']))
+		{
+			$filter = GridViewFilter::model()->findByAttributes(array(
+				'grid_id'=>$this->getId(),
+				'user_id'=>Yii::app()->user->id,
+				'id'=>$_GET['loadFilter']
+			));
+
+			if ($filter)
+			{
+				foreach(json_decode($filter->data) as $key=>$val)
+				{
+					$this->filter->$key = $val;
+				}
+			}
+		}
+
 		$this->initColumns();
 	}
 
@@ -123,23 +117,42 @@ class SGridView extends CGridView {
 	 */
 	public function insertDropdownHtml()
 	{
+		$filters = GridViewFilter::model()->findAllByAttributes(array(
+			'grid_id'=>$this->getId(),
+			'user_id'=>Yii::app()->user->id
+		));
+
+		$filtersHtml = '';
+		if ($filters)
+		{
+			$filtersHtml = '<hr>';
+			foreach ($filters as $filter) 
+			{
+				$filtersHtml .= strtr('<li><a href="#" onClick="return loadSGridViewFilterById(\'{gridId}\',{filterId})">{name}</a></li>', array(
+					'{name}'=>CHtml::encode($filter->name),
+					'{gridId}'=>$this->getId(),
+					'{filterId}'=>$filter->id,
+				));
+			}
+		}
+			
 		echo '
 			<div class="gridViewOptions">&nbsp;</div>
 			<div class="gridViewOptionsMenu">
 				<ul>
-				<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a></li>
-				<li><a href="#" onClick="$(\'#'.$this->getId().'saveFilterDialog\').dialog(\'open\');">Сохранить фильтр</a></li>
+					<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a></li>
+					<li><a href="#" onClick="$(\'#'.$this->getId().'saveFilterDialog\').dialog(\'open\');">Сохранить фильтр</a></li>
+					'.$filtersHtml.'
 				</ul>
 			</div>
 		';
-
 		echo CHtml::openTag('div', array(
 			'id'=>$this->getId().'saveFilterDialog',
 		));
 		echo '
 			<div class="form">
 				<div class="row">
-					<input type="text" id="'.$this->getId().'FilterBox" maxlength="255">
+					<input type="text" id="'.$this->getId().'FilterBox" maxlength="255" value="'.rand(1,100).'">
 					<div class="hint">Enter field name and press enter</div>
 				</div>
 			</div>
@@ -148,13 +161,14 @@ class SGridView extends CGridView {
 		echo Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
 			'title':'Сохранить фильтр',
 			'modal':true,
-			'resizable':true,
+			'resizable':false,
 			'draggable':false,
 			'autoOpen':false,
+			'YII_CSRF_TOKEN': '".Yii::app()->request->csrfToken."',
 			'buttons':{
 				'Сохранить':function(){saveSGridViewFilter('".$this->getId()."')},
 				'Отмена':function(){\$(this).dialog('close');}
-				}
-			});");
+			}
+		});");
 	}
 }

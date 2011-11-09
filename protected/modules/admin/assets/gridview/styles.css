@@ -12,6 +12,7 @@
 
 .grid-view table thead th {
     /*border-radius: 5px;*/
+    background-image:url(http://demo.scheetzdesigns.com/adminpro/assets/images/cap_bg.png);
 }
 
 .grid-view table.items

@@ -494,10 +494,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 	background:#EEEEEE;
 }
 .ui-tabs .ui-widget-header {
-	background: -moz-linear-gradient(top, #E6ECEF 0%, #D0D6DA 99%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E6ECEF), color-stop(99%,#D0D6DA));
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E6ECEF', endColorstr='#D0D6DA',GradientType=0 );
-	zoom: 1;
+	
 }
 /*
  * jQuery UI Datepicker 1.8.14
