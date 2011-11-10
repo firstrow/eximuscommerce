@@ -74,9 +74,27 @@
 	///////////////////
 	function loadSGridViewFilterById(gridId, filterId)
 	{
-		first = $('#'+ gridId +' :input').first();
-		$("<input type='hidden' value='"+filterId+"' name='loadFilter'>").appendTo(first);
-		first.trigger('change');
+		// Load filter data
+		$.ajax({
+			url: "/admin/core/GridView/loadFilterJsonData/?id="+filterId,
+			dataType: 'json',
+			success: function(data){
+				$('#'+ gridId +' :input').clearFields();
+
+				$('#'+ gridId +' :input').each(function(i, el){
+					for (var i in data) {
+						if ($(el).attr('name') == i)
+						{
+							$(el).val(data[i]);
+						}
+					}
+				});
+				
+				// reload grid
+				$('#'+ gridId +' :input').first().trigger('change');
+			}
+		});
+
 		return false;
 	}
 
@@ -103,7 +121,9 @@
 		}
 
 		// Close dialog
-		$("#"+gridId+"saveFilterDialog").dialog("close"); return false;
+		$("#"+gridId+"saveFilterDialog").dialog("close"); 
 		// Reload filter
 		$('#'+ gridId +' :input').first().trigger('change');
+
+		return false;
 	}

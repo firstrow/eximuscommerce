@@ -9,6 +9,9 @@ class GridViewController extends SAdminController
         );
     }
 
+    /**
+     * Save personal user filter.
+     */
     public function actionSaveFilterData()
     {
         Yii::import('application.modules.core.models.GridViewFilter');
@@ -22,6 +25,17 @@ class GridViewController extends SAdminController
             $model->save();
         else
             echo 'Error';
+    }
+
+    public function actionLoadFilterJsonData()
+    {
+        $model = GridViewFilter::model()->findByAttributes(array(
+            'user_id'=>Yii::app()->user->id,
+            'id'=>$_GET['id']
+        ));
+
+        if ($model)
+            echo $model->data;
     }
  
 }

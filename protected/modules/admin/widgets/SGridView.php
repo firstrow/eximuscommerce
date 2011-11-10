@@ -56,24 +56,6 @@ class SGridView extends CGridView {
 			'cssFile'=>$this->baseScriptUrl.'/pager.css',
 		);
 
-		// Load custom filter.
-		if (isset($_GET['loadFilter']))
-		{
-			$filter = GridViewFilter::model()->findByAttributes(array(
-				'grid_id'=>$this->getId(),
-				'user_id'=>Yii::app()->user->id,
-				'id'=>$_GET['loadFilter']
-			));
-
-			if ($filter)
-			{
-				foreach(json_decode($filter->data) as $key=>$val)
-				{
-					$this->filter->$key = $val;
-				}
-			}
-		}
-
 		$this->initColumns();
 	}
 
@@ -95,10 +77,16 @@ class SGridView extends CGridView {
 	{
 		if ($this->filter->attributes)
 		{
-			$attrs = $this->filter->attributes;
 
-			foreach ($attrs as $key => $value) 
-				if(!$value) unset($attrs[$key]);
+			$attrs = array();
+
+			foreach ($this->filter->attributes as $key => $value)
+			{
+				if($value)
+				{
+					$attrs[get_class($this->filter).'['.$key.']'] = $value;
+				}
+			}
 
 			if (!empty($attrs))
 			{
@@ -152,7 +140,7 @@ class SGridView extends CGridView {
 		echo '
 			<div class="form">
 				<div class="row">
-					<input type="text" id="'.$this->getId().'FilterBox" maxlength="255" value="'.rand(1,100).'">
+					<input type="text" id="'.$this->getId().'FilterBox" maxlength="255">
 					<div class="hint">Enter field name and press enter</div>
 				</div>
 			</div>
