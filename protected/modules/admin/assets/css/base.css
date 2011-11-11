@@ -85,7 +85,7 @@ a:hover, a:active, a.selected {
 #navigation {
     /*background-image:url(../images/navi_bg.jpg);*/
     background-image:url('../images/header_bg.gif');
-    background-color:silver;
+    /*background-color:silver;*/
     /*border-bottom:1px solid silver;*/
     margin:0 0 5px 0;
     height:38px; 

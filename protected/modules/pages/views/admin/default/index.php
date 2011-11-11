@@ -23,8 +23,9 @@
     $this->widget('application.modules.admin.widgets.SGridView', array(
         'dataProvider'=>$model->search(),
         'id'=>'pagesListGrid',
-        'afterAjaxUpdate'=>"function(){registerFilterDatePickers()}",
+        //'afterAjaxUpdate'=>"function(){registerFilterDatePickers()}",
         'filter'=>$model,
+        'ajaxUpdate'=>false,
         'columns'=>array(
             'id',
             array(
@@ -52,9 +53,11 @@
         ),
     ));
 
-    Yii::app()->clientScript->registerScript("pageDatepickers", "
-        function registerFilterDatePickers(id, data){
-            jQuery('input[name=\"Page[publish_date]\"]').datepicker({'dateFormat':'yy-mm-dd'});
-        }
-        registerFilterDatePickers();
-    ");
+    // Yii::app()->clientScript->registerScript("pageDatepickers", "
+    //     function registerFilterDatePickers(id, data){
+    //         jQuery('input[name=\"Page[publish_date]\"]').datepicker({
+    //             'dateFormat':'yy-mm-dd',
+    //         });
+    //     }
+    //     registerFilterDatePickers();
+    // ");

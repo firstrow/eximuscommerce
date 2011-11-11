@@ -113,10 +113,20 @@ class SGridView extends CGridView {
 		$filtersHtml = '';
 		if ($filters)
 		{
-			$filtersHtml = '<hr>';
+			$filtersHtml .= '<hr>';
 			foreach ($filters as $filter) 
 			{
-				$filtersHtml .= strtr('<li><a href="#" onClick="return loadSGridViewFilterById(\'{gridId}\',{filterId})">{name}</a></li>', array(
+				$filtersHtml .= strtr('
+					<li>
+						<div style="clear:both;">
+							<div style="float:left;">
+								<a href="#" onClick="return loadSGridViewFilterById(\'{gridId}\',{filterId})">{name}</a>
+							</div>
+							<div style="float:right;">
+								<a href="@">D</a>
+							</div>
+						</div>
+					</li>', array(
 					'{name}'=>CHtml::encode($filter->name),
 					'{gridId}'=>$this->getId(),
 					'{filterId}'=>$filter->id,
