@@ -77,15 +77,12 @@ class SGridView extends CGridView {
 	{
 		if ($this->filter->attributes)
 		{
-
 			$attrs = array();
 
 			foreach ($this->filter->attributes as $key => $value)
 			{
 				if($value)
-				{
 					$attrs[get_class($this->filter).'['.$key.']'] = $value;
-				}
 			}
 
 			if (!empty($attrs))
