@@ -123,13 +123,25 @@ class SGridView extends CGridView {
 								<a href="#" onClick="return loadSGridViewFilterById(\'{gridId}\',{filterId})">{name}</a>
 							</div>
 							<div style="float:right;">
-								<a href="@">D</a>
+								{delete}
 							</div>
 						</div>
 					</li>', array(
 					'{name}'=>CHtml::encode($filter->name),
 					'{gridId}'=>$this->getId(),
 					'{filterId}'=>$filter->id,
+					'{delete}'=>CHtml::link(
+					    'Удалить',
+					    array(
+						     '/admin/core/gridView/deleteFilter',
+						     'id'=>$filter->id,
+						     'redirect'=>base64_encode(Yii::app()->request->url),
+						),
+					    array(
+						    'confirm'=>'Вы действительно хотите удалить этот фильтр?',
+						    'id'=>'fdLink'.$filter->id
+						)
+					)
 				));
 			}
 		}

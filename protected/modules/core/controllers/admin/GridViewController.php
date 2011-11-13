@@ -27,15 +27,29 @@ class GridViewController extends SAdminController
             echo 'Error';
     }
 
-    public function actionLoadFilterJsonData()
+    public function actionLoadFilterJsonData($id)
     {
-        $model = GridViewFilter::model()->findByAttributes(array(
-            'user_id'=>Yii::app()->user->id,
-            'id'=>$_GET['id']
-        ));
+        $model = $this->_loadModel($id);
 
         if ($model)
             echo $model->data;
     }
  
+    public function actionDeleteFilter($id, $redirect)
+    {
+        $model = $this->_loadModel($id);
+
+        if ($model)
+            $model->delete();
+            
+        $this->redirect(base64_decode($redirect));
+    }
+
+    protected function _loadModel($id)
+    {
+        return GridViewFilter::model()->findByAttributes(array(
+            'user_id'=>Yii::app()->user->id,
+            'id'=>$id
+        ));
+    }
 }
