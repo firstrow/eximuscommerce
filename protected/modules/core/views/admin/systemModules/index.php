@@ -20,7 +20,7 @@
         ),
     ));
 
-    $this->widget('application.modules.admin.widgets.SGridView', array(
+    $this->widget('ext.sgridview.SGridView', array(
         'dataProvider'=>$model->search(),
         'id'=>'modulesListGrid',
         'filter'=>$model,

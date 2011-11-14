@@ -37,11 +37,11 @@ class SGridView extends CGridView {
 			$this->htmlOptions['class']='grid-view';
 
 		if($this->baseScriptUrl===null)
-			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.admin.assets'),
+			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.sgridview.assets'),
 				true,
 				-1,
 				YII_DEBUG
-			).'/gridview';
+			);
 
 		if($this->cssFile!==false)
 		{
@@ -128,7 +128,7 @@ class SGridView extends CGridView {
 					'{gridId}'=>$this->getId(),
 					'{filterId}'=>$filter->id,
 					'{delete}'=>CHtml::link(
-					    'Удалить',
+					    CHtml::image($this->baseScriptUrl.'/cross.png', 'Удалить'),
 					    array(
 						     '/admin/core/gridView/deleteFilter',
 						     'id'=>$filter->id,
