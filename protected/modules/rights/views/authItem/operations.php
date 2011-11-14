@@ -30,10 +30,9 @@
             
         <?php $this->sidebarContent = $this->renderPartial('/_menu',null,true); ?>
 
-	<?php $this->widget('zii.widgets.grid.CGridView', array(
+	<?php $this->widget('ext.sgridview.SGridView', array(
 	    'dataProvider'=>$dataProvider,
 	    'template'=>'{items}',
-            'cssFile'=>false,
 	    'emptyText'=>Rights::t('core', 'No operations found.'),
 	    'htmlOptions'=>array('class'=>'grid-view operation-table sortable-table'),
 	    'columns'=>array(

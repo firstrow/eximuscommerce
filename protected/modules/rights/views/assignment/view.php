@@ -8,12 +8,11 @@
     $this->pageHeader = 'Привязки';
     $this->sidebarContent = $this->renderPartial('/_menu', null, true);
     
-    $this->widget('zii.widgets.grid.CGridView', array(
+    $this->widget('ext.sgridview.SGridView', array(
 	    'dataProvider'=>$dataProvider,
 	    'template'=>"{items}{summary}{pager}",
 	    'emptyText'=>Rights::t('core', 'No users found.'),
 	    'htmlOptions'=>array('class'=>'grid-view assignment-table'),
-        'cssFile'=>false,
 	    'columns'=>array(
     		array(
     			'name'=>'name',

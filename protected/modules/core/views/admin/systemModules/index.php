@@ -24,6 +24,7 @@
         'dataProvider'=>$model->search(),
         'id'=>'modulesListGrid',
         'filter'=>$model,
+        'extended'=>false,
         'columns'=>array(
             array(
                 'name'=>'name',

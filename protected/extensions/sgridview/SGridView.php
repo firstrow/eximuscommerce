@@ -13,6 +13,7 @@ class SGridView extends CGridView {
 	
 	public $template = '{items}{summary}{pager}';
 	public $selectableRows = 100;
+	public $extended = true;
 
 	/**
 	 * Initializes the grid view.
@@ -64,8 +65,12 @@ class SGridView extends CGridView {
 	 */
 	public function renderItems()
 	{
-		$this->insertDropdownHtml();
-		$this->insertModelAttributes();
+		if ($this->extended && $this->filter)
+		{
+			$this->insertDropdownHtml();
+			$this->insertModelAttributes();
+		}
+
 		parent::renderItems();
 	}
 
