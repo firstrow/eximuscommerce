@@ -103,6 +103,23 @@ class SGridView extends CGridView {
 	}
 
 	/**
+	 * Check if filter attributes is not empty.
+	 * @return boolean
+	 */
+	public function _checkAttributes()
+	{
+		if($this->filter->attributes)
+		{
+			foreach($this->filter->attributes as $key=>$val)
+			{
+				if($val) 
+					return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Insert dropdown menu html code.
 	 */
 	public function insertDropdownHtml()
@@ -148,16 +165,17 @@ class SGridView extends CGridView {
 			}
 		}
 			
-		echo '
+		echo strtr('
 			<div class="gridViewOptions">&nbsp;</div>
 			<div class="gridViewOptionsMenu">
 				<ul>
 					<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a></li>
-					<li><a href="#" onClick="$(\'#'.$this->getId().'saveFilterDialog\').dialog(\'open\');">Сохранить фильтр</a></li>
+					<li>{saveLink}</li>
 					'.$filtersHtml.'
 				</ul>
-			</div>
-		';
+			</div>', array(
+				'{saveLink}'=>$this->_checkAttributes() ? '<a href="#" onClick="$(\'#'.$this->getId().'saveFilterDialog\').dialog(\'open\');">Сохранить фильтр</a>':'<a class="nonActive">Сохранить фильтр</a>',
+			));
 		echo CHtml::openTag('div', array(
 			'id'=>$this->getId().'saveFilterDialog',
 		));

@@ -203,3 +203,7 @@
     color:#309BBF;
     text-decoration:underline;
 }
+.grid-view .nonActive, .grid-view .nonActive:hover {
+    color:silver;
+    text-decoration:none;
+}
