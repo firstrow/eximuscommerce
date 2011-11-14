@@ -109,7 +109,8 @@
 
 			<?php else: ?>
 
-				<p class="info"><?php echo Rights::t('core', 'No children available to be added to this item.'); ?>
+				<p class="info">
+					<?php echo Rights::t('core', 'No children available to be added to this item.'); ?>
 				</p>
 
 			<?php endif; ?>
@@ -118,7 +119,7 @@
 	</div>
 
 	<?php else: ?>
-		<p class="info">
+		<p>
 			<?php echo Rights::t('core', 'No relations need to be set for the superuser role.'); ?><br />
 			<?php echo Rights::t('core', 'Super users are always granted access implicitly.'); ?>
 		</p>
