@@ -115,15 +115,12 @@
 					filterJsonData: filterJsonData
 				},
 				success:function(data) {
-					// alert(data);
+					// Reload filter
+					$('#'+ gridId +' :input').first().trigger('change');
 				},						
 			});
 		}
-
 		// Close dialog
 		$("#"+gridId+"saveFilterDialog").dialog("close"); 
-		// Reload filter
-		$('#'+ gridId +' :input').first().trigger('change');
-
 		return false;
 	}
