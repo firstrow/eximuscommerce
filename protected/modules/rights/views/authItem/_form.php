@@ -1,4 +1,4 @@
-<div class="form  span-12 first">
+<div class="form wide padding-all">
 
 <?php if( $model->scenario==='update' ): ?>
 

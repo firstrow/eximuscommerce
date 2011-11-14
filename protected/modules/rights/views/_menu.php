@@ -34,5 +34,5 @@
 
     if(isset($this->clips['sidebarHelpText']))
     {
-        echo '<div class="hint" style="margin-top:25px;">'.$this->clips['sidebarHelpText'].'</div>'; 
+        echo '<div class="hint" style="margin-top:25px;padding-right:5px;">'.$this->clips['sidebarHelpText'].'</div>'; 
     }
