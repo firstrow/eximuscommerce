@@ -27,6 +27,10 @@ class GridViewController extends SAdminController
             echo 'Error';
     }
 
+    /**
+     * Load filter data
+     * @param type $id Filter id
+     */
     public function actionLoadFilterJsonData($id)
     {
         $model = $this->_loadModel($id);
@@ -35,6 +39,11 @@ class GridViewController extends SAdminController
             echo $model->data;
     }
  
+    /**
+     * Delete fiter and redirect user back to page.
+     * @param type $idfilter id
+     * @param type $redirect base64 encoded relative site url.
+     */
     public function actionDeleteFilter($id, $redirect)
     {
         $model = $this->_loadModel($id);
@@ -45,6 +54,11 @@ class GridViewController extends SAdminController
         $this->redirect(base64_decode($redirect));
     }
 
+    /**
+     * Load fiter model by PK.
+     * @param type $id 
+     * @return GridViewFilter
+     */
     protected function _loadModel($id)
     {
         return GridViewFilter::model()->findByAttributes(array(
