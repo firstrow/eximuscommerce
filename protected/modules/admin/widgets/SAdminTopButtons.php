@@ -228,7 +228,7 @@ class SAdminTopButtons extends CWidget {
             function submitFormById(form_id, el)
             {
                 var submitForm = $('#'+form_id);
-                submitForm.append('<input type=hidden name='REDIRECT' value=\''+$(el).attr('href')+'\'>');
+                submitForm.append('<input type=hidden name=\'REDIRECT\' value=\''+$(el).attr('href')+'\'>');
                 submitForm.submit();
                 return false;
             }
