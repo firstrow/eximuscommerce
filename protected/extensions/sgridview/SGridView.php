@@ -38,11 +38,13 @@ class SGridView extends CGridView {
 			$this->htmlOptions['class']='grid-view';
 
 		if($this->baseScriptUrl===null)
+		{
 			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.sgridview.assets'),
 				true,
 				-1,
 				YII_DEBUG
 			);
+		}
 
 		if($this->cssFile!==false)
 		{
