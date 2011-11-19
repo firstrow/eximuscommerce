@@ -17,9 +17,9 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/forms.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
-    // $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/ui-lightness/jquery-ui-1.8.14.custom.css');
-    // $assetsManager->registerCssFile('http://taitems.github.com/Aristo-jQuery-UI-Theme/css/Aristo/Aristo.css');
-
+    // fg.menu
+    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
 ?>
 <!doctype html> 
 <html>
@@ -112,7 +112,7 @@
 	</div> <!-- /hd -->
 
         <div class="yui-gc" id="navigation">
-                    <div class="yui-u first" style="width:1px;">
+                <div class="yui-u first" style="width:1px;">
                     <div class="navigation-content-left">
                         <div id="breadcrumbs" class="breadCrumb module">
                             <div style="overflow:hidden; position:relative;  width: 990px;">
@@ -127,15 +127,15 @@
                         </div>
 
                     </div>
-            </div>
+                </div>
             <div class="yui-u" style="width:50%;">
-                <div class="navigation-content-right marright" align="right">
+                <div class="navigation-content-right marright" align="right" style="float:right;">
                     <?php
                         if (!empty($this->topButtons))
                         {
                             echo $this->topButtons;
                         }
-                    ?>
+                    ?>    
                 </div>
             </div>
 	</div>
