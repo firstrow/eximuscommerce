@@ -3,7 +3,7 @@
  * Admin menu items for pages module
  */
 return array(
-    'users'=>array(
+    'cms'=>array(
         'items'=>array(
             array(
                 'label'=>'Страницы', 

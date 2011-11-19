@@ -7,12 +7,12 @@ class SSystemMenu extends CWidget {
 
     public function run()
     {
-        /**
-         * TODO: Search in all modules config/adminMenu.php and build menus
-         */
         $items = array(
             'users'=>array(
                 'label'=>'Система',
+            ),
+            'cms'=>array(
+                'label'=>'Сайт',
             ),
         );
 
@@ -24,7 +24,6 @@ class SSystemMenu extends CWidget {
 
     /**
      * Sort menu items by position key.
-     *
      * @param  $items Menu items
      */
     protected function processSorting(&$items)
@@ -60,7 +59,6 @@ class SSystemMenu extends CWidget {
     
     /**
      *  Sort an array
-     *
      * @static
      * @param  $a array
      * @param  $b array
