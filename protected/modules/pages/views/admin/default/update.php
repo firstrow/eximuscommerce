@@ -19,7 +19,8 @@
     $this->pageHeader = $title;
 ?>
 
-<div class="form wide">
+<!-- Use padding-all class with SidebarAdminTabs -->
+<div class="form wide padding-all">
     <?php echo $form->asTabs(); ?>
 </div>
 
