@@ -20,7 +20,17 @@ class PagesController extends Controller
 
 		if (!$model) throw new CHttpException(404, Yii::t('PagesModule.core', 'Страница не найдена.'));
 
-		$this->render('view', array(
+		// Set layout
+		if ($model->layout)
+			$this->layout = $model->layout;
+
+		// Use custom page view
+		if ($model->view)
+			$view = $model->view;
+		else
+			$view = 'view';
+
+		$this->render($view, array(
 			'model'=>$model,
 		));
 	}

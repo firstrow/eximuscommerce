@@ -17,6 +17,8 @@
  * @property string $updated
  * @property string $publish_date
  * @property string $status
+ * @property string $layout
+ * @property string $view
  * 
  * TODO: Set DB indexes
  */
@@ -54,7 +56,7 @@ class Page extends BaseModel
                 'condition'=>'publish_date <= :date AND status = :status',
                 'params'=>array(
                     ':date'=>date('Y-m-d H:i:s'),
-                    ':status'=>$this->publishStatus,
+                    ':status'=>$this->publishStatus
                 ),
             ),
         );
@@ -88,7 +90,7 @@ class Page extends BaseModel
             array('title, url, status, publish_date', 'required'),
             array('url', 'LocalUrlValidator'),
             array('publish_date', 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'),
-            array('title, url, meta_title, meta_description, meta_keywords, publish_date', 'length', 'max'=>255),
+            array('title, url, meta_title, meta_description, meta_keywords, publish_date, layout, view', 'length', 'max'=>255),
             // The following rule is used by search().
             array('id, user_id, title, url, short_description, full_description, meta_title, meta_description, meta_keywords, created, updated, publish_date', 'safe', 'on'=>'search'),
         );
@@ -123,6 +125,8 @@ class Page extends BaseModel
             'updated' => 'Дата обновления',
             'publish_date' => 'Дата публикации',
             'status' => 'Статус',
+            'layout' => 'Макет',
+            'view' => 'Шаблон',
         );
     }
 

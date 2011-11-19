@@ -54,6 +54,12 @@ return array(
                         'dateFormat'=>'yy-mm-dd '.date('H:i:s'),
                     ),
                 ),
+                'layout'=>array(
+		            'type'=>'text',
+		        ),
+		        'view'=>array(
+		            'type'=>'text',
+		        ),
 			),
 		),
 	),
