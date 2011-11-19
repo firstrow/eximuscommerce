@@ -191,11 +191,6 @@ class SAdminTopButtons extends CWidget {
                 ),
                 'icon'=>'pen',
             ),
-            'dropDown'=>array(
-                'link'=>'#',
-                'title'=>'Ещё',
-                'icon'=>'downarrow',
-            ),
             'delete'=>array(
                 'link'=>$this->deleteAction,
                 'title'=>Yii::t('AdminModule.admin', 'Удалить'),
@@ -205,6 +200,11 @@ class SAdminTopButtons extends CWidget {
                     'title'=>Yii::t('AdminModule.admin', 'Удалить'),
                 ),
                 'icon'=>'cross',
+            ),
+            'dropDown'=>array(
+                'link'=>'#',
+                'title'=>'Ещё',
+                'icon'=>'downarrow',
             ),
         );
     }
