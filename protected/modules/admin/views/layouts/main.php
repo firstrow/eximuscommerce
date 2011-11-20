@@ -20,16 +20,25 @@
     // fg.menu
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
+
+    // Breadcrumbs
+    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/breadCrumbs/BreadCrumb.css');
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/breadCrumbs/jquery.jBreadCrumb.1.1.js');
+
+    // ToTop 
+    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery.ui.totop/ui.totop.css');
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ui.totop/jquery.ui.totop.js');
+    
+    // jGrowl
+    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.js');
+
+    // Init script
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
 ?>
 <!doctype html> 
 <html>
 <head>
-
-    <style>
-        .xdebug-var-dump {
-            background-color:silver;
-        }
-    </style>
 
 	<meta charset="utf-8">
 	<title>CMS</title>
@@ -37,59 +46,14 @@
     <!-- VENDORS -->
     <!-- Css3 buttons -->
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $adminAssetsUrl ?>/vendors/css3buttons/stylesheets/css3buttons.css">
-
-    <!-- jquery breadcrumbs -->
-    <script src="<?php echo $adminAssetsUrl ?>/vendors/breadCrumbs/jquery.jBreadCrumb.1.1.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="<?php echo $adminAssetsUrl ?>/vendors/breadCrumbs/BreadCrumb.css" type="text/css">
-    <script type="text/javascript">
-        jQuery(document).ready(function()
-        {
-            jQuery("#breadcrumbs").jBreadCrumb();
-        })
-   </script>
-
-    <!-- ToTop -->
-    <link rel="stylesheet" type="text/css" media="screen,projection" href="<?php echo $adminAssetsUrl ?>/vendors/jquery.ui.totop/ui.totop.css" />
-    <script src="<?php echo $adminAssetsUrl ?>/vendors/jquery.ui.totop/jquery.ui.totop.js" type="text/javascript"></script>
-    <script type="text/javascript"> 
-            $(document).ready(function() {
-                    $().UItoTop({ easingType: 'easeOutQuart' });
-            });
-    </script>     
-
-    <!-- jGrowl -->
-    <link rel="stylesheet" type="text/css" href="<?php echo $adminAssetsUrl ?>/vendors/jgrowl/jquery.jgrowl.css">
-    <script src="<?php echo $adminAssetsUrl ?>/vendors/jgrowl/jquery.jgrowl.js"></script>
     
-    <!-- Script to move navigation bar on scroll -->
-    <script type="text/javascript">
-        $(window).load(function (){
-            var topBar = $('#navigation');
-            var start  = topBar.offset().top;
-            var fixed;
-            $(window).scroll(function () {
-                if(!fixed && (topBar.offset().top - $(window).scrollTop() < 0)){
-                    topBar.css('top', 0);
-                    topBar.css('position', 'fixed');
-                    topBar.css('width', $('#doc3').css('width'));
-                    topBar.css('opacity', '0.92');
-                    $("#hd").css('margin-bottom','38px');
-                    fixed = true;
-                }else if(fixed && $(window).scrollTop() <= start){
-                    topBar.css('position', '');
-                    topBar.css('width', '');
-                    topBar.css('opacity', '1');
-                    $("#hd").css('margin-bottom','');
-                    fixed = false;
-                }
-            });
-        });
-    </script>
-
     <style type="text/css">
         /*** Fix for tabs. ***/
         .ui-tabs {
             border:0;
+        }
+        .xdebug-var-dump {
+            background-color:silver;
         }
     </style>
 
