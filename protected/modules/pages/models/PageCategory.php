@@ -14,13 +14,23 @@
  * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_keywords
+ * @property integer $page_size
  * @property string $created
  * @property string $updated
  */
 class PageCategory extends BaseModel
 {
 
+    /**
+     * Default page size.
+     */
+    public $defaultPageSize = 10;
+
+    /**
+     * Category level.
+     */
     public $level = 0;
+
     public $_nameWithLevel;
 
     /**
@@ -49,7 +59,7 @@ class PageCategory extends BaseModel
             array(' description, layout, view', 'type'),
             array('name', 'required'),
             array('url', 'LocalUrlValidator'),
-            array('parent_id', 'numerical', 'integerOnly'=>true),
+            array('parent_id, page_size', 'numerical', 'integerOnly'=>true),
             array('name, url, layout, view, meta_title, meta_description, meta_keywords', 'length', 'max'=>255),
             // The following rule is used by search().
             array('id, parent_id, name, url, description, layout, view, meta_title, meta_description, meta_keywords, created, updated', 'safe', 'on'=>'search'),
@@ -86,6 +96,7 @@ class PageCategory extends BaseModel
             'created' => 'Дата создания',
             'updated' => 'Дата обновления',
             'pages' => 'Страницы',
+            'page_size' => 'Записей на странице',
         );
     }
 

@@ -50,6 +50,13 @@ class Page extends BaseModel
         return 'Page';
     }
 
+    public function defaultScope()
+    {
+        return array(
+            'order'=>'publish_date DESC',
+        );
+    }
+
     public function scopes()
     {
         return array(
@@ -73,6 +80,21 @@ class Page extends BaseModel
         $this->getDbCriteria()->mergeWith(array(
             'condition'=>'url=:url',
             'params'=>array(':url'=>$url)
+        ));
+
+        return $this;
+    }
+
+    /**
+     * Filter pages by category.
+     * Scope.
+     * @return Page
+     */
+    public function filterByCategory($model)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'category_id=:category',
+            'params'=>array(':category'=>$model->id)
         ));
 
         return $this;

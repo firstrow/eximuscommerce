@@ -48,6 +48,9 @@ return array(
 			'type'=>'form',
 			'title'=>'Внешний вид',
 			'elements'=>array(
+				'page_size'=>array(
+		            'type'=>'text',
+		        ),
 				'layout'=>array(
 		            'type'=>'text',
 		        ),

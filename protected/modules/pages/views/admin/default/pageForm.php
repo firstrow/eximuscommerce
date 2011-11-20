@@ -32,7 +32,7 @@ return array(
 		),
 		'seo'=>array(
 			'type'=>'form',
-			'title'=>'SEO',
+			'title'=>'Мета данные',
 			'elements'=>array(
 				'meta_title'=>array(
 		            'type'=>'text',
