@@ -60,7 +60,7 @@
 	    try
 	    {    
 	        $('#'+ id +' :input').clearFields(); // this will clear all input in the current grid
-	        $('#'+ id +' :input').first().trigger('change');// to submit the form
+	        $('#'+ id +' .filters :input').first().trigger('change');// to submit the form
 	        return false;
 	    }
 	    catch(e)
