@@ -26,6 +26,9 @@
         'filter'=>$model,
         //'ajaxUpdate'=>false,
         'columns'=>array(
+            array(
+                'class'=>'CCheckBoxColumn',
+            ),
             'id',
             array(
                 'name'=>'title',

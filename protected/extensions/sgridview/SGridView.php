@@ -12,7 +12,7 @@ Yii::import('application.modules.core.models.GridViewFilter');
 class SGridView extends CGridView {
 	
 	public $template = '{items}{summary}{pager}';
-	public $selectableRows = 100;
+	public $selectableRows = 2;
 	public $extended = true;
 
 	/**

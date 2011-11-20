@@ -24,6 +24,9 @@
         'id'=>'pageCategoryGrid',
         'columns'=>array(
             array(
+                'class'=>'CCheckBoxColumn',
+            ),
+            array(
                 'name'=>'id',
                 'type'=>'html',
                 'header'=>$model->getAttributeLabel("id"),
