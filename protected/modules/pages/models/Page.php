@@ -186,6 +186,7 @@ class Page extends BaseModel
 
         if (empty($this->url))
         {
+            // Create slug
             Yii::import('ext.SlugHelper.SlugHelper');
             $this->url = SlugHelper::run($this->title);
         }

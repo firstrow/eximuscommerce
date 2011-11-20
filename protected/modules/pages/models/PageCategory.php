@@ -47,7 +47,7 @@ class PageCategory extends BaseModel
     {
         return array(
             array(' description, layout, view', 'type'),
-            array('name, url', 'required'),
+            array('name', 'required'),
             array('url', 'LocalUrlValidator'),
             array('parent_id', 'numerical', 'integerOnly'=>true),
             array('name, url, layout, view, meta_title, meta_description, meta_keywords', 'length', 'max'=>255),
@@ -134,6 +134,17 @@ class PageCategory extends BaseModel
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function beforeSave()
+    {
+        if (empty($this->url))
+        {
+            Yii::import('ext.SlugHelper.SlugHelper');
+            $this->url = SlugHelper::run($this->name);
+        }
+
+        return true;
     }
 
     /**

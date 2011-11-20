@@ -26,10 +26,9 @@ class SlugHelper {
         );
         foreach($matrix as $from=>$to)
             $text=mb_eregi_replace($from,$to,$text);
-
         $text = preg_replace('/[^A-Za-z0-9_\-]/', '', $text);
 
-        return $text;	
+        return strtolower($text);	
 	}
 
 }
