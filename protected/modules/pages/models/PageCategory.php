@@ -148,6 +148,33 @@ class PageCategory extends BaseModel
     }
 
     /**
+     * Delete category pages and childs.
+     * @return boolean
+     */
+    public function beforeDelete()
+    {
+        // Delete pages
+        $pages = $this->pages;
+        if ($pages)
+        {
+            foreach($pages as $p)
+                $p->delete();
+        }
+
+        // Delete all childs
+        $tree = new PageCategoryTree();
+        $tree = $tree->buildTree($this->id);
+
+        if (count($tree) > 0)
+        {
+            foreach($tree as $child)
+                $child->delete();
+        }
+
+        return true;
+    }
+
+    /**
      * Generate admin link to edit category. 
      * @return type
      */

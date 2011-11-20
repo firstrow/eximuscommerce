@@ -6,9 +6,12 @@ class PageCategoryTree {
 	public $result = array();
 	public $level = -1;
 
-	public function __construct($categories)
+	public function __construct($categories = null)
 	{
-		$this->categories = $categories;
+		if (!$categories === null)
+			$this->categories = PageCategory::model()->findAll();
+		else
+			$this->categories = $categories;
 	}
 
 	/**
