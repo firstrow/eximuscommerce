@@ -4,6 +4,8 @@ class PageCategoryTree {
 	
 	public $categories = array();
 	public $result = array();
+
+	public $path = array();
 	public $level = -1;
 
 	public function __construct($categories = null)
@@ -26,15 +28,25 @@ class PageCategoryTree {
 		{
 			if ($category->parent_id == $parentId)
 			{
+				$this->path[] = $category->url;
+
 				$category->level = $this->level;
+				$category->path = implode('/', $this->path);
 
 				$this->result[$category->id] = $category;
 				$this->buildTree($category->id);
+
+				array_pop($this->path);
 			}
 		}
 		$this->level--;
 
 		return $this->result;
+	}
+
+	public function getById($id)
+	{
+		return $this->result[$id];
 	}
 
 }

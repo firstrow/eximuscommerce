@@ -55,6 +55,11 @@ class CategoryController extends SAdminController {
 			{
 				$model->save();
 
+		        $tree = new PageCategoryTree();
+		        $tree->buildTree();
+		        $model->full_url = $tree->getById($model->id)->path;
+		        $model->save();
+
                 $this->setFlashMessage(Yii::t('PagesModule.admin', 'Изменения успешно сохранены'));
                 
                 if (isset($_POST['REDIRECT']))

@@ -26,10 +26,8 @@ class PageCategory extends BaseModel
      */
     public $defaultPageSize = 10;
 
-    /**
-     * Category level.
-     */
-    public $level = 0;
+    public $level;
+    public $path;
 
     public $_nameWithLevel;
 
@@ -75,6 +73,21 @@ class PageCategory extends BaseModel
     {
         $this->getDbCriteria()->mergeWith(array(
             'condition'=>'url=:url',
+            'params'=>array(':url'=>$url)
+        ));
+
+        return $this;
+    }
+
+    /**
+     * Find category by full_url.
+     * Scope.
+     * @return Page
+     */
+    public function withFullUrl($url)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'full_url=:url',
             'params'=>array(':url'=>$url)
         ));
 
@@ -223,7 +236,7 @@ class PageCategory extends BaseModel
      */
     public function getViewUrl()
     {
-        return Yii::app()->createUrl('pages/pages/list', array('url'=>$this->url));
+        return Yii::app()->createUrl('pages/pages/list', array('url'=>$this->full_url));
     }
 
     public function __toString()

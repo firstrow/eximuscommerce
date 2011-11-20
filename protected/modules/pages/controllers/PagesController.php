@@ -13,7 +13,7 @@ class PagesController extends Controller
 	public function actionList($url)
 	{
 		$model = PageCategory::model()
-			->withUrl($url)
+			->withFullUrl($url)
 			->find();
 
 		if (!$model) throw new CHttpException(404, Yii::t('PagesModule.core', 'Категория не найдена.'));
