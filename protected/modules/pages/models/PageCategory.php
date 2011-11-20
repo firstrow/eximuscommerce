@@ -67,6 +67,21 @@ class PageCategory extends BaseModel
     }
 
     /**
+     * Find category by url.
+     * Scope.
+     * @return Page
+     */
+    public function withUrl($url)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'url=:url',
+            'params'=>array(':url'=>$url)
+        ));
+
+        return $this;
+    }
+
+    /**
      * @return array relational rules.
      */
     public function relations()
@@ -154,6 +169,14 @@ class PageCategory extends BaseModel
             Yii::import('ext.SlugHelper.SlugHelper');
             $this->url = SlugHelper::run($this->name);
         }
+
+        // Check if url aviable
+        $test = PageCategory::model()
+            ->withUrl($this->url)
+            ->count('id!=:id', array(':id'=>$this->id));
+        
+        if ($test > 0)
+            $this->url .= '-'.$this->id;
 
         return true;
     }

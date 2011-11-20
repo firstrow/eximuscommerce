@@ -213,6 +213,15 @@ class Page extends BaseModel
             $this->url = SlugHelper::run($this->title);
         }
 
+        // Check if url aviable
+        $test = Page::model()
+            ->withUrl($this->url)
+            ->count('id!=:id', array(':id'=>$this->id));
+        
+        if ($test > 0)
+            $this->url .= '-'.$this->id;
+
         return parent::beforeSave();
     }
+
 }
