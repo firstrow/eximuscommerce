@@ -26,7 +26,14 @@ class PageCategory extends BaseModel
      */
     public $defaultPageSize = 10;
 
+    /**
+     * Set level on PageCategoryTree::buildTree()
+     */
     public $level;
+
+    /**
+     * Set temp path on PageCategoryTree::buildTree()
+     */
     public $path;
 
     public $_nameWithLevel;

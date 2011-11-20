@@ -44,6 +44,24 @@ class PageCategoryTree {
 		return $this->result;
 	}
 
+	/**
+	 * Rebuild ful_url after category save.
+	 */
+	public function rebuildFullUrl()
+	{
+        $this->buildTree();
+        foreach ($this->result as $category) 
+        {
+        	$category->full_url = $category->path;
+        	$category->save(false);
+        }
+	}
+
+	/**
+	 * Get category from tree by id.
+	 * @param type $id 
+	 * @return PageCategory
+	 */
 	public function getById($id)
 	{
 		return $this->result[$id];

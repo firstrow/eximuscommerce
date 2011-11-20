@@ -55,10 +55,8 @@ class CategoryController extends SAdminController {
 			{
 				$model->save();
 
-		        $tree = new PageCategoryTree();
-		        $tree->buildTree();
-		        $model->full_url = $tree->getById($model->id)->path;
-		        $model->save();
+				$tree = new PageCategoryTree();
+				$tree->rebuildFullUrl();
 
                 $this->setFlashMessage(Yii::t('PagesModule.admin', 'Изменения успешно сохранены'));
                 
