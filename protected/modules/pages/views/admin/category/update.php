@@ -1,10 +1,9 @@
 <?php
-    // Page create/edit view
-
-    //$this->sidebarContent = ';';
+    // Category create/edit view
 
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
         'form'=>$form,
+        'deleteAction'=>$this->createUrl('/pages/admin/category/delete', array('id'=>$model->id))
     ));
 
     $title = ($model->isNewRecord) ? Yii::t('PagesModule.admin', 'Создание категории') : 

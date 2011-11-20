@@ -37,7 +37,7 @@ class SAdminTopButtons extends CWidget {
      * @var array
      */
     //public $template = array('history_back','save','saveCreate','saveEdit','delete');
-    public $template = array('history_back','save','delete','dropDown');
+    public $template = array('history_back','save','dropDown','delete');
     
     /**
      * Default links
@@ -196,8 +196,17 @@ class SAdminTopButtons extends CWidget {
                 'title'=>Yii::t('AdminModule.admin', 'Удалить'),
                 'classes'=>array('negative'),
                 'htmlOptions'=>array(
-                    'onClick'=>$this->renderSubmitFormJs(),
                     'title'=>Yii::t('AdminModule.admin', 'Удалить'),
+                    'confirm'=>'Удалить?',
+                    'csrf'=>true,
+                    'ajax'=>array(
+                        'url'=>$this->deleteAction,
+                        'type'=>'POST',
+                        'data'=>array(
+                            Yii::app()->request->csrfTokenName=>Yii::app()->request->csrfToken,
+                        ),
+                        'success'=>"function(){ window.location = '$this->listAction' }"
+                    ),
                 ),
                 'icon'=>'cross',
             ),

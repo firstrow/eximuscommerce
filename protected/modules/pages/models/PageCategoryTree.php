@@ -8,7 +8,7 @@ class PageCategoryTree {
 
 	public function __construct($categories = null)
 	{
-		if (!$categories === null)
+		if ($categories === null)
 			$this->categories = PageCategory::model()->findAll();
 		else
 			$this->categories = $categories;
