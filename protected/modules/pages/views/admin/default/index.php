@@ -34,6 +34,12 @@
             ),
             'url',
             array(
+                'name'=>'category_id',
+                'type'=>'raw',
+                'value'=>'$data->category ? $data->category->getUpdateLink(): "Нет"',
+                'filter'=>PageCategory::keyValueList()
+            ),
+            array(
                 'name'=>'user_id',
                 'type'=>'raw',
                 'value'=>'$data->author->getUpdateLink()',

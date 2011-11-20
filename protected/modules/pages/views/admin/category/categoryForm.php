@@ -1,7 +1,6 @@
 <?php
 
 /*** Create/update page form ***/
-Yii::import('zii.widgets.jui.CJuiDatePicker');
 
 return array(
 	'id'=>'pageUpdateForm',
@@ -9,30 +8,30 @@ return array(
 	'elements'=>array(
 		'content'=>array(
 			'type'=>'form',
-			'title'=>'Содержимое',
+			'title'=>'Параметры',
 			'elements'=>array(
-				'title'=>array(
+				'name'=>array(
 		            'type'=>'text',
 		        ),
 				'url'=>array(
 		            'type'=>'text',
 		        ),
-				'category_id'=>array(
+				'parent_id'=>array(
 		            'type'=>'dropdownlist',
 		            'items'=>PageCategory::keyValueList(),
 		            'empty'=>'---',
+		            'options'=>array(
+		            	$this->model->id=>array('disabled'=>true),
+			        )
 		        ),
-		        'short_description'=>array(
-		            'type'=>'textarea',
-		        ),
-		        'full_description'=>array(
+				'description'=>array(
 		            'type'=>'textarea',
 		        ),
 			),
 		),
 		'seo'=>array(
 			'type'=>'form',
-			'title'=>'SEO',
+			'title'=>'Мета данные',
 			'elements'=>array(
 				'meta_title'=>array(
 		            'type'=>'text',
@@ -45,24 +44,14 @@ return array(
 		        ),
 			),
 		),
-		'additional'=>array(
+		'design'=>array(
 			'type'=>'form',
-			'title'=>'Дополнительно',
+			'title'=>'Внешний вид',
 			'elements'=>array(
-		        'status'=>array(
-		        	'type'=>'dropdownlist',
-		        	'items'=>Page::statuses()
-		        ),
-				'publish_date'=>array(
-                    'type'=>'CJuiDatePicker',
-                    'options'=>array(
-                        'dateFormat'=>'yy-mm-dd '.date('H:i:s'),
-                    ),
-                ),
-                'layout'=>array(
+				'layout'=>array(
 		            'type'=>'text',
 		        ),
-		        'view'=>array(
+				'view'=>array(
 		            'type'=>'text',
 		        ),
 			),

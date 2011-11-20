@@ -7,7 +7,7 @@ class PagesModule extends BaseModule
 	public function init()
 	{
 		$this->setImport(array(
-			'application.modules.pages.models.Page',
+			'application.modules.pages.models.*'
 		));
 	}
 }

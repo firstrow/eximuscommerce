@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'Pages':
  * @property integer $id
  * @property integer $user_id
+ * @property integer $category_id
  * @property string $title
  * @property string $url
  * @property string $short_description
@@ -82,10 +83,8 @@ class Page extends BaseModel
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('short_description, full_description', 'type'),
+            array('short_description, full_description, category_id', 'type'),
             array('status', 'in', 'range'=>array_keys(self::statuses())),
             array('title, url, status, publish_date', 'required'),
             array('url', 'LocalUrlValidator'),
@@ -102,7 +101,8 @@ class Page extends BaseModel
     public function relations()
     {
         return array(
-            'author'=>array(self::BELONGS_TO, 'User', 'user_id')
+            'author'=>array(self::BELONGS_TO, 'User', 'user_id'),
+            'category'=>array(self::BELONGS_TO, 'PageCategory', 'category_id')
         );
     }
 
@@ -114,6 +114,7 @@ class Page extends BaseModel
         return array(
             'id' => 'ID',
             'user_id' => 'Автор',
+            'category_id' => 'Категория',
             'title' => 'Заглавление',
             'url' => 'URL',
             'short_description' => 'Краткое описание',
@@ -156,6 +157,7 @@ class Page extends BaseModel
 
         $criteria->with = array('author');
         $criteria->compare('t.id',$this->id);
+        $criteria->compare('t.category_id',$this->category_id);
         $criteria->compare('author.username',$this->user_id,true);
         $criteria->compare('t.title',$this->title,true);
         $criteria->compare('t.url',$this->url,true);

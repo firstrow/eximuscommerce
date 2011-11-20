@@ -10,6 +10,11 @@ return array(
                 'url'=>array('/admin/pages'), 
                 'position'=>3
             ),
+            array(
+                'label'=>'Категории', 
+                'url'=>array('/admin/pages/category'), 
+                'position'=>4
+            ),
         ),
     ),
 );
