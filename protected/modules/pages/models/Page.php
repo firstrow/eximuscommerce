@@ -86,7 +86,7 @@ class Page extends BaseModel
         return array(
             array('short_description, full_description, category_id', 'type'),
             array('status', 'in', 'range'=>array_keys(self::statuses())),
-            array('title, url, status, publish_date', 'required'),
+            array('title, status, publish_date', 'required'),
             array('url', 'LocalUrlValidator'),
             array('publish_date', 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'),
             array('title, url, meta_title, meta_description, meta_keywords, publish_date, layout, view', 'length', 'max'=>255),
@@ -183,6 +183,12 @@ class Page extends BaseModel
     {
         if (!Yii::app()->user->isGuest) 
             $this->user_id = Yii::app()->user->id;
+
+        if (empty($this->url))
+        {
+            Yii::import('ext.SlugHelper.SlugHelper');
+            $this->url = SlugHelper::run($this->title);
+        }
 
         return parent::beforeSave();
     }

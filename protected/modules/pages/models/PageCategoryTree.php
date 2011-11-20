@@ -2,15 +2,20 @@
 
 class PageCategoryTree {
 	
-	public $categories;
-	public $level = -1;
+	public $categories = array();
 	public $result = array();
+	public $level = -1;
 
 	public function __construct($categories)
 	{
 		$this->categories = $categories;
 	}
 
+	/**
+	 * Build simple category tree.
+	 * @param type $parentId Parent category id. Set category id to get all childs.
+	 * @return array
+	 */
 	public function buildTree($parentId = null)
 	{
 		$this->level++;
