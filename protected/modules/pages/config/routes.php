@@ -8,5 +8,6 @@ return array(
   	array(
         'class' => 'application.modules.pages.config.CategoryUrlRule',
         'connectionID' => 'db',
+        //'urlSuffix'=>'.html',
     ), 
 );
