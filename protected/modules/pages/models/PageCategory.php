@@ -217,6 +217,15 @@ class PageCategory extends BaseModel
         return CHtml::link($this->name, array('/pages/admin/category/update', 'id'=>$this->id));
     }
 
+    /**
+     * Get url to view object on front
+     * @return string
+     */
+    public function getViewUrl()
+    {
+        return Yii::app()->createUrl('pages/pages/list', array('url'=>$this->url));
+    }
+
     public function __toString()
     {
         return $this->name;

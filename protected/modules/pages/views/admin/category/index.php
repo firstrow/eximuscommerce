@@ -36,7 +36,8 @@
             ),
             array(
                 'name'=>'url',
-                'type'=>'html',
+                'type'=>'raw',
+                'value'=>'CHtml::link($data->url, $data->getViewUrl(), array("target"=>"_blank"))',
                 'header'=>$model->getAttributeLabel("url"),
             ),
             array(

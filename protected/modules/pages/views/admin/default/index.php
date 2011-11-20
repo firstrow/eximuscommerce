@@ -32,7 +32,11 @@
                 'type'=>'raw',
                 'value'=>'CHtml::link($data->title, array("update", "id"=>$data->id))',
             ),
-            'url',
+            array(
+                'name'=>'url',
+                'type'=>'raw',
+                'value'=>'CHtml::link($data->url, $data->getViewUrl(), array("target"=>"_blank"))',
+            ),
             array(
                 'name'=>'category_id',
                 'type'=>'raw',

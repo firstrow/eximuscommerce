@@ -9,9 +9,13 @@
     );
 ?>
 
-<?php foreach ($pages as $page): ?>
-	<?php echo $page->title ?><br/>
-<?php endforeach ?>
+<?php if (sizeof($pages) > 0): ?>
+	<?php foreach ($pages as $page): ?>
+		<?php echo $page->title ?><br/>
+	<?php endforeach ?>
+<?php else: ?>
+	В категории нет страниц.
+<?php endif ?>
 
 <?php $this->widget('CLinkPager', array(
     'pages' => $pagination,

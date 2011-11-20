@@ -224,4 +224,13 @@ class Page extends BaseModel
         return parent::beforeSave();
     }
 
+    /**
+     * Get url to view object on front
+     * @return string
+     */
+    public function getViewUrl()
+    {
+        return Yii::app()->createUrl('pages/pages/view', array('url'=>$this->url));
+    }
+
 }
