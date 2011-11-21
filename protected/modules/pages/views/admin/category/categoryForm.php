@@ -1,7 +1,6 @@
 <?php
 
 /*** Create/update page form ***/
-Yii::import('zii.widgets.jui.CJuiDatePicker');
 
 return array(
 	'id'=>'pageUpdateForm',
@@ -9,23 +8,23 @@ return array(
 	'elements'=>array(
 		'content'=>array(
 			'type'=>'form',
-			'title'=>'Содержимое',
+			'title'=>'Параметры',
 			'elements'=>array(
-				'title'=>array(
+				'name'=>array(
 		            'type'=>'text',
 		        ),
 				'url'=>array(
 		            'type'=>'text',
 		        ),
-				'category_id'=>array(
+				'parent_id'=>array(
 		            'type'=>'dropdownlist',
 		            'items'=>PageCategory::keyValueList(),
 		            'empty'=>'---',
+		            'options'=>array(
+		            	$this->model->id=>array('disabled'=>true),
+			        )
 		        ),
-		        'short_description'=>array(
-		            'type'=>'textarea',
-		        ),
-		        'full_description'=>array(
+				'description'=>array(
 		            'type'=>'textarea',
 		        ),
 			),
@@ -45,24 +44,17 @@ return array(
 		        ),
 			),
 		),
-		'additional'=>array(
+		'design'=>array(
 			'type'=>'form',
-			'title'=>'Дополнительно',
+			'title'=>'Внешний вид',
 			'elements'=>array(
-		        'status'=>array(
-		        	'type'=>'dropdownlist',
-		        	'items'=>Page::statuses()
-		        ),
-				'publish_date'=>array(
-                    'type'=>'CJuiDatePicker',
-                    'options'=>array(
-                        'dateFormat'=>'yy-mm-dd '.date('H:i:s'),
-                    ),
-                ),
-                'layout'=>array(
+				'page_size'=>array(
 		            'type'=>'text',
 		        ),
-		        'view'=>array(
+				'layout'=>array(
+		            'type'=>'text',
+		        ),
+				'view'=>array(
 		            'type'=>'text',
 		        ),
 			),

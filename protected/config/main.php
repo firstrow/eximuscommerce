@@ -8,6 +8,7 @@ return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Shop',
     'language'=>'ru',
+    //'theme'=>'development',
     // preloading 'log' component
     'preload'=>array('log'),
 
@@ -29,7 +30,7 @@ return array(
             'class'=>'system.gii.GiiModule',
             'password'=>'123',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters'=>array('127.0.0.12','::1'),
+            //'ipFilters'=>array('127.0.0.5','::1'),
         ),
         'admin'=>array(),
         'rights'=>array(

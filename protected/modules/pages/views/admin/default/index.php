@@ -26,13 +26,26 @@
         'filter'=>$model,
         //'ajaxUpdate'=>false,
         'columns'=>array(
+            array(
+                'class'=>'CCheckBoxColumn',
+            ),
             'id',
             array(
                 'name'=>'title',
                 'type'=>'raw',
                 'value'=>'CHtml::link($data->title, array("update", "id"=>$data->id))',
             ),
-            'url',
+            array(
+                'name'=>'url',
+                'type'=>'raw',
+                'value'=>'CHtml::link($data->url, $data->getViewUrl(), array("target"=>"_blank"))',
+            ),
+            array(
+                'name'=>'category_id',
+                'type'=>'raw',
+                'value'=>'$data->category ? $data->category->getUpdateLink(): "Нет"',
+                'filter'=>PageCategory::keyValueList()
+            ),
             array(
                 'name'=>'user_id',
                 'type'=>'raw',

@@ -5,10 +5,7 @@ TODO:
 	- Create initial "Pages migration" with table sctructure and indexes.
 	- Create "hooks/events" system.
 	- Search and get done all "TODO" in source files.
-	- Fix buttons in opera browser.
-	- SGridView display filter button only when "$filterMenu" is enabled.
 	- Fix css3button to not hover on jquery buttons in dialog.
-	- Remove gridview filter button in modules.
 
 	Done:
 	+ Finish job with SGridView filet button.
@@ -18,3 +15,6 @@ TODO:
 	+ Add to SGridView "save filter" link.
 	+ Fix SGridView th gradient style to respect not only -moz* browsers.
 	+ Fix SGridView tr left and right rounded corners in firefox and opera.
+	+ Remove gridview filter button in modules.
+	+ SGridView display filter button only when "$filterMenu" is enabled.
+	+ Fix buttons in opera browser.

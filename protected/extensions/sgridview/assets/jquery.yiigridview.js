@@ -50,9 +50,9 @@
 
 			$.fn.yiiGridView.selectCheckedRows(id);
 
-			if(settings.selectableRows > 0) {
+			if(settings.selectableRows > 0) {	
 				$('#'+id+' .'+settings.tableClass+' > tbody > tr').die('click').live('click',function(e){
-					if('checkbox'!=e.target.type){
+					if('checkbox'!=e.target.type && e.target == '[object HTMLTableCellElement]'){
 						if(settings.selectableRows == 1)
 							$(this).siblings().removeClass('selected');
 

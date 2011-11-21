@@ -43,9 +43,14 @@ class STabbedForm extends CForm {
 			}
 		}
 
-		$result .= $this->owner->widget('zii.widgets.jui.CJuiTabs', array(
+		// $result .= $this->owner->widget('zii.widgets.jui.CJuiTabs', array(
+		// 	'tabs'=>$this->tabs,
+		// ), true);
+		
+		$result .= $this->owner->widget('ext.sidebartabs.SAdminSidebarTabs', array(
 			'tabs'=>$this->tabs,
 		), true);	
+			
 		$result .= $this->renderEnd();
 		
 		return $result; 

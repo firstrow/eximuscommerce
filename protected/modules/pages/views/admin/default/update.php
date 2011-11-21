@@ -5,6 +5,7 @@
 
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
         'form'=>$form,
+        'deleteAction'=>$this->createUrl('/pages/admin/default/delete', array('id'=>$model->id))
     ));
 
     $title = ($model->isNewRecord) ? Yii::t('PagesModule.admin', 'Создание страницы') : 
@@ -19,7 +20,8 @@
     $this->pageHeader = $title;
 ?>
 
-<div class="form wide">
+<!-- Use padding-all class with SidebarAdminTabs -->
+<div class="form wide padding-all">
     <?php echo $form->asTabs(); ?>
 </div>
 

@@ -1,0 +1,22 @@
+
+.SidebarTabsControl {
+	margin-top:25px;
+}
+
+.SidebarTabsControl li {
+	padding:2px 2px 2px 2px;
+}
+
+.SidebarTabsControl li:hover {
+	background-color:;
+}
+
+.SidebarTabsControl li a {
+	padding-left:15px;
+}
+.SidebarTabsControl li a.active {
+	color:#444;
+	background-image:url('arrow.png');
+	padding-left:15px;
+	background-repeat:no-repeat;
+}

@@ -36,7 +36,8 @@ class SAdminTopButtons extends CWidget {
      * Default links templates. 
      * @var array
      */
-    public $template = array('history_back','save','saveCreate','saveEdit','delete');
+    //public $template = array('history_back','save','saveCreate','saveEdit','delete');
+    public $template = array('history_back','save','dropDown','delete');
     
     /**
      * Default links
@@ -93,7 +94,7 @@ class SAdminTopButtons extends CWidget {
             $this->formId = $this->form->id;
         
         $this->setDefault();        
-        $this->registerScript();
+        $this->registerScripts();
         
         $buttons = CMap::mergeArray($this->default, $this->elements);
         
@@ -195,10 +196,24 @@ class SAdminTopButtons extends CWidget {
                 'title'=>Yii::t('AdminModule.admin', 'Удалить'),
                 'classes'=>array('negative'),
                 'htmlOptions'=>array(
-                    'onClick'=>$this->renderSubmitFormJs(),
                     'title'=>Yii::t('AdminModule.admin', 'Удалить'),
+                    'confirm'=>'Удалить?',
+                    'csrf'=>true,
+                    'ajax'=>array(
+                        'url'=>$this->deleteAction,
+                        'type'=>'POST',
+                        'data'=>array(
+                            Yii::app()->request->csrfTokenName=>Yii::app()->request->csrfToken,
+                        ),
+                        'success'=>"function(){ window.location = '$this->listAction' }"
+                    ),
                 ),
                 'icon'=>'cross',
+            ),
+            'dropDown'=>array(
+                'link'=>'#',
+                'title'=>'Ещё',
+                'icon'=>'downarrow',
             ),
         );
     }
@@ -215,18 +230,37 @@ class SAdminTopButtons extends CWidget {
             return '<span class="'.$item['icon'].' icon"></span>';         
     }
    
-    public function registerScript()
+    public function registerScripts()
     {
         $cs = Yii::app()->getClientScript();
         $cs->registerScript('topNavigationSubitForm', "
             function submitFormById(form_id, el)
             {
                 var submitForm = $('#'+form_id);
-                submitForm.append('<input type=hidden name=REDIRECT value=\''+$(el).attr('href')+'\'>');
+                submitForm.append('<input type=hidden name=\'REDIRECT\' value=\''+$(el).attr('href')+'\'>');
                 submitForm.submit();
                 return false;
             }
+
+            // Dropdrop menu        
+            $('#dropDown_topLink').menu({ 
+                content: $('#dropDownButtonMenu').html(), 
+                showSpeed: 400 
+            });
+
         ", CClientScript::POS_END);
+
+        echo strtr('<div class="hidden" id="dropDownButtonMenu">
+                <ul>
+                    <li><a href="{createAction}" onClick="{onClick}">Сохранить и создать</a></li>
+                    <li><a href="{updateAction}" onClick="{onClick}">Сохранить и редактировать</a></li>
+                </ul>
+            </div>
+        ', array(
+            '{createAction}'=>$this->createAction,
+            '{updateAction}'=>$this->updateAction,
+            '{onClick}'=>$this->renderSubmitFormJs()
+        ));
     }
     
     public function renderSubmitFormJs()

@@ -124,7 +124,6 @@ class User extends BaseModel
 	 */
 	public function getUpdateLink()
 	{
-		// return CHtml::link($this->username,'/admin/users/default/update?id='.$this->id);
 		return CHtml::link($this->username, array('/users/admin/default/update', 'id'=>$this->id));
 	}
 }
