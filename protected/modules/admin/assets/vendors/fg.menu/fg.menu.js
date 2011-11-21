@@ -237,7 +237,11 @@ function Menu(caller, options){
 			);
 		};	
 		
-		menu.setPosition(container, caller, options);
+		$(caller).click(function(){
+			setPosition(container, caller, options);
+		});
+
+		setPosition(container, caller, options);
 		menu.menuExists = true;
 	};
 	
@@ -459,7 +463,7 @@ Menu.prototype.drilldown = function(container, options) {
 		- detectH/V: detect the viewport horizontally / vertically
 		- linkToFront: copy the menu link and place it on top of the menu (visual effect to make it look like it overlaps the object) */
 
-Menu.prototype.setPosition = function(widget, caller, options) { 
+function setPosition(widget, caller, options) { 
 	var el = widget;
 	var referrer = caller;
 	var dims = {
@@ -470,11 +474,21 @@ Menu.prototype.setPosition = function(widget, caller, options) {
 	};	
 	var options = options;
 	var xVal, yVal;
-	
-	var helper = $('<div class="positionHelper"></div>');
-	helper.css({ position: 'absolute', left: dims.refX, top: dims.refY, width: dims.refW, height: dims.refH });
-	el.wrap(helper);
-	
+
+	var helper = $(el).parent(".positionHelper").html();
+
+	if (!helper)
+	{
+		var helper = $('<div class="positionHelper"></div>');
+		helper.css('z-index', 1000);
+		helper.css({ position: 'absolute', left: dims.refX, top: dims.refY, width: dims.refW, height: dims.refH });
+		el.wrap(helper);
+	}else{
+		helper = $(el).parent(".positionHelper");
+		helper.css('z-index', 1000);
+		helper.css({ position: 'absolute', left: dims.refX, top: dims.refY, width: dims.refW, height: dims.refH });
+	}
+
 	// get X pos
 	switch(options.positionOpts.posX) {
 		case 'left': 	xVal = 0; 
@@ -497,7 +511,7 @@ Menu.prototype.setPosition = function(widget, caller, options) {
 	
 	// add the offsets (zero by default)
 	xVal += options.positionOpts.offsetX;
-	yVal += options.positionOpts.offsetY;
+	//yVal += options.positionOpts.offsetY;
 	
 	// position the object vertically
 	if (options.positionOpts.directionV == 'up') {
@@ -539,7 +553,7 @@ Menu.prototype.setPosition = function(widget, caller, options) {
 			height: referrer.height()
 		}).insertAfter(el);
 	};
-};
+}
 
 
 /* Utilities to sort and find viewport dimensions */

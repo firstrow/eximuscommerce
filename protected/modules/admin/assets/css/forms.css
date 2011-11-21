@@ -47,8 +47,8 @@ div.form select
 div.form select
 {
     display: inline-block;
-    width: 250px;
-    padding: 4px;
+    width: 260px;
+    padding: 2px;
     font-size: 13px;
     line-height: 18px;
     border: 1px solid #ccc;

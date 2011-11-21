@@ -247,7 +247,6 @@ class SAdminTopButtons extends CWidget {
                 content: $('#dropDownButtonMenu').html(), 
                 showSpeed: 400 
             });
-
         ", CClientScript::POS_END);
 
         echo strtr('<div class="hidden" id="dropDownButtonMenu">
