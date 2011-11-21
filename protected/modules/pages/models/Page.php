@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'Pages':
  * @property integer $id
  * @property integer $user_id
+ * @property integer $category_id
  * @property string $title
  * @property string $url
  * @property string $short_description
@@ -17,6 +18,8 @@
  * @property string $updated
  * @property string $publish_date
  * @property string $status
+ * @property string $layout
+ * @property string $view
  * 
  * TODO: Set DB indexes
  */
@@ -47,6 +50,13 @@ class Page extends BaseModel
         return 'Page';
     }
 
+    public function defaultScope()
+    {
+        return array(
+            'order'=>'publish_date DESC',
+        );
+    }
+
     public function scopes()
     {
         return array(
@@ -54,7 +64,7 @@ class Page extends BaseModel
                 'condition'=>'publish_date <= :date AND status = :status',
                 'params'=>array(
                     ':date'=>date('Y-m-d H:i:s'),
-                    ':status'=>$this->publishStatus,
+                    ':status'=>$this->publishStatus
                 ),
             ),
         );
@@ -76,19 +86,32 @@ class Page extends BaseModel
     }
 
     /**
+     * Filter pages by category.
+     * Scope.
+     * @return Page
+     */
+    public function filterByCategory($model)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'category_id=:category',
+            'params'=>array(':category'=>$model->id)
+        ));
+
+        return $this;
+    }
+
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('short_description, full_description', 'type'),
+            array('short_description, full_description, category_id', 'type'),
             array('status', 'in', 'range'=>array_keys(self::statuses())),
-            array('title, url, status, publish_date', 'required'),
+            array('title, status, publish_date', 'required'),
             array('url', 'LocalUrlValidator'),
             array('publish_date', 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'),
-            array('title, url, meta_title, meta_description, meta_keywords, publish_date', 'length', 'max'=>255),
+            array('title, url, meta_title, meta_description, meta_keywords, publish_date, layout, view', 'length', 'max'=>255),
             // The following rule is used by search().
             array('id, user_id, title, url, short_description, full_description, meta_title, meta_description, meta_keywords, created, updated, publish_date', 'safe', 'on'=>'search'),
         );
@@ -100,7 +123,8 @@ class Page extends BaseModel
     public function relations()
     {
         return array(
-            'author'=>array(self::BELONGS_TO, 'User', 'user_id')
+            'author'=>array(self::BELONGS_TO, 'User', 'user_id'),
+            'category'=>array(self::BELONGS_TO, 'PageCategory', 'category_id')
         );
     }
 
@@ -112,6 +136,7 @@ class Page extends BaseModel
         return array(
             'id' => 'ID',
             'user_id' => 'Автор',
+            'category_id' => 'Категория',
             'title' => 'Заглавление',
             'url' => 'URL',
             'short_description' => 'Краткое описание',
@@ -123,6 +148,8 @@ class Page extends BaseModel
             'updated' => 'Дата обновления',
             'publish_date' => 'Дата публикации',
             'status' => 'Статус',
+            'layout' => 'Макет',
+            'view' => 'Шаблон',
         );
     }
 
@@ -152,6 +179,7 @@ class Page extends BaseModel
 
         $criteria->with = array('author');
         $criteria->compare('t.id',$this->id);
+        $criteria->compare('t.category_id',$this->category_id);
         $criteria->compare('author.username',$this->user_id,true);
         $criteria->compare('t.title',$this->title,true);
         $criteria->compare('t.url',$this->url,true);
@@ -178,6 +206,31 @@ class Page extends BaseModel
         if (!Yii::app()->user->isGuest) 
             $this->user_id = Yii::app()->user->id;
 
+        if (empty($this->url))
+        {
+            // Create slug
+            Yii::import('ext.SlugHelper.SlugHelper');
+            $this->url = SlugHelper::run($this->title);
+        }
+
+        // Check if url aviable
+        $test = Page::model()
+            ->withUrl($this->url)
+            ->count('id!=:id', array(':id'=>$this->id));
+        
+        if ($test > 0)
+            $this->url .= '-'.$this->id;
+
         return parent::beforeSave();
     }
+
+    /**
+     * Get url to view object on front
+     * @return string
+     */
+    public function getViewUrl()
+    {
+        return Yii::app()->createUrl('pages/pages/view', array('url'=>$this->url));
+    }
+
 }
