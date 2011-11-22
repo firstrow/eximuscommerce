@@ -1,6 +1,9 @@
 <?php
 
-	/** Display pages list **/
+	/** 
+     *Display category tree 
+     **/
+
 	$this->pageHeader = Yii::t('PagesModule.admin', 'Категории');
 
     $this->breadcrumbs = array(
@@ -22,6 +25,7 @@
     $this->widget('ext.sgridview.SGridView', array(
         'dataProvider'=>$tree,
         'id'=>'pageCategoryGrid',
+        //'enablePagination'=>false,
         'columns'=>array(
             array(
                 'class'=>'CCheckBoxColumn',

@@ -4,7 +4,7 @@ class CategoryController extends SAdminController {
 	
 	
 	/**
-	 * Display pages list.
+	 * Display category tree.
 	 */	
 	public function actionIndex()
 	{
@@ -14,7 +14,11 @@ class CategoryController extends SAdminController {
 			$model->attributes = $_GET['PageCategory'];
 
 		$tree = new PageCategoryTree(PageCategory::model()->findAll());
-		$tree = new CArrayDataProvider($tree->buildTree());
+		$tree = new CArrayDataProvider($tree->buildTree(), array(
+			'pagination'=>array(
+				'pageSize'=>100,
+			),
+		));
 
 		$this->render('index', array(
 			'model'=>$model,
@@ -28,7 +32,7 @@ class CategoryController extends SAdminController {
 	}
 
 	/**
-	 * Create or update new page
+	 * Create or update new category
 	 * @param boolean $new
 	 */
 	public function actionUpdate($new = false)
@@ -74,7 +78,7 @@ class CategoryController extends SAdminController {
 	}
 
     /**
-     * Delete page by Pk
+     * Delete category by Pk
      */
     public function actionDelete()
     {
