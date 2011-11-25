@@ -59,17 +59,24 @@ class SUrlManager extends CUrlManager {
      * Scan each module dir and include routes.php
      * Add module urls at the begining of $config['urlManager']['rules']
      *
-	 * TODO: Cache result and use only installed modules.
+	 * TODO: Cache found routes to php file in runtime dir.
      * @access protected
      */
     protected function _loadModuleUrls()
     {
-        $ruleFiles = glob(Yii::getPathOfAlias('application.modules.*') . '/*/config/routes.php');
+        $moduleDirs = array();
+        $modules = SystemModules::getEnabled();
 
-        foreach ($ruleFiles as $urlFile)
-        {
-            $this->rules = array_merge(require($urlFile), $this->rules); 
-        }
-    }	
+        foreach($modules as $m)
+            array_push($moduleDirs, $m->name);
+
+        $pattern = strtr(':fullPath/{:enabledModules}/config/routes.php', array(
+            ':fullPath'=>Yii::getPathOfAlias('application.modules'),
+            ':enabledModules'=>implode(',', $moduleDirs),
+        ));
+
+        foreach (glob($pattern, GLOB_BRACE) as $route)
+            $this->rules = array_merge(require($route), $this->rules);
+    }
 
 }
