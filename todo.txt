@@ -6,6 +6,13 @@ TODO:
 	- Create "hooks/events" system.
 	- Search and get done all "TODO" in source files.
 	- Fix css3button to not hover on jquery buttons in dialog.
+	- Translate ext.SGridView
+	- Translate ext.Sidebartabs
+	- Translate components.*
+	- Translate modules.admin
+	- Translate modules.core
+	- Translate modules.pages
+	- Translate modules.users
 
 	Done:
 	+ Finish job with SGridView filet button.
