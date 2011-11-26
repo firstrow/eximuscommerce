@@ -152,14 +152,14 @@ class SGridView extends CGridView {
 					'{gridId}'=>$this->getId(),
 					'{filterId}'=>$filter->id,
 					'{delete}'=>CHtml::link(
-					    CHtml::image($this->baseScriptUrl.'/cross.png', 'Удалить'),
+					    CHtml::image($this->baseScriptUrl.'/cross.png', Yii::t('SGridView.core', 'Удалить')),
 					    array(
 						     '/admin/core/gridView/deleteFilter',
 						     'id'=>$filter->id,
 						     'redirect'=>base64_encode(Yii::app()->request->url),
 						),
 					    array(
-						    'confirm'=>'Вы действительно хотите удалить этот фильтр?',
+						    'confirm'=>Yii::t('SGridView.core','Вы действительно хотите удалить этот фильтр?'),
 						    'id'=>'fdLink'.$filter->id
 						)
 					)
@@ -171,12 +171,12 @@ class SGridView extends CGridView {
 			<div class="gridViewOptions">&nbsp;</div>
 			<div class="gridViewOptionsMenu">
 				<ul>
-					<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">Очистить фильтр</a></li>
+					<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">'.Yii::t('SGridView.core','Очистить фильтр').'</a></li>
 					<li>{saveLink}</li>
 					'.$filtersHtml.'
 				</ul>
 			</div>', array(
-				'{saveLink}'=>$this->_checkAttributes() ? '<a href="#" onClick="$(\'#'.$this->getId().'saveFilterDialog\').dialog(\'open\');">Сохранить фильтр</a>':'<a class="nonActive">Сохранить фильтр</a>',
+				'{saveLink}'=>$this->_checkAttributes() ? '<a href="#" onClick="$(\'#'.$this->getId().'saveFilterDialog\').dialog(\'open\');">'.Yii::t('SGridView.core','Сохранить фильтр').'</a>':'<a class="nonActive">'.Yii::t('SGridView.core','Сохранить фильтр').'</a>',
 			));
 		echo CHtml::openTag('div', array(
 			'id'=>$this->getId().'saveFilterDialog',
@@ -185,21 +185,21 @@ class SGridView extends CGridView {
 			<div class="form">
 				<div class="row">
 					<input type="text" id="'.$this->getId().'FilterBox" maxlength="255">
-					<div class="hint">Enter field name and press enter</div>
+					<div class="hint">'.Yii::t('SGridView.core','Укажите имя фильтра').'</div>
 				</div>
 			</div>
 		';
 		echo CHtml::closeTag('div');
 		echo Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
-			'title':'Сохранить фильтр',
+			'title':'".Yii::t('SGridView.core','Сохранить фильтр')."',
 			'modal':true,
 			'resizable':false,
 			'draggable':false,
 			'autoOpen':false,
 			'YII_CSRF_TOKEN': '".Yii::app()->request->csrfToken."',
 			'buttons':{
-				'Сохранить':function(){saveSGridViewFilter('".$this->getId()."')},
-				'Отмена':function(){\$(this).dialog('close');}
+				'".Yii::t('SGridView.core','Сохранить')."':function(){saveSGridViewFilter('".$this->getId()."')},
+				'".Yii::t('SGridView.core','Отмена')."':function(){\$(this).dialog('close');}
 			}
 		});");
 	}
