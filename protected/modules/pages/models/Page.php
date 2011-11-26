@@ -135,31 +135,31 @@ class Page extends BaseModel
     {
         return array(
             'id' => 'ID',
-            'user_id' => 'Автор',
-            'category_id' => 'Категория',
-            'title' => 'Заглавление',
-            'url' => 'URL',
-            'short_description' => 'Краткое описание',
-            'full_description' => 'Содержание',
-            'meta_title' => 'Title',
-            'meta_description' => 'Description',
-            'meta_keywords' => 'Keywords',
-            'created' => 'Дата создания',
-            'updated' => 'Дата обновления',
-            'publish_date' => 'Дата публикации',
-            'status' => 'Статус',
-            'layout' => 'Макет',
-            'view' => 'Шаблон',
+            'user_id' => Yii::t('PagesModule.core', 'Автор'),
+            'category_id' => Yii::t('PagesModule.core', 'Категория'),
+            'title' => Yii::t('PagesModule.core', 'Заглавление'),
+            'url' => Yii::t('PagesModule.core', 'URL'),
+            'short_description' => Yii::t('PagesModule.core', 'Краткое описание'),
+            'full_description' => Yii::t('PagesModule.core', 'Содержание'),
+            'meta_title' => Yii::t('PagesModule.core', 'Meta Title'),
+            'meta_description' => Yii::t('PagesModule.core', 'Meta Description'),
+            'meta_keywords' => Yii::t('PagesModule.core', 'Meta Keywords'),
+            'created' => Yii::t('PagesModule.core', 'Дата создания'),
+            'updated' => Yii::t('PagesModule.core', 'Дата обновления'),
+            'publish_date' => Yii::t('PagesModule.core', 'Дата публикации'),
+            'status' => Yii::t('PagesModule.core', 'Статус'),
+            'layout' => Yii::t('PagesModule.core', 'Макет'),
+            'view' => Yii::t('PagesModule.core', 'Шаблон'),
         );
     }
 
     public function statuses()
     {
         return array(
-            'published'=>'Опубликован',
-            'waiting'=>'Ждет одобрения',
-            'draft'=>'Черновик',
-            'archive'=>'Архив',
+            'published'=>Yii::t('PagesModule.core', 'Опубликован'),
+            'waiting'=>Yii::t('PagesModule.core', 'Ждет одобрения'),
+            'draft'=>Yii::t('PagesModule.core', 'Черновик'),
+            'archive'=>Yii::t('PagesModule.core', 'Архив'),
         );
     }
 

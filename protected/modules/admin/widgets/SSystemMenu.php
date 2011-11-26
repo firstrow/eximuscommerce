@@ -9,10 +9,10 @@ class SSystemMenu extends CWidget {
     {
         $items = array(
             'users'=>array(
-                'label'=>'Система',
+                'label'=>Yii::t('AdminModule.admin', 'Система'),
             ),
             'cms'=>array(
-                'label'=>'Сайт',
+                'label'=>Yii::t('AdminModule.admin', 'Сайт'),
             ),
         );
 

@@ -1,11 +1,11 @@
 <?php
     // Display list of users
 
-    $this->pageHeader = Yii::t('UsersModule.admin', 'Список пользователей');
+    $this->pageHeader = Yii::t('UsersModule.core', 'Список пользователей');
 
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('UsersModule.admin', 'Пользователи'),
+        Yii::t('UsersModule.core', 'Пользователи'),
     );
       
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
@@ -13,7 +13,7 @@
         'elements'=>array(
             'new'=>array(
                 'link'=>$this->createUrl('create'),
-                'title'=>Yii::t('UsersModule.admin', 'Создать пользователя'),
+                'title'=>Yii::t('UsersModule.core', 'Создать пользователя'),
                 'icon'=>'user',
             ),
         ),

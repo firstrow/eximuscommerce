@@ -80,8 +80,8 @@ class SystemModules extends BaseModel
     {
         return array(
             'id' => 'ID',
-            'name' => 'Название',
-            'enabled' => 'Активен',
+            'name' => Yii::t('CoreModule.core', 'Название'),
+            'enabled' => Yii::t('CoreModule.core', 'Активен'),
         );
     }
 
@@ -168,10 +168,10 @@ class SystemModules extends BaseModel
         $model->enabled = true;
 
         try {
-            Yii::trace('Модуль успешно установлен.'); 
+            Yii::trace('Module installed'); 
             $model->save();
         } catch(Exception $e) {
-            Yii::trace('Ошибка установки модуля.');
+            Yii::trace('Error installing module');
             return false;
         }
 

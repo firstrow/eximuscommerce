@@ -6,13 +6,13 @@
         'deleteAction'=>$this->createUrl('/pages/admin/category/delete', array('id'=>$model->id))
     ));
 
-    $title = ($model->isNewRecord) ? Yii::t('PagesModule.admin', 'Создание категории') : 
-        Yii::t('PagesModule.admin', 'Редактирование категории');
+    $title = ($model->isNewRecord) ? Yii::t('PagesModule.core', 'Создание категории') : 
+        Yii::t('PagesModule.core', 'Редактирование категории');
     
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('PagesModule.admin', 'Категории')=>$this->createUrl('index'),
-        ($model->isNewRecord) ? Yii::t('PagesModule.admin', 'Создание категории') : CHtml::encode($model->name),
+        Yii::t('PagesModule.core', 'Категории')=>$this->createUrl('index'),
+        ($model->isNewRecord) ? Yii::t('PagesModule.core', 'Создание категории') : CHtml::encode($model->name),
     );
     
     $this->pageHeader = $title;

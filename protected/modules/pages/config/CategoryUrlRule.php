@@ -2,6 +2,10 @@
 
 Yii::import('application.modules.pages.models.PageCategory');
 
+/**
+ * Route for page categories.
+ * @package modules.core
+ */
 class CategoryUrlRule extends CBaseUrlRule
 {
     public $connectionID = 'db';

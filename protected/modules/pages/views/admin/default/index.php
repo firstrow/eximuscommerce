@@ -1,11 +1,11 @@
 <?php
 
 	/** Display pages list **/
-	$this->pageHeader = Yii::t('PagesModule.admin', 'Страницы');
+	$this->pageHeader = Yii::t('PagesModule.core', 'Страницы');
 
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('PagesModule.admin', 'Страницы'),
+        Yii::t('PagesModule.core', 'Страницы'),
     );
 
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
@@ -13,7 +13,7 @@
         'elements'=>array(
             'create'=>array(
                 'link'=>$this->createUrl('create'),
-                'title'=>'Создать страницу',
+                'title'=>Yii::t('PagesModule.core', 'Создать страницу'),
                 'icon'=>'plus',
             ),
         ),
@@ -43,7 +43,9 @@
             array(
                 'name'=>'category_id',
                 'type'=>'raw',
-                'value'=>'$data->category ? $data->category->getUpdateLink(): "Нет"',
+                'value'=>strtr('$data->category ? $data->category->getUpdateLink(): "{no}"', array(
+                    '{no}'=>Yii::t('PagesModule.core', 'Нет')
+                )),
                 'filter'=>PageCategory::keyValueList()
             ),
             array(

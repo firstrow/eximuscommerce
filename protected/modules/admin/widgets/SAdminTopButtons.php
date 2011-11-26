@@ -197,7 +197,7 @@ class SAdminTopButtons extends CWidget {
                 'classes'=>array('negative'),
                 'htmlOptions'=>array(
                     'title'=>Yii::t('AdminModule.admin', 'Удалить'),
-                    'confirm'=>'Удалить?',
+                    'confirm'=>Yii::t('AdminModule.admin', 'Удалить?'),
                     'csrf'=>true,
                     'ajax'=>array(
                         'url'=>$this->deleteAction,
@@ -212,7 +212,7 @@ class SAdminTopButtons extends CWidget {
             ),
             'dropDown'=>array(
                 'link'=>'#',
-                'title'=>'Ещё',
+                'title'=>Yii::t('AdminModule.admin', 'Ещё'),
                 'icon'=>'downarrow',
             ),
         );
@@ -251,14 +251,16 @@ class SAdminTopButtons extends CWidget {
 
         echo strtr('<div class="hidden" id="dropDownButtonMenu">
                 <ul>
-                    <li><a href="{createAction}" onClick="{onClick}">Сохранить и создать</a></li>
-                    <li><a href="{updateAction}" onClick="{onClick}">Сохранить и редактировать</a></li>
+                    <li><a href="{createAction}" onClick="{onClick}">{save&create}</a></li>
+                    <li><a href="{updateAction}" onClick="{onClick}">{save&edit}</a></li>
                 </ul>
             </div>
         ', array(
             '{createAction}'=>$this->createAction,
             '{updateAction}'=>$this->updateAction,
-            '{onClick}'=>$this->renderSubmitFormJs()
+            '{onClick}'=>$this->renderSubmitFormJs(),
+            '{save&create}'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
+            '{save&edit}'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать')
         ));
     }
     

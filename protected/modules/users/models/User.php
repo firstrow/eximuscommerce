@@ -69,14 +69,14 @@ class User extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id'           => Yii::t('UsersModule.models', 'ID'),
-			'username'     => Yii::t('UsersModule.models', 'Логин'),
-			'password'     => Yii::t('UsersModule.models', 'Пароль'),
-			'email'        => Yii::t('UsersModule.models', 'Email'),
-			'created_at'   => Yii::t('UsersModule.models', 'Дата создания'),
-			'last_login'   => Yii::t('UsersModule.models', 'Последний вход'),
-			'login_ip'     => Yii::t('UsersModule.models', 'IP Адрес'),
-			'new_password' => Yii::t('UsersModule.models', 'Новый пароль'),
+			'id'           => Yii::t('UsersModule.core', 'ID'),
+			'username'     => Yii::t('UsersModule.core', 'Логин'),
+			'password'     => Yii::t('UsersModule.core', 'Пароль'),
+			'email'        => Yii::t('UsersModule.core', 'Email'),
+			'created_at'   => Yii::t('UsersModule.core', 'Дата создания'),
+			'last_login'   => Yii::t('UsersModule.core', 'Последний вход'),
+			'login_ip'     => Yii::t('UsersModule.core', 'IP Адрес'),
+			'new_password' => Yii::t('UsersModule.core', 'Новый пароль'),
 		);
 	}
 

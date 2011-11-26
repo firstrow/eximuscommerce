@@ -8,7 +8,7 @@ return array(
 	'elements'=>array(
 		'content'=>array(
 			'type'=>'form',
-			'title'=>'Параметры',
+			'title'=>Yii::t('PagesModule.core', 'Параметры'),
 			'elements'=>array(
 				'name'=>array(
 		            'type'=>'text',
@@ -31,7 +31,7 @@ return array(
 		),
 		'seo'=>array(
 			'type'=>'form',
-			'title'=>'Мета данные',
+			'title'=>Yii::t('PagesModule.core', 'Мета данные'),
 			'elements'=>array(
 				'meta_title'=>array(
 		            'type'=>'text',
@@ -46,7 +46,7 @@ return array(
 		),
 		'design'=>array(
 			'type'=>'form',
-			'title'=>'Внешний вид',
+			'title'=>Yii::t('PagesModule.core', 'Внешний вид'),
 			'elements'=>array(
 				'page_size'=>array(
 		            'type'=>'text',

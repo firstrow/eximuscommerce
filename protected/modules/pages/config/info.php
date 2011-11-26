@@ -1,11 +1,14 @@
 <?php
+
+Yii::import('application.modules.pages.PagesModule')
+
 /**
  * Module info
  */ 
 return array(
-	'name'=>'Страницы',
+	'name'=>Yii::t('PagesModule.core', 'Страницы'),
 	'author'=>'firstrow@gmail.com',
 	'version'=>'0.1',
-	'description'=>'Управление страницами сайта.',
+	'description'=>Yii::t('PagesModule.core', 'Управление страницами сайта.'),
 	'url'=>'', # Url to module home page.
 );

@@ -32,9 +32,9 @@ class SystemModulesController extends SAdminController
         {
             $result = SystemModules::install($name);
             if ($result)
-                $this->setFlashMessage('Модуль успешно установлен.');
+                $this->setFlashMessage(Yii::t('CoreModule.core', 'Модуль успешно установлен.'));
             else
-                $this->setFlashMessage('Возникла ошибка при установке модуля.');
+                $this->setFlashMessage(Yii::t('CoreModule.core', 'Возникла ошибка при установке модуля.'));
 
             $this->redirect('index');
         }

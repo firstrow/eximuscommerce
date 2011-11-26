@@ -51,7 +51,7 @@ class DefaultController extends SAdminController
             if($model->validate())
             {
                 $model->save();
-                $this->setFlashMessage(Yii::t('UsersModule.admin', 'Изменения успешно сохранены'));
+                $this->setFlashMessage(Yii::t('UsersModule.core', 'Изменения успешно сохранены'));
                 
                 if (isset($_POST['REDIRECT']))
                     $this->smartRedirect($model);

@@ -4,11 +4,11 @@
      *Display category tree 
      **/
 
-	$this->pageHeader = Yii::t('PagesModule.admin', 'Категории');
+	$this->pageHeader = Yii::t('PagesModule.core', 'Категории');
 
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('PagesModule.admin', 'Категории'),
+        Yii::t('PagesModule.core', 'Категории'),
     );
 
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
@@ -16,7 +16,7 @@
         'elements'=>array(
             'create'=>array(
                 'link'=>$this->createUrl('create'),
-                'title'=>'Создать категорию',
+                'title'=>Yii::t('PagesModule.core', 'Создать категорию'),
                 'icon'=>'plus',
             ),
         ),

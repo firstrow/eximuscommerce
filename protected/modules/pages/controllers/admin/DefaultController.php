@@ -54,7 +54,7 @@ class DefaultController extends SAdminController {
 			{
 				$model->save();
 
-                $this->setFlashMessage(Yii::t('PagesModule.admin', 'Изменения успешно сохранены'));
+                $this->setFlashMessage(Yii::t('PagesModule.core', 'Изменения успешно сохранены'));
                 
                 if (isset($_POST['REDIRECT']))
                     $this->smartRedirect($model);

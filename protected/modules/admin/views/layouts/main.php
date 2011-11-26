@@ -69,8 +69,8 @@
                         ?>
                     </div>
                     <div class="yui-u" id="topRightMenu">
-                        <a href="#">Настройки</a>
-                        <a href="/admin/auth/logout">Выход</a>
+                        <a href="#"><?php Yii::t('AdminModule.admin', 'Настройки') ?></a>
+                        <a href="/admin/auth/logout"><?php Yii::t('AdminModule.admin', 'Выход') ?></a>
                     </div>
 		</div>
 	</div> <!-- /hd -->

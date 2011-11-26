@@ -9,7 +9,7 @@ return array(
 	'elements'=>array(
 		'content'=>array(
 			'type'=>'form',
-			'title'=>'Содержимое',
+			'title'=>Yii::t('PagesModule.core', 'Содержимое'),
 			'elements'=>array(
 				'title'=>array(
 		            'type'=>'text',
@@ -32,7 +32,7 @@ return array(
 		),
 		'seo'=>array(
 			'type'=>'form',
-			'title'=>'Мета данные',
+			'title'=>Yii::t('PagesModule.core', 'Мета данные'),
 			'elements'=>array(
 				'meta_title'=>array(
 		            'type'=>'text',
@@ -47,7 +47,7 @@ return array(
 		),
 		'additional'=>array(
 			'type'=>'form',
-			'title'=>'Дополнительно',
+			'title'=>Yii::t('PagesModule.core', 'Дополнительно'),
 			'elements'=>array(
 		        'status'=>array(
 		        	'type'=>'dropdownlist',

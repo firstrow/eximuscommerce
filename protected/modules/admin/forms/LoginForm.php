@@ -24,7 +24,7 @@ class LoginForm extends CFormModel
         'buttons'=>array(
             'login'=>array(
                 'type'=>'submit',
-                'label'=>'Вход',
+                'label'=>Yii::t('AdminModule.admin', 'Вход'),
             ),
         ),
     );
@@ -44,7 +44,7 @@ class LoginForm extends CFormModel
     {
         $this->_identity=new UserIdentity($this->username,$this->password);
         if(!$this->_identity->authenticate())
-            $this->addError('password','Неправильное имя пользователя или пароль.');
+            $this->addError('password',Yii::t('AdminModule.admin', 'Неправильное имя пользователя или пароль.'));
     }
 
     public function getIdentity()

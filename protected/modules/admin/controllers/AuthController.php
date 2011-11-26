@@ -11,7 +11,7 @@ class AuthController extends SAdminController
     public function actionIndex()
     {
         if(!Yii::app()->user->isGuest)
-            throw new CHttpException(405, Yii::t('main', 'Вы уже авторизированы.'));
+            throw new CHttpException(405, Yii::t('AdminModule.admin', 'Вы уже авторизированы.'));
 
         Yii::import('application.modules.admin.forms.LoginForm');
         $model = new LoginForm();
@@ -45,7 +45,7 @@ class AuthController extends SAdminController
     public function actionLogout()
     {
         if(Yii::app()->user->isGuest)
-            throw new CHttpException(405, Yii::t('main', 'Ошибка. Вы еще  неавторизовались.'));
+            throw new CHttpException(405, Yii::t('AdminModule.admin', 'Ошибка. Вы еще  неавторизовались.'));
 
         Yii::app()->user->logout();
         Yii::app()->request->redirect($this->createUrl('/admin'));

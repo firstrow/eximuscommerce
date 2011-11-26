@@ -1,4 +1,7 @@
 <?php
+
+Yii::import('applicatiom.modules.pages.PagesModule');
+
 /**
  * Admin menu items for pages module
  */
@@ -6,12 +9,12 @@ return array(
     'cms'=>array(
         'items'=>array(
             array(
-                'label'=>'Страницы', 
+                'label'=>Yii::t('PagesModule.core', 'Страницы'), 
                 'url'=>array('/admin/pages'), 
                 'position'=>3
             ),
             array(
-                'label'=>'Категории', 
+                'label'=>Yii::t('PagesModule.core', 'Категории'), 
                 'url'=>array('/admin/pages/category'), 
                 'position'=>4
             ),

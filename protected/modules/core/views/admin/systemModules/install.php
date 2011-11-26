@@ -1,12 +1,12 @@
 <?php
 	/*** Display list of modules aviable for installation ***/
 
-	$this->pageHeader = Yii::t('CoreModule.admin', 'Список доступных модулей');
+	$this->pageHeader = Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Список доступных модулей'));
 
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('CoreModule.admin', 'Модули')=>$this->createUrl('index'),
-        Yii::t('CoreModule.admin', 'Установка'),
+        Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Модули'))=>$this->createUrl('index'),
+        Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Установка')),
     );
 
 ?>
@@ -19,13 +19,13 @@
 					<?php echo $info['description'] ?>
 				</p>
 				<p>
-					<?php echo CHtml::link('Установить', $this->createUrl('install', array('name'=>$module))) ?>
+					<?php echo CHtml::link(Yii::t('CoreModule.core', 'Установить'), $this->createUrl('install', array('name'=>$module))) ?>
 				</p>
 
 				<br/>
 			</div>
 		<?php endforeach; ?>
 	<?php else: ?>
-		Нет доступных модулей для установки.
+		<?php Yii::t('CoreModule.core', 'Нет доступных модулей для установки.') ?>
 	<?php endif; ?>
 </div>

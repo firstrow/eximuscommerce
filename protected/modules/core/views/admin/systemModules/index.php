@@ -2,11 +2,11 @@
 
 	/** Display installed modules list **/
 
-	$this->pageHeader = Yii::t('CoreModule.admin', 'Модули');
+	$this->pageHeader = Yii::t('CoreModule.core', 'Модули');
 
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('CoreModule.admin', 'Модули'),
+        Yii::t('CoreModule.core', 'Модули'),
     );
 
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
@@ -14,7 +14,7 @@
         'elements'=>array(
             'new'=>array(
                 'link'=>$this->createUrl('install'),
-                'title'=>'Установить',
+                'title'=>Yii::t('CoreModule.core', 'Установить'),
                 'icon'=>'plus',
             ),
         ),
@@ -34,13 +34,16 @@
             array(
                 'name'=>'description',
                 'value'=>'$data->getInfo()->description',
-                'header'=>'Описание',
+                'header'=>Yii::t('CoreModule.core', 'Описание'),
                 'filter'=>false,
             ),
             array(
             	'name'=>'enabled',
-            	'value'=>'$data->enabled ? "Да":"Нет"',
-            	'filter'=>array(1=>'Да',0=>'Нет'),
+            	'value'=>strtr('$data->enabled ? "{yes}":"{no}"', array(
+                    '{yes}'=>Yii::t('CoreModule.core', 'Да'),
+                    '{no}'=>Yii::t('CoreModule.core', 'Нет')
+                )),
+            	'filter'=>array(1=>Yii::t('CoreModule.core', 'Да'),0=>Yii::t('CoreModule.core', 'Нет')),
 	        ), 
 	        // Buttons
             array(

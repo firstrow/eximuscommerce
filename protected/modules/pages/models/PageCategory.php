@@ -119,19 +119,19 @@ class PageCategory extends BaseModel
     {
         return array(
             'id' => 'ID',
-            'parent_id' => 'Родитель',
-            'name' => 'Название',
-            'url' => 'URL',
-            'description' => 'Описание',
-            'layout' => 'Макет',
-            'view' => 'Шаблон',
-            'meta_title' => 'Meta Title',
-            'meta_description' => 'Meta Description',
-            'meta_keywords' => 'Meta Keywords',
-            'created' => 'Дата создания',
-            'updated' => 'Дата обновления',
-            'pages' => 'Страницы',
-            'page_size' => 'Записей на странице',
+            'parent_id' => Yii::t('PagesModule.core', 'Родитель'),
+            'name' => Yii::t('PagesModule.core', 'Название'),
+            'url' => Yii::t('PagesModule.core', 'URL'),
+            'description' => Yii::t('PagesModule.core', 'Описание'),
+            'layout' => Yii::t('PagesModule.core', 'Макет'),
+            'view' => Yii::t('PagesModule.core', 'Шаблон'),
+            'meta_title' => Yii::t('PagesModule.core', 'Meta Title'),
+            'meta_description' => Yii::t('PagesModule.core', 'Meta Description'),
+            'meta_keywords' => Yii::t('PagesModule.core', 'Meta Keywords'),
+            'created' => Yii::t('PagesModule.core', 'Дата создания'),
+            'updated' => Yii::t('PagesModule.core', 'Дата обновления'),
+            'pages' => Yii::t('PagesModule.core', 'Страницы'),
+            'page_size' => Yii::t('PagesModule.core', 'Записей на странице'),
         );
     }
 

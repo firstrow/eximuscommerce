@@ -5,12 +5,12 @@
         'form'=>$form,
     ));
 
-    $title = ($model->isNewRecord) ? Yii::t('UsersModule.admin', 'Создание пользователя') : Yii::t('UsersModule.admin', 'Редактирование пользователя');
+    $title = ($model->isNewRecord) ? Yii::t('UsersModule.core', 'Создание пользователя') : Yii::t('UsersModule.core', 'Редактирование пользователя');
     
     $this->breadcrumbs = array(
         'Home'=>$this->createUrl('/admin'),
-        Yii::t('UsersModule.admin', 'Пользователи')=>$this->createUrl('index'),
-        ($model->isNewRecord) ? Yii::t('UsersModule.admin', 'Создание пользователя') : CHtml::encode($model->username),
+        Yii::t('UsersModule.core', 'Пользователи')=>$this->createUrl('index'),
+        ($model->isNewRecord) ? Yii::t('UsersModule.core', 'Создание пользователя') : CHtml::encode($model->username),
     );
     
     $this->pageHeader = $title;
