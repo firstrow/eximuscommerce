@@ -134,7 +134,7 @@ class SGridView extends CGridView {
 		$filtersHtml = '';
 		if ($filters)
 		{
-			$filtersHtml .= '<hr>';
+			$filtersHtml .= CHtml::openTag('hr');
 			foreach ($filters as $filter) 
 			{
 				$filtersHtml .= strtr('
@@ -171,7 +171,9 @@ class SGridView extends CGridView {
 			<div class="gridViewOptions">&nbsp;</div>
 			<div class="gridViewOptionsMenu">
 				<ul>
-					<li><a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">'.Yii::t('SGridView.core','Очистить фильтр').'</a></li>
+					<li>
+						<a href="#" onClick="clearSGridViewFilter(\''.$this->getId().'\');">'.Yii::t('SGridView.core','Очистить фильтр').'</a>
+					</li>
 					<li>{saveLink}</li>
 					'.$filtersHtml.'
 				</ul>
@@ -190,7 +192,13 @@ class SGridView extends CGridView {
 			</div>
 		';
 		echo CHtml::closeTag('div');
-		echo Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
+
+		echo $this->createSaveDialog();
+	}
+
+	protected function createSaveDialog()
+	{
+		return Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
 			'title':'".Yii::t('SGridView.core','Сохранить фильтр')."',
 			'modal':true,
 			'resizable':false,
