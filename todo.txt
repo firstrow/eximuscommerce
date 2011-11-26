@@ -2,6 +2,8 @@ TODO:
 	- Create module update page for "SystemModules".
 	- Add "translit button" on page update view.
 	- Create initial "Pages migration" with table sctructure and indexes.
+	- Add indexes to Page table
+	- Add indexes to PageCategory table
 	- Create "hooks/events" system.
 	- Search and get done all "TODO" in source files.
 	- Fix css3button to not hover on jquery buttons in dialog.
