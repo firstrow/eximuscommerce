@@ -9,18 +9,9 @@ defined('YII_DEBUG') or define('YII_DEBUG', true);
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 
-require_once($yii);
+require_once $yii;
+require_once 'protected/components/SWebApplication.php';
 
 // Create application
-$app = Yii::createWebApplication($config);
-
-// Enable installed modules
-$modules = SystemModules::getEnabled();
-
-if ($modules)
-{
-	foreach ($modules as $module)
-		$app->setModules(array($module->name));
-}
-
+$app = Yii::createApplication('SWebApplication', $config);
 $app->run();

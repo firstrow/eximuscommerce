@@ -1,5 +1,4 @@
 TODO:
-	- Translate all existing modules.
 	- Create module update page for "SystemModules".
 	- Add "translit button" on page update view.
 	- Create initial "Pages migration" with table sctructure and indexes.
@@ -25,3 +24,5 @@ TODO:
 	+ Translate modules.core
 	+ Translate modules.pages
 	+ Translate modules.users
+	+ Translate all existing modules.
+
