@@ -6,30 +6,35 @@ class LoginForm extends CFormModel
     public $password;
     public $rememberMe=false;
 
-    public $config = array(
-            'elements'=>array(
-            'username'=>array(
-                'type'=>'text',
-                'maxlength'=>32,
-            ),
-            'password'=>array(
-                'type'=>'password',
-                'maxlength'=>32,
-            ),
-            'rememberMe'=>array(
-                'type'=>'checkbox',
-            )
-        ),
-
-        'buttons'=>array(
-            'login'=>array(
-                'type'=>'submit',
-                'label'=>Yii::t('AdminModule.admin', 'Вход'),
-            ),
-        ),
-    );
+    public $_config;
 
     private $_identity;
+
+    public function getConfig()
+    {
+        return $config = array(
+            'elements'=>array(
+                'username'=>array(
+                    'type'=>'text',
+                    'maxlength'=>32,
+                ),
+                'password'=>array(
+                    'type'=>'password',
+                    'maxlength'=>32,
+                ),
+                'rememberMe'=>array(
+                    'type'=>'checkbox',
+                )
+            ),
+
+            'buttons'=>array(
+                'login'=>array(
+                    'type'=>'submit',
+                    'label'=>Yii::t('AdminModule.admin', 'Вход')
+                )
+            ),
+        );
+    }
 
     public function rules()
     {
