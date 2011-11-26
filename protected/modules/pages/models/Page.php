@@ -34,6 +34,14 @@ class Page extends BaseModel
     public $publishStatus = 'published';
 
     /**
+     * Multilingual attrs
+     */
+    public $title;
+    public $short_description;
+    public $full_description;
+  
+
+    /**
      * Returns the static model of the specified AR class.
      * @return Pages the static model class
      */
@@ -123,8 +131,23 @@ class Page extends BaseModel
     public function relations()
     {
         return array(
+            'translate'=>array(self::HAS_ONE, 'PageTranslate', 'object_id'),
             'author'=>array(self::BELONGS_TO, 'User', 'user_id'),
             'category'=>array(self::BELONGS_TO, 'PageCategory', 'category_id')
+        );
+    }
+
+    public function behaviors()
+    {
+        return array(
+            'STranslateBehavior'=>array(
+                'class'=>'ext.behaviors.STranslateBehavior',
+                'translateAttributes'=>array(
+                    'title',
+                    'short_description',
+                    'full_description'
+                ),
+            ),
         );
     }
 
@@ -231,6 +254,23 @@ class Page extends BaseModel
     public function getViewUrl()
     {
         return Yii::app()->createUrl('pages/pages/view', array('url'=>$this->url));
+    }
+
+}
+
+/**
+ * Class to access page translations
+ */
+class PageTranslate extends CActiveRecord {
+    
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
+    
+    public function tableName()
+    {
+        return 'PageTranslate';
     }
 
 }

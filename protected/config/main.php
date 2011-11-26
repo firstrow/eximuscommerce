@@ -71,7 +71,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=my_db',
             'enableProfiling' => true, // Disable in production
             'emulatePrepare' => true,
-            //'schemaCachingDuration'=>10, // Enable in production
+            //'schemaCachingDuration'=>3600, // Enable in production
             'username' => 'root',
             'password' => 'mysqlpass',
             'charset' => 'utf8',

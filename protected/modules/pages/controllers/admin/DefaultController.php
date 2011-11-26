@@ -38,7 +38,7 @@ class DefaultController extends SAdminController {
 			$model = Page::model()->findByPk($_GET['id']);
 
 		if (!$model)
-            throw new CHttpException(400, 'Bad request.');  
+            throw new CHttpException(404, Yii::t('PagesModule.core', 'Страница не найдена.'));
 
 		$form = new STabbedForm('application.modules.pages.views.admin.default.pageForm', $model);
 
