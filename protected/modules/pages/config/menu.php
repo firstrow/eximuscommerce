@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('applicatiom.modules.pages.PagesModule');
+Yii::import('application.modules.pages.PagesModule');
 
 /**
  * Admin menu items for pages module

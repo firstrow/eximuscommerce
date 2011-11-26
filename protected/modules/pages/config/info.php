@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('application.modules.pages.PagesModule')
+Yii::import('application.modules.pages.PagesModule');
 
 /**
  * Module info

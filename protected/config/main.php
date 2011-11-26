@@ -7,7 +7,7 @@
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Shop',
-    'language'=>'en',
+    'language'=>'ru',
     'sourceLanguage'=>'ru',
     //'theme'=>'development',
     // preloading 'log' component
