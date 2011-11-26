@@ -6,7 +6,7 @@
  * 
  * Usage:
  * 1. Create new relation
- *  'translate'=>array(self::HAS_ONE, 'TranslateStorageMode', 'foreign_id'),
+ *  'translate'=>array(self::HAS_ONE, 'Translate Storage Model', 'foreign_id'),
  * 2. Attach behavior and enter translateable attributes
  *   'STranslateBehavior'=>array(
  *       'class'=>'ext.behaviors.STranslateBehavior',
@@ -17,9 +17,10 @@
  *           etc...
  *       ),
  *   ),
- * 3. Create new db table to handle translated attribute values.
+ * 3. Set Model::$translateModelName - name of the model that handles translations.
+ * 4. Create new db table to handle translated attribute values.
  *    Basic structure: id, object_id, language_id + attributes.
- * 4. Create TranslateStorageMode class and set $tableName.
+ * 5. Create 'Translate Storage Model' class and set $tableName.
  * 
  */
 class STranslateBehavior extends CActiveRecordBehavior {
@@ -69,7 +70,8 @@ class STranslateBehavior extends CActiveRecordBehavior {
         if (!$translate)
         {
             // Create new translation on default language.
-            $translate = new TranslateHandler;
+            $className = $this->owner->translateModelName;
+            $translate = new $className;
             $translate->object_id = $this->owner->getPrimaryKey();
             $translate->language_id = 1;
         }
@@ -79,6 +81,20 @@ class STranslateBehavior extends CActiveRecordBehavior {
             $translate->$attr = $this->owner->$attr;
       
         $translate->save();
+    }
+
+    /**
+     * Delete related translations
+     */
+    public function afterDelete()
+    {
+        $className = $this->owner->translateModelName;
+        $translate = $className::model()
+            ->deleteAll('object_id=:id',array(
+                ':id'=>$this->owner->getPrimaryKey()
+            ));
+
+        return true;
     }
 
 }

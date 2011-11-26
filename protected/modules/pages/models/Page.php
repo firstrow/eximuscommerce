@@ -39,6 +39,11 @@ class Page extends BaseModel
     public $title;
     public $short_description;
     public $full_description;
+
+    /**
+     * Name of the translations model.
+     */
+    public $translateModelName = 'PageTranslate';
   
 
     /**
@@ -131,7 +136,7 @@ class Page extends BaseModel
     public function relations()
     {
         return array(
-            'translate'=>array(self::HAS_ONE, 'PageTranslate', 'object_id'),
+            'translate'=>array(self::HAS_ONE, $this->translateModelName, 'object_id'),
             'author'=>array(self::BELONGS_TO, 'User', 'user_id'),
             'category'=>array(self::BELONGS_TO, 'PageCategory', 'category_id')
         );
