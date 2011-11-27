@@ -56,6 +56,8 @@ class PagesController extends Controller
 
 		if (!$model) throw new CHttpException(404, Yii::t('PagesModule.core', 'Страница не найдена.'));
 
+		var_dump($this->createUrl('view', array('url'=>'ok')));
+
 		$view = $this->setDesign($model, 'view');
 
 		$this->render($view, array(

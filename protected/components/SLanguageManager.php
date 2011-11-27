@@ -2,8 +2,19 @@
 
 class SLanguageManager extends CApplicationComponent {
 	
-	protected $_languages = array();
+    /**
+     * @var array Aviable system languages
+     */
+    protected $_languages = array();
+
+    /**
+     * @var string Active lang code
+     */
 	protected $_active;
+
+    /**
+     * @var string Default lang code
+     */
 	protected $_default;
 
 	public function init()
@@ -48,9 +59,22 @@ class SLanguageManager extends CApplicationComponent {
         return array_keys($this->_languages);        
     }
 
+    /**
+     * Get default system language
+     * @return SSystemLanguage
+     */
     public function getDefault()
     {
     	return $this->getByCode($this->_default);
+    }
+
+    /**
+     * Get active language model
+     * @return SSystemLanguage
+     */
+    public function getActive()
+    {
+        return $this->getByCode($this->_active);
     }
 
     /**
@@ -64,23 +88,19 @@ class SLanguageManager extends CApplicationComponent {
     	if (!$model)
     		$model = $this->default;
 
-    	$this->activate($model);
-    }
-
-    /**
-     * Get active language model
-     * @return SSystemLanguage
-     */
-    public function getActive()
-    {
-    	return $this->getByCode($this->_active);
-    }
-
-    protected function activate(SSystemLanguage $model)
-    {
    		Yii::trace('Activating languge '.$model->name);
    		Yii::app()->setLanguage($model->locale);
    		$this->_active = $model->code;	
     }
 
+    /**
+     * Get language prefix to create url.
+     * If current language is default prefix will be empty.
+     * @return string Url prefix
+     */
+    public function getUrlPrefix()
+    {
+    	if ($this->_active !== $this->_default)
+    	   return $this->_active;
+    }
 }

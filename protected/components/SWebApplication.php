@@ -16,6 +16,9 @@ class SWebApplication extends CWebApplication
     {
         $this->setSystemModules();
         parent::init();
+
+        // Activate default system language
+        Yii::app()->languageManager->setActive();
     }
 
     /**

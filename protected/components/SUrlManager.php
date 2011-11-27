@@ -2,11 +2,8 @@
 
 class SUrlManager extends CUrlManager {
 
-    public $appendLangPrefix = false;
-
     /**
      * Init 
-     * 
      * @access public
      */
     public function init()
@@ -17,26 +14,29 @@ class SUrlManager extends CUrlManager {
 
     /**
      * Create url based on current language.
-     * 
      * @param mixed $route 
      * @param array $params 
      * @param string $ampersand 
      * @access public
      * @return string
      */
-    //public function createUrl($route,  $params=array(),  $ampersand='&')
-    //{
-    //	$result = parent::createUrl($route,$params,$ampersand);
-    //	if ($this->appendLangPrefix === true)
-    //		$result = '/'.Yii::app()->language.$result;
-    //	return $result;
-    //}
+    public function createUrl($route,  $params=array(),  $ampersand='&', $respectLang = true)
+    {
+    	$result = parent::createUrl($route,$params,$ampersand);
+
+        if ($respectLang === true)
+        {
+            $langPrefix = Yii::app()->languageManager->getUrlPrefix();
+            if ($langPrefix)
+                $result = '/'.$langPrefix.$result;
+        }
+
+    	return $result;
+    }
 
     /**
      * Scan each module dir and include routes.php
      * Add module urls at the begining of $config['urlManager']['rules']
-     *
-	 * TODO: Cache found routes to php file in runtime dir.
      * @access protected
      */
     protected function _loadModuleUrls()
