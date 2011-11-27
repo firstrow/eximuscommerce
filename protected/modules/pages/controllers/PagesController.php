@@ -50,7 +50,9 @@ class PagesController extends Controller
 		$model = Page::model()
 			->published()
 			->withUrl($url)
-			->find();
+			->find(array(
+				'limit'=>1
+			));
 
 		if (!$model) throw new CHttpException(404, Yii::t('PagesModule.core', 'Страница не найдена.'));
 
