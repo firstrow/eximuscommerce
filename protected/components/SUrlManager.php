@@ -16,29 +16,6 @@ class SUrlManager extends CUrlManager {
     }
 
     /**
-     * Parse request url to detect current language in first segment. 
-     * 
-     * @param mixed $request 
-     * @access public
-     * @return void
-     */
-    // public function parseUrl($request)
-    // {
-    //         $result = parent::parseUrl($request);
-    //         $parts = explode('/', $result);
-
-    //         if (in_array($parts[0], Yii::app()->params['languages']))
-    //         {
-    //                 Yii::app()->setLanguage($parts[0]);
-    //                 $this->appendLangPrefix = true;
-    //                 unset($parts[0]);
-    //                 $result = implode($parts, '/');
-    //         }
-
-    //         return $result;
-    // }
-
-    /**
      * Create url based on current language.
      * 
      * @param mixed $route 

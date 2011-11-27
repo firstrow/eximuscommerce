@@ -20,7 +20,6 @@ return array(
         'application.components.validators.*',
         'application.modules.core.models.*',
         'application.modules.users.models.User',
-        'application.extensions.simpleWorkflow.*',
         // Rights module
         'application.modules.rights.*',
         'application.modules.rights.components.*',
@@ -77,6 +76,7 @@ return array(
             'charset' => 'utf8',
         ),
         'request'=>array(
+            'class'=>'SHttpRequest',
             'enableCsrfValidation'=>true,
             'enableCookieValidation'=>true,
         ),
@@ -91,6 +91,9 @@ return array(
         ),
         'cache'=>array(
             'class'=>'CFileCache',
+        ),
+        'languageManager'=>array(
+            'class'=>'SLanguageManager'
         ),
         'log'=>array(
             'class'=>'CLogRouter',

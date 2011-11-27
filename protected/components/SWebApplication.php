@@ -9,7 +9,7 @@ class SWebApplication extends CWebApplication
     public function __construct($config=null)
     {
         parent::__construct($config);
-        register_shutdown_function(array($this, 'shutdown'));
+        //register_shutdown_function(array($this, 'shutdown'));
     }
 
     public function init()
