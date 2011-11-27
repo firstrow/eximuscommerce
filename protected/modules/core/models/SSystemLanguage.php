@@ -44,6 +44,7 @@ class SSystemLanguage extends CActiveRecord
             array('name, code, locale', 'required'),
             array('name, locale', 'length', 'max'=>100),
             array('code', 'length', 'max'=>25),
+            array('default', 'in', 'range'=>array(0,1)),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name, code, locale', 'safe', 'on'=>'search'),
@@ -57,9 +58,10 @@ class SSystemLanguage extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'name' => 'Name',
-            'code' => 'Code',
-            'locale' => 'Locale',
+            'name' => Yii::t('CoreModule.core', 'Название'),
+            'code' => Yii::t('CoreModule.core', 'Идентификатор'),
+            'locale' => Yii::t('CoreModule.core', 'Кодировка'),
+            'default' => Yii::t('CoreModule.core', 'По умолчанию'),
         );
     }
 
@@ -75,9 +77,22 @@ class SSystemLanguage extends CActiveRecord
         $criteria->compare('name',$this->name,true);
         $criteria->compare('code',$this->code,true);
         $criteria->compare('locale',$this->locale,true);
+        $criteria->compare('`default`',$this->default);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function afterSave()
+    {
+        // Leave only one default language
+        if ($this->default)
+        {
+            self::model()->updateAll(array(
+                'default'=>0,
+
+            ), 'id!='.$this->id);
+        }
     }
 }

@@ -21,6 +21,11 @@ class SAdminController extends RController {
         $this->module->initAdmin();
     }
 
+    public function filters()
+    {
+        return array('rights');
+    }
+
     public function beforeAction()
     {
         // Allow only authorized users access

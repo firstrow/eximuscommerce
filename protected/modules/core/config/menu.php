@@ -10,9 +10,14 @@ return array(
     'users'=>array(
         'items'=>array(
             array(
-                'label'=>Yii::t('CoreModule.core', 'Модули'), 
-                'url'=>array('/admin/core/systemModules'), 
+                'label'=>Yii::t('CoreModule.core', 'Модули'),
+                'url'=>Yii::app()->createUrl('core/admin/systemModules'), 
                 'position'=>3
+            ),
+			array(
+                'label'=>Yii::t('CoreModule.core', 'Языки'),
+                'url'=>Yii::app()->createUrl('core/admin/systemLanguages'), 
+                'position'=>4
             ),
         ),
     ),
