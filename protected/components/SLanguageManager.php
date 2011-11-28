@@ -39,6 +39,11 @@ class SLanguageManager extends CApplicationComponent {
         return $this->_languages;
     }
 
+    public function getLanguages()
+    {
+        return $this->_languages;
+    }
+
     /**
      * get lang by its code
      * @param type $langCode 
