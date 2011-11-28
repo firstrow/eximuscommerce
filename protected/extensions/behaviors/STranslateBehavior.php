@@ -93,7 +93,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
             ->deleteAll('object_id=:id',array(
                 ':id'=>$this->owner->getPrimaryKey()
             ));
-
+	    
         return true;
     }
 
