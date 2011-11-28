@@ -43,11 +43,11 @@ function Menu(caller, options){
 		width: 180, // width of menu container, must be set or passed in to calculate widths of child menus
 		maxHeight: 180, // max height of menu (if a drilldown: height does not include breadcrumb)
 		positionOpts: {
-			posX: 'left', 
+			posX: 'center', 
 			posY: 'bottom',
-			offsetX: 0,
+			offsetX: -33,
 			offsetY: 0,
-			directionH: 'right',
+			directionH: 'left',
 			directionV: 'down', 
 			detectH: true, // do horizontal collision detection  
 			detectV: true, // do vertical collision detection
@@ -491,7 +491,7 @@ function setPosition(widget, caller, options) {
 
 	// get X pos
 	switch(options.positionOpts.posX) {
-		case 'left': 	xVal = 0; 
+		case 'left': xVal = 0; 
 			break;				
 		case 'center': xVal = dims.refW / 2;
 			break;				
@@ -501,7 +501,7 @@ function setPosition(widget, caller, options) {
 	
 	// get Y pos
 	switch(options.positionOpts.posY) {
-		case 'top': 	yVal = 0;
+		case 'top': yVal = 0;
 			break;				
 		case 'center': yVal = dims.refH / 2;
 			break;				
@@ -599,61 +599,4 @@ function fitHorizontal(el, leftOffset){
 function fitVertical(el, topOffset){
 	var topVal = parseInt(topOffset) || $(el).offset().top;
 	return (topVal + $(el).height() <= getWindowHeight() + getScrollTop() && topVal - getScrollTop() >= 0);
-};
-
-/*-------------------------------------------------------------------- 
- * javascript method: "pxToEm"
- * by:
-   Scott Jehl (scott@filamentgroup.com) 
-   Maggie Wachs (maggie@filamentgroup.com)
-   http://www.filamentgroup.com
- *
- * Copyright (c) 2008 Filament Group
- * Dual licensed under the MIT (filamentgroup.com/examples/mit-license.txt) and GPL (filamentgroup.com/examples/gpl-license.txt) licenses.
- *
- * Description: Extends the native Number and String objects with pxToEm method. pxToEm converts a pixel value to ems depending on inherited font size.  
- * Article: http://www.filamentgroup.com/lab/retaining_scalable_interfaces_with_pixel_to_em_conversion/
- * Demo: http://www.filamentgroup.com/examples/pxToEm/	 	
- *							
- * Options:  	 								
- 		scope: string or jQuery selector for font-size scoping
- 		reverse: Boolean, true reverses the conversion to em-px
- * Dependencies: jQuery library						  
- * Usage Example: myPixelValue.pxToEm(); or myPixelValue.pxToEm({'scope':'#navigation', reverse: true});
- *
- * Version: 2.0, 08.01.2008 
- * Changelog:
- *		08.02.2007 initial Version 1.0
- *		08.01.2008 - fixed font-size calculation for IE
---------------------------------------------------------------------*/
-
-Number.prototype.pxToEm = String.prototype.pxToEm = function(settings){
-	//set defaults
-	settings = jQuery.extend({
-		scope: 'body',
-		reverse: false
-	}, settings);
-	
-	var pxVal = (this == '') ? 0 : parseFloat(this);
-	var scopeVal;
-	var getWindowWidth = function(){
-		var de = document.documentElement;
-		return self.innerWidth || (de && de.clientWidth) || document.body.clientWidth;
-	};	
-	
-	/* When a percentage-based font-size is set on the body, IE returns that percent of the window width as the font-size. 
-		For example, if the body font-size is 62.5% and the window width is 1000px, IE will return 625px as the font-size. 	
-		When this happens, we calculate the correct body font-size (%) and multiply it by 16 (the standard browser font size) 
-		to get an accurate em value. */
-				
-	if (settings.scope == 'body' && $.browser.msie && (parseFloat($('body').css('font-size')) / getWindowWidth()).toFixed(1) > 0.0) {
-		var calcFontSize = function(){		
-			return (parseFloat($('body').css('font-size'))/getWindowWidth()).toFixed(3) * 16;
-		};
-		scopeVal = calcFontSize();
-	}
-	else { scopeVal = parseFloat(jQuery(settings.scope).css("font-size")); };
-			
-	var result = (settings.reverse == true) ? (pxVal * scopeVal).toFixed(2) + 'px' : (pxVal / scopeVal).toFixed(2) + 'em';
-	return result;
 };
