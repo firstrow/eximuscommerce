@@ -205,14 +205,15 @@ class Page extends BaseModel
     {
         $criteria=new CDbCriteria;
 
-        $criteria->with = array('author');
+        $criteria->with = array('author','translate');
+        
         $criteria->compare('t.id',$this->id);
         $criteria->compare('t.category_id',$this->category_id);
         $criteria->compare('author.username',$this->user_id,true);
-        $criteria->compare('t.title',$this->title,true);
+        $criteria->compare('translate.title',$this->title,true);
         $criteria->compare('t.url',$this->url,true);
-        $criteria->compare('t.short_description',$this->short_description,true);
-        $criteria->compare('t.full_description',$this->full_description,true);
+        $criteria->compare('translate.short_description',$this->short_description,true);
+        $criteria->compare('translate.full_description',$this->full_description,true);
         $criteria->compare('t.meta_title',$this->meta_title,true);
         $criteria->compare('t.meta_description',$this->meta_description,true);
         $criteria->compare('t.meta_keywords',$this->meta_keywords,true);

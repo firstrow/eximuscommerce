@@ -11,7 +11,7 @@
  * @property string $locale Language locale
  * @property boolean $default Is lang default
  */
-class SSystemLanguage extends CActiveRecord
+class SSystemLanguage extends BaseModel
 {
 
     private static $_languages;

@@ -4,10 +4,17 @@ TODO:
 	- Create initial "Pages migration" with table sctructure and indexes.
 	- Add indexes to Page table
 	- Add indexes to PageCategory table
-	- Create "hooks/events" system.
 	- Search and get done all "TODO" in source files.
 	- Fix css3button to not hover on jquery buttons in dialog.
-	- Fix STranslateBehavior to respect default/current language.
+	- Create "hooks/events" for AR models using attachEventHandler
+		Workfolw:
+		1. Scan installed modules for events.php
+		sample event record:
+			array('Page', 'onAfterDelete', array($object, 'eventHandler'))
+		2. Attach aviable class handlers in BaseModel::init
+		sample:
+			if (get_class($this))
+				$this->attachEventHandler(args*)
 
 	Done:
 	+ Finish job with SGridView filet button.

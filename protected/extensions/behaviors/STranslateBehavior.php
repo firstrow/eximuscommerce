@@ -30,7 +30,6 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	 */
 	public $translateAttributes = array();
 
-
     public function attach($owner)
     {
         return parent::attach($owner);
@@ -43,10 +42,12 @@ class STranslateBehavior extends CActiveRecordBehavior {
     {
         $this->owner->getDbCriteria()->mergeWith(array(
             'with'=>array('translate'=>array(
-                'condition'=>'language_id=1',
+                'condition'=>'language_id=:language_id',
+                'params'=>array(
+                    ':language_id'=>Yii::app()->languageManager->active->id
+                )
             )),
         ));
-
         return true;
     }
 
@@ -60,31 +61,53 @@ class STranslateBehavior extends CActiveRecordBehavior {
             foreach ($this->translateAttributes as $attr)
                 $this->owner->$attr = $this->owner->translate[$attr];
         }
-
         return true;
     }
 
+    /**
+     * Update model translations
+     */
     public function afterSave()
     {
         $translate = $this->owner->translate;
-        if (!$translate)
-        {
-            // Create new translation on default language.
-            $className = $this->owner->translateModelName;
-            $translate = new $className;
-            $translate->object_id = $this->owner->getPrimaryKey();
-            $translate->language_id = 1;
-        }
-
-        // Update existing translation
-        foreach ($this->translateAttributes as $attr)
-            $translate->$attr = $this->owner->$attr;
-      
-        $translate->save();
+        if ($this->owner->isNewRecord OR !$translate)
+            $this->insertTranslations();
+        else
+            $this->updateTranslation($translate);
+        return true;
     }
 
     /**
-     * Delete related translations
+     * Create new object translation for each language.
+     */
+    public function insertTranslations()
+    {
+        $className = $this->owner->translateModelName;
+        $ownerPk = $this->owner->getPrimaryKey();
+        foreach (Yii::app()->languageManager->languages as $lang) 
+        {
+            $translate = new $className;
+            $translate->object_id = $ownerPk;
+            $translate->language_id = $lang->id;
+            // Populate translated attributes
+            foreach ($this->translateAttributes as $attr)
+                $translate->$attr = $this->owner->$attr;
+            $translate->save(false);
+        }
+    }
+
+    /**
+     * Update "current" translation object
+     */
+    public function updateTranslation($translate)
+    {
+        foreach ($this->translateAttributes as $attr)
+            $translate->$attr = $this->owner->$attr;
+        $translate->save(false);        
+    }
+
+    /**
+     * Delete model related translations
      */
     public function afterDelete()
     {
@@ -93,7 +116,6 @@ class STranslateBehavior extends CActiveRecordBehavior {
             ->deleteAll('object_id=:id',array(
                 ':id'=>$this->owner->getPrimaryKey()
             ));
-
         return true;
     }
 
