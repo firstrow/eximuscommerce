@@ -7,6 +7,7 @@ TODO:
 	- Create "hooks/events" system.
 	- Search and get done all "TODO" in source files.
 	- Fix css3button to not hover on jquery buttons in dialog.
+	- Fix STranslateBehavior to respect default/current language.
 
 	Done:
 	+ Finish job with SGridView filet button.
