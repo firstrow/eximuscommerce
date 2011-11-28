@@ -30,7 +30,6 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	 */
 	public $translateAttributes = array();
 
-
     public function attach($owner)
     {
         return parent::attach($owner);
@@ -84,7 +83,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
     }
 
     /**
-     * Delete related translations
+     * Delete model related translations
      */
     public function afterDelete()
     {
