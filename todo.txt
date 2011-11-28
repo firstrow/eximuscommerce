@@ -15,6 +15,9 @@ TODO:
 		sample:
 			if (get_class($this))
 				$this->attachEventHandler(args*)
+	- Fix dropdown "Еще" menu postion.
+	- Integrate http://www.graphicpush.com/demos/languageswitcher/
+	- Integrate http://benalman.com/projects/jquery-bbq-plugin/
 
 	Done:
 	+ Finish job with SGridView filet button.
