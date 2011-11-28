@@ -44,11 +44,21 @@ class STranslateBehavior extends CActiveRecordBehavior {
             'with'=>array('translate'=>array(
                 'condition'=>'language_id=:language_id',
                 'params'=>array(
-                    ':language_id'=>Yii::app()->languageManager->active->id
+                    ':language_id'=>$this->getEditLanguageId()
                 )
             )),
         ));
         return true;
+    }
+
+    /**
+     * Get language id for model.
+     */
+    public function getEditLanguageId()
+    {
+        if (isset($_GET['lang_id']))
+            return (int) $_GET['lang_id'];
+        return Yii::app()->languageManager->active->id;
     }
 
 	/**

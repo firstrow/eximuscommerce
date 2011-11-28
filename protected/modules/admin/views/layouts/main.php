@@ -35,6 +35,7 @@
 
     // Init script
     $assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
 ?>
 <!doctype html> 
 <html>
@@ -94,6 +95,13 @@
                 </div>
             <div class="yui-u" style="width:50%;">
                 <div class="navigation-content-right marright" align="right" style="float:right;">
+                    <?php
+                        foreach(SSystemLanguage::model()->findAll() as $lang) 
+                        {
+                              
+                        }
+                        echo CHtml::dropDownList('selectLang', 0, CHtml::listData(Yii::app()->languageManager->languages,'id','name')); 
+                    ?>
                     <?php
                         if (!empty($this->topButtons))
                         {

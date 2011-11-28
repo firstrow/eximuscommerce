@@ -22,7 +22,7 @@ class SAdminTopButtons extends CWidget {
      */
     public $listAction = 'index';
     public $createAction = 'create';
-    public $updateAction = 'update';
+    public $updateAction;
     public $deleteAction = 'delete';
     public $result = array();
     
@@ -89,6 +89,10 @@ class SAdminTopButtons extends CWidget {
     public function run()
     {
         Yii::import('application.modules.admin.AdminModule');
+
+        // Set update action from current url
+        if (!$this->updateAction)
+            $this->updateAction = Yii::app()->request->requestUri;
 
         if ($this->form)
             $this->formId = $this->form->id;
