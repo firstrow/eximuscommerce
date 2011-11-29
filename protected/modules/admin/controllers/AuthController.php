@@ -30,7 +30,7 @@ class AuthController extends SAdminController
             {
                 // Authenticate user and redirect to the dashboard
                 if($model->rememberMe)
-                    $duration = 84600*31;
+                    $duration = 84600*7; // Remember for one week
                 else
                     $duration = 0;
                     
