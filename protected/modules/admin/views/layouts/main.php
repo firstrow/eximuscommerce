@@ -15,10 +15,9 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/yui-grids/reset-fonts-grids.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/base.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/forms.css');
-    $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
-    $assetsManager->registerCssFile($adminAssetsUrl.'/css/breadcrumbs/style.css');    
-    
+    $assetsManager->registerCssFile($adminAssetsUrl.'/css/breadcrumbs/style.css');        
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
+    $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
 
     // fg.menu
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
@@ -31,10 +30,6 @@
     // jGrowl
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.js');
-
-    // Lang switcher
-    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/languageswitcher/languageswitcher.css');
-    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/languageswitcher/languageswitcher.js');
 
     // Init script
     $assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');

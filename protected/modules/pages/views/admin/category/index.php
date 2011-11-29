@@ -17,7 +17,9 @@
             'create'=>array(
                 'link'=>$this->createUrl('create'),
                 'title'=>Yii::t('PagesModule.core', 'Создать категорию'),
-                'icon'=>'plus',
+                'options'=>array(
+                    'icons'=>array('primary'=>'ui-icon-plus')
+                )
             ),
         ),
     ));

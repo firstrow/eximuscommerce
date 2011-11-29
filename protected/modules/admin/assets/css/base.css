@@ -101,11 +101,11 @@ a:hover, a:active, a.selected {
 }
 
 #navigation .navigation-content-right {
-    margin:7px 10px 0 0;
+    margin:6px 10px 0 0;
    
 }
 
-#navigation .navigation-content a{
+#navigation .navigation-content a {
     font-size:11px;
 }
 
