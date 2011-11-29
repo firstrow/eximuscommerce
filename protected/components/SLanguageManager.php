@@ -95,7 +95,7 @@ class SLanguageManager extends CApplicationComponent {
 
    		Yii::trace('Activating languge '.$model->name);
    		Yii::app()->setLanguage($model->locale);
-   		$this->_active = $model->code;	
+   		$this->_active = $model->code;
     }
 
     /**

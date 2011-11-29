@@ -59,6 +59,8 @@ class SAdminTopButtons extends CWidget {
      */
     public $addNewElements = true;
     
+    public $langSwitcher = false;
+
     /**
      * List of buttons to display
      * Example:
@@ -86,10 +88,13 @@ class SAdminTopButtons extends CWidget {
             $this->formId = $this->form->id;
                 
         $buttons = CMap::mergeArray($this->default, $this->elements);
-        
+
         if ($this->addNewElements)
             $this->template = array_unique(CMap::mergeArray(array_keys($this->elements), $this->template));
         
+        if ($this->langSwitcher)
+            array_unshift($this->template, 'langSwitch');
+
         // Remove `delete` button on new record
         if ($this->form !== null)
         {
@@ -154,7 +159,7 @@ class SAdminTopButtons extends CWidget {
                 'options'=>array(
                     'icons'=>array('primary'=>'ui-icon-arrow-1-w')
                 )
-            ),            
+            ),
             'save'=>array(
                 'link'=>$this->listAction,
                 'title'=>Yii::t('AdminModule.admin', 'Сохранить'),
@@ -194,12 +199,60 @@ class SAdminTopButtons extends CWidget {
                     'icons'=>array('primary'=>'ui-icon-triangle-1-s')
                 )
             ),
+            'langSwitch'=>$this->getLangSwitchButton(),
         );
     }
     
+    public function getLangSwitchButton()
+    {
+        $this->registerFgMenu();
+        Yii::app()->clientScript->registerScript('langSwithMenu', "       
+            $('#langSwitch_topLink').menu({ 
+                content: $('#langSwitchButtonMenu').html(), 
+                showSpeed: 400
+            });
+        ", CClientScript::POS_END);
+
+        if (isset($_GET['lang_id']))
+            $currentId = $_GET['lang_id'];
+        else
+            $currentId = null;
+
+        foreach(Yii::app()->languageManager->languages as $lang)
+        {
+            if($currentId != $lang->id)
+            {
+                $langs[] = array(
+                    'label'=>$lang['name'],
+                    'url'=>'#',
+                    'linkOptions'=>array(
+                        'onClick'=>"window.location = jQuery.param.querystring(window.location.href,{lang_id:$lang->id});"
+                    ),
+                );
+            }
+        }
+
+        echo '<div style="display:none" id="langSwitchButtonMenu">';
+        $this->widget('zii.widgets.CMenu', array(
+            'items'=>$langs,
+        ));
+        echo '</div>';
+
+        return array(
+            'link'=>'#',
+            'title'=>'Language',
+             'options'=>array(
+                'icons'=>array(
+                    'secondary'=>'ui-icon-triangle-1-s'
+                )
+            )
+        );
+    }
+
     public function registerScripts()
     {
         $cs = Yii::app()->getClientScript();
+        // Submit form by id script.
         $cs->registerScript('topNavigationSubitForm', "
             function submitFormById(form_id, el)
             {
@@ -210,18 +263,13 @@ class SAdminTopButtons extends CWidget {
             }
         ", CClientScript::POS_END);
 
-        if (!isset($this->template['dropDown']))
+        if (in_array('dropDown', $this->template))
         {
-            // Create dropdown menu
-            $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
-            $cs = Yii::app()->clientScript;
-            $cs->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
-            $cs->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
-
-            $cs->registerScript('dropDownButtonMenu', "       
+            $this->registerFgMenu();
+            Yii::app()->clientScript->registerScript('dropDownButtonMenu', "       
                 $('#dropDown_topLink').menu({ 
                     content: $('#dropDownButtonMenu').html(), 
-                    showSpeed: 400 
+                    showSpeed: 400
                 });
             ", CClientScript::POS_END);
 
@@ -241,6 +289,14 @@ class SAdminTopButtons extends CWidget {
         }
     }
     
+    public function registerFgMenu()
+    {
+        $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
+        $cs = Yii::app()->clientScript;
+        $cs->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
+        $cs->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
+    }
+
     public function renderSubmitFormJs()
     {        
         return  'return submitFormById(\''.$this->formId.'\', this);';

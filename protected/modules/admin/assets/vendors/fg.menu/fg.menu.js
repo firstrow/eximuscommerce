@@ -45,7 +45,7 @@ function Menu(caller, options){
 		positionOpts: {
 			posX: 'center', 
 			posY: 'bottom',
-			offsetX: -33,
+			offsetX: 0,
 			offsetY: 0,
 			directionH: 'left',
 			directionV: 'down', 
@@ -493,7 +493,7 @@ function setPosition(widget, caller, options) {
 	switch(options.positionOpts.posX) {
 		case 'left': xVal = 0; 
 			break;				
-		case 'center': xVal = dims.refW / 2;
+		case 'center': xVal = dims.refW / 100;
 			break;				
 		case 'right': xVal = dims.refW;
 			break;

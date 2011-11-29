@@ -27,6 +27,9 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.js');
 
+    // Back Button & Query Library
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ba-bbq.min.js');
+
     // Init script
     $assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
 ?>
@@ -87,20 +90,20 @@
                     <div style="float:right;">
 
                     <?php 
-                        $this->widget('zii.widgets.jui.CJuiButton',
-                            array(
-                                'id'=>'ls',
-                                'name'=>'ls',
-                                'url'=>'#',
-                                'buttonType'=>'link',
-                                'caption'=>'<img src="http://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/ru.png"> Русский',
-                                'htmlOptions'=>array(
-                                    'class'=>'marright20'
-                                ),
-                                'options'=>array(
-                                    'icons'=>array('secondary'=>'ui-icon-triangle-1-s')
-                                ))
-                        );
+                        // $this->widget('zii.widgets.jui.CJuiButton',
+                        //     array(
+                        //         'id'=>'ls',
+                        //         'name'=>'ls',
+                        //         'url'=>'#',
+                        //         'buttonType'=>'link',
+                        //         'caption'=>'<img src="http://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/ru.png"> Русский',
+                        //         'htmlOptions'=>array(
+                        //             'class'=>'marright20'
+                        //         ),
+                        //         'options'=>array(
+                        //             'icons'=>array('secondary'=>'ui-icon-triangle-1-s')
+                        //         ))
+                        // );
                     ?>
 
                     <?php
