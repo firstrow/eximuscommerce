@@ -2,22 +2,12 @@
 
 /**
  * SAdminTopButtons 
- * Displays base buttons on top to save object data.
- * Usage:
- * 
- * Yii::import('application.modules.admin.widgets.SAdminTopButtons');
- * $this->topButtons = $this->widget('SAdminTopButtons', array(
- *      'form'=>$form, // CForm object
- *      'template'=>array('save','delete', 'anyLinkName'),
- *      'elemnts'=>array(...),//Additional buttons. See SAdminTopbutton::$elements.
- *      'icon'='pen',
- *   ));
- * 
+ * Displays base buttons on top to save object.
  */
 class SAdminTopButtons extends CWidget {
     
     /**
-     * Link to controller delete actions
+     * Link to controller actions
      * @var string
      */
     public $listAction = 'index';
@@ -42,7 +32,7 @@ class SAdminTopButtons extends CWidget {
      * Default links
      * @var array
      */
-    public $default = array();
+    private $_default = array();
     
     /**
      * Form object
@@ -95,7 +85,6 @@ class SAdminTopButtons extends CWidget {
         if ($this->form)
             $this->formId = $this->form->id;
         
-        $this->setDefault();        
         $this->registerScripts();
         
         $buttons = CMap::mergeArray($this->default, $this->elements);
@@ -116,7 +105,7 @@ class SAdminTopButtons extends CWidget {
         }
         
         $n=0;
-        foreach ($this->template as $key)
+        foreach($this->template as $key)
         {
             $item = $buttons[$key];
             
@@ -124,6 +113,8 @@ class SAdminTopButtons extends CWidget {
                 $item['classes'] = array();
             if (!isset($item['htmlOptions']))
                 $item['htmlOptions'] = array();
+            if (!isset($item['options']))
+                $item['options'] = array();
             
             // Set link ID
             if (!isset($item['htmlOptions']['id']))
@@ -139,7 +130,7 @@ class SAdminTopButtons extends CWidget {
                     'buttonType'=>'link',
                     'caption'=>$item['title'],
                     'htmlOptions'=>CMap::mergeArray($item['htmlOptions'], array('class'=>implode(' ', $linkClasses))),
-                    'options'=>isset($item['options']) ? $item['options'] : array(),
+                    'options'=>$item['options']
                     )
             , true);
             $n++;
@@ -149,9 +140,9 @@ class SAdminTopButtons extends CWidget {
     /**
      * Load default buttons
      */
-    protected function setDefault()
+    public function getDefault()
     {
-        $this->default = array(
+        return array(
             'history_back'=>array(
                 'link'=>'#',
                 'title'=>Yii::t('AdminModule.admin', 'Назад'),
@@ -206,18 +197,6 @@ class SAdminTopButtons extends CWidget {
         );
     }
     
-    /**
-     * Generate code to display icon
-     * 
-     * @param array $item Item properties
-     * @return string 
-     */
-    public function renderLinkIcon($item)
-    {
-        if (isset($item['icon']) && !empty($item['icon']))
-            return '<span class="'.$item['icon'].' icon"></span>';         
-    }
-   
     public function registerScripts()
     {
         $cs = Yii::app()->getClientScript();
