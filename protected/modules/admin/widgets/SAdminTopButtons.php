@@ -30,13 +30,12 @@ class SAdminTopButtons extends CWidget {
      * List of default css classes to append to each link
      * @var array
      */
-    public $defaultLinkClasses = array('pill', 'button');
+    public $defaultLinkClasses = array();
     
     /**
      * Default links templates. 
      * @var array
      */
-    //public $template = array('history_back','save','saveCreate','saveEdit','delete');
     public $template = array('history_back','save','dropDown','delete');
     
     /**
@@ -79,7 +78,6 @@ class SAdminTopButtons extends CWidget {
      *      'title'=>'Link Title',
      *      'classes'=>array(),
      *      'htmlOptions'=>array(),
-     *      'icon'=>'plus',
      * )
      * 
      * @var type array
@@ -132,20 +130,18 @@ class SAdminTopButtons extends CWidget {
                 $item['htmlOptions']['id'] = $key.'_topLink';
             
             $linkClasses = CMap::mergeArray($item['classes'], $this->defaultLinkClasses);
-            
-            if (sizeof($this->template) > 1)
-            {
-                if ($n===0 && sizeof($this->template) > 1)
-                    $linkClasses[] = 'left';
-                elseif ($n == sizeof($this->template) - 1)
-                    $linkClasses[] = 'right';
-                else
-                    $linkClasses[] = 'middle';
-            }
-            
-            $item['htmlOptions'] = CMap::mergeArray($item['htmlOptions'], array('class'=>implode(' ', $linkClasses)));
-            
-            $this->result[$key] = CHtml::link($this->renderLinkIcon($item).$item['title'], $item['link'], $item['htmlOptions']);
+
+            $this->result[$key] = $this->widget('zii.widgets.jui.CJuiButton',
+                array(
+                    'id'=> $item['htmlOptions']['id'],
+                    'name'=>$item['htmlOptions']['id'],
+                    'url'=>$item['link'],
+                    'buttonType'=>'link',
+                    'caption'=>$item['title'],
+                    'htmlOptions'=>CMap::mergeArray($item['htmlOptions'], array('class'=>implode(' ', $linkClasses))),
+                    'options'=>isset($item['options']) ? $item['options'] : array(),
+                    )
+            , true);
             $n++;
         }
     }
@@ -164,41 +160,25 @@ class SAdminTopButtons extends CWidget {
                     'onClick'=>'history.back(-1); return false;',
                     'title'=>Yii::t('AdminModule.admin', 'Назад'),
                 ),
-                'icon'=>'leftarrow notext',
+                'options'=>array(
+                    'icons'=>array('primary'=>'ui-icon-arrow-1-w')
+                )
             ),            
             'save'=>array(
                 'link'=>$this->listAction,
                 'title'=>Yii::t('AdminModule.admin', 'Сохранить'),
-                'classes'=>array('primary'),
-                'htmlOptions'=>array(
-                    'onClick'=>$this->renderSubmitFormJs(),
-                ),
-                'icon'=>'check',
-            ),
-            'saveCreate'=>array(
-                'link'=>$this->createAction,
-                'title'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
                 'classes'=>array(),
                 'htmlOptions'=>array(
                     'onClick'=>$this->renderSubmitFormJs(),
-                    'title'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
                 ),
-                'icon'=>'plus',
-            ),
-            'saveEdit'=>array(
-                'link'=>$this->updateAction,
-                'title'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать'),
-                'classes'=>array(),
-                'htmlOptions'=>array(
-                    'onClick'=>$this->renderSubmitFormJs(),
-                    'title'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать'),
-                ),
-                'icon'=>'pen',
+                'options'=>array(
+                    'icons'=>array('primary'=>'ui-icon-circle-check')
+                )
             ),
             'delete'=>array(
                 'link'=>$this->deleteAction,
                 'title'=>Yii::t('AdminModule.admin', 'Удалить'),
-                'classes'=>array('negative'),
+                'classes'=>array(),
                 'htmlOptions'=>array(
                     'title'=>Yii::t('AdminModule.admin', 'Удалить'),
                     'confirm'=>Yii::t('AdminModule.admin', 'Удалить?'),
@@ -212,12 +192,16 @@ class SAdminTopButtons extends CWidget {
                         'success'=>"function(){ window.location = '$this->listAction' }"
                     ),
                 ),
-                'icon'=>'cross',
+                'options'=>array(
+                    'icons'=>array('primary'=>'ui-icon-trash')
+                )
             ),
             'dropDown'=>array(
                 'link'=>'#',
                 'title'=>Yii::t('AdminModule.admin', 'Ещё'),
-                'icon'=>'downarrow',
+                 'options'=>array(
+                    'icons'=>array('primary'=>'ui-icon-triangle-1-s')
+                )
             ),
         );
     }

@@ -19,6 +19,7 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/breadcrumbs/style.css');    
     
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
+
     // fg.menu
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
@@ -44,10 +45,6 @@
 
 	<meta charset="utf-8">
 	<title>CMS</title>
-
-    <!-- VENDORS -->
-    <!-- Css3 buttons -->
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $adminAssetsUrl ?>/vendors/css3buttons/stylesheets/css3buttons.css">
     
     <style type="text/css">
         /*** Fix for tabs. ***/
@@ -95,25 +92,15 @@
                     </div>
                 </div>
             <div class="yui-u" style="width:50%;">
-                <div class="navigation-content-right marright" align="right" style="float:right;">
-                    
-                    <div id="selectContainer" style="float:left;text-align:left;z-index:999;width:180px;height:40px;">
-                    <select id="selectId">
-                        <option>Russian</option>
-                        <option selected>English</option>
-                        <option>German</option>
-                    </select>
-                    </div>
-
+                <div class="navigation-content-right marright" align="right" style="float:right;">                   
                     <div style="float:right;">
                     <?php
                         if (!empty($this->topButtons))
                         {
                             echo $this->topButtons;
                         }
-                    ?>   
-                    </div>
-                     
+                    ?>
+                    </div> 
                 </div>
             </div>
 	</div>

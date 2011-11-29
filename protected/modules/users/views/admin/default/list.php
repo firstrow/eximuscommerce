@@ -14,7 +14,9 @@
             'new'=>array(
                 'link'=>$this->createUrl('create'),
                 'title'=>Yii::t('UsersModule.core', 'Создать пользователя'),
-                'icon'=>'user',
+                'options'=>array(
+                    'icons'=>array('primary'=>'ui-icon-person')
+                )
             ),
         ),
     ));
