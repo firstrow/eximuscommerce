@@ -14,7 +14,7 @@
 		<?php echo $page->title ?><br/>
 	<?php endforeach ?>
 <?php else: ?>
-	<?php echo Yii::t('В категории нет страниц.', 'В категории нет страниц.') ?>
+	<?php echo Yii::t('PagesModule.core', 'В категории нет страниц.') ?>
 <?php endif ?>
 
 <?php $this->widget('CLinkPager', array(

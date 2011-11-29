@@ -15,8 +15,8 @@ TODO:
 		sample:
 			if (get_class($this))
 				$this->attachEventHandler(args*)
-	- Integrate http://www.graphicpush.com/demos/languageswitcher/
 	- Integrate http://benalman.com/projects/jquery-bbq-plugin/
+	- languageManager - redirect to page without lang code if lang code is from default language.
 
 	Done:
 	+ Finish job with SGridView filet button.
