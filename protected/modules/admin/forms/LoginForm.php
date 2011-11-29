@@ -15,14 +15,17 @@ class LoginForm extends CFormModel
         return $config = array(
             'elements'=>array(
                 'username'=>array(
+                    'label'=>Yii::t('AdminModule.admin', 'Логин'),
                     'type'=>'text',
                     'maxlength'=>32,
                 ),
                 'password'=>array(
+                    'label'=>Yii::t('AdminModule.admin', 'Пароль'),
                     'type'=>'password',
                     'maxlength'=>32,
                 ),
                 'rememberMe'=>array(
+                    'label'=>'Запомнить меня',
                     'type'=>'checkbox',
                 )
             ),

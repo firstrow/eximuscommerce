@@ -5,6 +5,11 @@ class AuthController extends SAdminController
 
     public $layout = 'login';
 
+    public function allowedActions()
+    {
+        return 'index, logout';
+    }
+
     /**
      * Display admin login page.
      */
