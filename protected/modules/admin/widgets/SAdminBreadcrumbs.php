@@ -21,6 +21,7 @@ class SAdminBreadcrumbs extends CWidget {
 			$link=CHtml::link(Yii::t('zii','Home'),Yii::app()->homeUrl);
 		else if($this->homeLink!==false)
 			$link=$this->homeLink;
+			
 		foreach($this->links as $label=>$url)
 		{
 			if(is_string($label) || is_array($url))
@@ -28,7 +29,11 @@ class SAdminBreadcrumbs extends CWidget {
 			else
 				$link='<span>'.($this->encodeLabel ? CHtml::encode($url) : $url).'</span>';
 
-			echo '<li>'.$link.'</li>';
+			if(is_string($label))
+				echo '<li>'.$link.'</li>';
+			else
+				echo '<li class="noChevron">'.$link.'</li>';
+			
 		}
 
 		echo CHtml::closeTag($this->tagName);

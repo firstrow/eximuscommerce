@@ -16,14 +16,12 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/base.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/forms.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
+    $assetsManager->registerCssFile($adminAssetsUrl.'/css/breadcrumbs/style.css');    
+    
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
     // fg.menu
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
-
-    // Breadcrumbs
-    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/breadCrumbs/BreadCrumb.css');
-    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/breadCrumbs/jquery.jBreadCrumb.1.1.js');
 
     // ToTop 
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery.ui.totop/ui.totop.css');
@@ -32,6 +30,10 @@
     // jGrowl
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.js');
+
+    // Lang switcher
+    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/languageswitcher/languageswitcher.css');
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/languageswitcher/languageswitcher.js');
 
     // Init script
     $assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
@@ -79,7 +81,7 @@
                 <div class="yui-u first" style="width:1px;">
                     <div class="navigation-content-left">
                         <div id="breadcrumbs" class="breadCrumb module">
-                            <div style="overflow:hidden; position:relative;  width: 990px;">
+                          
                             <div>
                                 <?php
                                 $this->widget('application.modules.admin.widgets.SAdminBreadcrumbs', array(
@@ -87,19 +89,31 @@
                                     'links'=>$this->breadcrumbs,
                                 ));
                                 ?>  
-                            </div></div >
+                            </div>
                         </div>
 
                     </div>
                 </div>
             <div class="yui-u" style="width:50%;">
                 <div class="navigation-content-right marright" align="right" style="float:right;">
+                    
+                    <div id="selectContainer" style="float:left;text-align:left;z-index:999;width:180px;height:40px;">
+                    <select id="selectId">
+                        <option>Russian</option>
+                        <option selected>English</option>
+                        <option>German</option>
+                    </select>
+                    </div>
+
+                    <div style="float:right;">
                     <?php
                         if (!empty($this->topButtons))
                         {
                             echo $this->topButtons;
                         }
-                    ?>    
+                    ?>   
+                    </div>
+                     
                 </div>
             </div>
 	</div>

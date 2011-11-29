@@ -22,8 +22,6 @@
         });
     });
 
-    jQuery(document).ready(function()
-    {
-        jQuery("#breadcrumbs").jBreadCrumb();
+    jQuery(document).ready(function(){
         $().UItoTop({ easingType: 'easeOutQuart' });
     });
