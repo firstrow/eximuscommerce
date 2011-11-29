@@ -15,13 +15,9 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/yui-grids/reset-fonts-grids.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/base.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/forms.css');
-    $assetsManager->registerCssFile($adminAssetsUrl.'/css/breadcrumbs/style.css');        
+    $assetsManager->registerCssFile($adminAssetsUrl.'/css/breadcrumbs/style.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
-
-    // fg.menu
-    $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
-    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
 
     // ToTop 
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery.ui.totop/ui.totop.css');
@@ -57,15 +53,15 @@
 <div id="doc3" class="yui-t6">
 	<div id="hd">
 		<div class="yui-gc">
-                    <div class="yui-u first">
-                        <?php
-                            $this->widget('application.modules.admin.widgets.SSystemMenu');
-                        ?>
-                    </div>
-                    <div class="yui-u" id="topRightMenu">
-                        <a href="#"><?php echo Yii::t('AdminModule.admin', 'Настройки') ?></a>
-                        <a href="/admin/auth/logout"><?php echo Yii::t('AdminModule.admin', 'Выход') ?></a>
-                    </div>
+            <div class="yui-u first">
+                <?php
+                    $this->widget('application.modules.admin.widgets.SSystemMenu');
+                ?>
+            </div>
+            <div class="yui-u" id="topRightMenu">
+                <a href="#"><?php echo Yii::t('AdminModule.admin', 'Настройки') ?></a>
+                <a href="/admin/auth/logout"><?php echo Yii::t('AdminModule.admin', 'Выход') ?></a>
+            </div>
 		</div>
 	</div> <!-- /hd -->
 
@@ -76,10 +72,10 @@
                           
                             <div>
                                 <?php
-                                $this->widget('application.modules.admin.widgets.SAdminBreadcrumbs', array(
-                                    'homeLink'=>$this->createUrl('admin'),
-                                    'links'=>$this->breadcrumbs,
-                                ));
+                                    $this->widget('application.modules.admin.widgets.SAdminBreadcrumbs', array(
+                                        'homeLink'=>$this->createUrl('admin'),
+                                        'links'=>$this->breadcrumbs,
+                                    ));
                                 ?>  
                             </div>
                         </div>
@@ -91,9 +87,7 @@
                     <div style="float:right;">
                     <?php
                         if (!empty($this->topButtons))
-                        {
                             echo $this->topButtons;
-                        }
                     ?>
                     </div> 
                 </div>

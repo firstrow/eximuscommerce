@@ -84,9 +84,7 @@ class SAdminTopButtons extends CWidget {
 
         if ($this->form)
             $this->formId = $this->form->id;
-        
-        $this->registerScripts();
-        
+                
         $buttons = CMap::mergeArray($this->default, $this->elements);
         
         if ($this->addNewElements)
@@ -135,6 +133,8 @@ class SAdminTopButtons extends CWidget {
             , true);
             $n++;
         }
+
+        $this->registerScripts();
     }
     
     /**
@@ -208,27 +208,37 @@ class SAdminTopButtons extends CWidget {
                 submitForm.submit();
                 return false;
             }
-
-            // Dropdrop menu        
-            $('#dropDown_topLink').menu({ 
-                content: $('#dropDownButtonMenu').html(), 
-                showSpeed: 400 
-            });
         ", CClientScript::POS_END);
 
-        echo strtr('<div class="hidden" id="dropDownButtonMenu">
-                <ul>
-                    <li><a href="{createAction}" onClick="{onClick}">{save&create}</a></li>
-                    <li><a href="{updateAction}" onClick="{onClick}">{save&edit}</a></li>
-                </ul>
-            </div>
-        ', array(
-            '{createAction}'=>$this->createAction,
-            '{updateAction}'=>$this->updateAction,
-            '{onClick}'=>$this->renderSubmitFormJs(),
-            '{save&create}'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
-            '{save&edit}'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать')
-        ));
+        if (!isset($this->template['dropDown']))
+        {
+            // Create dropdown menu
+            $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
+            $cs = Yii::app()->clientScript;
+            $cs->registerCssFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.css');
+            $cs->registerScriptFile($adminAssetsUrl.'/vendors/fg.menu/fg.menu.js');
+
+            $cs->registerScript('dropDownButtonMenu', "       
+                $('#dropDown_topLink').menu({ 
+                    content: $('#dropDownButtonMenu').html(), 
+                    showSpeed: 400 
+                });
+            ", CClientScript::POS_END);
+
+            echo strtr('<div style="display:none" id="dropDownButtonMenu">
+                    <ul>
+                        <li><a href="{createAction}" onClick="{onClick}">{save&create}</a></li>
+                        <li><a href="{updateAction}" onClick="{onClick}">{save&edit}</a></li>
+                    </ul>
+                </div>
+            ', array(
+                '{createAction}'=>$this->createAction,
+                '{updateAction}'=>$this->updateAction,
+                '{onClick}'=>$this->renderSubmitFormJs(),
+                '{save&create}'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
+                '{save&edit}'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать')
+            ));
+        }
     }
     
     public function renderSubmitFormJs()
