@@ -18,7 +18,7 @@ class SChosen extends CWidget {
 		foreach($elements as $objectId)
 		{
 			$cs->registerScript($objectId.'Chosen', '
-				$("#'.$objectId.'").chosen();
+				$("#'.$objectId.'").chosen({no_results_text: "'.Yii::t('AdminModule.core', 'Ничего не найдено').'"});
 			');
 		}
 	}
