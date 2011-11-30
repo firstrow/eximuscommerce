@@ -3,7 +3,17 @@
 /**
  * TranslateBehavior implements the basic methods 
  * for translating dynamic content of models.
+ * Behavoir takes language from SLanguageManager::active or you
+ * can specify language id thru language() method.
  * 
+ * Example: 
+ * Find object with language id 2
+ *     Object::model()->language(2)->find();
+ * Detect language from array
+ *     Object::model()->language($_GET)->find();
+ * Language detected automatically
+ *     Object::model()->find();
+ *
  * Usage:
  * 1. Create new relation
  *  'translate'=>array(self::HAS_ONE, 'Translate Storage Model', 'foreign_id'),
@@ -26,9 +36,15 @@
 class STranslateBehavior extends CActiveRecordBehavior {
 	
 	/**
-	 * Attributes aviable for translate
+	 * @var array Model attributes aviable for translate
 	 */
 	public $translateAttributes = array();
+
+    /**
+     * @var integer Language id used to load model translation data.
+     * If null active language id we'll be used.
+     */
+    private $_translation_lang;
 
     public function attach($owner)
     {
@@ -36,15 +52,15 @@ class STranslateBehavior extends CActiveRecordBehavior {
     }
 
     /** 
-     * Find by language
+     * Merge object query with translate query.
      */
     public function beforeFind()
     {
         $this->owner->getDbCriteria()->mergeWith(array(
             'with'=>array('translate'=>array(
-                'condition'=>'language_id=:language_id',
+                'condition'=>'translate.language_id=:language_id',
                 'params'=>array(
-                    ':language_id'=>$this->getEditLanguageId()
+                    ':language_id'=>$this->getTranslateLanguageId()
                 )
             )),
         ));
@@ -52,12 +68,13 @@ class STranslateBehavior extends CActiveRecordBehavior {
     }
 
     /**
-     * Get language id for model.
+     * Get language id to load translated data.
+     * @return integer Language id
      */
-    public function getEditLanguageId()
+    public function getTranslateLanguageId()
     {
-        if (isset($_GET['lang_id']))
-            return (int) $_GET['lang_id'];
+        if ($this->_translation_lang)
+            return $this->_translation_lang;
         return Yii::app()->languageManager->active->id;
     }
 
@@ -66,9 +83,9 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	 */
     public function afterFind()
     {
-        if ($this->owner->translate)
+        if($this->owner->translate)
         {
-            foreach ($this->translateAttributes as $attr)
+            foreach($this->translateAttributes as $attr)
                 $this->owner->$attr = $this->owner->translate[$attr];
         }
         return true;
@@ -127,6 +144,23 @@ class STranslateBehavior extends CActiveRecordBehavior {
                 ':id'=>$this->owner->getPrimaryKey()
             ));
         return true;
+    }
+
+    /**
+     * Scope to load translation by language id
+     * @param mixed $languageId or array containing `lang_id` key
+     * @return CActiveRecord
+     */
+    public function language($language=null)
+    {
+        if(is_array($language) && isset($language['lang_id']))
+            $language = $language['lang_id'];
+
+        if(!Yii::app()->languageManager->getById($language))
+            $language = Yii::app()->languageManager->default->id;
+        
+        $this->_translation_lang = $language;
+        return $this->owner;
     }
 
 }

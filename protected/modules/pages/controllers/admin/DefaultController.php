@@ -35,7 +35,11 @@ class DefaultController extends SAdminController {
 			$model->publish_date = date('Y-m-d H:i:s');
 		}
 		else
-			$model = Page::model()->findByPk($_GET['id']);
+		{
+			$model = Page::model()
+				->language($_GET)
+				->findByPk($_GET['id']);
+		}
 
 		if (!$model)
             throw new CHttpException(404, Yii::t('PagesModule.core', 'Страница не найдена.'));

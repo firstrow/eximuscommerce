@@ -25,7 +25,7 @@ class SLanguageManager extends CApplicationComponent {
 
 	/**
 	 * Load aviable languages.
-	 * @return type
+	 * @return SSystemLanguage collection
 	 */
     private function loadLanguages()
     {
@@ -45,14 +45,28 @@ class SLanguageManager extends CApplicationComponent {
     }
 
     /**
-     * get lang by its code
-     * @param type $langCode 
+     * Get lang by its code
+     * @param string $langCode 
      * @return SSystemLanguage
      */
     public function getByCode($langCode)
     {
         if (isset($this->_languages[$langCode]))
             return $this->_languages[$langCode];
+    }
+
+    /**
+     * Get language by its id
+     * @param integer $langId Language id
+     * @return mixed SSystemLanguage if lang found. Null if not.
+     */
+    public function getById($langId)
+    {
+        foreach($this->languages as $lang)
+        {
+            if ($lang->id == $langId) 
+                return $lang;
+        }
     }
 
     /**
@@ -65,7 +79,7 @@ class SLanguageManager extends CApplicationComponent {
     }
 
     /**
-     * Get default system language
+     * Get default system model
      * @return SSystemLanguage
      */
     public function getDefault()
@@ -84,7 +98,7 @@ class SLanguageManager extends CApplicationComponent {
 
     /**
      * Activate language by code
-     * @param type $code Language code.
+     * @param string $code Language code.
      */
     public function setActive($code=null)
     {
@@ -94,6 +108,7 @@ class SLanguageManager extends CApplicationComponent {
     		$model = $this->default;
 
    		Yii::trace('Activating languge '.$model->name);
+
    		Yii::app()->setLanguage($model->locale);
    		$this->_active = $model->code;
     }
