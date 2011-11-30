@@ -15,8 +15,10 @@ TODO:
 		sample:
 			if (get_class($this))
 				$this->attachEventHandler(args*)
-	- Integrate http://benalman.com/projects/jquery-bbq-plugin/
 	- languageManager - redirect to page without lang code if lang code is from default language.
+	- Create "chosen" http://harvesthq.github.com/chosen/ extension.
+	- Create text file used 3rd party soft.
+	- Connect http://www.famfamfam.com/lab/icons/flags/ to SSystemLanguage and display in langSwitch
 
 	Done:
 	+ Finish job with SGridView filet button.
@@ -37,4 +39,5 @@ TODO:
 	+ Translate modules.pages
 	+ Translate modules.users
 	+ Translate all existing modules.
+	+ Integrate http://benalman.com/projects/jquery-bbq-plugin/
 
