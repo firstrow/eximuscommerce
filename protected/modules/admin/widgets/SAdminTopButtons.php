@@ -203,20 +203,17 @@ class SAdminTopButtons extends CWidget {
         );
     }
     
+    /**
+     * Create language switch button.
+     */
     public function getLangSwitchButton()
     {
-        $this->registerFgMenu();
-        Yii::app()->clientScript->registerScript('langSwithMenu', "       
-            $('#langSwitch_topLink').menu({ 
-                content: $('#langSwitchButtonMenu').html(), 
-                showSpeed: 400
-            });
-        ", CClientScript::POS_END);
+        $currentLang = Yii::app()->languageManager->default;
 
         if (isset($_GET['lang_id']))
             $currentId = $_GET['lang_id'];
         else
-            $currentId = null;
+            $currentId = $currentLang->id;
 
         foreach(Yii::app()->languageManager->languages as $lang)
         {
@@ -230,17 +227,29 @@ class SAdminTopButtons extends CWidget {
                     ),
                 );
             }
+            else
+                $currentLang = $lang;
         }
 
-        echo '<div style="display:none" id="langSwitchButtonMenu">';
+        Yii::app()->clientScript->registerScript('langSwithMenu', "       
+            $('#langSwitch_topLink').menu({ 
+                content: $('#langSwitchButtonMenu').html(), 
+                showSpeed: 400
+            });
+        ", CClientScript::POS_END);
+
+        echo CHtml::openTag('div', array(
+            'id'=>'langSwitchButtonMenu',
+            'style'=>'display:none'
+        ));
         $this->widget('zii.widgets.CMenu', array(
             'items'=>$langs,
         ));
-        echo '</div>';
+        echo CHtml::closeTag('div');
 
         return array(
             'link'=>'#',
-            'title'=>'Language',
+            'title'=>$currentLang->name,
              'options'=>array(
                 'icons'=>array(
                     'secondary'=>'ui-icon-triangle-1-s'
@@ -263,6 +272,7 @@ class SAdminTopButtons extends CWidget {
             }
         ", CClientScript::POS_END);
 
+        // Register stuff dropDown button scripts
         if (in_array('dropDown', $this->template))
         {
             $this->registerFgMenu();
@@ -273,22 +283,38 @@ class SAdminTopButtons extends CWidget {
                 });
             ", CClientScript::POS_END);
 
-            echo strtr('<div style="display:none" id="dropDownButtonMenu">
-                    <ul>
-                        <li><a href="{createAction}" onClick="{onClick}">{save&create}</a></li>
-                        <li><a href="{updateAction}" onClick="{onClick}">{save&edit}</a></li>
-                    </ul>
-                </div>
-            ', array(
-                '{createAction}'=>$this->createAction,
-                '{updateAction}'=>$this->updateAction,
-                '{onClick}'=>$this->renderSubmitFormJs(),
-                '{save&create}'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
-                '{save&edit}'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать')
+            echo CHtml::openTag('div', array(
+                'id'=>'dropDownButtonMenu',
+                'style'=>'display:none'
             ));
+            $this->widget('zii.widgets.CMenu', array(
+                'items'=>array(
+                    array(
+                        'label'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
+                        'url'=>$this->createAction,
+                        'linkOptions'=>array(
+                            'onClick'=>$this->renderSubmitFormJs()
+                        ),
+                    ),
+                    array(
+                        'label'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать'),
+                        'url'=>$this->updateAction,
+                        'linkOptions'=>array(
+                            'onClick'=>$this->renderSubmitFormJs()
+                        ),
+                    ),                    
+                ),
+            ));
+            echo CHtml::closeTag('div');
         }
+
+        if(in_array('langSwitch', $this->template))
+            $this->registerFgMenu();
     }
     
+    /**
+     * Register fg.menu scripts
+     */
     public function registerFgMenu()
     {
         $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;

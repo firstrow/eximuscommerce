@@ -1,9 +1,9 @@
 <?php
     // Page create/edit view
-
+    
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
         'form'=>$form,
-        'langSwitcher'=>true,
+        'langSwitcher'=>!$model->isNewRecord,
         'deleteAction'=>$this->createUrl('/pages/admin/default/delete', array('id'=>$model->id))
     ));
 
