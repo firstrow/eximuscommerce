@@ -1,0 +1,40 @@
+<?php
+
+class SChosen extends CWidget {
+	
+	/**
+	 * @var array List of objects id
+	 */
+	private $_elements;
+
+	public function run()
+	{
+		$this->registerScripts();	
+	}
+
+	public function setElements($elements)
+	{
+		$cs = Yii::app()->getClientScript();
+		foreach($elements as $objectId)
+		{
+			$cs->registerScript($objectId.'Chosen', '
+				$("#'.$objectId.'").chosen();
+			');
+		}
+	}
+
+	public function registerScripts()
+	{
+		$assetsUrl=Yii::app()->getAssetManager()->publish(
+            Yii::getPathOfAlias('application.modules.admin.widgets.schosen.assets'),
+            true,
+            -1,
+            YII_DEBUG
+    	);
+
+		$cs = Yii::app()->getClientScript();
+    	$cs->registerCssFile($assetsUrl.'/chosen.css');
+    	$cs->registerScriptFile($assetsUrl.'/chosen.jquery.js');
+	}
+
+}

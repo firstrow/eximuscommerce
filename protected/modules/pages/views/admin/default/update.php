@@ -15,6 +15,10 @@
         Yii::t('PagesModule.admin', 'Страницы')=>$this->createUrl('index'),
         ($model->isNewRecord) ? Yii::t('PagesModule.admin', 'Создание страницы') : CHtml::encode($model->title),
     );
+
+    $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
+        'elements'=>array('Page_category_id')
+    ));
     
     $this->pageHeader = $title;
 ?>
