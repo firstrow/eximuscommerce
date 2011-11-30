@@ -222,8 +222,19 @@ class Page extends BaseModel
         $criteria->compare('t.publish_date',$this->publish_date,true);
         $criteria->compare('t.status',$this->status);
 
+        // Create sorting by translation title
+        $sort=new CSort;
+        $sort->attributes=array(
+            '*',
+            'title' => array(
+                'asc'   => 'translate.title',
+                'desc'  => 'translate.title DESC',
+            )
+        );
+
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'sort'=>$sort,
             'pagination'=>array(
                 'pageSize'=>20,
             )
