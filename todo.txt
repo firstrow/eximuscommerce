@@ -16,7 +16,6 @@ TODO:
 			if (get_class($this))
 				$this->attachEventHandler(args*)
 	- languageManager - redirect to page without lang code if lang code is from default language.
-	- Create "chosen" http://harvesthq.github.com/chosen/ extension.
 	- Create text file used 3rd party soft.
 	- Connect http://www.famfamfam.com/lab/icons/flags/ to SSystemLanguage and display in langSwitch
 
@@ -40,4 +39,5 @@ TODO:
 	+ Translate modules.users
 	+ Translate all existing modules.
 	+ Integrate http://benalman.com/projects/jquery-bbq-plugin/
+	+ Create "chosen" http://harvesthq.github.com/chosen/ extension.
 
