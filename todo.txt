@@ -17,7 +17,6 @@ TODO:
 				$this->attachEventHandler(args*)
 	- languageManager - redirect to page without lang code if lang code is from default language.
 	- Create text file used 3rd party soft.
-	- Connect http://www.famfamfam.com/lab/icons/flags/ to SSystemLanguage and display in langSwitch
 
 	Done:
 	+ Finish job with SGridView filet button.
@@ -40,4 +39,5 @@ TODO:
 	+ Translate all existing modules.
 	+ Integrate http://benalman.com/projects/jquery-bbq-plugin/
 	+ Create "chosen" http://harvesthq.github.com/chosen/ extension.
+	+ Connect http://www.famfamfam.com/lab/icons/flags/ to SSystemLanguage and display in langSwitch
 
