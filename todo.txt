@@ -17,6 +17,8 @@ TODO:
 				$this->attachEventHandler(args*)
 	- languageManager - redirect to page without lang code if lang code is from default language.
 	- Create text file used 3rd party soft.
+	- Fix grid gridview delete link
+	- Fix langSwith to use only one language
 
 	Done:
 	+ Finish job with SGridView filet button.

@@ -208,6 +208,7 @@ class SAdminTopButtons extends CWidget {
      */
     public function getLangSwitchButton()
     {
+        $langs = array();
         $currentLang = Yii::app()->languageManager->default;
 
         if (isset($_GET['lang_id']))
