@@ -12,8 +12,9 @@ class SAdminTopButtons extends CWidget {
      */
     public $listAction = 'index';
     public $createAction = 'create';
-    public $updateAction;
     public $deleteAction = 'delete';
+    public $defaultUpdateAction = 'update';
+    public $updateAction;
     public $result = array();
     
     /**
@@ -41,7 +42,7 @@ class SAdminTopButtons extends CWidget {
     public $form = null;
     
     /**
-     * If if new is set to false the `delete` button will not by displayed
+     * If isNew is set to false the `delete` button will not by displayed
      * @var boolean
      */
     public $isNew = false;
@@ -51,7 +52,7 @@ class SAdminTopButtons extends CWidget {
      * @var string
      */
     public $formId;
-    
+
     /**
      * Add new elements to template if set to true.
      * If set to false, need to configure $template array manually.
@@ -99,11 +100,18 @@ class SAdminTopButtons extends CWidget {
         if ($this->form !== null)
         {
             $this->formId = $this->form->id;
-            if (isset($this->form->model->isNewRecord) && array_search('delete', $this->template))
+            if ($this->form->model instanceof CActiveRecord)
             {
-                $this->isNew = ($this->form->model->isNewRecord) ? true: false;
-                if ($this->isNew)
-                    unset($this->template[array_search('delete', $this->template)]);
+                // New record
+                if (isset($this->form->model->isNewRecord) && $this->form->model->isNewRecord === true)
+                {
+                    $this->isNew = ($this->form->model->isNewRecord) ? true: false;
+
+                    if ($this->isNew && array_search('delete', $this->template))
+                        unset($this->template[array_search('delete', $this->template)]);
+
+                    $this->updateAction = $this->defaultUpdateAction;
+                }
             }
         }
         
@@ -208,7 +216,6 @@ class SAdminTopButtons extends CWidget {
      */
     public function getLangSwitchButton()
     {
-        $langs = array();
         $currentLang = Yii::app()->languageManager->default;
 
         if (isset($_GET['lang_id']))
@@ -216,45 +223,49 @@ class SAdminTopButtons extends CWidget {
         else
             $currentId = $currentLang->id;
 
-        foreach(Yii::app()->languageManager->languages as $lang)
+        if (count(Yii::app()->languageManager->languages) > 1)
         {
-            if($currentId != $lang->id)
+            $langs = array();
+            foreach(Yii::app()->languageManager->languages as $lang)
             {
-                $langs[] = array(
-                    'label'=>$this->getFlagImage($lang).CHtml::encode($lang['name']),
-                    'url'=>'#',
-                    'linkOptions'=>array(
-                        'onClick'=>"window.location = jQuery.param.querystring(window.location.href,{lang_id:$lang->id});",
-                    ),
-                );
+                if($currentId != $lang->id)
+                {
+                    $langs[] = array(
+                        'label'=>$this->getFlagImage($lang).CHtml::encode($lang['name']),
+                        'url'=>'#',
+                        'linkOptions'=>array(
+                            'onClick'=>"window.location = jQuery.param.querystring(window.location.href,{lang_id:$lang->id});",
+                        ),
+                    );
+                }
+                else
+                    $currentLang = $lang;
             }
-            else
-                $currentLang = $lang;
+
+            Yii::app()->clientScript->registerScript('langSwithMenu', "       
+                $('#langSwitch_topLink').menu({ 
+                    content: $('#langSwitchButtonMenu').html(), 
+                    showSpeed: 400
+                });
+            ", CClientScript::POS_END);
+
+            echo CHtml::openTag('div', array(
+                'id'=>'langSwitchButtonMenu',
+                'style'=>'display:none'
+            ));
+            $this->widget('zii.widgets.CMenu', array(
+                'items'=>$langs,
+                'encodeLabel'=>false
+            ));
+            echo CHtml::closeTag('div');            
         }
-
-        Yii::app()->clientScript->registerScript('langSwithMenu', "       
-            $('#langSwitch_topLink').menu({ 
-                content: $('#langSwitchButtonMenu').html(), 
-                showSpeed: 400
-            });
-        ", CClientScript::POS_END);
-
-        echo CHtml::openTag('div', array(
-            'id'=>'langSwitchButtonMenu',
-            'style'=>'display:none'
-        ));
-        $this->widget('zii.widgets.CMenu', array(
-            'items'=>$langs,
-            'encodeLabel'=>false
-        ));
-        echo CHtml::closeTag('div');
 
         return array(
             'link'=>'#',
             'title'=>$this->getFlagImage($currentLang).CHtml::encode($currentLang->name),
-             'options'=>array(
+            'options'=>array(
                 'icons'=>array(
-                    'secondary'=>'ui-icon-triangle-1-s'
+                    'secondary'=>(count(Yii::app()->languageManager->languages) > 1) ? 'ui-icon-triangle-1-s' : null
                 )
             )
         );
