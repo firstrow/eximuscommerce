@@ -19,6 +19,7 @@ TODO:
 	- Create text file used 3rd party soft.
 	- Fix grid gridview delete link
 	- Fix langSwith to use only one language
+	- On create newLanguage insert default tranlations for all subsribed model
 
 	Done:
 	+ Finish job with SGridView filet button.
