@@ -10,6 +10,7 @@
  * @property string $code Url prefix
  * @property string $locale Language locale
  * @property boolean $default Is lang default
+ * @property boolean $flag_name Flag image name
  */
 class SSystemLanguage extends BaseModel
 {
@@ -38,15 +39,12 @@ class SSystemLanguage extends BaseModel
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('name, code, locale', 'required'),
             array('name, locale', 'length', 'max'=>100),
+            array('flag_name', 'length', 'max'=>255),
             array('code', 'length', 'max'=>25),
             array('default', 'in', 'range'=>array(0,1)),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
             array('id, name, code, locale', 'safe', 'on'=>'search'),
         );
     }
@@ -57,11 +55,12 @@ class SSystemLanguage extends BaseModel
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'name' => Yii::t('CoreModule.core', 'Название'),
-            'code' => Yii::t('CoreModule.core', 'Идентификатор'),
-            'locale' => Yii::t('CoreModule.core', 'Кодировка'),
-            'default' => Yii::t('CoreModule.core', 'По умолчанию'),
+            'id'        => 'ID',
+            'name'      => Yii::t('CoreModule.core', 'Название'),
+            'code'      => Yii::t('CoreModule.core', 'Идентификатор'),
+            'locale'    => Yii::t('CoreModule.core', 'Кодировка'),
+            'default'   => Yii::t('CoreModule.core', 'По умолчанию'),
+            'flag_name' => Yii::t('CoreModule.core', 'Флаг'),
         );
     }
 
@@ -91,8 +90,25 @@ class SSystemLanguage extends BaseModel
         {
             self::model()->updateAll(array(
                 'default'=>0,
-
-            ), 'id!='.$this->id);
+            ), 'id != '.$this->id);
         }
+    }
+
+    public static function getFlagImagesList()
+    {
+        Yii::import('system.utils.CFileHelper');
+        $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
+        $flagsPath = 'application.modules.admin.assets.images.flags.png';
+
+        $result = array();
+        $flags = CFileHelper::findFiles(Yii::getPathOfAlias($flagsPath));
+
+        foreach($flags as $f)
+        {
+            $fileName = end(explode(DIRECTORY_SEPARATOR, $f));
+            $result[$fileName] = $fileName;
+        }
+
+        return $result;
     }
 }

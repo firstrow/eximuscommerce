@@ -14,6 +14,10 @@
         Yii::t('CoreModule.admin', 'Языки')=>$this->createUrl('index'),
         ($model->isNewRecord) ? Yii::t('CoreModule.admin', 'Создание языка') : CHtml::encode($model->name),
     );
+
+    // $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
+    //     'elements'=>array('SSystemLanguage_flag_name'),
+    // ));
     
     $this->pageHeader = $title;
 ?>

@@ -220,10 +220,10 @@ class SAdminTopButtons extends CWidget {
             if($currentId != $lang->id)
             {
                 $langs[] = array(
-                    'label'=>$lang['name'],
+                    'label'=>$this->getFlagImage($lang).CHtml::encode($lang['name']),
                     'url'=>'#',
                     'linkOptions'=>array(
-                        'onClick'=>"window.location = jQuery.param.querystring(window.location.href,{lang_id:$lang->id});"
+                        'onClick'=>"window.location = jQuery.param.querystring(window.location.href,{lang_id:$lang->id});",
                     ),
                 );
             }
@@ -244,18 +244,38 @@ class SAdminTopButtons extends CWidget {
         ));
         $this->widget('zii.widgets.CMenu', array(
             'items'=>$langs,
+            'encodeLabel'=>false
         ));
         echo CHtml::closeTag('div');
 
         return array(
             'link'=>'#',
-            'title'=>$currentLang->name,
+            'title'=>$this->getFlagImage($currentLang).CHtml::encode($currentLang->name),
              'options'=>array(
                 'icons'=>array(
                     'secondary'=>'ui-icon-triangle-1-s'
                 )
             )
         );
+    }
+
+    /**
+     * Create flag image for lang
+     * @param SSystemLanguage $lang 
+     * @return string
+     */
+    public function getFlagImage(SSystemLanguage $lang)
+    {
+        $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
+        if($lang->flag_name)
+        {
+            return CHtml::image($adminAssetsUrl.'/images/flags/png/'.$lang->flag_name, null, array(
+                'width'=>16,
+                'height'=>11,
+                'align'=>'absmiddle',
+                'style'=>'margin-bottom:2px',
+            )).' ';
+        }
     }
 
     public function registerScripts()
