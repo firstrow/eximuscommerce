@@ -104,8 +104,7 @@ class SystemModules extends BaseModel
 
     /**
      * Load enabled modules and cache for current request
-     * TODO: cache result
-     * @return type
+     * @return array Enabled modules
      */
     public static function getEnabled()
     {

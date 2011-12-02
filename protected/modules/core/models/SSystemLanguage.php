@@ -92,6 +92,7 @@ class SSystemLanguage extends BaseModel
                 'default'=>0,
             ), 'id != '.$this->id);
         }
+        return parent::afterSave();
     }
 
     public static function getFlagImagesList()

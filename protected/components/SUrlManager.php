@@ -16,7 +16,8 @@ class SUrlManager extends CUrlManager {
      * Create url based on current language.
      * @param mixed $route 
      * @param array $params 
-     * @param string $ampersand 
+     * @param string $ampersand
+     * @param boolean $respectLang
      * @access public
      * @return string
      */
@@ -36,7 +37,7 @@ class SUrlManager extends CUrlManager {
 
     /**
      * Scan each module dir and include routes.php
-     * Add module urls at the begining of $config['urlManager']['rules']
+     * Add module urls at the beginning of $config['urlManager']['rules']
      * @access protected
      */
     protected function _loadModuleUrls()
