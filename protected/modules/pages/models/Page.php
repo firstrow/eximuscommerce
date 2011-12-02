@@ -86,6 +86,7 @@ class Page extends BaseModel
     /**
      * Find page by url.
      * Scope.
+     * @param string Page url
      * @return Page
      */
     public function withUrl($url)
@@ -101,6 +102,7 @@ class Page extends BaseModel
     /**
      * Filter pages by category.
      * Scope.
+     * @param PageCategory $model
      * @return Page
      */
     public function filterByCategory($model)

@@ -40,9 +40,9 @@ class SModelEventManager
      */
     public static function init()
     {
-        $modules = SystemModules::getEnabled();
+        self::$initialized = true;
 
-        foreach($modules as $module)
+        foreach(SystemModules::getEnabled() as $module)
         {
             $className = ucfirst($module->name).'ModuleEvents';
             $path = Yii::getPathOfAlias('application.modules.'.$module->name.'.config.'.$className).'.php';
@@ -53,16 +53,14 @@ class SModelEventManager
     }
 
     /**
+     * Attach events to object
      * @static
      * @param CActiveRecord $object
      */
     public static function attachEvents(CActiveRecord $object)
     {
         if(self::$initialized === false)
-        {
-            self::$initialized = true;
             self::init();
-        }
 
         if(isset(self::$events[get_class($object)]))
         {
