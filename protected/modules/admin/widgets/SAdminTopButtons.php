@@ -2,12 +2,12 @@
 
 /**
  * SAdminTopButtons 
- * Displays base buttons on top to save object.
+ * Displays buttons on top to save object.
  */
 class SAdminTopButtons extends CWidget {
     
     /**
-     * Link to controller actions
+     * Links to controller actions
      * @var string
      */
     public $listAction = 'index';
@@ -71,6 +71,7 @@ class SAdminTopButtons extends CWidget {
      *      'title'=>'Link Title',
      *      'classes'=>array(),
      *      'htmlOptions'=>array(),
+     *      ...
      * )
      * 
      * @var type array
@@ -152,6 +153,7 @@ class SAdminTopButtons extends CWidget {
     
     /**
      * Load default buttons
+     * @return array
      */
     public function getDefault()
     {
@@ -213,6 +215,7 @@ class SAdminTopButtons extends CWidget {
     
     /**
      * Create language switch button.
+     * @return array
      */
     public function getLangSwitchButton()
     {
@@ -367,9 +370,8 @@ class SAdminTopButtons extends CWidget {
     public function __toString() 
     {
         $htmlResult = '';
-        foreach($this->result as $key=>$link)
+        foreach($this->result as $link)
             $htmlResult .= $link;
-        
         return $htmlResult;
     }
 }
