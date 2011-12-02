@@ -6,15 +6,6 @@ TODO:
 	- Add indexes to PageCategory table
 	- Search and get done all "TODO" in source files.
 	- Fix css3button to not hover on jquery buttons in dialog.
-	- Create "hooks/events" for AR models using attachEventHandler
-		Workfolw:
-		1. Scan installed modules for events.php
-		sample event record:
-			array('Page', 'onAfterDelete', array($object, 'eventHandler'))
-		2. Attach aviable class handlers in BaseModel::init
-		sample:
-			if (get_class($this))
-				$this->attachEventHandler(args*)
 	- languageManager - redirect to page without lang code if lang code is from default language.
 	- Create text file used 3rd party soft.
 	- Fix grid gridview delete link
@@ -43,4 +34,4 @@ TODO:
 	+ Integrate http://benalman.com/projects/jquery-bbq-plugin/
 	+ Create "chosen" http://harvesthq.github.com/chosen/ extension.
 	+ Connect http://www.famfamfam.com/lab/icons/flags/ to SSystemLanguage and display in langSwitch
-
+	- Create "hooks/events" for AR models using attachEventHandler
