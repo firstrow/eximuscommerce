@@ -3,7 +3,7 @@
 class SLanguageManager extends CApplicationComponent {
 	
     /**
-     * @var array Aviable system languages
+     * @var array available system languages
      */
     protected $_languages = array();
 
@@ -24,7 +24,7 @@ class SLanguageManager extends CApplicationComponent {
 	}
 
 	/**
-	 * Load aviable languages.
+	 * Load available languages.
 	 * @return SSystemLanguage collection
 	 */
     private function loadLanguages()
