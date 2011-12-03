@@ -2,7 +2,7 @@
 
 /**
  * Manage system languages
- * @package default
+ * @package core.systemLanguages
  */
 class SystemLanguagesController extends SAdminController
 {

@@ -6,11 +6,12 @@ TODO:
 	- Add indexes to PageCategory table
 	- Search and get done all "TODO" in source files.
 	- Fix css3button to not hover on jquery buttons in dialog.
-	- languageManager - redirect to page without lang code if lang code is from default language.
 	- Create text file used 3rd party soft.
 	- Fix grid gridview delete link
 	- Fix langSwith to use only one language
 	- On create newLanguage insert default tranlations for all subsribed model
+	- Add full list of translate able objects to Page
+	- Add full support of translate to PageCategory model
 
 	Done:
 	+ Finish job with SGridView filet button.
@@ -34,4 +35,5 @@ TODO:
 	+ Integrate http://benalman.com/projects/jquery-bbq-plugin/
 	+ Create "chosen" http://harvesthq.github.com/chosen/ extension.
 	+ Connect http://www.famfamfam.com/lab/icons/flags/ to SSystemLanguage and display in langSwitch
-	- Create "hooks/events" for AR models using attachEventHandler
+	+ Create "hooks/events" for AR models using attachEventHandler
+	+ languageManager - redirect to page without lang code if lang code is from default language.
