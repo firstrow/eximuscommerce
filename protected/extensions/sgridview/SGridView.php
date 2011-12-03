@@ -1,16 +1,16 @@
-<?php 
+<?php
 
 Yii::import('zii.widgets.grid.CGridView');
 Yii::import('application.modules.core.models.GridViewFilter');
 
 /**
- * Extends yii gridview and adds several new features as: "Clear/Save filter", 
+ * Extends yii gridview and adds several new features as: "Clear/Save filter",
  * ability to add personal menu.
- * 
+ *
  * @package admin.widgets
  */
 class SGridView extends CGridView {
-	
+
 	public $template = '{items}{summary}{pager}';
 	public $selectableRows = 2;
 	public $extended = true;
@@ -20,7 +20,7 @@ class SGridView extends CGridView {
 	 */
 	public function init()
 	{
-		// Uhhhh! ugly copypaste from CBaseListView::init()!
+		// Uhhhh! ugly copy-paste from CBaseListView::init()!
 		if($this->dataProvider===null)
 			throw new CException(Yii::t('zii','The "dataProvider" property cannot be empty.'));
 
@@ -114,7 +114,7 @@ class SGridView extends CGridView {
 		{
 			foreach($this->filter->attributes as $key=>$val)
 			{
-				if($val) 
+				if($val)
 					return true;
 			}
 		}
@@ -135,7 +135,7 @@ class SGridView extends CGridView {
 		if ($filters)
 		{
 			$filtersHtml .= CHtml::openTag('hr');
-			foreach ($filters as $filter) 
+			foreach ($filters as $filter)
 			{
 				$filtersHtml .= strtr('
 					<li>
@@ -166,7 +166,7 @@ class SGridView extends CGridView {
 				));
 			}
 		}
-			
+
 		echo strtr('
 			<div class="gridViewOptions">&nbsp;</div>
 			<div class="gridViewOptionsMenu">

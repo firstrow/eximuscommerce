@@ -42,6 +42,9 @@ class Page extends BaseModel
     public $title;
     public $short_description;
     public $full_description;
+    public $meta_title;
+    public $meta_description;
+    public $meta_keywords;
 
     /**
      * Name of the translations model.
@@ -155,7 +158,10 @@ class Page extends BaseModel
                 'translateAttributes'=>array(
                     'title',
                     'short_description',
-                    'full_description'
+                    'full_description',
+                    'meta_title',
+                    'meta_description',
+                    'meta_keywords',
                 ),
             ),
         );

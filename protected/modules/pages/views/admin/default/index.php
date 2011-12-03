@@ -26,7 +26,6 @@
         'id'=>'pagesListGrid',
         'afterAjaxUpdate'=>"function(){registerFilterDatePickers()}",
         'filter'=>$model,
-        //'ajaxUpdate'=>false,
         'columns'=>array(
             array(
                 'class'=>'CCheckBoxColumn',
