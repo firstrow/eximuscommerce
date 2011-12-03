@@ -232,11 +232,10 @@ class SGridView extends CGridView {
 					'{filterId}'=>$filter->id,
 					'{delete}'=>CHtml::link(
 					    CHtml::image($this->baseScriptUrl.'/cross.png', Yii::t('SGridView.core', 'Удалить')),
-					    array(
-						     '/admin/core/gridView/deleteFilter',
-						     'id'=>$filter->id,
-						     'redirect'=>base64_encode(Yii::app()->request->url),
-						),
+					    Yii::app()->createUrl('core/admin/gridView/deleteFilter',array(
+                            'id'=>$filter->id,
+                            'redirect'=>base64_encode(Yii::app()->request->url),
+                        )),
 					    array(
 						    'confirm'=>Yii::t('SGridView.core','Вы действительно хотите удалить этот фильтр?'),
 						    'id'=>'fdLink'.$filter->id

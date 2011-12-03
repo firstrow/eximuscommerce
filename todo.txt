@@ -7,8 +7,6 @@ TODO:
 	- Search and get done all "TODO" in source files.
 	- Fix css3button to not hover on jquery buttons in dialog.
 	- Create text file used 3rd party soft.
-	- Fix grid gridview delete link
-	- Fix langSwith to use only one language
 	- Add full support of translate to PageCategory model
 
 	Done:
@@ -37,3 +35,5 @@ TODO:
 	+ languageManager - redirect to page without lang code if lang code is from default language.
 	+ Add full list of translate able objects to Page
 	+ On create newLanguage insert default translations for all subscribed model
+	+ Fix langSwith to use only one language
+	+ Fix grid gridview delete filter link
