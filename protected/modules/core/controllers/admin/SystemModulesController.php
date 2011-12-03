@@ -40,7 +40,7 @@ class SystemModulesController extends SAdminController
         }
 
         $this->render('install', array(
-            'modules'=>SystemModules::getAviable(),
+            'modules'=>SystemModules::getAvailable(),
         ));
     }
 
@@ -61,5 +61,5 @@ class SystemModulesController extends SAdminController
                 $this->redirect('index');
         }
     }
-    
+
 }

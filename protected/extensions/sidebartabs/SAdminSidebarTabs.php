@@ -3,11 +3,11 @@
 Yii::import('web.widgets.CWidget');
 
 /**
- * Displaytical ve tabs in sidebar
+ * Display vertical tabs in sidebar
  * @package ext.sidebartabs
  */
 class SAdminSidebarTabs extends CWidget {
-	
+
 	public $tabs=array();
 
 	public function run()
@@ -16,7 +16,7 @@ class SAdminSidebarTabs extends CWidget {
 
 		$n=0;
 		echo CHtml::openTag('div', array('class'=>'SidebarTabsContent'));
-		foreach ($this->tabs as $title => $content) 
+		foreach ($this->tabs as $title => $content)
 		{
 			echo CHtml::openTag('div', array(
 				'id'=>'tab_'.$n,

@@ -1,13 +1,10 @@
 TODO:
 	- Create module update page for "SystemModules".
-	- Add "translit button" on page update view.
 	- Create initial "Pages migration" with table sctructure and indexes.
 	- Add indexes to Page table
 	- Add indexes to PageCategory table
 	- Search and get done all "TODO" in source files.
-	- Fix css3button to not hover on jquery buttons in dialog.
 	- Create text file used 3rd party soft.
-	- Add full support of translate to PageCategory model
 
 	Done:
 	+ Finish job with SGridView filet button.
@@ -37,3 +34,5 @@ TODO:
 	+ On create newLanguage insert default translations for all subscribed model
 	+ Fix langSwith to use only one language
 	+ Fix grid gridview delete filter link
+	+ Add full support of translate to PageCategory model
+	+ Fix css3button to not hover on jquery buttons in dialog.

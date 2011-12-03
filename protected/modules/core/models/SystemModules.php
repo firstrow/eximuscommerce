@@ -11,9 +11,15 @@
 class SystemModules extends BaseModel
 {
     /**
-     * Cache enabled modules
+     * Cache enabled modules for request
      */
     protected static $cache = null;
+
+    /**
+     * Cache all modules for request
+     * @var null
+     */
+    protected static $cacheAll = null;
 
     /**
      * Module info
@@ -53,16 +59,6 @@ class SystemModules extends BaseModel
         );
     }
 
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-        );
-    }
 
     public function scopes()
     {
@@ -122,14 +118,31 @@ class SystemModules extends BaseModel
     }
 
     /**
-     * Get not inslled modules
-     * @return array List of modules aviable to install.
+     * @return array All installed modules names
      */
-    public function getAviable()
+    public static function getInstalled()
+    {
+        if (self::$cacheAll)
+            return self::$cacheAll;
+
+        $cr = new CDbCriteria;
+        $cr->select = 'name';
+
+        self::$cacheAll = SystemModules::model()
+            ->findAll($cr);
+
+        return self::$cacheAll;
+    }
+
+    /**
+     * Get not installed modules
+     * @return array List of modules available to install.
+     */
+    public function getAvailable()
     {
         $result = array();
         $files = glob(Yii::getPathOfAlias('application.modules.*') . '/*/config/info.php');
-        
+
         if (!sizeof($files))
             return array();
 
@@ -146,7 +159,7 @@ class SystemModules extends BaseModel
 
     /**
      * Check if module is installed
-     * @param string $name 
+     * @param string $name
      * @return boolean
      */
     public static function isModuleInstalled($name)
@@ -157,7 +170,7 @@ class SystemModules extends BaseModel
 
     /**
      * Install module
-     * @param type $name module name 
+     * @param type $name module name
      * @return boolean
      */
     public function install($name)
@@ -167,7 +180,7 @@ class SystemModules extends BaseModel
         $model->enabled = true;
 
         try {
-            Yii::trace('Module installed'); 
+            Yii::trace('Module installed');
             $model->save();
         } catch(Exception $e) {
             Yii::trace('Error installing module');
@@ -179,7 +192,7 @@ class SystemModules extends BaseModel
 
     /**
      * Load module description file
-     * @param string $name module name 
+     * @param string $name module name
      * @return array
      */
     public static function loadInfoFile($name = null)
