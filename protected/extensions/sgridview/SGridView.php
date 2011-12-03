@@ -21,7 +21,12 @@ class SGridView extends CGridView {
      * @var array List of custom actions to display in footer.
      * See example in {@link SGridView::getFooterActions}
      */
-    public $customActions = array();
+    protected $_customActions;
+
+    /**
+     * @var bool Set to false to hide `Delete` button.
+     */
+    public $hasDeleteAction = true;
 
 	/**
 	 * Initializes the grid view.
@@ -93,22 +98,59 @@ class SGridView extends CGridView {
         ));
 	}
 
+    /**
+     * @return array List of available actions
+     */
     public function getFooterActions()
     {
-        $deleteAction = array(array(
+        if ($this->hasDeleteAction === true)
+        {
+            $this->customActions = array(array(
                 'label'=>'Удалить',
                 'url'=>$this->owner->createUrl('delete'),
                 'linkOptions'=>array(
                     'class'=>'actionDelete',
-                    'data-token'=>Yii::app()->request->csrfToken,
                     'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные страницы?'),
-                    'onClick'=>strtr('return $.fn.yiiGridView.runAction(":grid", this);', array(
-                        ':grid'=>$this->getId()
-                    )),
-                ),
+                )
             ));
-        return CMap::mergeArray($this->customActions, $deleteAction);
+        }
+        return $this->customActions;
     }
+
+    /**
+     * @param array $actions of user defined actions
+     */
+    public function setCustomActions($actions)
+    {
+        foreach($actions as $action)
+        {
+            if(!isset($action['linkOptions']))
+                $action['linkOptions'] = $this->getDefaultActionOptions();
+            else
+                $action['linkOptions'] = array_merge($this->getDefaultActionOptions(),$action['linkOptions']);
+            $this->_customActions[] = $action;
+        }
+    }
+
+    /**
+     * @return array Default linkOptions for footer action.
+     */
+    public function getDefaultActionOptions()
+    {
+        return array(
+            'data-token'=>Yii::app()->request->csrfToken,
+            'data-question'=>Yii::t('SGridView.core', 'Выполнить действие?'),
+            'onClick'=>strtr('return $.fn.yiiGridView.runAction(":grid", this);', array(
+                ':grid'=>$this->getId()
+            )),
+        );
+    }
+
+    public function getCustomActions()
+    {
+        return $this->_customActions;
+    }
+
 
     /**
      * Set js function on grid row click.
