@@ -225,9 +225,9 @@ class Page extends BaseModel
         $criteria->compare('t.url',$this->url,true);
         $criteria->compare('translate.short_description',$this->short_description,true);
         $criteria->compare('translate.full_description',$this->full_description,true);
-        $criteria->compare('t.meta_title',$this->meta_title,true);
-        $criteria->compare('t.meta_description',$this->meta_description,true);
-        $criteria->compare('t.meta_keywords',$this->meta_keywords,true);
+        $criteria->compare('translate.meta_title',$this->meta_title,true);
+        $criteria->compare('translate.meta_description',$this->meta_description,true);
+        $criteria->compare('translate.meta_keywords',$this->meta_keywords,true);
         $criteria->compare('t.created',$this->created,true);
         $criteria->compare('t.updated',$this->updated,true);
         $criteria->compare('t.publish_date',$this->publish_date,true);
@@ -264,7 +264,7 @@ class Page extends BaseModel
             $this->url = SlugHelper::run($this->title);
         }
 
-        // Check if url aviable
+        // Check if url available
         $test = Page::model()
             ->withUrl($this->url)
             ->count('id!=:id', array(':id'=>$this->id));
