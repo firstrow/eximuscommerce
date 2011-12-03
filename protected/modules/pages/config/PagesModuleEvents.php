@@ -36,6 +36,17 @@ class PagesModuleEvents
             foreach($pages as $p)
                 $p->createTranslation($event->sender->getPrimaryKey());
         }
+
+        // Categories
+        $categories = PageCategory::model()
+            ->language(Yii::app()->languageManager->default->id)
+            ->findAll();
+
+        if($categories)
+        {
+            foreach($categories as $c)
+                $c->createTranslation($event->sender->getPrimaryKey());
+        }
     }
 
     /**
@@ -44,6 +55,7 @@ class PagesModuleEvents
      */
     public function deleteTranslations($event)
     {
+        // Delete page translations
         Yii::import('application.modules.pages.models.PageTranslate');
 
         $pages = PageTranslate::model()->findAll(array(
@@ -55,6 +67,20 @@ class PagesModuleEvents
         {
             foreach($pages as $p)
                 $p->delete();
+        }
+
+        // Delete categories translations
+        Yii::import('application.modules.pages.models.PageCategoryTranslate');
+
+        $categories = PageCategoryTranslate::model()->findAll(array(
+            'condition'=>'language_id=:lang_id',
+            'params'=>array(':lang_id'=>$event->sender->getPrimaryKey())
+        ));
+
+        if($categories)
+        {
+            foreach($categories as $c)
+                $c->delete();
         }
     }
 

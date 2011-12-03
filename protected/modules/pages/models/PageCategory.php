@@ -250,7 +250,7 @@ class PageCategory extends BaseModel
                 $p->delete();
         }
 
-        // Delete all childs
+        // Delete all child categories
         $tree = new PageCategoryTree();
         $tree = $tree->buildTree($this->id);
 

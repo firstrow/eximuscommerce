@@ -1,7 +1,7 @@
 <?php
 
 class PageCategoryTree {
-	
+
 	public $categories = array();
 	public $result = array();
 
@@ -18,7 +18,7 @@ class PageCategoryTree {
 
 	/**
 	 * Build simple category tree.
-	 * @param type $parentId Parent category id. Set category id to get all childs.
+	 * @param int $parentId Parent category id. Set category id to get all childs.
 	 * @return array
 	 */
 	public function buildTree($parentId = null)
@@ -50,7 +50,7 @@ class PageCategoryTree {
 	public function rebuildFullUrl()
 	{
         $this->buildTree();
-        foreach ($this->result as $category) 
+        foreach ($this->result as $category)
         {
         	$category->full_url = $category->path;
         	$category->save(false);
@@ -59,7 +59,7 @@ class PageCategoryTree {
 
 	/**
 	 * Get category from tree by id.
-	 * @param type $id 
+	 * @param int $id
 	 * @return PageCategory
 	 */
 	public function getById($id)
