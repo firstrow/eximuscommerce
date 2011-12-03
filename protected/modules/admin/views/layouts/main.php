@@ -4,7 +4,7 @@
     $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
 
     $assetsManager = Yii::app()->clientScript;
-	$assetsManager->registerCoreScript('jquery');  
+	$assetsManager->registerCoreScript('jquery');
 	$assetsManager->registerCoreScript('jquery.ui');
 
     // Disable jquery-ui default theme
@@ -19,10 +19,10 @@
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
     $assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
 
-    // ToTop 
+    // ToTop
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery.ui.totop/ui.totop.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ui.totop/jquery.ui.totop.js');
-    
+
     // jGrowl
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.js');
@@ -33,13 +33,13 @@
     // Init script
     $assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
 ?>
-<!doctype html> 
+<!doctype html>
 <html>
 <head>
 
 	<meta charset="utf-8">
 	<title>CMS</title>
-    
+
     <style type="text/css">
         /*** Fix for tabs. ***/
         .ui-tabs {
@@ -72,24 +72,24 @@
                 <div class="yui-u first" style="width:1px;">
                     <div class="navigation-content-left">
                         <div id="breadcrumbs" class="breadCrumb module">
-                          
+
                             <div>
                                 <?php
                                     $this->widget('application.modules.admin.widgets.SAdminBreadcrumbs', array(
                                         'homeLink'=>$this->createUrl('admin'),
                                         'links'=>$this->breadcrumbs,
                                     ));
-                                ?>  
+                                ?>
                             </div>
                         </div>
 
                     </div>
                 </div>
             <div class="yui-u" style="width:50%;">
-                <div class="navigation-content-right marright" align="right" style="float:right;">                   
+                <div class="navigation-content-right marright" align="right" style="float:right;">
                     <div style="float:right;">
 
-                    <?php 
+                    <?php
                         // $this->widget('zii.widgets.jui.CJuiButton',
                         //     array(
                         //         'id'=>'ls',
@@ -110,7 +110,7 @@
                         if (!empty($this->topButtons))
                             echo $this->topButtons;
                     ?>
-                    </div> 
+                    </div>
                 </div>
             </div>
 	</div>
@@ -118,7 +118,7 @@
 	<div id="bd" class="marleft">
             <div id="yui-main">
                 <?php if (isset($this->pageHeader) && !empty($this->pageHeader)) echo '<h3>'.CHtml::encode($this->pageHeader).'</h3>'; ?>
-                
+
                 <!-- Remove yui-b class for full wide -->
                 <?php if (!empty($this->sidebarContent)) { ?>
                     <div class="yui-b marright">
@@ -137,9 +137,9 @@
                             echo '</script>';
                         }
                     ?>
-                    <div id="content" class="yui-g">	
+                    <div id="content" class="yui-g">
                     <!-- <hr /> -->
-                        <?php 
+                        <?php
                             echo $content;
                         ?>
                     </div>
@@ -151,7 +151,7 @@
                 <?php echo $this->sidebarContent; ?>
                 <!--
                 <h3>Меню</h3>
-                <hr/>        
+                <hr/>
                 <ul>
                     <li><a href="#">Страницы</a></li>
                     <li><a href="#">Категории</a></li>
@@ -164,7 +164,7 @@
                 <div class="sidebarBlock marright">
                     <h3>Block Header</h3>
                     <div class="blockContent">
-                        <form>     
+                        <form>
                             <input type="text" />
                         </form>
                     </div>
@@ -173,7 +173,7 @@
                 </div><!-- /sidebar -->
             <?php } ?>
 	</div>
-	
+
 	<div id="ft" style="height:50px;">
             <!-- footer -->
             &nbsp;

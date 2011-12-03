@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.pages.models.PageCategoryTranslate');
+
 /**
  * This is the model class for table "PageCategory".
  *
@@ -36,7 +38,21 @@ class PageCategory extends BaseModel
      */
     public $path;
 
+    /**
+     * @var string name prefixed with "-"
+     */
     public $_nameWithLevel;
+
+    /**
+     * Translateable
+     */
+    public $name;
+    public $description;
+    public $meta_title;
+    public $meta_description;
+    public $meta_keywords;
+
+    public $translateModelName = 'PageCategoryTranslate';
 
     /**
      * Returns the static model of the specified AR class.
@@ -61,7 +77,7 @@ class PageCategory extends BaseModel
     public function rules()
     {
         return array(
-            array(' description, layout, view', 'type'),
+            array('description, layout, view', 'type'),
             array('name', 'required'),
             array('url', 'LocalUrlValidator'),
             array('parent_id, page_size', 'numerical', 'integerOnly'=>true),
@@ -107,6 +123,7 @@ class PageCategory extends BaseModel
     public function relations()
     {
         return array(
+            'translate'=>array(self::HAS_ONE, $this->translateModelName, 'object_id'),
             'pages'=>array(self::HAS_MANY, 'Page', 'category_id'),
             'pageCount'=>array(self::STAT, 'Page', 'category_id'),
         );
@@ -137,7 +154,7 @@ class PageCategory extends BaseModel
 
     /**
      * Get all categories list to display in dropdown.
-     * @param type $excludeId Exclude self model 
+     * @param type $excludeId Exclude self model
      * @return array id=>name
      */
     public static function keyValueList()
@@ -164,22 +181,40 @@ class PageCategory extends BaseModel
     {
         $criteria=new CDbCriteria;
 
+        $criteria->with = array('translate');
+
         $criteria->compare('id',$this->id);
         $criteria->compare('parent_id',$this->parent_id);
-        $criteria->compare('name',$this->name,true);
+        $criteria->compare('translate.name',$this->name,true);
         $criteria->compare('url',$this->url,true);
-        $criteria->compare('description',$this->description,true);
+        $criteria->compare('translate.description',$this->description,true);
         $criteria->compare('layout',$this->layout,true);
         $criteria->compare('view',$this->view,true);
-        $criteria->compare('meta_title',$this->meta_title,true);
-        $criteria->compare('meta_description',$this->meta_description,true);
-        $criteria->compare('meta_keywords',$this->meta_keywords,true);
+        $criteria->compare('translate.meta_title',$this->meta_title,true);
+        $criteria->compare('translate.meta_description',$this->meta_description,true);
+        $criteria->compare('translate.meta_keywords',$this->meta_keywords,true);
         $criteria->compare('created',$this->created,true);
         $criteria->compare('updated',$this->updated,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function behaviors()
+    {
+        return array(
+            'STranslateBehavior'=>array(
+                'class'=>'ext.behaviors.STranslateBehavior',
+                'translateAttributes'=>array(
+                    'name',
+                    'description',
+                    'meta_title',
+                    'meta_description',
+                    'meta_keywords',
+                ),
+            ),
+        );
     }
 
     public function beforeSave()
@@ -194,11 +229,11 @@ class PageCategory extends BaseModel
         $test = PageCategory::model()
             ->withUrl($this->url)
             ->count('id!=:id', array(':id'=>$this->id));
-        
+
         if ($test > 0)
             $this->url .= '-'.$this->id;
 
-        return true;
+        return parent::beforeSave();
     }
 
     /**
@@ -225,11 +260,11 @@ class PageCategory extends BaseModel
                 $child->delete();
         }
 
-        return true;
+        return parent::beforeDelete();
     }
 
     /**
-     * Generate admin link to edit category. 
+     * Generate admin link to edit category.
      * @return type
      */
     public function getUpdateLink()

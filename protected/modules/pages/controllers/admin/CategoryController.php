@@ -1,11 +1,11 @@
 <?php
 
-class CategoryController extends SAdminController {
-	
-	
+class CategoryController extends SAdminController
+{
+
 	/**
 	 * Display category tree.
-	 */	
+	 */
 	public function actionIndex()
 	{
 		$model = new PageCategory('search');
@@ -40,10 +40,14 @@ class CategoryController extends SAdminController {
 		if ($new === true)
 			$model = new PageCategory;
 		else
-			$model = PageCategory::model()->findByPk($_GET['id']);
+        {
+			$model = PageCategory::model()
+                ->language($_GET)
+                ->findByPk($_GET['id']);
+        }
 
 		if (!$model)
-            throw new CHttpException(400, 'Bad request.');  
+            throw new CHttpException(400, 'Bad request.');
 
 		$form = new STabbedForm('application.modules.pages.views.admin.category.categoryForm', $model);
 
@@ -63,7 +67,7 @@ class CategoryController extends SAdminController {
 				$tree->rebuildFullUrl();
 
                 $this->setFlashMessage(Yii::t('PagesModule.core', 'Изменения успешно сохранены'));
-                
+
                 if (isset($_POST['REDIRECT']))
                     $this->smartRedirect($model);
                 else
@@ -84,10 +88,13 @@ class CategoryController extends SAdminController {
     {
         if (Yii::app()->request->isPostRequest)
         {
-            $model = PageCategory::model()->findByPk($_GET['id']);
+            $model = PageCategory::model()->findAllByPk($_REQUEST['id']);
 
-            if ($model)
-                $model->delete();
+            if (!empty($model))
+            {
+                foreach($model as $category)
+                    $category->delete();
+            }
 
             if (!Yii::app()->request->isAjaxRequest)
                 $this->redirect('index');
