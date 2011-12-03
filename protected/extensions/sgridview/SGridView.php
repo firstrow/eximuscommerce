@@ -94,28 +94,9 @@ class SGridView extends CGridView {
             'htmlOptions'=>array(
                 'class'=>'gridFooterActions',
             ),
-            'items'=>$this->getFooterActions(),
+            'items'=>$this->getCustomActions(),
         ));
 	}
-
-    /**
-     * @return array List of available actions
-     */
-    public function getFooterActions()
-    {
-        if ($this->hasDeleteAction === true)
-        {
-            $this->customActions = array(array(
-                'label'=>'Удалить',
-                'url'=>$this->owner->createUrl('delete'),
-                'linkOptions'=>array(
-                    'class'=>'actionDelete',
-                    'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные страницы?'),
-                )
-            ));
-        }
-        return $this->customActions;
-    }
 
     /**
      * @param array $actions of user defined actions
@@ -146,8 +127,22 @@ class SGridView extends CGridView {
         );
     }
 
+    /**
+     * @return array of actions
+     */
     public function getCustomActions()
     {
+        if ($this->hasDeleteAction === true)
+        {
+            $this->customActions = array(array(
+                'label'=>'Удалить',
+                'url'=>$this->owner->createUrl('delete'),
+                'linkOptions'=>array(
+                    'class'=>'actionDelete',
+                    'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные страницы?'),
+                )
+            ));
+        }
         return $this->_customActions;
     }
 
