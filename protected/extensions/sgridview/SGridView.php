@@ -15,6 +15,14 @@ class SGridView extends CGridView {
 	public $selectableRows = 2;
 	public $extended = true;
 
+    public $selectionChanged;
+
+    /**
+     * @var array List of custom actions to display in footer.
+     * See example in {@link SGridView::getFooterActions}
+     */
+    public $customActions = array();
+
 	/**
 	 * Initializes the grid view.
 	 */
@@ -59,6 +67,7 @@ class SGridView extends CGridView {
 			'cssFile'=>$this->baseScriptUrl.'/pager.css',
 		);
 
+        $this->setSelectionChanged();
 		$this->initColumns();
 	}
 
@@ -74,7 +83,40 @@ class SGridView extends CGridView {
 		}
 
 		parent::renderItems();
+
+        $this->widget('zii.widgets.CMenu', array(
+            'id'=>$this->getId().'Actions',
+            'htmlOptions'=>array(
+                'class'=>'gridFooterActions',
+            ),
+            'items'=>$this->getFooterActions(),
+        ));
 	}
+
+    public function getFooterActions()
+    {
+        $deleteAction = array(array(
+                'label'=>'Удалить',
+                'url'=>$this->owner->createUrl('delete'),
+                'linkOptions'=>array(
+                    'class'=>'actionDelete',
+                    'data-token'=>Yii::app()->request->csrfToken,
+                    'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные страницы?'),
+                    'onClick'=>strtr('return $.fn.yiiGridView.runAction(":grid", this);', array(
+                        ':grid'=>$this->getId()
+                    )),
+                ),
+            ));
+        return CMap::mergeArray($this->customActions, $deleteAction);
+    }
+
+    /**
+     * Set js function on grid row click.
+     */
+    public function setSelectionChanged()
+    {
+        $this->selectionChanged = 'function(id){$.fn.yiiGridView.showActions(id)}';
+    }
 
 	/**
 	 * Display current model attributes as json string in hidden block
@@ -112,7 +154,7 @@ class SGridView extends CGridView {
 	{
 		if($this->filter->attributes)
 		{
-			foreach($this->filter->attributes as $key=>$val)
+			foreach($this->filter->attributes as $val)
 			{
 				if($val)
 					return true;

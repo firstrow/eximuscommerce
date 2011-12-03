@@ -50,7 +50,7 @@
 
 			$.fn.yiiGridView.selectCheckedRows(id);
 
-			if(settings.selectableRows > 0) {	
+			if(settings.selectableRows > 0) {
 				$('#'+id+' .'+settings.tableClass+' > tbody > tr').die('click').live('click',function(e){
 					if('checkbox'!=e.target.type && e.target == '[object HTMLTableCellElement]'){
 						if(settings.selectableRows == 1)
@@ -184,7 +184,7 @@
 				$.each(settings.ajaxUpdate, function(i,v) {
 					var id='#'+v;
 					//$(id).replaceWith($(id,'<div>'+data+'</div>'));
-					// Replace line above to eval respone
+					// Replace line above to eval response
 					$(id).html(data);
 				});
 				if(settings.afterAjaxUpdate !== undefined)
@@ -311,5 +311,74 @@
 		});
 		return checked;
 	};
+
+    /**
+     * Modifications goes below
+     */
+
+    /**
+     * If grid have selected rows display actions list
+     * @param id string the ID of the grid view container
+     */
+    $.fn.yiiGridView.showActions = function(id) {
+        var actions = $('#'+id+'Actions');
+        if($.fn.yiiGridView.getSelection(id) == '') {
+            actions.css('visibility', 'hidden');
+        }else{
+            actions.css('visibility', 'visible');
+        }
+    };
+
+    /**
+     * Send selected rows to url specified in link href
+     * @param id string the ID of the grid view container
+     * @param el link clicked
+     */
+    $.fn.yiiGridView.runAction = function(id, el) {
+        var selection = $.fn.yiiGridView.getSelection(id);
+        var url = $(el).attr('href');
+        var sendRequest = false;
+
+        if($(el).attr('data-question'))
+        {
+            sendRequest = confirm($(el).attr('data-question'));
+        }
+
+        if(selection && url && sendRequest)
+        {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data:{
+                    YII_CSRF_TOKEN: $(el).attr('data-token'),
+                    id: selection
+                },
+                success:function(){
+                    $.fn.yiiGridView.update(id);
+                },
+                error:function(XHR, textStatus, errorThrown){
+                    var err='';
+                    switch(textStatus) {
+                        case 'timeout':
+                            err='The request timed out!';
+                            break;
+                        case 'parsererror':
+                            err='Parser error!';
+                            break;
+                        case 'error':
+                            if(XHR.status && !/^\s*$/.test(XHR.status))
+                                err='Error ' + XHR.status;
+                            else
+                                err='Error';
+                            if(XHR.responseText && !/^\s*$/.test(XHR.responseText))
+                                err=err + ': ' + XHR.responseText;
+                            break;
+                    }
+                    alert(err);
+                }
+            });
+        }
+        return false;
+    };
 
 })(jQuery);

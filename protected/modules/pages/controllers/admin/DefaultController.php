@@ -1,11 +1,11 @@
 <?php
 
 class DefaultController extends SAdminController {
-	
-	
+
+
 	/**
 	 * Display pages list.
-	 */	
+	 */
 	public function actionIndex()
 	{
 		$model = new Page('search');
@@ -59,7 +59,7 @@ class DefaultController extends SAdminController {
 				$model->save();
 
                 $this->setFlashMessage(Yii::t('PagesModule.core', 'Изменения успешно сохранены'));
-                
+
                 if (isset($_POST['REDIRECT']))
                     $this->smartRedirect($model);
                 else
@@ -80,10 +80,13 @@ class DefaultController extends SAdminController {
     {
         if (Yii::app()->request->isPostRequest)
         {
-            $model = Page::model()->findByPk($_GET['id']);
+            $model = Page::model()->findAllByPk($_REQUEST['id']);
 
-            if ($model)
-                $model->delete();
+            if (!empty($model))
+            {
+                foreach($model as $page)
+                    $page->delete();
+            }
 
             if (!Yii::app()->request->isAjaxRequest)
                 $this->redirect('index');

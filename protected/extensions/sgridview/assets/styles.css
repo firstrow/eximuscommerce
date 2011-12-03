@@ -150,7 +150,7 @@
     z-index:100;
     border-top:1px solid transparent;
     border-left:1px solid transparent;
-    border-right:1px solid transparent;     
+    border-right:1px solid transparent;
 }
 
 .gridViewOptions.active {
@@ -160,7 +160,7 @@
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
     border-top-left-radius: 5px;
-    border-top-right-radius: 5px;  
+    border-top-right-radius: 5px;
     border-top:1px solid silver;
     border-left:1px solid silver;
     border-right:1px solid silver;
@@ -192,11 +192,11 @@
 }
 
 .gridViewOptionsMenu ul li {
-    display: block; 
+    display: block;
 }
 .gridViewOptionsMenu ul li a {
     padding:5px;
-    display: block; 
+    display: block;
     color:#444;
 }
 .gridViewOptionsMenu ul li a:hover {
@@ -206,4 +206,22 @@
 .grid-view .nonActive, .grid-view .nonActive:hover {
     color:silver;
     text-decoration:none;
+}
+
+.gridFooterActions {
+    padding: 5px;
+    float: left;
+    visibility: hidden;
+}
+.gridFooterActions li {
+    padding: 3px 0 3px 0;
+    float: left;
+    margin-right: 1px;
+    margin-left: 5px;
+}
+.gridFooterActions a.actionDelete {
+    color:#E46969;
+}
+.gridFooterActions a:hover {
+    color:#444;
 }

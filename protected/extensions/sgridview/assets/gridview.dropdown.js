@@ -12,7 +12,7 @@
 	            	}else{
 	            		// show
 	            		menu.addClass('active');
-	            		menu.next('.gridViewOptionsMenu').css('display', 'block');				            		
+	            		menu.next('.gridViewOptionsMenu').css('display', 'block');
 	            	}
 	            });
 
@@ -21,10 +21,10 @@
 					if( !$(e.target).hasClass('gridViewOptions') && !$(e.target).hasClass('gridViewOptionsMenu') )
 					{
 	            		menu.removeClass('active');
-	            		menu.next('.gridViewOptionsMenu').css('display', 'none');									
+	            		menu.next('.gridViewOptionsMenu').css('display', 'none');
 					}
 				});
-				            
+
 	        });
 	    }
 	})(jQuery);
@@ -38,7 +38,7 @@
 	  	gridViewDropdownInit();
 	});
 
-	// Clear fields code. 
+	// Clear fields code.
 	// Read more at http://www.yiiframework.com/extension/clear-filters-gridview/
 	$.fn.clearFields = $.fn.clearInputs = function() {
 	    return this.each(function() {
@@ -58,7 +58,7 @@
 	function clearSGridViewFilter(id)
 	{
 	    try
-	    {    
+	    {
 	        $('#'+ id +' :input').clearFields(); // this will clear all input in the current grid
 	        $('#'+ id +' .filters :input').first().trigger('change');// to submit the form
 	        return false;
@@ -89,7 +89,7 @@
 						}
 					}
 				});
-				
+
 				// reload grid
 				$('#'+ gridId +' .filters :input').first().trigger('change');
 			}
@@ -102,8 +102,8 @@
 	{
 		var filterJsonData = $('#'+gridId+'HiddenJsonAttributes').text();
 		var filterName = $('#'+gridId+'FilterBox').val();
-		
-		if (filterJsonData != '' && filterName != '') 
+
+		if (filterJsonData != '' && filterName != '')
 		{
 			$.ajax({
 				url: "/admin/core/GridView/saveFilterData",
@@ -117,10 +117,10 @@
 				success:function(data) {
 					// Reload filter
 					$('#'+ gridId +' :input').first().trigger('change');
-				},						
+				}
 			});
 		}
 		// Close dialog
-		$("#"+gridId+"saveFilterDialog").dialog("close"); 
+		$("#"+gridId+"saveFilterDialog").dialog("close");
 		return false;
 	}
