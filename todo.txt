@@ -9,8 +9,6 @@ TODO:
 	- Create text file used 3rd party soft.
 	- Fix grid gridview delete link
 	- Fix langSwith to use only one language
-	- On create newLanguage insert default tranlations for all subsribed model
-	- Add full list of translate able objects to Page
 	- Add full support of translate to PageCategory model
 
 	Done:
@@ -37,3 +35,5 @@ TODO:
 	+ Connect http://www.famfamfam.com/lab/icons/flags/ to SSystemLanguage and display in langSwitch
 	+ Create "hooks/events" for AR models using attachEventHandler
 	+ languageManager - redirect to page without lang code if lang code is from default language.
+	+ Add full list of translate able objects to Page
+	+ On create newLanguage insert default translations for all subscribed model
