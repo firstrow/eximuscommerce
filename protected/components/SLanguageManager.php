@@ -1,7 +1,7 @@
 <?php
 
 class SLanguageManager extends CApplicationComponent {
-	
+
     /**
      * @var array available system languages
      */
@@ -50,7 +50,7 @@ class SLanguageManager extends CApplicationComponent {
 
     /**
      * Get lang by its code
-     * @param string $langCode 
+     * @param string $langCode
      * @return SSystemLanguage
      */
     public function getByCode($langCode)
@@ -68,7 +68,7 @@ class SLanguageManager extends CApplicationComponent {
     {
         foreach($this->languages as $lang)
         {
-            if ($lang->id == $langId) 
+            if ($lang->id == $langId)
                 return $lang;
         }
     }
@@ -79,7 +79,7 @@ class SLanguageManager extends CApplicationComponent {
      */
     public function getCodes()
     {
-        return array_keys($this->_languages);        
+        return array_keys($this->_languages);
     }
 
     /**
@@ -111,7 +111,7 @@ class SLanguageManager extends CApplicationComponent {
     	if (!$model)
     		$model = $this->default;
 
-   		Yii::trace('Activating languge '.$model->name);
+   		Yii::trace('Activating language '.$model->name);
 
    		Yii::app()->setLanguage($model->locale);
    		$this->_active = $model->code;
