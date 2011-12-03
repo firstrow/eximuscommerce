@@ -95,6 +95,13 @@ class SSystemLanguage extends BaseModel
         return parent::afterSave();
     }
 
+    public function beforeDelete()
+    {
+        if($this->default)
+            return false;
+        return parent::beforeDelete();
+    }
+
     public static function getFlagImagesList()
     {
         Yii::import('system.utils.CFileHelper');

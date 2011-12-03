@@ -17,14 +17,13 @@ class PagesModuleEvents
      * `On after create new language` event.
      * Create default translation for each page object.
      * @param $event
-     * @return boolean
      */
     public function insertTranslations($event)
     {
         Yii::import('application.modules.pages.models.Page');
 
         if(!$event->sender->isNewRecord)
-            return true;
+            return;
 
         // Find all pages on default language and
         // make copy on new lang.
