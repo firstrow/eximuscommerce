@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.pages.models.PageTranslate');
+
 /**
  * This is the model class for table "Pages".
  *
@@ -20,7 +22,8 @@
  * @property string $status
  * @property string $layout
  * @property string $view
- * 
+ * @property PageTranslate $translate
+ *
  * TODO: Set DB indexes
  */
 class Page extends BaseModel
@@ -44,11 +47,11 @@ class Page extends BaseModel
      * Name of the translations model.
      */
     public $translateModelName = 'PageTranslate';
-  
+
 
     /**
      * Returns the static model of the specified AR class.
-     * @return Pages the static model class
+     * @return Page the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -208,7 +211,7 @@ class Page extends BaseModel
         $criteria=new CDbCriteria;
 
         $criteria->with = array('author','translate');
-        
+
         $criteria->compare('t.id',$this->id);
         $criteria->compare('t.category_id',$this->category_id);
         $criteria->compare('author.username',$this->user_id,true);
@@ -245,7 +248,7 @@ class Page extends BaseModel
 
     public function beforeSave()
     {
-        if (!Yii::app()->user->isGuest) 
+        if (!Yii::app()->user->isGuest)
             $this->user_id = Yii::app()->user->id;
 
         if (empty($this->url))
@@ -259,7 +262,7 @@ class Page extends BaseModel
         $test = Page::model()
             ->withUrl($this->url)
             ->count('id!=:id', array(':id'=>$this->id));
-        
+
         if ($test > 0)
             $this->url .= '-'.$this->id;
 
@@ -273,23 +276,6 @@ class Page extends BaseModel
     public function getViewUrl()
     {
         return Yii::app()->createUrl('pages/pages/view', array('url'=>$this->url));
-    }
-
-}
-
-/**
- * Class to access page translations
- */
-class PageTranslate extends CActiveRecord {
-    
-    public static function model($className=__CLASS__)
-    {
-        return parent::model($className);
-    }
-    
-    public function tableName()
-    {
-        return 'PageTranslate';
     }
 
 }

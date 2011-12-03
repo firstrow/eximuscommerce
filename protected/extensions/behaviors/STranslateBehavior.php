@@ -1,12 +1,12 @@
 <?php
 
 /**
- * TranslateBehavior implements the basic methods 
+ * TranslateBehavior implements the basic methods
  * for translating dynamic content of models.
  * Behavoir takes language from SLanguageManager::active or you
  * can specify language id thru language() method.
- * 
- * Example: 
+ *
+ * Example:
  * Find object with language id 2
  *     Object::model()->language(2)->find();
  * Detect language from array
@@ -31,12 +31,12 @@
  * 4. Create new db table to handle translated attribute values.
  *    Basic structure: id, object_id, language_id + attributes.
  * 5. Create 'Translate Storage Model' class and set $tableName.
- * 
+ *
  */
 class STranslateBehavior extends CActiveRecordBehavior {
-	
+
 	/**
-	 * @var array Model attributes aviable for translate
+	 * @var array Model attributes available for translate
 	 */
 	public $translateAttributes = array();
 
@@ -51,7 +51,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
         return parent::attach($owner);
     }
 
-    /** 
+    /**
      * Merge object query with translate query.
      */
     public function beforeFind()
@@ -106,31 +106,42 @@ class STranslateBehavior extends CActiveRecordBehavior {
 
     /**
      * Create new object translation for each language.
+     * Used on creating new object.
      */
     public function insertTranslations()
     {
+        foreach (Yii::app()->languageManager->languages as $lang)
+            $this->createTranslation($lang->id);
+    }
+
+    /**
+     * Create object translation
+     * @param $languageId Language id
+     * @return boolean Translation save result
+     */
+    public function createTranslation($languageId)
+    {
         $className = $this->owner->translateModelName;
-        $ownerPk = $this->owner->getPrimaryKey();
-        foreach (Yii::app()->languageManager->languages as $lang) 
-        {
-            $translate = new $className;
-            $translate->object_id = $ownerPk;
-            $translate->language_id = $lang->id;
-            // Populate translated attributes
-            foreach ($this->translateAttributes as $attr)
-                $translate->$attr = $this->owner->$attr;
-            $translate->save(false);
-        }
+        $translate = new $className;
+        $translate->object_id = $this->owner->getPrimaryKey();
+        $translate->language_id = $languageId;
+
+        // Populate translated attributes
+        foreach($this->translateAttributes as $attr)
+            $translate->$attr = $this->owner->$attr;
+
+        return $translate->save(false);
     }
 
     /**
      * Update "current" translation object
+     * @param CActiveRecord $translate
      */
     public function updateTranslation($translate)
     {
         foreach ($this->translateAttributes as $attr)
             $translate->$attr = $this->owner->$attr;
-        $translate->save(false);        
+        $translate->save(false);
     }
 
     /**
@@ -139,7 +150,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
     public function afterDelete()
     {
         $className = $this->owner->translateModelName;
-        $translate = $className::model()
+        $className::model()
             ->deleteAll('object_id=:id',array(
                 ':id'=>$this->owner->getPrimaryKey()
             ));
@@ -148,7 +159,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
 
     /**
      * Scope to load translation by language id
-     * @param mixed $languageId or array containing `lang_id` key
+     * @param mixed $language or array containing `lang_id` key
      * @return CActiveRecord
      */
     public function language($language=null)
@@ -158,7 +169,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
 
         if(!Yii::app()->languageManager->getById($language))
             $language = Yii::app()->languageManager->default->id;
-        
+
         $this->_translation_lang = $language;
         return $this->owner;
     }
