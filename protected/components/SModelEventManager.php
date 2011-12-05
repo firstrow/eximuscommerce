@@ -42,7 +42,7 @@ class SModelEventManager
     {
         self::$initialized = true;
 
-        foreach(SystemModules::getInstalled() as $module)
+        foreach(SystemModules::getEnabled() as $module)
         {
             $className = ucfirst($module->name).'ModuleEvents';
             $path = Yii::getPathOfAlias('application.modules.'.$module->name.'.config.'.$className).'.php';
