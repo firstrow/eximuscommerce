@@ -2,24 +2,38 @@
 
 class SiteController extends Controller {
 
-    public function filters() 
+    public function filters()
     {
         return array(
             'rights',
         );
     }
-    
-    public function allowedActions() 
+
+    public function allowedActions()
     {
-        return 'login, index, error';
+        return 'login, index, error, contact';
     }
-    
-    
+
+
     public function actionLogin()
     {
-        
+
     }
-    
+
+    public function actionContact()
+    {
+        echo '
+        <html>
+            <head>
+                <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            </head>
+            <body>
+            іваіваіва ok іваіваіваіваіваіва ok 123123 іваіваіва привет
+            </body>
+        </html>
+        ';
+    }
+
     public function actionIndex()
     {
             echo $this->createUrl('site/index', array('name'=>'sdsd'));
