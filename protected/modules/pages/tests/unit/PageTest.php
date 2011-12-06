@@ -10,7 +10,10 @@ class PageTest extends CDbTestCase
 {
 
     public $fixtures = array(
-        //'Page'
+        'Page',
+        'PageTranslate',
+        'PageCategory',
+        'PageCategoryTranslate'
     );
 
     public function testPage()

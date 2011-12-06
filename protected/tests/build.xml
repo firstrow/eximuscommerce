@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<project name="ProjectTesting" basedir="." default="test">
+<target name="test" description="Launch the unit-tests">
+    <copy todir="migrations" >
+        <fileset dir=".">
+            <include name="../modules/*/tests/migrations/*.php" />
+        </fileset>
+    </copy>
+    <phpunit bootstrap="bootstrap.php" printsummary="true">
+        <formatter type="plain" usefile="false"/>
+        <batchtest>
+            <fileset dir="../modules/">
+                <include name="*/tests/unit/*Test.php"/>
+                <include name="*/tests/functional/*Test.php"/>
+            </fileset>
+        </batchtest>
+    </phpunit>
+</target>
+</project>
