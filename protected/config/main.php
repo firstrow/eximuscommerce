@@ -95,6 +95,9 @@ return array(
         'languageManager'=>array(
             'class'=>'SLanguageManager'
         ),
+        'fixture'=>array(
+            'class'=>'system.test.CDbFixtureManager',
+        ),
         'log'=>array(
             'class'=>'CLogRouter',
             'routes'=>array(

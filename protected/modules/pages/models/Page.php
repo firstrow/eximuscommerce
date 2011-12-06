@@ -254,6 +254,11 @@ class Page extends BaseModel
 
     public function beforeSave()
     {
+        if(!$this->created && $this->isNewRecord)
+            $this->created = date('Y-m-d H:i:s');
+        if(!$this->updated)
+            $this->updated = date('Y-m-d H:i:s');
+
         if (!Yii::app()->user->isGuest)
             $this->user_id = Yii::app()->user->id;
 
