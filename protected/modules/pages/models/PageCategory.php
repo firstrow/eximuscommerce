@@ -44,7 +44,7 @@ class PageCategory extends BaseModel
     public $_nameWithLevel;
 
     /**
-     * Translateable
+     * Translate-able
      */
     public $name;
     public $description;
@@ -219,19 +219,33 @@ class PageCategory extends BaseModel
 
     public function beforeSave()
     {
+        if(!$this->created && $this->isNewRecord)
+            $this->created = date('Y-m-d H:i:s');
+        if(!$this->updated)
+            $this->updated = date('Y-m-d H:i:s');
+
         if (empty($this->url))
         {
             Yii::import('ext.SlugHelper.SlugHelper');
             $this->url = SlugHelper::run($this->name);
         }
 
-        // Check if url aviable
-        $test = PageCategory::model()
-            ->withUrl($this->url)
-            ->count('id!=:id', array(':id'=>$this->id));
+        // Check if url available
+        if($this->isNewRecord)
+        {
+            $test = PageCategory::model()
+                ->withUrl($this->url)
+                ->count();
+        }
+        else
+        {
+            $test = PageCategory::model()
+                ->withUrl($this->url)
+                ->count('id!=:id', array(':id'=>$this->id));
+        }
 
         if ($test > 0)
-            $this->url .= '-'.$this->id;
+            $this->url .= '-'.date('YmdHis');
 
         return parent::beforeSave();
     }

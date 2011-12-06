@@ -270,12 +270,21 @@ class Page extends BaseModel
         }
 
         // Check if url available
-        $test = Page::model()
-            ->withUrl($this->url)
-            ->count('id!=:id', array(':id'=>$this->id));
+        if($this->isNewRecord)
+        {
+            $test = Page::model()
+                ->withUrl($this->url)
+                ->count();
+        }
+        else
+        {
+            $test = Page::model()
+                ->withUrl($this->url)
+                ->count('id!=:id', array(':id'=>$this->id));
+        }
 
         if ($test > 0)
-            $this->url .= '-'.$this->id;
+            $this->url .= '-'.date('YmdHis');
 
         return parent::beforeSave();
     }

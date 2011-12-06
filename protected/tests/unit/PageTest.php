@@ -1,5 +1,8 @@
 <?php
 
+Yii::import('application.modules.pages.PagesModule');
+Yii::import('application.modules.pages.models.*');
+
 /**
  * Tests for Page module.
  */
@@ -12,9 +15,6 @@ class PageTest extends CDbTestCase
 
     public function testPage()
     {
-        Yii::import('application.modules.pages.PagesModule');
-        Yii::import('application.modules.pages.models.*');
-
         $page = new Page;
         $page->setAttributes(array(
             'category_id'  =>'2',
@@ -60,6 +60,28 @@ class PageTest extends CDbTestCase
             ->withUrl('page-title')
             ->find();
         $this->assertTrue($page instanceof Page);
+    }
+
+    public function testPageCategory()
+    {
+        $category = new PageCategory;
+        $category->setAttributes(array(
+            'name' => 'Тест тест',
+            'description' => 'Category test desc',
+            'layout' => '',
+            'view' =>  '',
+            'meta_title' => '',
+            'meta_description' => '',
+            'meta_keywords' =>  '',
+        ));
+
+        $this->assertTrue($category->save(false));
+
+        $category = PageCategory::model()->findByPk($category->id);
+        $this->assertTrue($category instanceof PageCategory);
+
+        // Test category url
+        $this->assertEquals('test-test', $category->url);
     }
 
 }
