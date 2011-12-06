@@ -2,9 +2,11 @@
 
 <project name="ProjectTesting" basedir="." default="test">
 <target name="test" description="Launch the unit-tests">
-    <copy todir="migrations" >
-        <fileset dir=".">
-            <include name="../modules/*/tests/migrations/*.php" />
+    <!-- Copy module fixtures to main fixture directory -->
+    <copy todir="fixtures" >
+        <mapper type="flatten" />
+        <fileset dir="../modules/" >
+            <include  name="*/tests/fixtures/*.php" />
         </fileset>
     </copy>
     <phpunit bootstrap="bootstrap.php" printsummary="true">

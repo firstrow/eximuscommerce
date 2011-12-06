@@ -6,7 +6,7 @@ Yii::import('application.modules.pages.models.*');
 /**
  * Tests for Page module.
  */
-class PageTest extends CDbTestCase
+class PagesUnitTest extends CDbTestCase
 {
 
     public $fixtures = array(

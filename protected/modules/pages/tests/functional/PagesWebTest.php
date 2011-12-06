@@ -3,7 +3,7 @@
 Yii::import('application.modules.pages.PagesModule');
 Yii::import('application.modules.pages.models.*');
 
-class PagesTest extends WebTestCase
+class PagesWebTest extends WebTestCase
 {
 
     public $fixtures = array(
@@ -14,7 +14,7 @@ class PagesTest extends WebTestCase
 	public function testViewPage()
 	{
 		$this->open('page/page-1');
-		$this->assertTextPresent('Page Title');
+		$this->assertTextPresent($this->PageTranslate['page1']['title']);
 	}
 
 }
