@@ -20,7 +20,7 @@ class PagesUnitTest extends CDbTestCase
     {
         $page = new Page;
         $page->setAttributes(array(
-            'category_id'  =>'2',
+            'category_id'  =>'1',
             'publish_date' =>'2011-12-01 18:55:06',
             'status'       =>'published',
             'layout'       =>'',
@@ -63,6 +63,22 @@ class PagesUnitTest extends CDbTestCase
             ->withUrl('page-title')
             ->find();
         $this->assertTrue($page instanceof Page);
+    }
+
+    public function testPageUrlUnique()
+    {
+        // Create page with url that exists
+        $page = new Page;
+        $page->setAttributes(array(
+            'category_id'  =>'1',
+            'publish_date' =>'2011-12-01 18:55:06',
+            'status'       =>'published',
+            // Translate able fields
+            'title'=>'Page Test Urls Unique',
+            'url'=>'page-1',
+        ));
+        $this->assertTrue($page->save(false));
+        $this->assertEquals('page-1'.'-'.date('YmdHis'), $page->url);
     }
 
     public function testPageCategory()
