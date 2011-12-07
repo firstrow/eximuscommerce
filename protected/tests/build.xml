@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 
+<!-- To run only only one test use command: phing -DtestsPattern=*/tests/unit/TestNameName.php -->
+
 <project name="ProjectTesting" basedir="." default="test">
 <target name="test" description="Launch the unit-tests">
     <!-- Copy module fixtures to main fixture directory -->
+    <propertyprompt propertyName="testsPattern" defaultValue="*/tests/*/*Test.php"
+    		promptText="Enter pattern to search tests" useExistingValue="true" />
     <copy todir="fixtures" >
         <mapper type="flatten" />
         <fileset dir="../modules/" >
@@ -13,8 +17,7 @@
         <formatter type="plain" usefile="false"/>
         <batchtest>
             <fileset dir="../modules/">
-                <include name="*/tests/unit/*Test.php"/>
-                <include name="*/tests/functional/*Test.php"/>
+                <include name="${testsPattern}"/>
             </fileset>
         </batchtest>
     </phpunit>
