@@ -31,7 +31,6 @@ return array(
             'password'=>'123',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
            'ipFilters'=>array('127.0.0.5','127.0.0.12',),
-
         ),
         'admin'=>array(),
         'rights'=>array(
