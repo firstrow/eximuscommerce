@@ -8,7 +8,9 @@ class PagesWebTest extends WebTestCase
 
     public $fixtures = array(
         'Page'=>'Page',
-        'PageTranslate'=>'PageTranslate'
+        'PageTranslate'=>'PageTranslate',
+        'PageCategory'=>'PageCategory',
+        'PageCategoryTranslate'=>'PageCategoryTranslate'
     );
 
 	public function testViewPage()
@@ -16,5 +18,11 @@ class PagesWebTest extends WebTestCase
 		$this->open('page/page-1');
 		$this->assertTextPresent($this->PageTranslate['page1']['title']);
 	}
+
+    public function testViewCategory()
+    {
+        $this->open('knigi/nauchnie-knigi');
+        $this->assertTextPresent('Научные книги');
+    }
 
 }

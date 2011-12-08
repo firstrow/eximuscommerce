@@ -235,13 +235,18 @@ class PageCategory extends BaseModel
         {
             $test = PageCategory::model()
                 ->withUrl($this->url)
-                ->count();
+                ->count('parent_id=:parent_id', array(
+                    ':parent_id'=>$this->parent_id
+                ));
         }
         else
         {
             $test = PageCategory::model()
                 ->withUrl($this->url)
-                ->count('id!=:id', array(':id'=>$this->id));
+                ->count('id!=:id AND parent_id=:parent_id', array(
+                    ':id'=>$this->id,
+                    ':parent_id'=>$this->parent_id,
+                ));
         }
 
         if ($test > 0)

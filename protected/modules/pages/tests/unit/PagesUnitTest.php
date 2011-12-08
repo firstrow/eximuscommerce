@@ -10,10 +10,10 @@ class PagesUnitTest extends CDbTestCase
 {
 
     public $fixtures = array(
-        'Page',
-        'PageTranslate',
-        'PageCategory',
-        'PageCategoryTranslate'
+        'Page'=>'Page',
+        'PageTranslate'=>'PageTranslate',
+        'PageCategory'=>'PageCategory',
+        'PageCategoryTranslate'=>'PageCategoryTranslate'
     );
 
     public function testPage()
@@ -104,6 +104,23 @@ class PagesUnitTest extends CDbTestCase
 
         // Test category url
         $this->assertEquals('test-test', $category->url);
+    }
+
+    public function testCategoryUrlUnique()
+    {
+        // Create new category with existing url
+        $category = new PageCategory;
+        $category->setAttributes(array(
+            'name' => 'Тест тест 2',
+            'description' => 'Category test desc',
+            'parent_id' => $this->PageCategory['PageCategory_2']['parent_id'],
+            'url' => $this->PageCategory['PageCategory_2']['url'],
+        ));
+
+        $this->assertTrue($category->save(false));
+        $category = PageCategory::model()->findByPk($category->id);
+
+        $this->assertEquals('fantastika-'.date('YmdHis'), $category->url);
     }
 
 }

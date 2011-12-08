@@ -1,0 +1,48 @@
+<?php
+
+return array(
+    'PageCategory_1' => array(
+        'id' =>'1',
+        'parent_id' =>NULL,
+        'url' =>'knigi',
+        'full_url' =>'knigi',
+        'layout' =>'',
+        'view' =>'',
+        'created' =>'2011-12-03 18:49:46',
+        'updated' =>'2011-12-03 19:36:31',
+        'page_size' =>NULL,
+    ),
+    'PageCategory_2' => array(
+        'id' =>'2',
+        'parent_id' =>'1',
+        'url' =>'fantastika',
+        'full_url' =>'knigi/fantastika',
+        'layout' =>'',
+        'view' =>'',
+        'created' =>'2011-12-03 18:50:25',
+        'updated' =>'2011-12-08 11:28:11',
+        'page_size' =>NULL,
+    ),
+    'PageCategory_3' => array(
+        'id' =>'4',
+        'parent_id' =>'1',
+        'url' =>'romani',
+        'full_url' =>'knigi/romani',
+        'layout' =>'',
+        'view' =>'',
+        'created' =>'2011-12-03 18:50:45',
+        'updated' =>'2011-12-03 18:50:45',
+        'page_size' =>NULL,
+    ),
+    'PageCategory_4' => array(
+        'id' =>'5',
+        'parent_id' =>'1',
+        'url' =>'nauchnie-knigi',
+        'full_url' =>'knigi/nauchnie-knigi',
+        'layout' =>'',
+        'view' =>'',
+        'created' =>'2011-12-03 18:51:03',
+        'updated' =>'2011-12-04 18:47:24',
+        'page_size' =>NULL,
+    ),
+);
