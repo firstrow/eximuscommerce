@@ -4,8 +4,12 @@
  * @package Widgets
  */
 class STabbedForm extends CForm {
-	
-	public $tabs = array();
+
+    /**
+     * @var array list of tabs (tab title=>tab content). Will be
+     * generated from form elements.
+     */
+	protected $tabs = array();
 
     /**
      * @var array Additional tabs to render.
