@@ -18,6 +18,7 @@ class PagesUnitTest extends CDbTestCase
 
     public function testPage()
     {
+        // Test page create
         $page = new Page;
         $page->setAttributes(array(
             'category_id'  =>'1',
@@ -83,6 +84,7 @@ class PagesUnitTest extends CDbTestCase
 
     public function testPageCategory()
     {
+        // Test create new category
         $category = new PageCategory;
         $category->setAttributes(array(
             'name' => 'Тест тест',
@@ -96,6 +98,7 @@ class PagesUnitTest extends CDbTestCase
 
         $this->assertTrue($category->save(false));
 
+        // Test category find
         $category = PageCategory::model()->findByPk($category->id);
         $this->assertTrue($category instanceof PageCategory);
 
