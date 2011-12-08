@@ -24,7 +24,7 @@ class STabbedForm extends CForm {
 	protected $activeTab = null;
 
 	/**
-	 * @var boolean Dipslay errors summary on each tab.
+	 * @var boolean Display errors summary on each tab.
 	 */
 	public $summaryOnEachTab = true;
 
