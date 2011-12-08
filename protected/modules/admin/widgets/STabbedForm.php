@@ -6,6 +6,17 @@
 class STabbedForm extends CForm {
 	
 	public $tabs = array();
+
+    /**
+     * @var array Additional tabs to render.
+     */
+    public $additionalTabs = array();
+
+    /**
+     * @var string Widget to render form. zii.widgets.jui.CJuiTabs
+     */
+    public $formWidget = 'ext.sidebartabs.SAdminSidebarTabs';
+
 	protected $activeTab = null;
 
 	/**
@@ -38,17 +49,11 @@ class STabbedForm extends CForm {
 					$tab = $errorSummary.$tab;
 			}
 			else
-			{
 				$result .= $errorSummary;
-			}
 		}
 
-		// $result .= $this->owner->widget('zii.widgets.jui.CJuiTabs', array(
-		// 	'tabs'=>$this->tabs,
-		// ), true);
-		
-		$result .= $this->owner->widget('ext.sidebartabs.SAdminSidebarTabs', array(
-			'tabs'=>$this->tabs,
+		$result .= $this->owner->widget($this->formWidget, array(
+			'tabs'=>CMap::mergeArray($this->tabs, $this->additionalTabs),
 		), true);	
 			
 		$result .= $this->renderEnd();
@@ -56,15 +61,17 @@ class STabbedForm extends CForm {
 		return $result; 
 	}
 
+    /**
+     * Renders elements
+     * @return string
+     */
 	public function renderElements()
 	{
 		$output='';
 		foreach($this->getElements() as $element)
 		{
 			if (isset($element->title))
-			{
 				$this->activeTab = $element->title;
-			}
 
 			$out=$this->renderElement($element);
 
