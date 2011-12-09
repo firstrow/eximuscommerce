@@ -30,7 +30,7 @@ return array(
             'class'=>'system.gii.GiiModule',
             'password'=>'123',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
-           'ipFilters'=>array('127.0.0.5','127.0.0.12',),
+           'ipFilters'=>array('127.0.0.*'),
         ),
         'admin'=>array(),
         'rights'=>array(
@@ -60,7 +60,7 @@ return array(
                 'admin/<module:\w+>/<controller:\w+>'=>'<module>/admin/<controller>',
                 'admin/<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/admin/<controller>/<action>',
                 'admin/<module:\w+>/<controller:\w+>/<action:\w+>/*'=>'<module>/admin/<controller>/<action>',
-                
+
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',

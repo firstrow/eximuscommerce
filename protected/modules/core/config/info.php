@@ -1,7 +1,10 @@
 <?php
+
+Yii::import('application.modules.core.CoreModule');
+
 /**
  * Module info
- */ 
+ */
 return array(
 	'name'=>Yii::t('CoreModule.core', 'База'),
 	'author'=>'firstrow@gmail.com',

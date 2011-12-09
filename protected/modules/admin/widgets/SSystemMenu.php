@@ -11,13 +11,16 @@ class SSystemMenu extends CWidget {
             'users'=>array(
                 'label'=>Yii::t('AdminModule.admin', 'Система'),
             ),
+            'catalog'=>array(
+                'label'=>Yii::t('AdminModule.admin', 'Каталог'),
+            ),
             'cms'=>array(
                 'label'=>Yii::t('AdminModule.admin', 'Сайт'),
             ),
         );
 
         $items = CMap::mergeArray($items, $this->findMenuFiles());
-        
+
         $this->processSorting($items);
         $this->widget('application.extensions.mbmenu.MbMenu', array('items'=>$items));
     }
@@ -56,7 +59,7 @@ class SSystemMenu extends CWidget {
 
         return $result;
     }
-    
+
     /**
      *  Sort an array
      * @static
