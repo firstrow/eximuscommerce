@@ -68,51 +68,33 @@
 		</div>
 	</div> <!-- /hd -->
 
-        <div class="yui-gc" id="navigation">
-                <div class="yui-u first" style="width:1px;">
-                    <div class="navigation-content-left">
-                        <div id="breadcrumbs" class="breadCrumb module">
+    <div class="yui-gc" id="navigation">
+        <div class="yui-u first" style="width:1px;">
+            <div class="navigation-content-left">
+                <div id="breadcrumbs" class="breadCrumb module">
 
-                            <div>
-                                <?php
-                                    $this->widget('application.modules.admin.widgets.SAdminBreadcrumbs', array(
-                                        'homeLink'=>$this->createUrl('admin'),
-                                        'links'=>$this->breadcrumbs,
-                                    ));
-                                ?>
-                            </div>
-                        </div>
-
+                    <div>
+                        <?php
+                            $this->widget('application.modules.admin.widgets.SAdminBreadcrumbs', array(
+                                'homeLink'=>$this->createUrl('admin'),
+                                'links'=>$this->breadcrumbs,
+                            ));
+                        ?>
                     </div>
                 </div>
-            <div class="yui-u" style="width:50%;">
-                <div class="navigation-content-right marright" align="right" style="float:right;">
-                    <div style="float:right;">
 
-                    <?php
-                        // $this->widget('zii.widgets.jui.CJuiButton',
-                        //     array(
-                        //         'id'=>'ls',
-                        //         'name'=>'ls',
-                        //         'url'=>'#',
-                        //         'buttonType'=>'link',
-                        //         'caption'=>'<img src="http://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/ru.png"> Русский',
-                        //         'htmlOptions'=>array(
-                        //             'class'=>'marright20'
-                        //         ),
-                        //         'options'=>array(
-                        //             'icons'=>array('secondary'=>'ui-icon-triangle-1-s')
-                        //         ))
-                        // );
-                    ?>
-
-                    <?php
-                        if (!empty($this->topButtons))
-                            echo $this->topButtons;
-                    ?>
-                    </div>
+            </div>
+        </div>
+        <div class="yui-u" style="width:50%;">
+            <div class="navigation-content-right marright" align="right" style="float:right;">
+                <div style="float:right;">
+                <?php
+                    if (!empty($this->topButtons))
+                        echo $this->topButtons;
+                ?>
                 </div>
             </div>
+        </div>
 	</div>
 
 	<div id="bd" class="marleft">
