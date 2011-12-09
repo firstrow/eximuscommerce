@@ -211,7 +211,7 @@ div.form input[type=text], div.form input[type=password]
 {
     font-size: 12px;
     width:70%;
-    max-width:650px;
+    /*max-width:650px;*/
     vertical-align: middle;
     padding: 5px;
     color: #666;
@@ -241,7 +241,7 @@ div.form textarea {
     padding:3px;
     font-size:12px;
     width:70%;
-    max-width:650px;    
+    /*max-width:650px;    */
     height:70px;
     background: #fff url(../images/input_bg.gif) repeat-x top;
     color: #666;

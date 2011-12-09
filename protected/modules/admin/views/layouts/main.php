@@ -52,7 +52,7 @@
 <body style="text-align:left;">
 
 <!--
-    yui-t1: sidebar left
+    yui-t1,3: sidebar left
 
     // For fixed width
     <div style="width: 80%;" class="yui-t5">
