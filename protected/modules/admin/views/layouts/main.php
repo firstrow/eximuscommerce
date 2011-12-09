@@ -36,7 +36,6 @@
 <!doctype html>
 <html>
 <head>
-
 	<meta charset="utf-8">
 	<title>CMS</title>
 
@@ -49,10 +48,15 @@
             background-color:silver;
         }
     </style>
-
 </head>
 <body style="text-align:left;">
 
+<!--
+    yui-t1: sidebar left
+
+    // For fixed width
+    <div style="width: 80%;" class="yui-t5">
+-->
 <div id="doc3" class="yui-t6">
 	<div id="hd">
 		<div class="yui-gc">
