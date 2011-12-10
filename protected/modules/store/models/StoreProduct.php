@@ -8,11 +8,17 @@
  * @property string $name
  * @property string $url
  * @property double $price
+ * @property boolean $is_active
  * @property string $short_description
  * @property string $full_description
  * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_keywords
+ * @property string $layout
+ * @property string $view
+ * @property string $sku
+ * @property string $quantity
+ * @property string $availability
  * @property string $created
  * @property string $updated
  */
@@ -59,9 +65,11 @@ class StoreProduct extends BaseModel
     {
         return array(
             array('price', 'numerical'),
+            array('is_active', 'boolean'),
+            array('quantity, availability', 'numerical', 'integerOnly'=>true),
             array('name, price', 'required'),
             array('url', 'LocalUrlValidator'),
-            array('name, url, meta_title, meta_keywords, meta_description', 'length', 'max'=>255),
+            array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
             array('short_description, full_description', 'type'),
             // Search
             array('id, name, url, price, short_description, full_description, created, updated', 'safe', 'on'=>'search'),
@@ -143,5 +151,13 @@ class StoreProduct extends BaseModel
             $this->url .= '-'.date('YmdHis');
 
         return parent::beforeSave();
+    }
+
+    public function getAvailabilityItems()
+    {
+        return array(
+            1=>Yii::t('StoreModule.core', 'Есть на складе'),
+            2=>Yii::t('StoreModule.core', 'Нет на складе'),
+        );
     }
 }

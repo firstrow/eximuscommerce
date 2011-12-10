@@ -17,6 +17,22 @@ return array(
                 'url'=>array(
                     'type'=>'text',
                 ),
+                'is_active'=>array(
+                    'type'=>'checkbox',
+                ),
+                'sku'=>array(
+                    'type'=>'text',
+                ),
+                'quantity'=>array(
+                    'type'=>'text',
+                ),
+                'availability'=>array(
+                    'type'=>'dropdownlist',
+                    'items'=>StoreProduct::getAvailabilityItems()
+                ),
+                'is_active'=>array(
+                    'type'=>'checkbox',
+                ),
                 'short_description'=>array(
                     'type'=>'textarea',
                 ),
@@ -37,6 +53,18 @@ return array(
                 ),
                 'meta_description'=>array(
                     'type'=>'textarea',
+                ),
+            ),
+        ),
+        'design'=>array(
+            'type'=>'form',
+            'title'=>Yii::t('StoreModule.admin', 'Дизайн'),
+            'elements'=>array(
+                'layout'=>array(
+                    'type'=>'text',
+                ),
+                'view'=>array(
+                    'type'=>'text',
                 ),
             ),
         ),

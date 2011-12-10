@@ -6,11 +6,11 @@
         var fixed;
         $(window).scroll(function () {
             if(!fixed && (topBar.offset().top - $(window).scrollTop() < 0)){
+                $("#hd").css('margin-bottom','38px');
                 topBar.css('top', 0);
                 topBar.css('position', 'fixed');
                 topBar.css('width', $('#doc3').css('width'));
                 topBar.css('opacity', '0.92');
-                $("#hd").css('margin-bottom','38px');
                 fixed = true;
             }else if(fixed && $(window).scrollTop() <= start){
                 topBar.css('position', '');
