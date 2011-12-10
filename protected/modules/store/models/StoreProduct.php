@@ -10,6 +10,9 @@
  * @property double $price
  * @property string $short_description
  * @property string $full_description
+ * @property string $meta_title
+ * @property string $meta_description
+ * @property string $meta_keywords
  * @property string $created
  * @property string $updated
  */
@@ -33,6 +36,23 @@ class StoreProduct extends BaseModel
     }
 
     /**
+     * Find product by url.
+     * Scope.
+     * @param string Product url
+     * @return StoreProduct
+     */
+    public function withUrl($url)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'url=:url',
+            'params'=>array(':url'=>$url)
+        ));
+
+        return $this;
+    }
+
+
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
@@ -41,7 +61,7 @@ class StoreProduct extends BaseModel
             array('price', 'numerical'),
             array('name, price', 'required'),
             array('url', 'LocalUrlValidator'),
-            array('name, url', 'length', 'max'=>255),
+            array('name, url, meta_title, meta_keywords, meta_description', 'length', 'max'=>255),
             array('short_description, full_description', 'type'),
             // Search
             array('id, name, url, price, short_description, full_description, created, updated', 'safe', 'on'=>'search'),
@@ -94,5 +114,34 @@ class StoreProduct extends BaseModel
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function beforeSave()
+    {
+        if (empty($this->url))
+        {
+            // Create slug
+            Yii::import('ext.SlugHelper.SlugHelper');
+            $this->url = SlugHelper::run($this->name);
+        }
+
+        // Check if url available
+        if($this->isNewRecord)
+        {
+            $test = StoreProduct::model()
+                ->withUrl($this->url)
+                ->count();
+        }
+        else
+        {
+            $test = StoreProduct::model()
+                ->withUrl($this->url)
+                ->count('id!=:id', array(':id'=>$this->id));
+        }
+
+        if ($test > 0)
+            $this->url .= '-'.date('YmdHis');
+
+        return parent::beforeSave();
     }
 }
