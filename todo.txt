@@ -1,10 +1,12 @@
 TODO:
 	- Create module update page for "SystemModules".
-	- Create initial "Pages migration" with table sctructure and indexes.
+	- Create initial "Pages migration" with table structure and indexes.
 	- Add indexes to Page table
 	- Add indexes to PageCategory table
 	- Search and get done all "TODO" in source files.
 	- Create text file used 3rd party soft.
+	- get finished "Related products" tab
+	- fix sorting in "Related products" tab
 
 	Done:
 	+ Finish job with SGridView filet button.
