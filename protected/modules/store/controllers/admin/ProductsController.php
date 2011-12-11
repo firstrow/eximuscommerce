@@ -41,7 +41,9 @@ class ProductsController extends SAdminController
 
         // Set additional tabs
         $form->additionalTabs = array(
-            Yii::t('StoreModule.admin','Сопутствующие товары')=>$this->renderPartial('_relatedProducts',null,true),
+            Yii::t('StoreModule.admin','Сопутствующие продукты')=>$this->renderPartial('_relatedProducts',array(
+                'exclude'=>$model->id,
+            ),true),
         );
 
         if (Yii::app()->request->isPostRequest)
@@ -71,15 +73,20 @@ class ProductsController extends SAdminController
         ));
     }
 
-    public function actionApplyProductsFilter()
+    /**
+     * Create gridview for "Related Products" tab
+     */
+    public function actionApplyProductsFilter($exclude = 0)
     {
         $model = new StoreProduct('search');
+        $model->exclude = $exclude;
 
-        if (!empty($_GET['StoreProduct']))
-            $model->attributes = $_GET['StoreProduct'];
+        if (!empty($_GET['RelatedProducts']))
+            $model->attributes = $_GET['RelatedProducts'];
 
         $this->renderPartial('_relatedProducts', array(
             'model'=>$model,
+            'exclude'=>$exclude,
         ));
     }
 

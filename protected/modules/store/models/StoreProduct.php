@@ -25,6 +25,12 @@
  */
 class StoreProduct extends BaseModel
 {
+
+    /**
+     * @var null Id if product to exclude from search
+     */
+    public $exclude = null;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
@@ -122,8 +128,15 @@ class StoreProduct extends BaseModel
         $criteria->compare('created',$this->created,true);
         $criteria->compare('updated',$this->updated,true);
 
+        // Id of product to exclude from search
+        if($this->exclude)
+            $criteria->compare('t.id !', array(':id'=>$this->exclude));
+
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'sort'=>array(
+                'defaultOrder'=>'t.created DESC'
+            ),
         ));
     }
 

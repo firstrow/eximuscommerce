@@ -32,6 +32,11 @@ class SGridView extends CGridView {
      */
     public $hasDeleteAction = true;
 
+    /**
+     * @var bool Display custom actions
+     */
+    public $enableCustomActions = true;
+
 	/**
 	 * Initializes the grid view.
 	 */
@@ -93,13 +98,16 @@ class SGridView extends CGridView {
 
 		parent::renderItems();
 
-        $this->widget('zii.widgets.CMenu', array(
-            'id'=>$this->getId().'Actions',
-            'htmlOptions'=>array(
-                'class'=>'gridFooterActions',
-            ),
-            'items'=>$this->getCustomActions(),
-        ));
+        if($this->enableCustomActions === true)
+        {
+            $this->widget('zii.widgets.CMenu', array(
+                'id'=>$this->getId().'Actions',
+                'htmlOptions'=>array(
+                    'class'=>'gridFooterActions',
+                ),
+                'items'=>$this->getCustomActions(),
+            ));
+        }
 	}
 
     /**

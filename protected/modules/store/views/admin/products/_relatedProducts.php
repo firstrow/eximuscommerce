@@ -1,31 +1,70 @@
+
+<table style="width: 70%" id="relatedProductsTable">
+</table>
+
+<div>&nbsp;</div>
+
 <?php
 
-if(!isset($model))
-    $model = new StoreProduct();
+/**
+ * Related products tab
+ */
 
-// ext.sgridview.SGridView
-// zii.widgets.grid.CGridView
+Yii::app()->clientScript->registerScript("rti18n",
+    strtr("var deleteButtonText='{text}';", array(
+        '{text}'=>Yii::t('StoreModule.admin','Удалить'),
+    )),
+CClientScript::POS_HEAD);
+
+Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/admin/relatedProductsTab.js');
+
+if(!isset($model))
+{
+    $model = new StoreProduct('search');
+    $model->exclude = $exclude;
+}
 
 $this->widget('ext.sgridview.SGridView', array(
     'dataProvider'=>$model->search(),
-    'ajaxUrl'=>Yii::app()->createUrl('store/admin/products/applyProductsFilter'),
-    'id'=>'productsListGridInner',
+    'ajaxUrl'=>Yii::app()->createUrl('store/admin/products/applyProductsFilter/exclude/'.$exclude),
+    'id'=>'RelatedProductsGrid',
     'template'=>'{items}{summary}{pager}',
+    'enableCustomActions'=>false,
     'extended'=>false,
     'filter'=>$model,
     'columns'=>array(
-        'id',
+        array(
+            'name'=>'id',
+            'type'=>'raw',
+            'value'=>'$data->id',
+            'filter'=>CHtml::textField('RelatedProducts[id]', $model->id)
+        ),
         array(
             'name'=>'name',
-            'type'=>'raw',
+            'type'=>'html',
             'value'=>'CHtml::link($data->name, array("update", "id"=>$data->id))',
+            'filter'=>CHtml::textField('RelatedProducts[name]', $model->name)
         ),
         array(
-            'name'=>'url',
+            'name'=>'sku',
             'type'=>'raw',
-            'value'=>'CHtml::link($data->url, $data->url, array("target"=>"_blank"))',
+            'value'=>'$data->sku',
+            'filter'=>CHtml::textField('RelatedProducts[sku]', $model->sku)
         ),
-        'sku',
-        'price',
+        array(
+            'name'=>'price',
+            'type'=>'raw',
+            'value'=>'$data->price',
+            'filter'=>CHtml::textField('RelatedProducts[price]', $model->price)
+        ),
+        array(
+            'class'=>'CLinkColumn',
+            'header'=>'',
+            'label'=>Yii::t('StoreModule.admin','Добавить'),
+            'urlExpression'=>'$data->id."/".$data->name',
+            'htmlOptions'=>array(
+                'onClick'=>'return AddRelatedProduct(this);'
+            ),
+        ),
     ),
 ));
