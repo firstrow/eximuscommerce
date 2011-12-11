@@ -39,6 +39,11 @@ class ProductsController extends SAdminController
 
         $form = new STabbedForm('application.modules.store.views.admin.products.productForm', $model);
 
+        // Set additional tabs
+        $form->additionalTabs = array(
+            Yii::t('StoreModule.admin','Сопутствующие товары')=>$this->renderPartial('_relatedProducts',null,true),
+        );
+
         if (Yii::app()->request->isPostRequest)
         {
             $model->attributes = $_POST['StoreProduct'];
@@ -63,6 +68,18 @@ class ProductsController extends SAdminController
         $this->render('update', array(
             'model'=>$model,
             'form'=>$form,
+        ));
+    }
+
+    public function actionApplyProductsFilter()
+    {
+        $model = new StoreProduct('search');
+
+        if (!empty($_GET['StoreProduct']))
+            $model->attributes = $_GET['StoreProduct'];
+
+        $this->renderPartial('_relatedProducts', array(
+            'model'=>$model,
         ));
     }
 

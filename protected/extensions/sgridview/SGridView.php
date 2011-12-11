@@ -13,6 +13,10 @@ class SGridView extends CGridView {
 
 	public $template = '{items}{summary}{pager}';
 	public $selectableRows = 2;
+
+    /**
+     * @var bool Show additional filter actions as "Clear Filter" && "Save filter"
+     */
 	public $extended = true;
 
     public $selectionChanged;

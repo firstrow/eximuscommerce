@@ -27,6 +27,7 @@ class StoreProduct extends BaseModel
 {
     /**
      * Returns the static model of the specified AR class.
+     * @param string $className
      * @return StoreProduct the static model class
      */
     public static function model($className=__CLASS__)
@@ -155,6 +156,9 @@ class StoreProduct extends BaseModel
         return parent::beforeSave();
     }
 
+    /**
+     * @return array
+     */
     public function getAvailabilityItems()
     {
         return array(
