@@ -43,6 +43,7 @@
                 'type'=>'raw',
                 'value'=>'CHtml::link($data->url, $data->url, array("target"=>"_blank"))',
             ),
+            'sku',
             'price',
             // Buttons
             array(

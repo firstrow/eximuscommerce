@@ -18,6 +18,7 @@
  * @property string $view
  * @property string $sku
  * @property string $quantity
+ * @property string $auto_decrease_quantity
  * @property string $availability
  * @property string $created
  * @property string $updated
@@ -70,7 +71,7 @@ class StoreProduct extends BaseModel
             array('name, price', 'required'),
             array('url', 'LocalUrlValidator'),
             array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
-            array('short_description, full_description', 'type'),
+            array('short_description, full_description, auto_decrease_quantity', 'type'),
             // Search
             array('id, name, url, price, short_description, full_description, created, updated', 'safe', 'on'=>'search'),
         );
@@ -116,6 +117,7 @@ class StoreProduct extends BaseModel
         $criteria->compare('price',$this->price);
         $criteria->compare('short_description',$this->short_description,true);
         $criteria->compare('full_description',$this->full_description,true);
+        $criteria->compare('sku',$this->sku,true);
         $criteria->compare('created',$this->created,true);
         $criteria->compare('updated',$this->updated,true);
 
