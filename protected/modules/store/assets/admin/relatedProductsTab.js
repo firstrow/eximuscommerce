@@ -8,8 +8,9 @@ function AddRelatedProduct(el)
     if($("."+trclass).length == 0)
     {
         $("#relatedProductsTable").append("<tr class="+trclass+"><td>"+parts[0]+"</td><td>"+parts[1]+"</td><td>" +
-            "<a href=''>"+deleteButtonText+"</a></td>" +
-            "</tr>");
+            "<a href=''>"+deleteButtonText+"</a>" +
+            "<input type='hidden' value='"+parts[0]+"' name='RelatedProductsIds[]'>" +
+            "</td></tr>");
     }
 
     return false;
