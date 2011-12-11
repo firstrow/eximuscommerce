@@ -225,3 +225,9 @@
 .gridFooterActions a:hover {
     color:#444;
 }
+
+/* Fix for grid in form div */
+.form .filters input[type=text] {
+    padding: 0;
+    width: 99%;
+}
