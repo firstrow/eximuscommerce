@@ -5,8 +5,7 @@ TODO:
 	- Add indexes to PageCategory table
 	- Search and get done all "TODO" in source files.
 	- Create text file used 3rd party soft.
-	- get finished "Related products" tab
-	- fix sorting in "Related products" tab
+	- Fix sorting in "Related products" tab
 
 	Done:
 	+ Finish job with SGridView filet button.

@@ -1,6 +1,18 @@
 
-<table style="width: 70%" id="relatedProductsTable">
-</table>
+<?php if(isset($product)): ?>
+    <table style="width: 70%" id="relatedProductsTable">
+        <?php foreach($product->relatedProducts as $related): ?>
+            <tr>
+                <input type="hidden" value="<?php echo $related->id ?>" name="RelatedProductId[]">
+                <td class="relatedProductLine<?php echo $related->id ?>"><?php echo $related->id ?></td>
+                <td><?php echo CHtml::link($related->name, array('admin/products/update', 'id'=>$related->id), array(
+                    'target'=>'_blank'
+                )); ?></td>
+                <td><a href="#" onclick="$(this).parents('tr').remove();"><?php echo Yii::t('StoreModule.admin', 'Удалить') ?></a></td>
+            </tr>
+        <?php endforeach ?>
+    </table>
+<?php endif; ?>
 
 <div>&nbsp;</div>
 
@@ -31,6 +43,7 @@ $this->widget('ext.sgridview.SGridView', array(
     'template'=>'{items}{summary}{pager}',
     'enableCustomActions'=>false,
     'extended'=>false,
+    'selectableRows'=>0,
     'filter'=>$model,
     'columns'=>array(
         array(
@@ -41,8 +54,8 @@ $this->widget('ext.sgridview.SGridView', array(
         ),
         array(
             'name'=>'name',
-            'type'=>'html',
-            'value'=>'CHtml::link($data->name, array("update", "id"=>$data->id))',
+            'type'=>'raw',
+            'value'=>'CHtml::link($data->name, array("update", "id"=>$data->id), array("target"=>"_blank"))',
             'filter'=>CHtml::textField('RelatedProducts[name]', $model->name)
         ),
         array(

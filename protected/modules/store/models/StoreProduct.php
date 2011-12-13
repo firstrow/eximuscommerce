@@ -32,6 +32,11 @@ class StoreProduct extends BaseModel
     public $exclude = null;
 
     /**
+     * @var array of related products
+     */
+    private $_related;
+
+    /**
      * Returns the static model of the specified AR class.
      * @param string $className
      * @return StoreProduct the static model class
@@ -90,6 +95,8 @@ class StoreProduct extends BaseModel
     public function relations()
     {
         return array(
+            'related'=>array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
+            'relatedProducts'=>array(self::HAS_MANY, 'StoreProduct', 'related_id', 'through'=>'related')
         );
     }
 
@@ -137,7 +144,18 @@ class StoreProduct extends BaseModel
             'sort'=>array(
                 'defaultOrder'=>'t.created DESC'
             ),
+            'pagination'=>array(
+                'pageSize'=>20,
+            )
         ));
+    }
+
+    /**
+     * @param array $ids Array of related products
+     */
+    public function setRelatedProducts($ids = array())
+    {
+        $this->_related = $ids;
     }
 
     public function beforeSave()
@@ -167,6 +185,25 @@ class StoreProduct extends BaseModel
             $this->url .= '-'.date('YmdHis');
 
         return parent::beforeSave();
+    }
+
+    public function afterSave()
+    {
+        if($this->_related !== null)
+        {
+            // Clear all related products
+            StoreRelatedProduct::model()->deleteAll('product_id=:id', array('id'=>$this->id));
+
+            foreach($this->_related as $id)
+            {
+                $related = new StoreRelatedProduct;
+                $related->product_id = $this->id;
+                $related->related_id = $id;
+                $related->save();
+            }
+        }
+
+        return parent::afterSave();
     }
 
     /**

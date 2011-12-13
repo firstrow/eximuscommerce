@@ -43,6 +43,7 @@ class ProductsController extends SAdminController
         $form->additionalTabs = array(
             Yii::t('StoreModule.admin','Сопутствующие продукты')=>$this->renderPartial('_relatedProducts',array(
                 'exclude'=>$model->id,
+                'product'=>$model,
             ),true),
         );
 
@@ -53,6 +54,9 @@ class ProductsController extends SAdminController
             if ($model->isNewRecord)
                 $model->created = date('Y-m-d H:i:s');
             $model->updated = date('Y-m-d H:i:s');
+
+            // Handle related products
+            $model->setRelatedProducts(Yii::app()->getRequest()->getPost('RelatedProductId', array()));
 
             if ($model->validate())
             {
