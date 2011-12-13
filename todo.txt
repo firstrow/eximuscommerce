@@ -6,6 +6,7 @@ TODO:
 	- Search and get done all "TODO" in source files.
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab
+	- Delete products relations onAfterDelete
 
 	Done:
 	+ Finish job with SGridView filet button.
