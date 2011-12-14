@@ -208,6 +208,7 @@ class StoreProduct extends BaseModel
     public function afterDelete()
     {
         $this->clearRelatedProducts();
+        StoreRelatedProduct::model()->deleteAll('related_id=:id', array('id'=>$this->id));
         return parent::afterDelete();
     }
 
