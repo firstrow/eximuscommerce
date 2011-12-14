@@ -6,7 +6,6 @@ TODO:
 	- Search and get done all "TODO" in source files.
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab
-	- Delete products relations onAfterDelete
 
 	Done:
 	+ Finish job with SGridView filet button.
@@ -38,3 +37,4 @@ TODO:
 	+ Fix grid gridview delete filter link
 	+ Add full support of translate to PageCategory model
 	+ Fix css3button to not hover on jquery buttons in dialog.
+	+ Delete products relations onAfterDelete

@@ -191,8 +191,7 @@ class StoreProduct extends BaseModel
     {
         if($this->_related !== null)
         {
-            // Clear all related products
-            StoreRelatedProduct::model()->deleteAll('product_id=:id', array('id'=>$this->id));
+            $this->clearRelatedProducts();
 
             foreach($this->_related as $id)
             {
@@ -204,6 +203,20 @@ class StoreProduct extends BaseModel
         }
 
         return parent::afterSave();
+    }
+
+    public function afterDelete()
+    {
+        $this->clearRelatedProducts();
+        return parent::afterDelete();
+    }
+
+    /**
+     * Clear all related products
+     */
+    private function clearRelatedProducts()
+    {
+        StoreRelatedProduct::model()->deleteAll('product_id=:id', array('id'=>$this->id));
     }
 
     /**
