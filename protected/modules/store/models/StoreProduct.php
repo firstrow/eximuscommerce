@@ -181,6 +181,7 @@ class StoreProduct extends BaseModel
                 ->count('id!=:id', array(':id'=>$this->id));
         }
 
+        // Create unique url
         if ($test > 0)
             $this->url .= '-'.date('YmdHis');
 
@@ -189,6 +190,7 @@ class StoreProduct extends BaseModel
 
     public function afterSave()
     {
+        // Process related products
         if($this->_related !== null)
         {
             $this->clearRelatedProducts();
@@ -207,6 +209,7 @@ class StoreProduct extends BaseModel
 
     public function afterDelete()
     {
+        // Delete related products
         $this->clearRelatedProducts();
         StoreRelatedProduct::model()->deleteAll('related_id=:id', array('id'=>$this->id));
         return parent::afterDelete();
