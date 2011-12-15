@@ -4,6 +4,7 @@
  */
 
 $this->widget('CMultiFileUpload', array(
+    'name'=>'StoreProductImages',
     'model'=>$model,
     'attribute'=>'files',
     'accept'=>'jpg|gif',

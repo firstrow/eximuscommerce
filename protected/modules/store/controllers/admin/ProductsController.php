@@ -64,16 +64,29 @@ class ProductsController extends SAdminController
             // Handle related products
             $model->setRelatedProducts(Yii::app()->getRequest()->getPost('RelatedProductId', array()));
 
+
             if ($model->validate())
             {
                 $model->save();
 
-                $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
+                // Handle images
+                // TODO: Check size and image type, extension
+                $images = CUploadedFile::getInstancesByName('StoreProductImages');
+                if($images && sizeof($images) > 0)
+                {
+                    foreach ($images as $image)
+                    {
+                        $image->saveAs(Yii::getPathOfAlias('webroot.uploads').'/'.sha1(time().rand(1,1000)));
+                    }
+                }
 
-                if (isset($_POST['REDIRECT']))
-                    $this->smartRedirect($model);
-                else
-                    $this->redirect(array('index'));
+
+//                $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
+//
+//                if (isset($_POST['REDIRECT']))
+//                    $this->smartRedirect($model);
+//                else
+//                    $this->redirect(array('index'));
             }
         }
 
