@@ -151,6 +151,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
+     * Save related products. Notice, related product will be saved after save() method called.
      * @param array $ids Array of related products
      */
     public function setRelatedProducts($ids = array())

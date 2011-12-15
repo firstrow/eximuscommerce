@@ -17,6 +17,14 @@ return array(
                 'url'=>array(
                     'type'=>'text',
                 ),
+                'is_active'=>array(
+                    'type'=>'dropdownlist',
+                    'items'=>array(
+                        1=>Yii::t('StoreModule.admin', 'Да'),
+                        0=>Yii::t('StoreModule.admin', 'Нет')
+                    ),
+                    'hint'=>Yii::t('StoreModule.admin', 'Отображать товар на сайте')
+                ),
                 'short_description'=>array(
                     'type'=>'textarea',
                 ),
@@ -29,14 +37,6 @@ return array(
             'type'=>'form',
             'title'=>Yii::t('StoreModule.admin', 'Склад'),
             'elements'=>array(
-                'is_active'=>array(
-                    'type'=>'dropdownlist',
-                    'items'=>array(
-                        1=>Yii::t('StoreModule.admin', 'Да'),
-                        0=>Yii::t('StoreModule.admin', 'Нет')
-                    ),
-                    'hint'=>Yii::t('StoreModule.admin', 'Отображать товар на сайте')
-                ),
                 'sku'=>array(
                     'type'=>'text',
                 ),
