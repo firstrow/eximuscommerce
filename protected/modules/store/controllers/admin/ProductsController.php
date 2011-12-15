@@ -45,6 +45,10 @@ class ProductsController extends SAdminController
                 'exclude'=>$model->id,
                 'product'=>$model,
             ),true),
+            Yii::t('StoreModule.admin','Изображения')=>'',
+            Yii::t('StoreModule.admin','Характеристики')=>'',
+            Yii::t('StoreModule.admin','Свойства')=>'',
+            Yii::t('StoreModule.admin','Отзывы')=>'',
         );
 
         if (Yii::app()->request->isPostRequest)
