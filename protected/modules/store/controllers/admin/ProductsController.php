@@ -45,7 +45,9 @@ class ProductsController extends SAdminController
                 'exclude'=>$model->id,
                 'product'=>$model,
             ),true),
-            Yii::t('StoreModule.admin','Изображения')=>'',
+            Yii::t('StoreModule.admin','Изображения')=>$this->renderPartial('_images', array(
+                'model'=>$model,
+            ), true),
             Yii::t('StoreModule.admin','Характеристики')=>'',
             Yii::t('StoreModule.admin','Свойства')=>'',
             Yii::t('StoreModule.admin','Отзывы')=>'',
@@ -98,6 +100,9 @@ class ProductsController extends SAdminController
         ));
     }
 
+    /**
+     * Delete products
+     */
     public function actionDelete()
     {
         if (Yii::app()->request->isPostRequest)
