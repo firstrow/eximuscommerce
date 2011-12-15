@@ -3,11 +3,11 @@
  * Images tabs
  */
 
-$this->widget('CMultiFileUpload', array(
+$this->widget('system.web.widgets.CMultiFileUpload', array(
     'name'=>'StoreProductImages',
     'model'=>$model,
     'attribute'=>'files',
-    'accept'=>'jpg|gif',
+    'accept'=>'jpg|gif|png',
     'options'=>array(
 //        'onFileSelect'=>'function(e, v, m){ alert("onFileSelect - "+v) }',
 //        'afterFileSelect'=>'function(e, v, m){ alert("afterFileSelect - "+v) }',
