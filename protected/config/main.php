@@ -115,7 +115,13 @@ return array(
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params'=>array(
-            // this is used in contact page
-            //'adminEmail'=>'webmaster@example.com',
+        // this is used in contact page
+        //'adminEmail'=>'webmaster@example.com',
+        'storeImages'=>array(
+            'path'=>'webroot.uploads.product',
+            'maxFileSize'=>10*1024*1024,
+            'extensions'=>array('jpg', 'jpeg','png', 'gif'),
+            'types'=>array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
+        )
     ),
 );

@@ -7,7 +7,8 @@ class StoreModule extends BaseModule
     public function init()
     {
         $this->setImport(array(
-            'application.modules.store.models.*'
+            'application.modules.store.models.*',
+            'application.modules.store.components.*'
         ));
     }
 }

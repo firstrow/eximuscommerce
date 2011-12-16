@@ -70,25 +70,24 @@ class ProductsController extends SAdminController
                 $model->save();
 
                 // Handle images
-                // TODO: Check size and image type, extension
                 $images = CUploadedFile::getInstancesByName('StoreProductImages');
                 if ($images && sizeof($images) > 0)
                 {
                     foreach ($images as $image)
                     {
-                        if ($image->isAllowedSize && $image->isAllowedType())
+                        if (!StoreUploadedImage::hasErrors($image))
                         {
-                            $image->saveAs(Yii::getPathOfAlias('webroot.uploads').'/'.sha1(time().rand(1,1000)));
+                            $image->saveAs(Yii::getPathOfAlias(Yii::app()->params['storeImages']['path']).'/'.StoreUploadedImage::createName($model, $image));
                         }
                     }
                 }
 
-                $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
+//                $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
-                if (isset($_POST['REDIRECT']))
-                    $this->smartRedirect($model);
-                else
-                    $this->redirect(array('index'));
+//                if (isset($_POST['REDIRECT']))
+//                    $this->smartRedirect($model);
+//                else
+//                    $this->redirect(array('index'));
             }
         }
 
@@ -100,6 +99,7 @@ class ProductsController extends SAdminController
 
     /**
      * Create gridview for "Related Products" tab
+     * @param int $exclude Product id to exclude from list
      */
     public function actionApplyProductsFilter($exclude = 0)
     {
