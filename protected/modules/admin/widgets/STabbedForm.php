@@ -26,11 +26,11 @@ class STabbedForm extends CForm {
 	/**
 	 * @var boolean Display errors summary on each tab.
 	 */
-	public $summaryOnEachTab = true;
+	public $summaryOnEachTab = false;
 
 	public function render()
 	{
-		$result = $this->renderBegin(); 
+		$result = $this->renderBegin();
 		$result .= $this->renderElements();
 		$result .= $this->renderEnd();
 
@@ -41,7 +41,7 @@ class STabbedForm extends CForm {
 	{
      	$this->render();
 		$result = $this->renderBegin();
-		 
+
 		if($this->showErrorSummary && ($model=$this->getModel(false))!==null)
 		{
 			// Display errors summary on each tab.
@@ -51,18 +51,22 @@ class STabbedForm extends CForm {
 			{
 				foreach ($this->tabs as &$tab)
 					$tab = $errorSummary.$tab;
+
+                // Display error on additional tabs
+                foreach($this->additionalTabs as &$tab)
+                    $tab = $errorSummary.$tab;
 			}
 			else
-				$result .= $errorSummary;
+				$result = $errorSummary.$result;
 		}
 
 		$result .= $this->owner->widget($this->formWidget, array(
 			'tabs'=>CMap::mergeArray($this->tabs, $this->additionalTabs),
-		), true);	
-			
+		), true);
+
 		$result .= $this->renderEnd();
-		
-		return $result; 
+
+		return $result;
 	}
 
     /**
