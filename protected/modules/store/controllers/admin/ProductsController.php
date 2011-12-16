@@ -77,7 +77,7 @@ class ProductsController extends SAdminController
                     {
                         if (!StoreUploadedImage::hasErrors($image))
                         {
-                            $image->saveAs(Yii::getPathOfAlias(Yii::app()->params['storeImages']['path']).'/'.StoreUploadedImage::createName($model, $image));
+                            $image->saveAs(StoreUploadedImage::getSavePath().'/'.StoreUploadedImage::createName($model, $image));
                         }
                     }
                 }
