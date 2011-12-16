@@ -77,17 +77,18 @@ class ProductsController extends SAdminController
                     {
                         if (!StoreUploadedImage::hasErrors($image))
                         {
-                            $image->saveAs(StoreUploadedImage::getSavePath().'/'.StoreUploadedImage::createName($model, $image));
+                            $name = StoreUploadedImage::createName($model, $image);
+                            $image->saveAs(StoreUploadedImage::getSavePath().'/'.$name);
                         }
                     }
                 }
 
-//                $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
+                $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
-//                if (isset($_POST['REDIRECT']))
-//                    $this->smartRedirect($model);
-//                else
-//                    $this->redirect(array('index'));
+                if (isset($_POST['REDIRECT']))
+                    $this->smartRedirect($model);
+                else
+                    $this->redirect(array('index'));
             }
         }
 
