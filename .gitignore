@@ -1,4 +1,5 @@
 /assets/*
+/uploads/*
 protected/runtime/
 .idea
 /protected/tests/fixtures/*

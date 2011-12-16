@@ -45,6 +45,12 @@ class ProductsController extends SAdminController
                 'exclude'=>$model->id,
                 'product'=>$model,
             ),true),
+            Yii::t('StoreModule.admin','Изображения')=>$this->renderPartial('_images', array(
+                'model'=>$model,
+            ), true),
+            Yii::t('StoreModule.admin','Характеристики')=>'',
+            Yii::t('StoreModule.admin','Свойства')=>'',
+            Yii::t('StoreModule.admin','Отзывы')=>'',
         );
 
         if (Yii::app()->request->isPostRequest)
@@ -58,9 +64,24 @@ class ProductsController extends SAdminController
             // Handle related products
             $model->setRelatedProducts(Yii::app()->getRequest()->getPost('RelatedProductId', array()));
 
+
             if ($model->validate())
             {
                 $model->save();
+
+                // Handle images
+                // TODO: Check size and image type, extension
+                $images = CUploadedFile::getInstancesByName('StoreProductImages');
+                if ($images && sizeof($images) > 0)
+                {
+                    foreach ($images as $image)
+                    {
+                        if ($image->isAllowedSize && $image->isAllowedType())
+                        {
+                            $image->saveAs(Yii::getPathOfAlias('webroot.uploads').'/'.sha1(time().rand(1,1000)));
+                        }
+                    }
+                }
 
                 $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
@@ -94,6 +115,9 @@ class ProductsController extends SAdminController
         ));
     }
 
+    /**
+     * Delete products
+     */
     public function actionDelete()
     {
         if (Yii::app()->request->isPostRequest)
