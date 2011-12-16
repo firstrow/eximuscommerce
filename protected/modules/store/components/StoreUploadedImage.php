@@ -31,7 +31,7 @@ class StoreUploadedImage
      */
     public static function isAllowedType(CUploadedFile $image)
     {
-        return in_array($image->getType(), Yii::app()->params['storeImages']['types']);
+        return in_array(CFileHelper::getMimeType($image->getTempName()), Yii::app()->params['storeImages']['types']);
     }
 
     /**
@@ -40,7 +40,7 @@ class StoreUploadedImage
      */
     public static function hasErrors(CUploadedFile $image)
     {
-        return (!$image->getError() && self::isAllowedExt($image) && self::isAllowedSize($image) && self::isAllowedType($image));
+        return !(!$image->getError() && self::isAllowedExt($image) === true && self::isAllowedSize($image) === true && self::isAllowedType($image) === true);
     }
 
     /**
