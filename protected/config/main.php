@@ -122,6 +122,7 @@ return array(
             'maxFileSize'=>10*1024*1024,
             'extensions'=>array('jpg', 'jpeg','png', 'gif'),
             'types'=>array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
+            'url'=>'/uploads/product/', // With ending slash
         )
     ),
 );

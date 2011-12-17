@@ -95,6 +95,7 @@ class StoreProduct extends BaseModel
     public function relations()
     {
         return array(
+            'images'=>array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
             'related'=>array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
             'relatedProducts'=>array(self::HAS_MANY, 'StoreProduct', 'related_id', 'through'=>'related')
         );

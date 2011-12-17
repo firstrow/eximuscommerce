@@ -5,7 +5,7 @@ html, body {
     margin: auto; /* center in viewport */
     width: 100%;
     min-height:100%;
-    font-family:"Lucida Grande", verdana, arial, helvetica, sans-serif; 
+    font-family:"Lucida Grande", verdana, arial, helvetica, sans-serif;
     font-size:12px;
     background-color:#F5F5F5;
     /*background-color: #D2D1D0;*/
@@ -88,7 +88,7 @@ a:hover, a:active, a.selected {
     /*background-color:silver;*/
     /*border-bottom:1px solid silver;*/
     margin:0 0 5px 0;
-    height:38px; 
+    height:38px;
     z-index:500;
 }
 
@@ -102,7 +102,7 @@ a:hover, a:active, a.selected {
 
 #navigation .navigation-content-right {
     margin:6px 10px 0 0;
-   
+
 }
 
 #navigation .navigation-content a {
@@ -130,7 +130,7 @@ a:hover, a:active, a.selected {
     background: -moz-linear-gradient(top, #E6ECEF 0%, #D0D6DA 99%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E6ECEF), color-stop(99%,#D0D6DA));
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E6ECEF', endColorstr='#D0D6DA',GradientType=0 );
-    zoom: 1;    
+    zoom: 1;
 }
 
 #sidebar .sidebarBlock .blockContent {
