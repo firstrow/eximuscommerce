@@ -167,7 +167,7 @@ class ProductsController extends SAdminController
     /**
      * Delete products
      */
-    public function actionDelete()
+    public function actionDelete($id = array())
     {
         if (Yii::app()->request->isPostRequest)
         {

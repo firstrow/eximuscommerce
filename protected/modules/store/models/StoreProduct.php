@@ -214,6 +214,16 @@ class StoreProduct extends BaseModel
         // Delete related products
         $this->clearRelatedProducts();
         StoreRelatedProduct::model()->deleteAll('related_id=:id', array('id'=>$this->id));
+
+        // Delete images
+        $images = $this->images;
+        if(!empty($images))
+        {
+            foreach ($images as $image)
+                $image->delete();
+        }
+
+
         return parent::afterDelete();
     }
 

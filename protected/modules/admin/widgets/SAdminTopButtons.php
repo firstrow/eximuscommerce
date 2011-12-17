@@ -1,11 +1,11 @@
 <?php
 
 /**
- * SAdminTopButtons 
+ * SAdminTopButtons
  * Displays buttons on top to save object.
  */
 class SAdminTopButtons extends CWidget {
-    
+
     /**
      * Links to controller actions
      * @var string
@@ -16,37 +16,37 @@ class SAdminTopButtons extends CWidget {
     public $defaultUpdateAction = 'update';
     public $updateAction;
     public $result = array();
-    
+
     /**
      * List of default css classes to append to each link
      * @var array
      */
     public $defaultLinkClasses = array();
-    
+
     /**
-     * Default links templates. 
+     * Default links templates.
      * @var array
      */
     public $template = array('history_back','save','dropDown','delete');
-    
+
     /**
      * Default links
      * @var array
      */
     private $_default = array();
-    
+
     /**
      * Form object
      * @var CForm
      */
     public $form = null;
-    
+
     /**
      * If isNew is set to false the `delete` button will not by displayed
      * @var boolean
      */
     public $isNew = false;
-    
+
     /**
      * From id to be submitted
      * @var string
@@ -59,13 +59,13 @@ class SAdminTopButtons extends CWidget {
      * @var boolen
      */
     public $addNewElements = true;
-    
+
     public $langSwitcher = false;
 
     /**
      * List of buttons to display
      * Example:
-     * 
+     *
      * 'linkName'=>array(
      *      'link'=>array('controller/action', 'a'=>'b'),
      *      'title'=>'Link Title',
@@ -73,11 +73,11 @@ class SAdminTopButtons extends CWidget {
      *      'htmlOptions'=>array(),
      *      ...
      * )
-     * 
+     *
      * @var type array
      */
     public $elements = array();
-    
+
     public function run()
     {
         Yii::import('application.modules.admin.AdminModule');
@@ -88,12 +88,12 @@ class SAdminTopButtons extends CWidget {
 
         if ($this->form)
             $this->formId = $this->form->id;
-                
+
         $buttons = CMap::mergeArray($this->default, $this->elements);
 
         if ($this->addNewElements)
             $this->template = array_unique(CMap::mergeArray(array_keys($this->elements), $this->template));
-        
+
         if ($this->langSwitcher)
             array_unshift($this->template, 'langSwitch');
 
@@ -115,23 +115,23 @@ class SAdminTopButtons extends CWidget {
                 }
             }
         }
-        
+
         $n=0;
         foreach($this->template as $key)
         {
             $item = $buttons[$key];
-            
+
             if (!isset($item['classes']))
                 $item['classes'] = array();
             if (!isset($item['htmlOptions']))
                 $item['htmlOptions'] = array();
             if (!isset($item['options']))
                 $item['options'] = array();
-            
+
             // Set link ID
             if (!isset($item['htmlOptions']['id']))
                 $item['htmlOptions']['id'] = $key.'_topLink';
-            
+
             $linkClasses = CMap::mergeArray($item['classes'], $this->defaultLinkClasses);
 
             $this->result[$key] = $this->widget('zii.widgets.jui.CJuiButton',
@@ -150,7 +150,7 @@ class SAdminTopButtons extends CWidget {
 
         $this->registerScripts();
     }
-    
+
     /**
      * Load default buttons
      * @return array
@@ -212,7 +212,7 @@ class SAdminTopButtons extends CWidget {
             'langSwitch'=>$this->getLangSwitchButton(),
         );
     }
-    
+
     /**
      * Create language switch button.
      * @return array
@@ -245,9 +245,9 @@ class SAdminTopButtons extends CWidget {
                     $currentLang = $lang;
             }
 
-            Yii::app()->clientScript->registerScript('langSwithMenu', "       
-                $('#langSwitch_topLink').menu({ 
-                    content: $('#langSwitchButtonMenu').html(), 
+            Yii::app()->clientScript->registerScript('langSwithMenu', "
+                $('#langSwitch_topLink').menu({
+                    content: $('#langSwitchButtonMenu').html(),
                     showSpeed: 400
                 });
             ", CClientScript::POS_END);
@@ -260,7 +260,7 @@ class SAdminTopButtons extends CWidget {
                 'items'=>$langs,
                 'encodeLabel'=>false
             ));
-            echo CHtml::closeTag('div');            
+            echo CHtml::closeTag('div');
         }
 
         return array(
@@ -276,7 +276,7 @@ class SAdminTopButtons extends CWidget {
 
     /**
      * Create flag image for lang
-     * @param SSystemLanguage $lang 
+     * @param SSystemLanguage $lang
      * @return string
      */
     public function getFlagImage(SSystemLanguage $lang)
@@ -311,9 +311,9 @@ class SAdminTopButtons extends CWidget {
         if (in_array('dropDown', $this->template))
         {
             $this->registerFgMenu();
-            Yii::app()->clientScript->registerScript('dropDownButtonMenu', "       
-                $('#dropDown_topLink').menu({ 
-                    content: $('#dropDownButtonMenu').html(), 
+            Yii::app()->clientScript->registerScript('dropDownButtonMenu', "
+                $('#dropDown_topLink').menu({
+                    content: $('#dropDownButtonMenu').html(),
                     showSpeed: 400
                 });
             ", CClientScript::POS_END);
@@ -337,7 +337,7 @@ class SAdminTopButtons extends CWidget {
                         'linkOptions'=>array(
                             'onClick'=>$this->renderSubmitFormJs()
                         ),
-                    ),                    
+                    ),
                 ),
             ));
             echo CHtml::closeTag('div');
@@ -346,7 +346,7 @@ class SAdminTopButtons extends CWidget {
         if(in_array('langSwitch', $this->template))
             $this->registerFgMenu();
     }
-    
+
     /**
      * Register fg.menu scripts
      */
@@ -359,15 +359,15 @@ class SAdminTopButtons extends CWidget {
     }
 
     public function renderSubmitFormJs()
-    {        
+    {
         return  'return submitFormById(\''.$this->formId.'\', this);';
     }
-    
+
     /**
      * Display buttons
      * @return string
      */
-    public function __toString() 
+    public function __toString()
     {
         $htmlResult = '';
         foreach($this->result as $link)
