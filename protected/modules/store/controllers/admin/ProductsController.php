@@ -98,7 +98,6 @@ class ProductsController extends SAdminController
                             // Resize if needed
                             Yii::import('ext.phpthumb.PhpThumbFactory');
                             $thumb = PhpThumbFactory::create($fullPath);
-
                             $sizes = Yii::app()->params['storeImages']['sizes'];
                             $method = $sizes['resizeMethod'];
                             $thumb->$method($sizes['maximum'][0],$sizes['maximum'][1])->save($fullPath);

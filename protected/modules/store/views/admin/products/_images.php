@@ -2,7 +2,9 @@
 /**
  * Images tabs
  */
+Yii::import('ext.jqPrettyPhoto');
 
+// Register view styles
 Yii::app()->getClientScript()->registerCss('infoStyles', "
     table.imagesList {
         float: left;
@@ -15,6 +17,7 @@ Yii::app()->getClientScript()->registerCss('infoStyles', "
     }
 ");
 
+// Upload button
 echo CHtml::openTag('div', array('class'=>'row'));
 echo CHtml::label(Yii::t('StoreModule.admin', 'Выберите изображения'), 'files');
     $this->widget('system.web.widgets.CMultiFileUpload', array(
@@ -25,6 +28,7 @@ echo CHtml::label(Yii::t('StoreModule.admin', 'Выберите изображе
     ));
 echo CHtml::closeTag('div');
 
+// Images
 if ($model->images)
 {
     foreach ($model->images as $image)
@@ -42,7 +46,7 @@ if ($model->images)
                     'value'=>CHtml::link(
                         CHtml::image($image->getUrl(true), $image->name, array('height'=>'150px',)),
                         $image->getUrl(true),
-                        array('target'=>'_blank')
+                        array('target'=>'_blank', 'class'=>'pretty', 'title'=>CHtml::encode($model->name))
                     ),
                 ),
                 'id',
@@ -77,3 +81,12 @@ if ($model->images)
         ));
     }
 }
+
+
+
+$options = array(
+    'autoplay_slideshow'=>false,
+    'show_title'=>false
+);
+// call addPretty static function
+jqPrettyPhoto::addPretty('.pretty',jqPrettyPhoto::PRETTY_SINGLE,jqPrettyPhoto::THEME_DARK_SQUARE, $options);
