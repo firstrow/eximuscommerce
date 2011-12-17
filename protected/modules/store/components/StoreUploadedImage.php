@@ -22,7 +22,7 @@ class StoreUploadedImage
      */
     public static function isAllowedExt(CUploadedFile $image)
     {
-        return in_array($image->getExtensionName(), Yii::app()->params['storeImages']['extensions']);
+        return in_array(strtolower($image->getExtensionName()), Yii::app()->params['storeImages']['extensions']);
     }
 
     /**

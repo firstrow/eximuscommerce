@@ -10,6 +10,9 @@ Yii::app()->getClientScript()->registerCss('infoStyles', "
         margin-right: 15px;
         margin-bottom: 15px;
     }
+    div.MultiFile-list {
+        margin-left:190px
+    }
 ");
 
 echo CHtml::openTag('div', array('class'=>'row'));
@@ -36,9 +39,11 @@ if ($model->images)
                 array(
                     'label'=>Yii::t('StoreModule.admin', 'Изображение'),
                     'type'=>'raw',
-                    'value'=>CHtml::image($image->getUrl(true), $image->name, array(
-                        'height'=>'150px',
-                    )),
+                    'value'=>CHtml::link(
+                        CHtml::image($image->getUrl(true), $image->name, array('height'=>'150px',)),
+                        $image->getUrl(true),
+                        array('target'=>'_blank')
+                    ),
                 ),
                 'id',
                 array(

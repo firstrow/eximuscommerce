@@ -95,6 +95,10 @@ class ProductsController extends SAdminController
                             $imageModel->date_uploaded = date('Y-m-d H:i:s');
                             $imageModel->save();
                         }
+                        else
+                        {
+                            $this->setFlashMessage(Yii::t('StoreModule.admin', 'Error uploading image'));
+                        }
                     }
                 }
 
