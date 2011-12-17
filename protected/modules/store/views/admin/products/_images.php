@@ -56,7 +56,7 @@ if ($model->images)
                 array(
                     'name'=>'author',
                     'type'=>'raw',
-                    'value'=>$image->author->username,
+                    'value'=>($image->author) ? $image->author->username : '',
                 ),
                 'date_uploaded',
                 array(
