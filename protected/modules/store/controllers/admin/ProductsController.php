@@ -81,11 +81,10 @@ class ProductsController extends SAdminController
                             $image->saveAs($fullPath);
 
                             // Check if product has main image
-                            $is_main = (int) StoreProductImage::model()
-                                ->countByAttributes(array(
-                                    'product_id'=>$model->id,
-                                    'is_main'=>1
-                                ));
+                            $is_main = (int) StoreProductImage::model()->countByAttributes(array(
+                                'product_id'=>$model->id,
+                                'is_main'=>1
+                            ));
 
                             $imageModel = new StoreProductImage;
                             $imageModel->product_id = $model->id;

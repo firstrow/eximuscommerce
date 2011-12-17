@@ -41,7 +41,7 @@
             array(
                 'name'=>'url',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->url, $data->url, array("target"=>"_blank"))',
+                'value'=>'CHtml::link($data->url, array("/store/frontProduct/view", "url"=>$data->url), array("target"=>"_blank"))',
             ),
             'sku',
             'price',

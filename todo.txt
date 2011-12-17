@@ -6,10 +6,7 @@ TODO:
 	- Search and get done all "TODO" in source files.
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab.
-	- Get done "Images" tab.
 	- Create base categories for products based on nested set.
-	- Create dev theme based on web-app-theme.
-	- Display errors on each tab or find another way to display error in tabbed inter face
 
 	Done:
 	+ Finish job with SGridView filet button.
@@ -42,3 +39,5 @@ TODO:
 	+ Add full support of translate to PageCategory model
 	+ Fix css3button to not hover on jquery buttons in dialog.
 	+ Delete products relations onAfterDelete
+	+ Display errors on each tab or find another way to display error in tabbed interface
+	+ Get done "Images" tab.
