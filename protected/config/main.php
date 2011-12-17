@@ -123,6 +123,10 @@ return array(
             'extensions'=>array('jpg', 'jpeg','png', 'gif'),
             'types'=>array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
             'url'=>'/uploads/product/', // With ending slash
+            'sizes'=>array(
+                'resizeMethod'=>'resize', // or resizeAdaptive
+                'maximum'=>array(800, 600), // All uploaded images
+            )
         )
     ),
 );

@@ -70,7 +70,7 @@ if ($model->images)
                         ),
                         array(
                             'id'=>'DeleteImageLink'.$image->id,
-                            'confirm'=>'Delete Image?',
+                            'confirm'=>Yii::t('StoreModule.admin', 'Вы действительно хотите удалить это изображение?'),
                         )),
                 ),
             ),

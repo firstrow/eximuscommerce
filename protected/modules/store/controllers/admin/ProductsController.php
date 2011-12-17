@@ -69,7 +69,6 @@ class ProductsController extends SAdminController
                 $model->save();
 
                 // Handle images
-                // TODO: Display upload errors
                 $images = CUploadedFile::getInstancesByName('StoreProductImages');
                 if ($images && sizeof($images) > 0)
                 {
@@ -78,7 +77,8 @@ class ProductsController extends SAdminController
                         if (!StoreUploadedImage::hasErrors($image))
                         {
                             $name = StoreUploadedImage::createName($model, $image);
-                            $image->saveAs(StoreUploadedImage::getSavePath().'/'.$name);
+                            $fullPath = StoreUploadedImage::getSavePath().'/'.$name;
+                            $image->saveAs($fullPath);
 
                             // Check if product has main image
                             $is_main = (int) StoreProductImage::model()
@@ -94,10 +94,18 @@ class ProductsController extends SAdminController
                             $imageModel->uploaded_by = Yii::app()->user->getId();
                             $imageModel->date_uploaded = date('Y-m-d H:i:s');
                             $imageModel->save();
+
+                            // Resize if needed
+                            Yii::import('ext.phpthumb.PhpThumbFactory');
+                            $thumb = PhpThumbFactory::create($fullPath);
+
+                            $sizes = Yii::app()->params['storeImages']['sizes'];
+                            $method = $sizes['resizeMethod'];
+                            $thumb->$method($sizes['maximum'][0],$sizes['maximum'][1])->save($fullPath);
                         }
                         else
                         {
-                            $this->setFlashMessage(Yii::t('StoreModule.admin', 'Error uploading image'));
+                            $this->setFlashMessage(Yii::t('StoreModule.admin', 'Ошибка загрузки изображения'));
                         }
                     }
                 }
@@ -144,6 +152,9 @@ class ProductsController extends SAdminController
         ));
     }
 
+    /**
+     * @param $id StoreProductImage id
+     */
     public function actionDeleteImage($id)
     {
         if (Yii::app()->request->getIsPostRequest())
