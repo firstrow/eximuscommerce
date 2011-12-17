@@ -9,6 +9,7 @@ Yii::app()->getClientScript()->registerCss('infoStyles', "
     table.imagesList {
         float: left;
         width: 45%;
+        min-width:250px;
         margin-right: 15px;
         margin-bottom: 15px;
     }
@@ -82,11 +83,9 @@ if ($model->images)
     }
 }
 
-
-
-$options = array(
-    'autoplay_slideshow'=>false,
-    'show_title'=>false
+// Fancybox plugin
+$this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a.pretty',
+        'config'=>array(),
+    )
 );
-// call addPretty static function
-jqPrettyPhoto::addPretty('.pretty',jqPrettyPhoto::PRETTY_SINGLE,jqPrettyPhoto::THEME_DARK_SQUARE, $options);
