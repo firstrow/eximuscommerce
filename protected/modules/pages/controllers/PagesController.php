@@ -1,9 +1,10 @@
-<?php 
+<?php
+
 /**
- * Display pages.
+ * Pages controller
  * @package modules.pages
  */
-class PagesController extends Controller 
+class PagesController extends Controller
 {
 
 	/**
@@ -24,7 +25,7 @@ class PagesController extends Controller
 			->getDbCriteria();
 
 		$count = Page::model()->count($criteria);
-		
+
 	 	$pagination = new CPagination($count);
 	    $pagination->pageSize = ($model->page_size > 0) ? $model->page_size: $model->defaultPageSize;
 	    $pagination->applyLimit($criteria);
@@ -43,7 +44,7 @@ class PagesController extends Controller
 	/**
 	 * Display page by url.
 	 * Example url: /page/some-page-url
-	 * @param string $url page url 
+	 * @param string $url page url
 	 */
 	public function actionView($url)
 	{
@@ -61,25 +62,6 @@ class PagesController extends Controller
 		$this->render($view, array(
 			'model'=>$model,
 		));
-	}
-
-	/**
-	 * Set layout and view
-	 * @param mixed $model Page|PageCategory 
-	 * @param string $view Default view name 
-	 * @return string
-	 */
-	protected function setDesign($model, $view)
-	{
-		// Set layout
-		if ($model->layout)
-			$this->layout = $model->layout;
-
-		// Use custom page view
-		if ($model->view)
-			$view = $model->view;
-
-		return $view;
 	}
 
 }

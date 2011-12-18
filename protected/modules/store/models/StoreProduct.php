@@ -54,6 +54,15 @@ class StoreProduct extends BaseModel
         return 'StoreProduct';
     }
 
+    public function scopes()
+    {
+        return array(
+            'active'=>array(
+                'condition'=>'is_active=1',
+            ),
+        );
+    }
+
     /**
      * Find product by url.
      * Scope.
