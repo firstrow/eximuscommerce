@@ -49,7 +49,7 @@ class CategoryController extends SAdminController {
                 {
                     $model->saveNode();
                     // Move category if parent has changed
-                    if($parent->id != 1 && $model->parent->id != $model->parent_id)
+                    if($model->id != 1 && $model->parent->id != $model->parent_id)
                         $model->moveAsLast($parent);
                 }
 

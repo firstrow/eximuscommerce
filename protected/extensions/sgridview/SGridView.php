@@ -167,7 +167,7 @@ class SGridView extends CGridView {
                 'url'=>$this->owner->createUrl('delete'),
                 'linkOptions'=>array(
                     'class'=>'actionDelete',
-                    'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные страницы?'),
+                    'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные объекты?'),
                 )
             ));
         }
