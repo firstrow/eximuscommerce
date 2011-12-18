@@ -69,6 +69,8 @@ class StoreCategory extends BaseModel
     {
         if (self::model()->count('id=:id',array(':id'=>$this->$attr))==0)
             $this->addError($attr, Yii::t('StoreModule.core','Ошибка проверки родительской категории.'));
+        if ($this->id !== 1 && $this->id == $this->$attr)
+            $this->addError($attr, Yii::t('StoreModule.core','Ошибка проверки родительской категории.'));
     }
 
     /**

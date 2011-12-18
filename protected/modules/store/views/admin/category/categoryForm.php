@@ -2,7 +2,10 @@
 
 // Set parent_id as root on create new category
 try{
-    $parent_id = $this->model->parent->id;
+    if ($this->model->parent)
+        $parent_id = $this->model->parent->id;
+    else
+        $parent_id = 1;
 } catch(Exception $e) {
     $parent_id = 1;
 }
@@ -23,6 +26,7 @@ return array(
                     'items'=>CHtml::listData(StoreCategory::model()->findAll(array('order'=>'lft')), 'id', 'nameWithLevel'),
                     'options'=>array(
                         $parent_id=>array('selected'=>'selected'),
+                        //$this->model->id=>array('disabled'=>'disabled'),
                     ),
                 ),
             ),

@@ -4,6 +4,9 @@
      * Create/update category
      */
 
+    $descendants=$model->ancestors()->findAll();
+    var_dump($descendants);
+
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
         'form'=>$form,
         //'langSwitcher'=>!$model->isNewRecord,
@@ -20,6 +23,11 @@
     );
 
     $this->pageHeader = $title;
+
+    $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
+        'elements'=>array('StoreCategory_parent_id')
+    ));
+
 ?>
 
 <div class="form wide padding-all">
