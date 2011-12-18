@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/434/trunk/app/extensions/yiiext/behaviors/model/trees
+END
+readme_ru.txt
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/434/trunk/app/extensions/yiiext/behaviors/model/trees/readme_ru.txt
+END
+schema_with_many_roots.sql
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/400/trunk/app/extensions/yiiext/behaviors/model/trees/schema_with_many_roots.sql
+END
+NestedSetBehavior.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/434/trunk/app/extensions/yiiext/behaviors/model/trees/NestedSetBehavior.php
+END
+changelog.txt
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/434/trunk/app/extensions/yiiext/behaviors/model/trees/changelog.txt
+END
+readme_en.txt
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/434/trunk/app/extensions/yiiext/behaviors/model/trees/readme_en.txt
+END
+schema.sql
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/366/trunk/app/extensions/yiiext/behaviors/model/trees/schema.sql
+END
