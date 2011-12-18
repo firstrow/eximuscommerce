@@ -13,6 +13,11 @@ return array(
                 'url'=>Yii::app()->createUrl('store/admin/products'),
                 'position'=>1
             ),
+            array(
+                'label'=>Yii::t('StoreModule.admin', 'Категории'),
+                'url'=>Yii::app()->createUrl('store/admin/category'),
+                'position'=>2
+            ),
         ),
     ),
 );
