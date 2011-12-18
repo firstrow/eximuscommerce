@@ -77,6 +77,22 @@ class SGridView extends CGridView {
 
 		Yii::app()->getClientScript()->registerScriptFile($this->baseScriptUrl.'/gridview.dropdown.js',CClientScript::POS_END);
 
+        Yii::app()->getClientScript()->registerScript("setFirstThWidth",'
+            $("#'.$this->id.'").find("table thead th").not(".checkbox-column").each(function(){
+                var title = "";
+                if($(this).children().is("a"))
+                {
+                    title = $(this).children().text().toLowerCase();
+                }else{
+                    title = $(this).text().toLowerCase();
+                }
+
+                if (title == "id") {
+                    $(this).attr("width", "35px;");
+                }
+            });
+        ');
+
 		$this->pager = array(
 			'cssFile'=>$this->baseScriptUrl.'/pager.css',
 		);
