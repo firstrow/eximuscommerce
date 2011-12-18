@@ -4,9 +4,6 @@
      * Create/update category
      */
 
-    $descendants=$model->ancestors()->findAll();
-    var_dump($descendants);
-
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
         'form'=>$form,
         //'langSwitcher'=>!$model->isNewRecord,
