@@ -7,6 +7,7 @@ TODO:
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab.
 	- Create base categories for products based on nested set.
+	- Move page categories to NestedSet
 
 	Done:
 	+ Finish job with SGridView filet button.
