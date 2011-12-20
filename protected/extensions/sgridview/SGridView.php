@@ -286,6 +286,10 @@ class SGridView extends CGridView {
 		echo $this->createSaveDialog();
 	}
 
+    /**
+     * Create jquery.ui dialog to save custom filters
+     * @return string
+     */
 	protected function createSaveDialog()
 	{
 		return Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
@@ -301,4 +305,19 @@ class SGridView extends CGridView {
 			}
 		});");
 	}
+
+}
+
+/**
+ * Column class to render ID column
+ */
+class SGridIdColumn extends CDataColumn
+{
+
+    public function renderHeaderCell()
+    {
+        $this->headerHtmlOptions['width']='40px';
+        parent::renderHeaderCell();
+    }
+
 }
