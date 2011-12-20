@@ -1,7 +1,7 @@
 <?php
 
-	/** 
-     *Display category tree 
+	/**
+     *Display category tree
      **/
 
 	$this->pageHeader = Yii::t('PagesModule.core', 'Категории');
@@ -33,6 +33,7 @@
                 'class'=>'CCheckBoxColumn',
             ),
             array(
+                'class'=>'SGridIdColumn',
                 'name'=>'id',
                 'type'=>'html',
                 'header'=>$model->getAttributeLabel("id"),

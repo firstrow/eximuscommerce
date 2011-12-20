@@ -7,7 +7,7 @@
         'Home'=>$this->createUrl('/admin'),
         Yii::t('UsersModule.core', 'Пользователи'),
     );
-      
+
     $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
         'template'=>array('new'),
         'elements'=>array(
@@ -26,7 +26,10 @@
         'id'=>'usersListGrid',
         'filter'=>$model,
         'columns'=>array(
-            'id' ,
+            array(
+                'class'=>'SGridIdColumn',
+                'name'=>'id',
+            ),
             array(
                 'name'=>'username',
                 'value'=>'CHtml::link($data->username,array("update","id"=>$data->id))',

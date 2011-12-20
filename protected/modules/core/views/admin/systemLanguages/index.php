@@ -28,7 +28,10 @@
             array(
                 'class'=>'CCheckBoxColumn',
             ),
-            'id',
+            array(
+                'class'=>'SGridIdColumn',
+                'name'=>'id',
+            ),
             array(
                 'name'=>'name',
                 'type'=>'raw',
