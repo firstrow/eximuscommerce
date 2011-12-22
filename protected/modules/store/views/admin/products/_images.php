@@ -45,7 +45,7 @@ if ($model->images)
                     'label'=>Yii::t('StoreModule.admin', 'Изображение'),
                     'type'=>'raw',
                     'value'=>CHtml::link(
-                        CHtml::image($image->getUrl(true), $image->name, array('height'=>'150px',)),
+                        CHtml::image($image->getUrl(true), CHtml::encode($image->name), array('height'=>'150px',)),
                         $image->getUrl(true),
                         array('target'=>'_blank', 'class'=>'pretty', 'title'=>CHtml::encode($model->name))
                     ),
@@ -61,7 +61,7 @@ if ($model->images)
                 array(
                     'name'=>'author',
                     'type'=>'raw',
-                    'value'=>($image->author) ? $image->author->username : '',
+                    'value'=>($image->author) ? CHtml::encode($image->author->username) : '',
                 ),
                 'date_uploaded',
                 array(
@@ -83,7 +83,7 @@ if ($model->images)
     }
 }
 
-// Fancybox plugin
+// Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
         'target'=>'a.pretty',
         'config'=>array(),

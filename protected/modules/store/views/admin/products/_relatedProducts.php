@@ -48,25 +48,23 @@ $this->widget('ext.sgridview.SGridView', array(
     'columns'=>array(
         array(
             'name'=>'id',
-            'type'=>'raw',
+            'type'=>'text',
             'value'=>'$data->id',
             'filter'=>CHtml::textField('RelatedProducts[id]', $model->id)
         ),
         array(
             'name'=>'name',
             'type'=>'raw',
-            'value'=>'CHtml::link($data->name, array("update", "id"=>$data->id), array("target"=>"_blank"))',
+            'value'=>'CHtml::link(CHtml::encode($data->name), array("update", "id"=>$data->id), array("target"=>"_blank"))',
             'filter'=>CHtml::textField('RelatedProducts[name]', $model->name)
         ),
         array(
             'name'=>'sku',
-            'type'=>'raw',
             'value'=>'$data->sku',
             'filter'=>CHtml::textField('RelatedProducts[sku]', $model->sku)
         ),
         array(
             'name'=>'price',
-            'type'=>'raw',
             'value'=>'$data->price',
             'filter'=>CHtml::textField('RelatedProducts[price]', $model->price)
         ),
@@ -74,7 +72,7 @@ $this->widget('ext.sgridview.SGridView', array(
             'class'=>'CLinkColumn',
             'header'=>'',
             'label'=>Yii::t('StoreModule.admin','Добавить'),
-            'urlExpression'=>'$data->id."/".$data->name',
+            'urlExpression'=>'$data->id."/".CHtml::encode($data->name)',
             'htmlOptions'=>array(
                 'onClick'=>'return AddRelatedProduct(this);'
             ),

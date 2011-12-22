@@ -14,7 +14,7 @@
 	<?php if (!empty($modules)): ?>
 		<?php foreach ($modules as $module=>$info): ?>
 			<div>
-				<b><?php echo $info['name'].' '.$info['version'] ?></b>
+				<b><?php echo CHtml::encode($info['name'].' '.$info['version']) ?></b>
 				<p>
 					<?php echo $info['description'] ?>
 				</p>

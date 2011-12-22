@@ -32,8 +32,8 @@
             ),
             array(
                 'name'=>'username',
-                'value'=>'CHtml::link($data->username,array("update","id"=>$data->id))',
                 'type'=>'raw',
+                'value'=>'CHtml::link(CHtml::encode($data->username),array("update","id"=>$data->id))',
             ),
             'email',
             array(

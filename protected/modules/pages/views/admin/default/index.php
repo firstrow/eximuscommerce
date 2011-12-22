@@ -37,12 +37,12 @@
             array(
                 'name'=>'title',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->title, array("update", "id"=>$data->id))',
+                'value'=>'CHtml::link(CHtml::encode($data->title), array("update", "id"=>$data->id))',
             ),
             array(
                 'name'=>'url',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->url, $data->getViewUrl(), array("target"=>"_blank"))',
+                'value'=>'CHtml::link(CHtml::encode($data->url), $data->getViewUrl(), array("target"=>"_blank"))',
             ),
             array(
                 'name'=>'category_id',
@@ -59,7 +59,7 @@
             ),
             array(
                 'name'=>'status',
-                'value'=>'$data->statusLabel',
+                'value'=>'CHtml::encode($data->statusLabel)',
                 'filter'=>Page::statuses()
             ),
             'publish_date',

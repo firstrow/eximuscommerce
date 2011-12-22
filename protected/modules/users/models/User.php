@@ -12,9 +12,9 @@
  * @property integer $last_login
  * @property string $login_ip
  */
-class User extends BaseModel 
+class User extends BaseModel
 {
-	
+
 	public $new_password;
 
 	/**
@@ -23,7 +23,7 @@ class User extends BaseModel
 	 */
 	public static function model($className=__CLASS__)
 	{
-		return parent::model($className);   
+		return parent::model($className);
 	}
 
 	/**
@@ -98,32 +98,32 @@ class User extends BaseModel
 				'criteria'=>$criteria,
 		));
 	}
-	
+
 	/**
 	 *  Encodes user password
-	 * 
+	 *
 	 * @param string $string
-	 * @return string 
+	 * @return string
 	 */
 	public static function encodePassword($string)
 	{
 		return sha1($string);
 	}
-	
-	public function beforeSave() 
+
+	public function beforeSave()
 	{
 		// Set new password
 		if ($this->new_password)
-			$this->password = User::encodePassword($this->new_password);        
+			$this->password = User::encodePassword($this->new_password);
 		return parent::beforeSave();
 	}
-	
+
 	/**
-	 * Generate admin link to edit user. 
+	 * Generate admin link to edit user.
 	 * @return type
 	 */
 	public function getUpdateLink()
 	{
-		return CHtml::link($this->username, array('/users/admin/default/update', 'id'=>$this->id));
+		return CHtml::link(CHtml::encode($this->username), array('/users/admin/default/update', 'id'=>$this->id));
 	}
 }

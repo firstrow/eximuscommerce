@@ -27,7 +27,6 @@
     $this->widget('ext.sgridview.SGridView', array(
         'dataProvider'=>$model,
         'id'=>'productsListGrid',
-        //'filter'=>$model,
         'columns'=>array(
             array(
                 'class'=>'CCheckBoxColumn',
@@ -39,7 +38,7 @@
             array(
                 'name'=>'name',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->nameWithLevel, array("update", "id"=>$data->id))',
+                'value'=>'CHtml::link(CHtml::encode($data->nameWithLevel), array("update", "id"=>$data->id))',
             ),
             // Buttons
             array(

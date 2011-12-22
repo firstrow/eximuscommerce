@@ -35,30 +35,30 @@
             array(
                 'class'=>'SGridIdColumn',
                 'name'=>'id',
-                'type'=>'html',
+                'type'=>'text',
                 'header'=>$model->getAttributeLabel("id"),
             ),
             array(
                 'name'=>'name',
                 'type'=>'html',
-                'value'=>'CHtml::link($data->nameWithLevel, array("update", "id"=>$data->id), array("class"))',
+                'value'=>'CHtml::link(CHtml::encode($data->nameWithLevel), array("update", "id"=>$data->id), array("class"))',
                 'header'=>$model->getAttributeLabel("name")
             ),
             array(
                 'name'=>'url',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->url, $data->getViewUrl(), array("target"=>"_blank"))',
+                'value'=>'CHtml::link(CHtml::encode($data->url), $data->getViewUrl(), array("target"=>"_blank"))',
                 'header'=>$model->getAttributeLabel("url"),
             ),
             array(
                 'name'=>'pages',
                 'type'=>'html',
-                'value'=>'CHtml::link($data->pageCount, array("/pages/admin/default/index", "Page[category_id]"=>$data->id))',
+                'value'=>'CHtml::link(CHtml::encode($data->pageCount), array("/pages/admin/default/index", "Page[category_id]"=>$data->id))',
                 'header'=>$model->getAttributeLabel("pages"),
             ),
             array(
                 'name'=>'created',
-                'type'=>'raw',
+                'type'=>'text',
                 'header'=>$model->getAttributeLabel("created"),
             ),
             // Buttons

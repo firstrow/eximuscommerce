@@ -39,12 +39,12 @@
             array(
                 'name'=>'name',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->name, array("update", "id"=>$data->id))',
+                'value'=>'CHtml::link(CHtml::encode($data->name), array("update", "id"=>$data->id))',
             ),
             array(
                 'name'=>'url',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->url, array("/store/frontProduct/view", "url"=>$data->url), array("target"=>"_blank"))',
+                'value'=>'CHtml::link(CHtml::encode($data->url), array("/store/frontProduct/view", "url"=>$data->url), array("target"=>"_blank"))',
             ),
             'sku',
             'price',

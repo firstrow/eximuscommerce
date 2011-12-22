@@ -35,11 +35,11 @@
             array(
                 'name'=>'name',
                 'type'=>'raw',
-                'value'=>'CHtml::link($data->name, array("update", "id"=>$data->id))',
+                'value'=>'CHtml::link(CHtml::encode($data->name), array("update", "id"=>$data->id))',
             ),
             array(
                 'name'=>'default',
-                'type'=>'raw',
+                'type'=>'text',
                 'filter'=>array(
                     '1'=>Yii::t('CoreModule.core', 'Да'),
                     '0'=>Yii::t('CoreModule.core', 'Нет')

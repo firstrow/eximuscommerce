@@ -28,12 +28,12 @@
         'columns'=>array(
             array(
                 'name'=>'name',
-                'value'=>'$data->getInfo()->name',
+                'value'=>'CHtml::encode($data->getInfo()->name)',
                 'filter'=>false,
             ),
             array(
                 'name'=>'description',
-                'value'=>'$data->getInfo()->description',
+                'value'=>'CHtml::encode($data->getInfo()->description)',
                 'header'=>Yii::t('CoreModule.core', 'Описание'),
                 'filter'=>false,
             ),
@@ -44,7 +44,7 @@
                     '{no}'=>Yii::t('CoreModule.core', 'Нет')
                 )),
             	'filter'=>array(1=>Yii::t('CoreModule.core', 'Да'),0=>Yii::t('CoreModule.core', 'Нет')),
-	        ), 
+	        ),
 	        // Buttons
             array(
                 'class'=>'CButtonColumn',

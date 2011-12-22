@@ -288,7 +288,7 @@ class PageCategory extends BaseModel
      */
     public function getUpdateLink()
     {
-        return CHtml::link($this->name, array('/pages/admin/category/update', 'id'=>$this->id));
+        return CHtml::link(CHtml::encode($this->name), array('/pages/admin/category/update', 'id'=>$this->id));
     }
 
     /**
