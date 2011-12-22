@@ -41,6 +41,7 @@ class ProductsController extends SAdminController
 
         // Set additional tabs
         $form->additionalTabs = array(
+            Yii::t('StoreModule.admin','Категории')=>'',
             Yii::t('StoreModule.admin','Сопутствующие продукты')=>$this->renderPartial('_relatedProducts',array(
                 'exclude'=>$model->id,
                 'product'=>$model,
