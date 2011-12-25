@@ -81,12 +81,13 @@ class STabbedForm extends CForm {
 			if (isset($element->title))
 				$this->activeTab = $element->title;
 
-			$out=$this->renderElement($element);
+			$out = $this->renderElement($element);
 
 			$this->tabs[$this->activeTab] = $out;
 
 			$output .= $out;
 		}
+
 		return $output;
 	}
 
