@@ -1,32 +1,36 @@
 <?php
 
-    /**
-     * Create/update category
-     */
+	/**
+	 * Create/update category
+	 */
 
-    $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
-        'form'=>$form,
-        //'langSwitcher'=>!$model->isNewRecord,
-        'deleteAction'=>$this->createUrl('/store/admin/products/delete', array('id'=>$model->id))
-    ));
+	$this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
+		'form'=>$form,
+		//'langSwitcher'=>!$model->isNewRecord,
+		'deleteAction'=>$this->createUrl('/store/admin/category/delete', array('id'=>$model->id))
+	));
 
-    $title = ($model->isNewRecord) ? Yii::t('StoreModule.admin', 'Создание категории') :
-        Yii::t('StoreModule.admin', 'Редактирование категории');
+	$title = ($model->isNewRecord) ? Yii::t('StoreModule.admin', 'Создание категории') :
+		Yii::t('StoreModule.admin', 'Редактирование категории');
 
-    $this->breadcrumbs = array(
-        'Home'=>$this->createUrl('/admin'),
-        Yii::t('StoreModule.admin', 'Категории')=>$this->createUrl('index'),
-        ($model->isNewRecord) ? Yii::t('StoreModule.admin', 'Создание категории') : CHtml::encode($model->name),
-    );
+	$this->breadcrumbs = array(
+		'Home'=>$this->createUrl('/admin'),
+		Yii::t('StoreModule.admin', 'Категории')=>$this->createUrl('index'),
+		($model->isNewRecord) ? Yii::t('StoreModule.admin', 'Создание категории') : CHtml::encode($model->name),
+	);
 
-    $this->pageHeader = $title;
+	$this->pageHeader = $title;
 
-    $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
-        'elements'=>array('StoreCategory_parent_id')
-    ));
+	$this->widget('application.modules.admin.widgets.schosen.SChosen', array(
+		'elements'=>array('StoreCategory_parent_id')
+	));
 
+	/**
+	 * @var $this Controller
+	 */
+	$this->sidebarContent = $this->renderPartial('_sidebar', array(), true);
 ?>
 
-<div class="form wide padding-all">
-    <?php echo $form->asTabs(); ?>
+<div class="form wide">
+	<?php echo $form->asTabs(); ?>
 </div>

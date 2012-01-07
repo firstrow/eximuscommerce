@@ -5,88 +5,81 @@
  */
 class CategoryController extends SAdminController {
 
-    public function actionIndex()
-    {
-        $model = new CArrayDataProvider(StoreCategory::model()->findAll(array('order'=>'lft')), array(
-            'pagination'=>false
-        ));
+	public function actionIndex()
+	{
+		$this->actionUpdate(true);
+	}
 
-        $this->render('index', array(
-            'model'=>$model,
-        ));
-    }
+	public function actionCreate()
+	{
+		$this->actionUpdate(true);
+	}
 
-    public function actionCreate()
-    {
-        $this->actionUpdate(true);
-    }
+	public function actionUpdate($new = false)
+	{
+		if ($new === true)
+			$model = new StoreCategory;
+		else
+		{
+			$model = StoreCategory::model()
+				->findByPk($_GET['id']);
+		}
 
-    public function actionUpdate($new = false)
-    {
-        if ($new === true)
-            $model = new StoreCategory;
-        else
-        {
-            $model = StoreCategory::model()
-                ->findByPk($_GET['id']);
-        }
+		if (!$model)
+			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Категория не найдена.'));
 
-        if (!$model)
-            throw new CHttpException(404, Yii::t('StoreModule.admin', 'Категория не найдена.'));
+		$form = new STabbedForm('application.modules.store.views.admin.category.categoryForm', $model);
+		$form->formWidget = 'zii.widgets.jui.CJuiTabs';
+		$form->summaryOnEachTab = true;
 
-        $form = new STabbedForm('application.modules.store.views.admin.category.categoryForm', $model);
+		if (Yii::app()->request->isPostRequest)
+		{
+			$model->attributes = $_POST['StoreCategory'];
 
-        if (Yii::app()->request->isPostRequest)
-        {
-            $model->attributes = $_POST['StoreCategory'];
+			if ($model->validate())
+			{
+				$parent=StoreCategory::model()->findByPk($_POST['StoreCategory']['parent_id']);
+				if($model->getIsNewRecord())
+					$model->appendTo($parent);
+				else
+				{
+					$model->saveNode();
+					// Move category if parent has changed
+					if($model->id != 1 && $model->parent->id != $model->parent_id)
+						$model->moveAsLast($parent);
+				}
 
-            if ($model->validate())
-            {
-                $parent=StoreCategory::model()->findByPk($_POST['StoreCategory']['parent_id']);
-                if($model->getIsNewRecord())
-                    $model->appendTo($parent);
-                else
-                {
-                    $model->saveNode();
-                    // Move category if parent has changed
-                    if($model->id != 1 && $model->parent->id != $model->parent_id)
-                        $model->moveAsLast($parent);
-                }
+				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
-                $this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
+				if (isset($_POST['REDIRECT']))
+					$this->smartRedirect($model);
+				else
+					$this->redirect('create');
+			}
+		}
 
-                if (isset($_POST['REDIRECT']))
-                    $this->smartRedirect($model);
-                else
-                    $this->redirect(array('index'));
-            }
-        }
+		$this->render('update', array(
+			'model'=>$model,
+			'form'=>$form,
+		));
+	}
 
-        $this->render('update', array(
-            'model'=>$model,
-            'form'=>$form,
-        ));
-    }
+	/**
+	 * Delete category
+	 * @param array $id
+	 */
+	public function actionDelete($id)
+	{
+		if (Yii::app()->request->isPostRequest)
+		{
+			$model = StoreCategory::model()->findByPk($id);
+			// Delete if not root node
+			if ($model && $model->id != 1)
+				$model->deleteNode();
 
-    /**
-     * Delete categories
-     * @param array $id
-     */
-    public function actionDelete($id = array())
-    {
-        if (Yii::app()->request->isPostRequest)
-        {
-            foreach ($_REQUEST['id'] as $id)
-            {
-                $model = StoreCategory::model()->findByPk($id);
-
-                if ($model && $model->id != 1)
-                    $model->deleteNode();
-            }
-
-            if (!Yii::app()->request->isAjaxRequest)
-                $this->redirect('index');
-        }
-    }
+			if (!Yii::app()->request->isAjaxRequest)
+				$this->redirect('create');
+		}
+	}
 
 }

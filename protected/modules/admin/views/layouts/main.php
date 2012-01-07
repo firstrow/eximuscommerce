@@ -22,6 +22,7 @@
     // ToTop
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery.ui.totop/ui.totop.css');
     $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ui.totop/jquery.ui.totop.js');
+    $assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ui.totop/jquery.ui.totop.js');
 
     // jGrowl
     $assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
