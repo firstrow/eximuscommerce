@@ -27,6 +27,11 @@ $this->widget('ext.jstree.SJsTree', array(
 				return true;
 			}')
 		 ),
+		'dnd'=>array(
+			'drag_finish'=>'js:function(data){
+				alert(data);
+			}',
+		),
 		'ui'=>array(
 			'initially_select'=>array('#StoreCategoryTreeNode_'.(int)Yii::app()->request->getParam('id'))
 		),
@@ -36,3 +41,8 @@ $this->widget('ext.jstree.SJsTree', array(
 Yii::app()->getClientScript()->registerCss("StoreCategoryTreeStyles","#StoreCategoryTree { width:90% }");
 
 ?>
+
+<div class="hint">
+	<br>
+	<?php echo Yii::t('StoreModule.admin',"Используйте 'drag-and-drop' для сортировки категорий."); ?>
+</div>

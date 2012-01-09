@@ -6,9 +6,7 @@ TODO:
 	- Search and get done all "TODO" in source files.
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab.
-	- Create base categories for products based on nested set.
 	- Move page categories to NestedSet
-	- Get done categories sort
 
 	Done:
 	+ Finish job with SGridView filet button.

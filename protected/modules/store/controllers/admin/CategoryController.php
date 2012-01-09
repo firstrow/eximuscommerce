@@ -5,6 +5,12 @@
  */
 class CategoryController extends SAdminController {
 
+	public function filters() {
+		return array(
+			'ajaxOnly + moveNode',
+		);
+	}
+
 	public function actionIndex()
 	{
 		$this->actionUpdate(true);
@@ -62,6 +68,25 @@ class CategoryController extends SAdminController {
 			'model'=>$model,
 			'form'=>$form,
 		));
+	}
+
+	/**
+	 * Drag-n-drop nodes
+	 */
+	public function actionMoveNode()
+	{
+		$node = StoreCategory::model()->findByPk($_GET['id']);
+		$target = StoreCategory::model()->findByPk($_GET['ref']);
+
+		if((int) $_GET['position'] > 0)
+		{
+			$pos = (int) $_GET['position'];
+			$childs = $target->children()->findAll();
+			if(isset($childs[$pos-1]) && $childs[$pos-1] instanceof StoreCategory && $childs[$pos-1]['id'] != $node->id)
+				$node->moveAfter($childs[$pos-1]);
+		}
+		else
+			$node->moveAsFirst($target);
 	}
 
 	/**
