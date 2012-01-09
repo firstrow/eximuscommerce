@@ -17,7 +17,7 @@ $this->widget('ext.jstree.SJsTree', array(
 	'data'=>StoreCategoryNode::fromArray(StoreCategory::model()->findAllByPk(1)),
 	'options'=>array(
 		'core'=>array('initially_open'=>'StoreCategoryTreeNode_1'),
-		'plugins'=>array('themes','html_data','ui','dnd','crrm', 'search'),
+		'plugins'=>array('themes','html_data','ui','dnd','crrm', 'search','cookies'),
 		'crrm'=>array(
 			'move'=>array('check_move'=>'js: function(m){
 				// Disallow categories without parent.

@@ -51,7 +51,7 @@ class ProductsController extends SAdminController
 
 		// Set additional tabs
 		$form->additionalTabs = array(
-			Yii::t('StoreModule.admin','Категории')=>'',
+			Yii::t('StoreModule.admin','Категории')=>$this->renderPartial('_tree', array(), true),
 			Yii::t('StoreModule.admin','Сопутствующие продукты')=>$this->renderPartial('_relatedProducts',array(
 				'exclude'=>$model->id,
 				'product'=>$model,
@@ -81,11 +81,11 @@ class ProductsController extends SAdminController
 
 				// Handle images
 				$images = CUploadedFile::getInstancesByName('StoreProductImages');
-				if ($images && sizeof($images) > 0)
+				if($images && sizeof($images) > 0)
 				{
-					foreach ($images as $image)
+					foreach($images as $image)
 					{
-						if (!StoreUploadedImage::hasErrors($image))
+						if(!StoreUploadedImage::hasErrors($image))
 						{
 							$name = StoreUploadedImage::createName($model, $image);
 							$fullPath = StoreUploadedImage::getSavePath().'/'.$name;
