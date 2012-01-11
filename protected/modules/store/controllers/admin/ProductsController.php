@@ -51,7 +51,9 @@ class ProductsController extends SAdminController
 
 		// Set additional tabs
 		$form->additionalTabs = array(
-			Yii::t('StoreModule.admin','Категории')=>$this->renderPartial('_tree', array(), true),
+			Yii::t('StoreModule.admin','Категории')=>$this->renderPartial('_tree', array(
+				'model'=>$model,
+			), true),
 			Yii::t('StoreModule.admin','Сопутствующие продукты')=>$this->renderPartial('_relatedProducts',array(
 				'exclude'=>$model->id,
 				'product'=>$model,
@@ -78,6 +80,9 @@ class ProductsController extends SAdminController
 			if ($model->validate())
 			{
 				$model->save();
+
+				// Process categories
+				$model->setCategories(Yii::app()->request->getPost('categories', array()));
 
 				// Handle images
 				$images = CUploadedFile::getInstancesByName('StoreProductImages');
@@ -113,9 +118,7 @@ class ProductsController extends SAdminController
 							$thumb->$method($sizes['maximum'][0],$sizes['maximum'][1])->save($fullPath);
 						}
 						else
-						{
 							$this->setFlashMessage(Yii::t('StoreModule.admin', 'Ошибка загрузки изображения'));
-						}
 					}
 				}
 

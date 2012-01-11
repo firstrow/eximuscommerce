@@ -56,7 +56,7 @@ class SJsTree extends CWidget
 
         $this->cs->registerScript('JsTreeScript', "
             $('#{$this->id}').jstree({$options});
-        ", CClientScript::POS_READY);
+        ");
     }
 
     /**

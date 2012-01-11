@@ -7,3 +7,11 @@ $("#productUpdateForm").submit(function(){
 		$("#productUpdateForm").append('<input type="hidden" name="categories[]" value="' + cleanId + '" />');
 	});
 });
+
+;(function($) {
+    $.fn.checkNode = function(id) {
+        $(this).bind('loaded.jstree', function () {
+            $(this).jstree('checkbox').check_node('#StoreCategoryTreeNode_' + id);
+        });
+    };
+})(jQuery);

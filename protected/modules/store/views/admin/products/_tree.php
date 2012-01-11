@@ -23,6 +23,14 @@ $this->widget('ext.jstree.SJsTree', array(
 	),
 ));
 
+// Check tree nodes
+foreach($model->categories as $c)
+{
+	Yii::app()->getClientScript()->registerScript("checkNode{$c->id}", "
+		$('#StoreCategoryTree').checkNode({$c->id});
+	");
+}
+
 Yii::app()->getClientScript()->registerCss("StoreCategoryTreeStyles","#StoreCategoryTree { width:90% }");
 
 ?>

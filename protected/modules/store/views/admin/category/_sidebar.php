@@ -43,6 +43,5 @@ Yii::app()->getClientScript()->registerCss("StoreCategoryTreeStyles","#StoreCate
 ?>
 
 <div class="hint">
-	<br>
-	<?php echo Yii::t('StoreModule.admin',"Используйте 'drag-and-drop' для сортировки категорий."); ?>
+	<br><?php echo Yii::t('StoreModule.admin',"Используйте 'drag-and-drop' для сортировки категорий."); ?>
 </div>
