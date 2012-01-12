@@ -75,7 +75,6 @@ class StoreProduct extends BaseModel
 			'condition'=>'url=:url',
 			'params'=>array(':url'=>$url)
 		));
-
 		return $this;
 	}
 

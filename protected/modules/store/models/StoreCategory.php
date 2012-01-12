@@ -9,115 +9,157 @@
  * @property string $rgt
  * @property integer $level
  * @property string $name
+ * @property string $url
  */
 class StoreCategory extends BaseModel
 {
 
-    /**
-     * @var int Parent category id
-     */
-    public $parent_id;
+	/**
+	 * @var int Parent category id
+	 */
+	public $parent_id;
 
-    /**
-     * Returns the static model of the specified AR class.
-     * @return StoreCategory the static model class
-     */
-    public static function model($className=__CLASS__)
-    {
-        return parent::model($className);
-    }
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return StoreCategory the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
 
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'StoreCategory';
-    }
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'StoreCategory';
+	}
 
-    /**
-     * @return array validation rules for model attributes.
-     */
-    public function rules()
-    {
-        return array(
-            array('name', 'required'),
-            array('parent_id', 'numerical'),
-            array('parent_id', 'checkCategoryExists'),
-            array('name', 'length', 'max'=>255),
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		return array(
+			array('name', 'required'),
+			array('name, url', 'length', 'max'=>255),
 
-            array('id, name', 'safe', 'on'=>'search'),
-        );
-    }
+			array('id, name, url', 'safe', 'on'=>'search'),
+		);
+	}
 
-    public function behaviors()
-    {
-        return array(
-            'NestedSetBehavior'=>array(
-                'class'=>'ext.behaviors.NestedSet.NestedSetBehavior',
-                'leftAttribute'=>'lft',
-                'rightAttribute'=>'rgt',
-                'levelAttribute'=>'level',
-        ));
-    }
+	public function behaviors()
+	{
+		return array(
+			'NestedSetBehavior'=>array(
+				'class'=>'ext.behaviors.NestedSet.NestedSetBehavior',
+				'leftAttribute'=>'lft',
+				'rightAttribute'=>'rgt',
+				'levelAttribute'=>'level',
+		));
+	}
 
-    /**
-     * @param string $attr Attribute name
-     * @param array $params Additional params
-     */
-    public function checkCategoryExists($attr, $params)
-    {
-        if (self::model()->count('id=:id',array(':id'=>$this->$attr))==0)
-            $this->addError($attr, Yii::t('StoreModule.core','Ошибка проверки родительской категории.'));
-        if ($this->id != 1 && $this->id == $this->$attr)
-            $this->addError($attr, Yii::t('StoreModule.core','Ошибка проверки родительской категории.'));
-    }
+	/**
+	 * Find category by url.
+	 * Scope.
+	 * @param string Category url
+	 * @return StoreProduct
+	 */
+	public function withUrl($url)
+	{
+		$this->getDbCriteria()->mergeWith(array(
+			'condition'=>'url=:url',
+			'params'=>array(':url'=>$url)
+		));
+		return $this;
+	}
 
-    /**
-     * Get category name to display in dropdown list.
-     * @return string "-- CategoryName"
-     */
-    public function getNameWithLevel()
-    {
-        return str_repeat('-', $this->level).' '.$this->name;
-    }
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		return array(
 
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array(
+		);
+	}
 
-        );
-    }
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'ID',
+			'level' => 'Level',
+			'name' => 'Name',
+			'url' => 'Url',
+		);
+	}
 
-    /**
-     * @return array customized attribute labels (name=>label)
-     */
-    public function attributeLabels()
-    {
-        return array(
-            'id' => 'ID',
-            'level' => 'Level',
-            'name' => 'Name',
-        );
-    }
+	public function beforeSave()
+	{
+		if (empty($this->url))
+		{
+			// Create slug
+			Yii::import('ext.SlugHelper.SlugHelper');
+			$this->url = SlugHelper::run($this->name);
+		}
 
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function search()
-    {
-        $criteria=new CDbCriteria;
+		// Check if url available
+		if($this->isNewRecord)
+		{
+			$test = StoreCategory::model()
+				->withUrl($this->url)
+				->count();
+		}
+		else
+		{
+			$test = StoreCategory::model()
+				->withUrl($this->url)
+				->count('id!=:id', array(':id'=>$this->id));
+		}
 
-        $criteria->compare('id',$this->id,true);
-        $criteria->compare('level',$this->level);
-        $criteria->compare('name',$this->name,true);
+		// Create unique url
+		if ($test > 0)
+			$this->url .= '-'.date('YmdHis');
 
-        return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
-        ));
-    }
+		$ancestors = $this->ancestors()->findAll();
+		if(sizeof($ancestors))
+		{
+			$path = array();
+			foreach($ancestors as $ancestor)
+				array_push($path, $ancestor->url);
+			array_push($path, $this->url);
+			$this->full_path = implode('/', array_filter($path));
+		}
+
+		return parent::beforeSave();
+	}
+
+	public function afterSave()
+	{
+
+
+		return parent::afterSave();
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id,true);
+		$criteria->compare('level',$this->level);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('url',$this->name,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
 }

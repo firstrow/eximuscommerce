@@ -44,16 +44,11 @@ class CategoryController extends SAdminController {
 
 			if ($model->validate())
 			{
-				$parent=StoreCategory::model()->findByPk($_POST['StoreCategory']['parent_id']);
+				$parent=StoreCategory::model()->findByPk(1);
 				if($model->getIsNewRecord())
 					$model->appendTo($parent);
 				else
-				{
 					$model->saveNode();
-					// Move category if parent has changed
-					if($model->id != 1 && $model->parent->id != $model->parent_id)
-						$model->moveAsLast($parent);
-				}
 
 				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
