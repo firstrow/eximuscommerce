@@ -85,6 +85,7 @@ class StoreProduct extends BaseModel
 	public function rules()
 	{
 		return array(
+			array('price', 'commaToDot'),
 			array('price', 'numerical'),
 			array('is_active', 'boolean'),
 			array('quantity, availability', 'numerical', 'integerOnly'=>true),
@@ -95,6 +96,15 @@ class StoreProduct extends BaseModel
 			// Search
 			array('id, name, url, price, short_description, full_description, created, updated', 'safe', 'on'=>'search'),
 		);
+	}
+
+	/**
+	 * Replaces comma to dot
+	 * @param $attr
+	 */
+	public function commaToDot($attr)
+	{
+		$this->$attr = str_replace(',','.', $this->$attr);
 	}
 
 	/**
