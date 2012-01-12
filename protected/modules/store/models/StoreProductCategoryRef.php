@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $category
  * @property integer $product
+ * @property boolean $is_main
  */
 class StoreProductCategoryRef extends BaseModel
 {

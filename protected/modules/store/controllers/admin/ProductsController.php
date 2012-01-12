@@ -82,7 +82,7 @@ class ProductsController extends SAdminController
 				$model->save();
 
 				// Process categories
-				$model->setCategories(Yii::app()->request->getPost('categories', array()));
+				$model->setCategories(Yii::app()->request->getPost('categories', array()), Yii::app()->request->getPost('main_category', 1));
 
 				// Handle images
 				$images = CUploadedFile::getInstancesByName('StoreProductImages');

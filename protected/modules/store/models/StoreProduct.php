@@ -108,6 +108,7 @@ class StoreProduct extends BaseModel
 			'relatedProducts'=>array(self::HAS_MANY, 'StoreProduct', 'related_id', 'through'=>'related'),
 			'_categoriesRef'=>array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
 			'categories'=>array(self::HAS_MANY, 'StoreCategory', 'category', 'through'=>'_categoriesRef'),
+			'mainCategory'=>array(self::HAS_ONE, 'StoreCategory', 'category', 'through'=>'_categoriesRef', 'condition'=>'_categoriesRef.is_main = 1')
 		);
 	}
 
@@ -225,6 +226,11 @@ class StoreProduct extends BaseModel
 		$this->clearRelatedProducts();
 		StoreRelatedProduct::model()->deleteAll('related_id=:id', array('id'=>$this->id));
 
+		// Delete categorization
+		StoreProductCategoryRef::model()->deleteAllByAttributes(array(
+			'product'=>$this->id
+		));
+
 		// Delete images
 		$images = $this->images;
 		if(!empty($images))
@@ -258,9 +264,16 @@ class StoreProduct extends BaseModel
 	/**
 	 * @param array $categories
 	 */
-	public function setCategories(array $categories)
+	public function setCategories(array $categories, $main_category)
 	{
 		$dontDelete = array();
+
+		if(!StoreCategory::model()->countByAttributes(array('id'=>$main_category)))
+			$main_category = 1;
+
+		if(!in_array($main_category, $categories))
+			array_push($categories, $main_category);
+
 		foreach ($categories as $c)
 		{
 			$count = StoreProductCategoryRef::model()->countByAttributes(array(
@@ -278,6 +291,16 @@ class StoreProduct extends BaseModel
 
 			$dontDelete[] = $c;
 		}
+
+		// Clear main category
+		StoreProductCategoryRef::model()->updateAll(array(
+			'is_main'=>0
+		), 'product=:p', array(':p'=>$this->id));
+
+		// Set main category
+		StoreProductCategoryRef::model()->updateAll(array(
+			'is_main'=>1
+		), 'product=:p AND category=:c ', array(':p'=>$this->id,':c'=>$main_category));
 
 		// Delete not used relations
 		if(sizeof($dontDelete) > 0)

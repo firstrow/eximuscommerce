@@ -8,6 +8,13 @@ $("#productUpdateForm").submit(function(){
 	});
 });
 
+$('#StoreCategoryTree').delegate("a", "click", function (event) {
+    $('#StoreCategoryTree').jstree('checkbox').check_node($(this));
+    var id = $(this).parent("li").attr('id').replace('StoreCategoryTreeNode_', '');
+    $('#main_category').val(id);
+});
+
+// Check node
 ;(function($) {
     $.fn.checkNode = function(id) {
         $(this).bind('loaded.jstree', function () {
