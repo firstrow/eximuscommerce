@@ -68,7 +68,7 @@ return array(
         ),
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=my_db',
-            'enableProfiling' => true, // Disable in production
+            'enableProfiling' => YII_DEBUG, // Disable in production
             'emulatePrepare' => true,
             //'schemaCachingDuration'=>3600, // Enable in production
             'username' => 'root',

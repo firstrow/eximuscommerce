@@ -7,6 +7,7 @@ TODO:
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab.
 	- Move page categories to NestedSet
+	- Create front categories menu
 
 	Done:
 	+ Finish job with SGridView filet button.

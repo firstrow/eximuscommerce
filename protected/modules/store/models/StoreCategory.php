@@ -10,6 +10,10 @@
  * @property integer $level
  * @property string $name
  * @property string $url
+ * @property string $full_path
+ * @property string $meta_title
+ * @property string $meta_description
+ * @property string $meta_keywords
  */
 class StoreCategory extends BaseModel
 {
@@ -43,7 +47,7 @@ class StoreCategory extends BaseModel
 	{
 		return array(
 			array('name', 'required'),
-			array('name, url', 'length', 'max'=>255),
+			array('name, url, meta_keywords, meta_title, meta_description, layout, view', 'length', 'max'=>255),
 
 			array('id, name, url', 'safe', 'on'=>'search'),
 		);

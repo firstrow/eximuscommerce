@@ -1,15 +1,5 @@
 <?php
 
-// Set parent_id as root on create new category
-try{
-	if ($this->model->parent)
-		$parent_id = $this->model->parent->id;
-	else
-		$parent_id = 1;
-} catch(Exception $e) {
-	$parent_id = 1;
-}
-
 return array(
 	'id'=>'productCategoryUpdateForm',
 	'showErrorSummary'=>true,
@@ -21,13 +11,6 @@ return array(
 				'name'=>array(
 					'type'=>'text',
 				),
-//				'parent_id'=>array(
-//					'type'=>'dropdownlist',
-//					'items'=>CHtml::listData(StoreCategory::model()->findAll(array('order'=>'lft')), 'id', 'nameWithLevel'),
-//					'options'=>array(
-//						$parent_id=>array('selected'=>'selected'),
-//					),
-//				),
 				'url'=>array(
 					'type'=>'text',
 				),
