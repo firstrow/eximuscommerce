@@ -11,7 +11,7 @@ Yii::app()->clientScript->registerScriptFile(
 );
 
 // Insert hidden to handle main category
-$mainCategory = ($model->isNewRecord) ? 0 : 'StoreCategoryTreeNode_'.$model->mainCategory->id;
+$mainCategory = ($model->isNewRecord) ? 0 : $model->mainCategory->id;
 echo CHtml::hiddenField('main_category', $mainCategory);
 
 // Create jstree
@@ -31,7 +31,7 @@ $this->widget('ext.jstree.SJsTree', array(
 			'save_selected'=>false,
 		),
 		'ui'=>array(
-			'initially_select'=>$mainCategory,
+			'initially_select'=>'StoreCategoryTreeNode_'.$mainCategory,
 		),
 	),
 ));
