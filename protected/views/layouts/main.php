@@ -32,28 +32,10 @@
 		  <p class="pull-right">Logged in as <a href="#">username</a></p>
 
 			<?php
-//			$this->widget('application.extensions.mbmenu.MbMenu',array(
-//				'items'=>array(
-//					array('label'=>'Home', 'url'=>array('/site/index')),
-//					array('label'=>'Contact', 'url'=>array('/site/contact'),
-//						'items'=>array(
-//							array('label'=>'sub 1 contact'),
-//							array('label'=>'sub 2 contact'),
-//						),
-//					),
-//					array('label'=>'Test',
-//						'items'=>array(
-//							array('label'=>'Sub 1', 'url'=>array('/site/page','view'=>'sub1')),
-//							array('label'=>'Sub 2',
-//								'items'=>array(
-//									array('label'=>'Sub sub 1', 'url'=>array('/site/page','view'=>'subsub1')),
-//									array('label'=>'Sub sub 2', 'url'=>array('/site/page','view'=>'subsub2')),
-//								),
-//							),
-//						),
-//					),
-//				),
-//			));
+				$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
+				$this->widget('application.extensions.mbmenu.MbMenu',array(
+					'items'=>$items['items'])
+				);
 			?>
 
 		</div>
@@ -81,6 +63,9 @@
 		</div>
 
 		<div class="well">
+			<?php
+				StoreCategory::model()->findByPk(1)->asCMenuArray();
+			?>
 		  <?php echo $content; ?>
 		</div>
 	  </div>

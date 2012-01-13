@@ -60,8 +60,14 @@ class StoreCategory extends BaseModel
 				'class'=>'ext.behaviors.NestedSet.NestedSetBehavior',
 				'leftAttribute'=>'lft',
 				'rightAttribute'=>'rgt',
-				'levelAttribute'=>'level',
-		));
+				'levelAttribute'=>'level'
+			),
+			'SAsCMenuArrayBehavior'=>array(
+				'class'=>'ext.behaviors.SAsCMenuArrayBehavior',
+				'labelAttr'=>'name',
+				'urlExpression'=>'array("/store/category", "id"=>$model->id)',
+			),
+		);
 	}
 
 	/**
