@@ -37,7 +37,7 @@ class CategoryController extends Controller
 			'id'=>false,
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>2,
+				'pageSize'=>20,
 			)
 		));
 

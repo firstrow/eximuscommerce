@@ -46,6 +46,11 @@
 				'type'=>'raw',
 				'value'=>'CHtml::link(CHtml::encode($data->url), array("/store/frontProduct/view", "url"=>$data->url), array("target"=>"_blank"))',
 			),
+			array(
+				'name'=>'mainCategory',
+				'type'=>'raw',
+				'value'=>'CHtml::link(CHtml::encode($data->mainCategory->name), array("/store/admin/category/update", "id"=>$data->mainCategory->id))',
+			),
 			'sku',
 			'price',
 			// Buttons
