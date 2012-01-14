@@ -17,7 +17,7 @@ $this->widget('ext.jstree.SJsTree', array(
 	'data'=>StoreCategoryNode::fromArray(StoreCategory::model()->findAllByPk(1)),
 	'options'=>array(
 		'core'=>array('initially_open'=>'StoreCategoryTreeNode_1'),
-		'plugins'=>array('themes','html_data','ui','dnd','crrm', 'search','cookies'),
+		'plugins'=>array('themes','html_data','ui','dnd','crrm', 'search','cookies', 'contextmenu'),
 		'crrm'=>array(
 			'move'=>array('check_move'=>'js: function(m){
 				// Disallow categories without parent.
@@ -38,6 +38,16 @@ $this->widget('ext.jstree.SJsTree', array(
 		'ui'=>array(
 			'initially_select'=>array('#StoreCategoryTreeNode_'.(int)Yii::app()->request->getParam('id'))
 		),
+		'contextmenu'=>array('items'=>array(
+			'view'=>array(
+				'label'=>Yii::t('StoreModule.admin','Перейти'),
+				'action'=>'js:function(obj){ CategoryRedirectToFront(obj); }'
+			),
+			'create'=>false,
+			'rename'=>false,
+			'remove'=>false,
+			'ccp'=>false,
+		))
 	),
 ));
 

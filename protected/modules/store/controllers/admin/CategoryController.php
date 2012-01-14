@@ -85,6 +85,16 @@ class CategoryController extends SAdminController {
 	}
 
 	/**
+	 * Redirect to category front.
+	 * @param $id Category id
+	 */
+	public function actionRedirect($id)
+	{
+		$node = StoreCategory::model()->findByPk($_GET['id']);
+		$this->redirect($this->createUrl('/store/category/view', array('url'=>$node->url)));
+	}
+
+	/**
 	 * Delete category
 	 * @param array $id
 	 */

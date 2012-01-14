@@ -116,9 +116,9 @@ class StoreProduct extends BaseModel
 			'images'=>array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
 			'related'=>array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
 			'relatedProducts'=>array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
-			'_categoriesRef'=>array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
-			'categories'=>array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'_categoriesRef'),
-			'mainCategory'=>array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'_categoriesRef', 'condition'=>'_categoriesRef.is_main = 1')
+			'categorization'=>array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
+			'categories'=>array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
+			'mainCategory'=>array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1')
 		);
 	}
 

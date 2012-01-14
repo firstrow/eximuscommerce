@@ -26,3 +26,9 @@ $('#StoreCategoryTree').bind('loaded.jstree', function (event, data) {
 		});
 	});
 });
+
+function CategoryRedirectToFront(obj)
+{
+    var id = $(obj).attr("id").replace('StoreCategoryTreeNode_','');
+    window.open('/admin/store/category/redirect/id/'+id, '_blank');
+}

@@ -26,11 +26,11 @@ class PagesController extends Controller
 
 		$count = Page::model()->count($criteria);
 
-	 	$pagination = new CPagination($count);
-	    $pagination->pageSize = ($model->page_size > 0) ? $model->page_size: $model->defaultPageSize;
-	    $pagination->applyLimit($criteria);
+		$pagination = new CPagination($count);
+		$pagination->pageSize = ($model->page_size > 0) ? $model->page_size: $model->defaultPageSize;
+		$pagination->applyLimit($criteria);
 
-	    $pages = Page::model()->findAll($criteria);
+		$pages = Page::model()->findAll($criteria);
 
 		$view = $this->setDesign($model, 'list');
 

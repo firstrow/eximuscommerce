@@ -65,7 +65,7 @@ class StoreCategory extends BaseModel
 			'SAsCMenuArrayBehavior'=>array(
 				'class'=>'ext.behaviors.SAsCMenuArrayBehavior',
 				'labelAttr'=>'name',
-				'urlExpression'=>'array("/store/category", "id"=>$model->id)',
+				'urlExpression'=>'array("/store/category/view", "url"=>$model->url)',
 			),
 		);
 	}

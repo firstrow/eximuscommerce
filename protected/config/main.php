@@ -66,6 +66,7 @@ return array(
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 
+				'admin'=>'admin/default/index',
 				'rights'=>'rights/assignment/view',
 				'rights/<controller:\w+>/<id:\d+>'=>'rights/<controller>/view',
 				'rights/<controller:\w+>/<action:\w+>/<id:\d+>'=>'rights/<controller>/<action>',
