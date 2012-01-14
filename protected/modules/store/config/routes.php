@@ -6,5 +6,6 @@
 
 return array(
 	'product/<url>'=>array('store/frontProduct/view', 'urlSuffix'=>'.html'),
-	'store/frontProduct/*'=>'site/error',
+	'category/'=>'store/category/view',
+	//'store/frontProduct/*'=>'site/error',
 );

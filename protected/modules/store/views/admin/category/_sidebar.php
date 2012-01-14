@@ -32,6 +32,9 @@ $this->widget('ext.jstree.SJsTree', array(
 				alert(data);
 			}',
 		),
+		'cookies'=>array(
+			'save_selected'=>false,
+		),
 		'ui'=>array(
 			'initially_select'=>array('#StoreCategoryTreeNode_'.(int)Yii::app()->request->getParam('id'))
 		),

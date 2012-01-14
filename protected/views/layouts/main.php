@@ -32,6 +32,7 @@
 		  <p class="pull-right">Logged in as <a href="#">username</a></p>
 
 			<?php
+				Yii::import('application.modules.store.models.StoreCategory');
 				$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
 				$this->widget('application.extensions.mbmenu.MbMenu',array(
 					'cssFile'=>'/themes/development/assets/mbmenu.css',
@@ -65,9 +66,6 @@
 		</div>
 
 		<div class="well">
-			<?php
-				StoreCategory::model()->findByPk(1)->asCMenuArray();
-			?>
 		  <?php echo $content; ?>
 		</div>
 	  </div>
