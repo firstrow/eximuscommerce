@@ -7,10 +7,10 @@ TODO:
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab.
 	- Move page categories to NestedSet
-	- Create front categories menu
 
 	Done:
-	+ Finish job with SGridView filet button.
+	+ Create front categories menu
+	+ Finish job with SGridView file button.
 	+ Get styled gridview pagination.
 	+ Add to SGridView "Clear filter" link.
 	+ Fix grid view loading css loading class.
@@ -21,7 +21,7 @@ TODO:
 	+ SGridView display filter button only when "$filterMenu" is enabled.
 	+ Fix buttons in opera browser.
 	+ Translate ext.SGridView
-	+ Translate ext.Sidebartabs
+	+ Translate ext.SidebarTabs
 	+ Translate components.*
 	+ Translate modules.admin
 	+ Translate modules.core

@@ -7,6 +7,7 @@
  * 		'class'=>'ext.behaviors.SAsCMenuArrayBehavior',
  * 		'labelAttr'=>'name',
  * 		'urlExpression'=>'array("/store/category", "id"=>$model->id)',
+ * TODO: Cache queries
  * 	)
  */
 class SAsCMenuArrayBehavior extends CActiveRecordBehavior
@@ -41,7 +42,7 @@ class SAsCMenuArrayBehavior extends CActiveRecordBehavior
 		);
 
 		$children = $model->children()->findAll();
-		if(sizeof($children) > 0)
+		if($children)
 		{
 			foreach($children as $c)
 				$data['items'][] = $this->walkArray($c);
@@ -57,10 +58,7 @@ class SAsCMenuArrayBehavior extends CActiveRecordBehavior
 	 */
 	public function evaluateUrlExpression($expression,$data=array())
 	{
-		if(is_string($expression))
-		{
-			extract($data);
-			return eval('return '.$expression.';');
-		}
+		extract($data);
+		return eval('return '.$expression.';');
 	}
 }
