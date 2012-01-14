@@ -139,6 +139,9 @@ class StoreCategory extends BaseModel
 		$ancestors = $this->ancestors()->findAll();
 		if(sizeof($ancestors))
 		{
+			// Remove root category from path
+			unset($ancestors[0]);
+			
 			$path = array();
 			foreach($ancestors as $ancestor)
 				array_push($path, $ancestor->url);
