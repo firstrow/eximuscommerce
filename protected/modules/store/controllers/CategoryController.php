@@ -8,7 +8,7 @@ class CategoryController extends Controller
 
 	/**
 	 * Display products list
-	 * @param string $url product url
+	 * @param string $url category url
 	 */
 	public function actionView($url)
 	{

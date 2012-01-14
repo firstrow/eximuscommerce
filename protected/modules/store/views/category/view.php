@@ -8,9 +8,13 @@ $this->pageTitle = ($model->meta_title) ? $model->meta_title : $model->name;
 $this->pageKeywords = $model->meta_keywords;
 $this->pageDescription = $model->meta_description;
 
-$this->breadcrumbs = array(
-	$model->name
-);
+// Create breadcrumbs
+$ancestors = $model->excludeRoot()->ancestors()->findAll();
+
+foreach($ancestors as $c)
+	$this->breadcrumbs[$c->name] = $c->getViewUrl();
+
+$this->breadcrumbs[] = $model->name;
 ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>

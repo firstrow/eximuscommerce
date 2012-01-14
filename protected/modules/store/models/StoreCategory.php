@@ -47,6 +47,7 @@ class StoreCategory extends BaseModel
 	{
 		return array(
 			array('name', 'required'),
+			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_keywords, meta_title, meta_description, layout, view', 'length', 'max'=>255),
 
 			array('id, name, url', 'safe', 'on'=>'search'),
@@ -81,6 +82,14 @@ class StoreCategory extends BaseModel
 		$this->getDbCriteria()->mergeWith(array(
 			'condition'=>'url=:url',
 			'params'=>array(':url'=>$url)
+		));
+		return $this;
+	}
+
+	public function excludeRoot()
+	{
+		$this->getDbCriteria()->mergeWith(array(
+			'condition'=>'id!=1',
 		));
 		return $this;
 	}
@@ -168,5 +177,10 @@ class StoreCategory extends BaseModel
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getViewUrl()
+	{
+		return Yii::app()->createUrl('/store/category/view', array('url'=>$this->url));
 	}
 }

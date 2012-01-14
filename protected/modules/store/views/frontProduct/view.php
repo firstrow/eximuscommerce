@@ -8,9 +8,18 @@ $this->pageTitle = ($model->meta_title) ? $model->meta_title : $model->name;
 $this->pageKeywords = $model->meta_keywords;
 $this->pageDescription = $model->meta_description;
 
-$this->breadcrumbs = array(
-    $model->name
-);
+// Create breadcrumbs
+$ancestors = $model->mainCategory->excludeRoot()->ancestors()->findAll();
+
+foreach($ancestors as $c)
+	$this->breadcrumbs[$c->name] = $c->getViewUrl();
+
+// Do not add root category
+if ($model->mainCategory->id != 1)
+	$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
+
+$this->breadcrumbs[] = $model->name;
+
 ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>
