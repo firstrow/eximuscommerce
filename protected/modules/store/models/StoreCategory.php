@@ -135,6 +135,7 @@ class StoreCategory extends BaseModel
 		if ($test > 0)
 			$this->url .= '-'.date('YmdHis');
 
+		// Create category full path.
 		$ancestors = $this->ancestors()->findAll();
 		if(sizeof($ancestors))
 		{

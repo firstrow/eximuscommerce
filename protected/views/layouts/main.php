@@ -34,6 +34,8 @@
 			<?php
 				$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
 				$this->widget('application.extensions.mbmenu.MbMenu',array(
+					'cssFile'=>'/themes/development/assets/mbmenu.css',
+					'htmlOptions'=>array('class'=>'nav'),
 					'items'=>$items['items'])
 				);
 			?>
