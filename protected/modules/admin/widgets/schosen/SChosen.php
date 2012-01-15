@@ -9,7 +9,7 @@ class SChosen extends CWidget {
 
 	public function run()
 	{
-		$this->registerScripts();	
+		$this->registerScripts();
 	}
 
 	public function setElements($elements)

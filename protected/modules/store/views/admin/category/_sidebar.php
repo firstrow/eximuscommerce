@@ -29,7 +29,7 @@ $this->widget('ext.jstree.SJsTree', array(
 		 ),
 		'dnd'=>array(
 			'drag_finish'=>'js:function(data){
-				alert(data);
+				//alert(data);
 			}',
 		),
 		'cookies'=>array(

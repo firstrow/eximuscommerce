@@ -7,6 +7,8 @@ TODO:
 	- Create text file used 3rd party soft.
 	- Fix sorting in "Related products" tab.
 	- Move page categories to NestedSet
+	- Fix gridview filter save
+	- Filter products by category in admin panel
 
 	Done:
 	+ Create front categories menu
