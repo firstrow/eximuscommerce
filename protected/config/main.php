@@ -71,6 +71,10 @@ return array(
 				'rights/<controller:\w+>/<id:\d+>'=>'rights/<controller>/view',
 				'rights/<controller:\w+>/<action:\w+>/<id:\d+>'=>'rights/<controller>/<action>',
 				'rights/<controller:\w+>/<action:\w+>'=>'rights/<controller>/<action>',
+
+				'gii'=>'gii',
+				'gii/<controller:\w+>'=>'gii/<controller>',
+				'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',
 			),
 		),
 		'db'=>array(

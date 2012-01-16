@@ -128,14 +128,24 @@ class StoreProduct extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'url' => 'Url',
-			'price' => 'Price',
-			'short_description' => 'Short Description',
-			'full_description' => 'Full Description',
-			'created' => 'Created',
-			'updated' => 'Updated',
+			'id'                     => 'ID',
+			'name'                   => Yii::t('StoreModule.core', 'Название'),
+			'url'                    => Yii::t('StoreModule.core', 'URL'),
+			'price'                  => Yii::t('StoreModule.core', 'Цена'),
+			'is_active'              => Yii::t('StoreModule.core', 'Активен'),
+			'short_description'      => Yii::t('StoreModule.core', 'Краткое описание'),
+			'full_description'       => Yii::t('StoreModule.core', 'Полное описание'),
+			'meta_title'             => Yii::t('StoreModule.core', 'Meta Title'),
+			'meta_keywords'          => Yii::t('StoreModule.core', 'Meta Keywords'),
+			'meta_description'       => Yii::t('StoreModule.core', 'Meta Description'),
+			'layout'                 => Yii::t('StoreModule.core', 'Макет'),
+			'view'                   => Yii::t('StoreModule.core', 'Шаблон'),
+			'sku'                    => Yii::t('StoreModule.core', 'Артикул'),
+			'quantity'               => Yii::t('StoreModule.core', 'Количество'),
+			'availability'           => Yii::t('StoreModule.core', 'Доступность'),
+			'auto_decrease_quantity' => Yii::t('StoreModule.core', 'Автоматически уменьшать количество'),
+			'created'                => Yii::t('StoreModule.core', 'Дата создания'),
+			'updated'                => Yii::t('StoreModule.core', 'Дата обновления'),
 		);
 	}
 
