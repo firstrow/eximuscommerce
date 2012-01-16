@@ -5,6 +5,10 @@
 
 <?php
 
+/**
+ * Categories sidebar
+ */
+
 // Register scripts
 Yii::app()->clientScript->registerScriptFile(
 	$this->module->assetsUrl.'/admin/category.js',

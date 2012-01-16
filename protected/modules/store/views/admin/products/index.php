@@ -8,6 +8,12 @@
 
 	$this->sidebarContent = $this->renderPartial('_sidebar', array(), true);
 
+	// Register scripts
+	Yii::app()->clientScript->registerScriptFile(
+		$this->module->assetsUrl.'/admin/products.index.js',
+		CClientScript::POS_END
+	);
+
 	$this->breadcrumbs = array(
 		'Home'=>$this->createUrl('/admin'),
 		Yii::t('StoreModule.admin', 'Продукты'),
@@ -27,7 +33,7 @@
 	));
 
 	$this->widget('ext.sgridview.SGridView', array(
-		'dataProvider'=>$model->search(),
+		'dataProvider'=>$dataProvider,
 		'id'=>'productsListGrid',
 		'filter'=>$model,
 		'columns'=>array(

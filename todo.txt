@@ -1,14 +1,3 @@
-TODO:
-	- Create module update page for "SystemModules".
-	- Create initial "Pages migration" with table structure and indexes.
-	- Add indexes to Page table.
-	- Add indexes to PageCategory table.
-	- Search and get done all "TODO" in source files.
-	- Create text file used 3rd party soft.
-	- Fix sorting in "Related products" tab.
-	- Move page categories to NestedSet
-	- Fix gridview filter save
-	- Filter products by category in admin panel
 
 	Done:
 	+ Create front categories menu

@@ -16,8 +16,16 @@ class ProductsController extends SAdminController
 		if (!empty($_GET['StoreProduct']))
 			$model->attributes = $_GET['StoreProduct'];
 
+		// Pass additional params to search method.
+		$params = array(
+			'category'=>Yii::app()->request->getParam('category', null)
+		);
+
+		$dataProvider = $model->search($params);
+
 		$this->render('index', array(
 			'model'=>$model,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 

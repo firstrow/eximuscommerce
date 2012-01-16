@@ -143,19 +143,26 @@ class StoreProduct extends BaseModel
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($params = array())
 	{
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('url',$this->url,true);
-		$criteria->compare('price',$this->price);
-		$criteria->compare('short_description',$this->short_description,true);
-		$criteria->compare('full_description',$this->full_description,true);
-		$criteria->compare('sku',$this->sku,true);
-		$criteria->compare('created',$this->created,true);
-		$criteria->compare('updated',$this->updated,true);
+		$criteria->with = array(
+			'categorization'=>array('together'=>true),
+		);
+
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.name',$this->name,true);
+		$criteria->compare('t.url',$this->url,true);
+		$criteria->compare('t.price',$this->price);
+		$criteria->compare('t.short_description',$this->short_description,true);
+		$criteria->compare('t.full_description',$this->full_description,true);
+		$criteria->compare('t.sku',$this->sku,true);
+		$criteria->compare('t.created',$this->created,true);
+		$criteria->compare('t.updated',$this->updated,true);
+
+		if (isset($params['category']) && $params['category'])
+			$criteria->compare('categorization.category', $params['category']);
 
 		// Id of product to exclude from search
 		if($this->exclude)
