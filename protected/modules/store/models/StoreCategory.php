@@ -110,10 +110,18 @@ class StoreCategory extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'level' => 'Level',
-			'name' => 'Name',
-			'url' => 'Url',
+			'id'               => 'ID',
+			'lft'              => 'Lft',
+			'rgt'              => 'Rgt',
+			'level'            => Yii::t('StoreModule.core', 'Уровень'),
+			'name'             => Yii::t('StoreModule.core', 'Название'),
+			'url'              => Yii::t('StoreModule.core', 'URL'),
+			'full_path'        => Yii::t('StoreModule.core', 'Полный путь'),
+			'meta_title'       => Yii::t('StoreModule.core', 'Meta Title'),
+			'meta_keywords'    => Yii::t('StoreModule.core', 'Meta Keywords'),
+			'meta_description' => Yii::t('StoreModule.core', 'Meta Description'),
+			'layout'           => Yii::t('StoreModule.core', 'Макет'),
+			'view'             => Yii::t('StoreModule.core', 'Шаблон')
 		);
 	}
 

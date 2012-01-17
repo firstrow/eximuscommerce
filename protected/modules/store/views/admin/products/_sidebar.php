@@ -3,10 +3,6 @@
 	<input type="text" style="width: 90%" onkeyup='$("#StoreCategoryTreeFilter").jstree("search", $(this).val());' />
 </div>
 
-<!--<div>-->
-<!--	<a href="" >Все категории</a>-->
-<!--</div>-->
-
 <?php
 
 // Create jstree to filter products
