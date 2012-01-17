@@ -8,7 +8,7 @@
 // Create jstree to filter products
 $this->widget('ext.jstree.SJsTree', array(
 	'id'=>'StoreCategoryTreeFilter',
-	'data'=>StoreCategoryNode::fromArray(StoreCategory::model()->findAllByPk(1)),
+	'data'=>StoreCategoryNode::fromArray(StoreCategory::model()->findAllByPk(1), array('displayCount'=>true)),
 	'options'=>array(
 		'core'=>array('initially_open'=>'StoreCategoryTreeFilterNode_1'),
 		'plugins'=>array('themes','html_data','ui','crrm', 'search','cookies'),

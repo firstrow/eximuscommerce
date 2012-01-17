@@ -100,7 +100,7 @@ class StoreCategory extends BaseModel
 	public function relations()
 	{
 		return array(
-
+			'countProducts'=>array(self::STAT, 'StoreProductCategoryRef', 'category')
 		);
 	}
 
