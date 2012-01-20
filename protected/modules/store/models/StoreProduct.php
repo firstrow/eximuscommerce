@@ -165,6 +165,7 @@ class StoreProduct extends BaseModel
 		$criteria->compare('t.name',$this->name,true);
 		$criteria->compare('t.url',$this->url,true);
 		$criteria->compare('t.price',$this->price);
+		$criteria->compare('t.is_active',$this->is_active);
 		$criteria->compare('t.short_description',$this->short_description,true);
 		$criteria->compare('t.full_description',$this->full_description,true);
 		$criteria->compare('t.sku',$this->sku,true);

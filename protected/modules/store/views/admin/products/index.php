@@ -56,7 +56,11 @@
 			),
 			'sku',
 			'price',
-			'is_active',
+			array(
+				'name'=>'is_active',
+				'filter'=>array(1=>Yii::t('StoreModule.admin', 'Да'), 0=>Yii::t('StoreModule.admin', 'Нет')),
+				'value'=>'$data->is_active ? Yii::t("StoreModule.admin", "Да") : Yii::t("StoreModule.admin", "Нет")'
+			),
 			// Buttons
 			array(
 				'class'=>'CButtonColumn',
