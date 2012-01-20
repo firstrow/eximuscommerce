@@ -32,3 +32,9 @@ function CategoryRedirectToFront(obj)
     var id = $(obj).attr("id").replace('StoreCategoryTreeNode_','');
     window.open('/admin/store/category/redirect/id/'+id, '_blank');
 }
+
+function CategoryRedirectToAdminProducts(obj)
+{
+    var id = $(obj).attr("id").replace('StoreCategoryTreeNode_','');
+    window.location = '/admin/store/products/?category='+id;
+}

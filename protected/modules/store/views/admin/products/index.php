@@ -56,6 +56,7 @@
 			),
 			'sku',
 			'price',
+			'is_active',
 			// Buttons
 			array(
 				'class'=>'CButtonColumn',

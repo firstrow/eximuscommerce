@@ -47,6 +47,10 @@ $this->widget('ext.jstree.SJsTree', array(
 				'label'=>Yii::t('StoreModule.admin','Перейти'),
 				'action'=>'js:function(obj){ CategoryRedirectToFront(obj); }'
 			),
+			'products'=>array(
+				'label'=>Yii::t('StoreModule.admin','Продукты'),
+				'action'=>'js:function(obj){ CategoryRedirectToAdminProducts(obj); }'
+			),
 			'create'=>false,
 			'rename'=>false,
 			'remove'=>false,

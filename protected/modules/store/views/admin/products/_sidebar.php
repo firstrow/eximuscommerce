@@ -15,18 +15,16 @@ $this->widget('ext.jstree.SJsTree', array(
 		'cookies'=>array(
 			'save_selected'=>false,
 		),
-		'ui'=>array(
-			'initially_select'=>array('StoreCategoryTreeFilterNode_1')
-		),
 	),
 ));
 
+// Category id to select in sidebar.
+$activeCategoryId = Yii::app()->request->getQuery('category', 0);
 Yii::app()->getClientScript()->registerScript('insertAllCategory', '
 $("#StoreCategoryTreeFilter").bind("loaded.jstree", function (event, data) {
 	$(this).jstree("create",-1,false,{attr:{id:"StoreCategoryTreeFilterNode_0"}, data:{title:"'.Yii::t('StoreModule.admin', 'Все категории').'"}},false,true);
-	$(this).jstree("select_node","#StoreCategoryTreeFilterNode_0");
+	$(this).jstree("select_node","#StoreCategoryTreeFilterNode_'.$activeCategoryId.'");
 });
-
 ');
 
 Yii::app()->getClientScript()->registerCss("StoreCategoryTreeStyles","#StoreCategoryTree { width:90% }");
