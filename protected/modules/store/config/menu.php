@@ -18,6 +18,11 @@ return array(
 				'url'=>Yii::app()->createUrl('store/admin/category/create'),
 				'position'=>2
 			),
+			array(
+				'label'=>Yii::t('StoreModule.admin', 'Производители'),
+				'url'=>Yii::app()->createUrl('store/admin/manufacturer'),
+				'position'=>3
+			),
 		),
 	),
 );

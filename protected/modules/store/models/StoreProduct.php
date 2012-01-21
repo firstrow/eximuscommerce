@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'StoreProduct':
  * @property integer $id
+ * @property integer $manufacturer_id
  * @property string $name
  * @property string $url
  * @property double $price
@@ -88,7 +89,7 @@ class StoreProduct extends BaseModel
 			array('price', 'commaToDot'),
 			array('price', 'numerical'),
 			array('is_active', 'boolean'),
-			array('quantity, availability', 'numerical', 'integerOnly'=>true),
+			array('quantity, availability, manufacturer_id', 'numerical', 'integerOnly'=>true),
 			array('name, price', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
@@ -114,6 +115,7 @@ class StoreProduct extends BaseModel
 	{
 		return array(
 			'images'=>array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
+			'manufacturer'=>array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id'),
 			'related'=>array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
 			'relatedProducts'=>array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
 			'categorization'=>array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
@@ -129,6 +131,7 @@ class StoreProduct extends BaseModel
 	{
 		return array(
 			'id'                     => 'ID',
+			'manufacturer_id'        => Yii::t('StoreModule.core', 'Производитель'),
 			'name'                   => Yii::t('StoreModule.core', 'Название'),
 			'url'                    => Yii::t('StoreModule.core', 'URL'),
 			'price'                  => Yii::t('StoreModule.core', 'Цена'),

@@ -1,7 +1,7 @@
 <?php
 
 class SChosen extends CWidget {
-	
+
 	/**
 	 * @var array List of objects id
 	 */
@@ -26,15 +26,15 @@ class SChosen extends CWidget {
 	public function registerScripts()
 	{
 		$assetsUrl=Yii::app()->getAssetManager()->publish(
-            Yii::getPathOfAlias('application.modules.admin.widgets.schosen.assets'),
-            true,
-            -1,
-            YII_DEBUG
-    	);
+			Yii::getPathOfAlias('application.modules.admin.widgets.schosen.assets'),
+			true,
+			-1,
+			YII_DEBUG
+		);
 
 		$cs = Yii::app()->getClientScript();
-    	$cs->registerCssFile($assetsUrl.'/chosen.css');
-    	$cs->registerScriptFile($assetsUrl.'/chosen.jquery.js');
+		$cs->registerCssFile($assetsUrl.'/chosen.css');
+		$cs->registerScriptFile($assetsUrl.'/chosen.jquery.js');
 	}
 
 }
