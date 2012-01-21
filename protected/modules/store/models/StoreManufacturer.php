@@ -131,6 +131,14 @@ class StoreManufacturer extends BaseModel
 		return parent::beforeSave();
 	}
 
+	public function afterDelete()
+	{
+		// Clear product relations
+		StoreProduct::model()->updateAll(array(
+			'manufacturer_id'=>0,
+		), 'manufacturer_id = :id', array(':id'=>$this->id));
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
