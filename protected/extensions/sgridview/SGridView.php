@@ -203,9 +203,9 @@ class SGridView extends CGridView {
 	{
 		if($this->filter->attributes)
 		{
-			foreach($this->filter->attributes as $val)
+			foreach($this->filter->attributes as $name=>$val)
 			{
-				if($val)
+				if(isset($_REQUEST[get_class($this->filter)][$name]) && $_REQUEST[get_class($this->filter)][$name] != '')
 					return true;
 			}
 		}
