@@ -4,6 +4,9 @@
  * Supported plugins: ui (hovered, clicked), checkbox, contextmenu, search
  */
 
+.jstree-default {
+    font-size: 11px;
+}
 .jstree-default li,
 .jstree-default ins { background-image:url("d.png"); background-repeat:no-repeat; background-color:transparent; }
 .jstree-default li { background-position:-90px 0; background-repeat:repeat-y; }
@@ -25,8 +28,6 @@
 .jstree-default .jstree-no-dots .jstree-closed > ins { background-position:0 0; }
 
 .jstree-default .jstree-no-icons a .jstree-icon { display:none; }
-
-
 
 .jstree-default .jstree-no-icons .jstree-checkbox { display:inline-block; }
 .jstree-default .jstree-no-checkboxes .jstree-checkbox { display:none !important; }
