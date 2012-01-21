@@ -5,21 +5,21 @@
  */
 class STabbedForm extends CForm {
 
-    /**
-     * @var array list of tabs (tab title=>tab content). Will be
-     * generated from form elements.
-     */
+	/**
+	 * @var array list of tabs (tab title=>tab content). Will be
+	 * generated from form elements.
+	 */
 	protected $tabs = array();
 
-    /**
-     * @var array Additional tabs to render.
-     */
-    public $additionalTabs = array();
+	/**
+	 * @var array Additional tabs to render.
+	 */
+	public $additionalTabs = array();
 
-    /**
-     * @var string Widget to render form. zii.widgets.jui.CJuiTabs
-     */
-    public $formWidget = 'ext.sidebartabs.SAdminSidebarTabs';
+	/**
+	 * @var string Widget to render form. zii.widgets.jui.CJuiTabs
+	 */
+	public $formWidget = 'ext.sidebartabs.SAdminSidebarTabs';
 
 	protected $activeTab = null;
 
@@ -39,7 +39,7 @@ class STabbedForm extends CForm {
 
 	public function asTabs()
 	{
-     	$this->render();
+		$this->render();
 		$result = $this->renderBegin();
 
 		if($this->showErrorSummary && ($model=$this->getModel(false))!==null)
@@ -52,9 +52,9 @@ class STabbedForm extends CForm {
 				foreach ($this->tabs as &$tab)
 					$tab = $errorSummary.$tab;
 
-                // Display error on additional tabs
-                foreach($this->additionalTabs as &$tab)
-                    $tab = $errorSummary.$tab;
+				// Display error on additional tabs
+				foreach($this->additionalTabs as &$tab)
+					$tab = $errorSummary.$tab;
 			}
 			else
 				$result = $errorSummary.$result;
@@ -69,10 +69,10 @@ class STabbedForm extends CForm {
 		return $result;
 	}
 
-    /**
-     * Renders elements
-     * @return string
-     */
+	/**
+	 * Renders elements
+	 * @return string
+	 */
 	public function renderElements()
 	{
 		$output='';

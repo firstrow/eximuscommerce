@@ -23,6 +23,11 @@ return array(
 				'url'=>Yii::app()->createUrl('store/admin/manufacturer'),
 				'position'=>3
 			),
+			array(
+				'label'=>Yii::t('StoreModule.admin', 'Атрибуты'),
+				'url'=>Yii::app()->createUrl('store/admin/attribute'),
+				'position'=>4
+			),
 		),
 	),
 );
