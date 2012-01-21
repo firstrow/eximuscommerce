@@ -116,7 +116,7 @@
 				},
 				success:function(data) {
 					// Reload filter
-					$('#'+ gridId +' :input').first().trigger('change');
+					$('#'+ gridId +' .filters :input').first().trigger('change');
 				}
 			});
 		}

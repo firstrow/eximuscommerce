@@ -14,28 +14,28 @@ class SGridView extends CGridView {
 	public $template = '{items}{summary}{pager}';
 	public $selectableRows = 2;
 
-    /**
-     * @var bool Show additional filter actions as "Clear Filter" && "Save filter"
-     */
+	/**
+	 * @var bool Show additional filter actions as "Clear Filter" && "Save filter"
+	 */
 	public $extended = true;
 
-    public $selectionChanged;
+	public $selectionChanged;
 
-    /**
-     * @var array List of custom actions to display in footer.
-     * See example in {@link SGridView::getFooterActions}
-     */
-    protected $_customActions;
+	/**
+	 * @var array List of custom actions to display in footer.
+	 * See example in {@link SGridView::getFooterActions}
+	 */
+	protected $_customActions;
 
-    /**
-     * @var bool Set to false to hide `Delete` button.
-     */
-    public $hasDeleteAction = true;
+	/**
+	 * @var bool Set to false to hide `Delete` button.
+	 */
+	public $hasDeleteAction = true;
 
-    /**
-     * @var bool Display custom actions
-     */
-    public $enableCustomActions = true;
+	/**
+	 * @var bool Display custom actions
+	 */
+	public $enableCustomActions = true;
 
 	/**
 	 * Initializes the grid view.
@@ -81,7 +81,7 @@ class SGridView extends CGridView {
 			'cssFile'=>$this->baseScriptUrl.'/pager.css',
 		);
 
-        $this->setSelectionChanged();
+		$this->setSelectionChanged();
 		$this->initColumns();
 	}
 
@@ -98,74 +98,74 @@ class SGridView extends CGridView {
 
 		parent::renderItems();
 
-        if($this->enableCustomActions === true)
-        {
-            $this->widget('zii.widgets.CMenu', array(
-                'id'=>$this->getId().'Actions',
-                'htmlOptions'=>array(
-                    'class'=>'gridFooterActions',
-                ),
-                'items'=>$this->getCustomActions(),
-            ));
-        }
+		if($this->enableCustomActions === true)
+		{
+			$this->widget('zii.widgets.CMenu', array(
+				'id'=>$this->getId().'Actions',
+				'htmlOptions'=>array(
+					'class'=>'gridFooterActions',
+				),
+				'items'=>$this->getCustomActions(),
+			));
+		}
 	}
 
-    /**
-     * @param array $actions of user defined actions
-     */
-    public function setCustomActions($actions)
-    {
-        foreach($actions as $action)
-        {
-            if(!isset($action['linkOptions']))
-                $action['linkOptions'] = $this->getDefaultActionOptions();
-            else
-                $action['linkOptions'] = array_merge($this->getDefaultActionOptions(),$action['linkOptions']);
-            $this->_customActions[] = $action;
-        }
-    }
+	/**
+	 * @param array $actions of user defined actions
+	 */
+	public function setCustomActions($actions)
+	{
+		foreach($actions as $action)
+		{
+			if(!isset($action['linkOptions']))
+				$action['linkOptions'] = $this->getDefaultActionOptions();
+			else
+				$action['linkOptions'] = array_merge($this->getDefaultActionOptions(),$action['linkOptions']);
+			$this->_customActions[] = $action;
+		}
+	}
 
-    /**
-     * @return array Default linkOptions for footer action.
-     */
-    public function getDefaultActionOptions()
-    {
-        return array(
-            'data-token'=>Yii::app()->request->csrfToken,
-            'data-question'=>Yii::t('SGridView.core', 'Выполнить действие?'),
-            'onClick'=>strtr('return $.fn.yiiGridView.runAction(":grid", this);', array(
-                ':grid'=>$this->getId()
-            )),
-        );
-    }
+	/**
+	 * @return array Default linkOptions for footer action.
+	 */
+	public function getDefaultActionOptions()
+	{
+		return array(
+			'data-token'=>Yii::app()->request->csrfToken,
+			'data-question'=>Yii::t('SGridView.core', 'Выполнить действие?'),
+			'onClick'=>strtr('return $.fn.yiiGridView.runAction(":grid", this);', array(
+				':grid'=>$this->getId()
+			)),
+		);
+	}
 
-    /**
-     * @return array of actions
-     */
-    public function getCustomActions()
-    {
-        if ($this->hasDeleteAction === true)
-        {
-            $this->customActions = array(array(
-                'label'=>'Удалить',
-                'url'=>$this->owner->createUrl('delete'),
-                'linkOptions'=>array(
-                    'class'=>'actionDelete',
-                    'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные объекты?'),
-                )
-            ));
-        }
-        return $this->_customActions;
-    }
+	/**
+	 * @return array of actions
+	 */
+	public function getCustomActions()
+	{
+		if ($this->hasDeleteAction === true)
+		{
+			$this->customActions = array(array(
+				'label'=>'Удалить',
+				'url'=>$this->owner->createUrl('delete'),
+				'linkOptions'=>array(
+					'class'=>'actionDelete',
+					'data-question'=>Yii::t('SGridView.core', 'Вы действительно хотите удалить выбранные объекты?'),
+				)
+			));
+		}
+		return $this->_customActions;
+	}
 
 
-    /**
-     * Set js function on grid row click.
-     */
-    public function setSelectionChanged()
-    {
-        $this->selectionChanged = 'function(id){$.fn.yiiGridView.showActions(id)}';
-    }
+	/**
+	 * Set js function on grid row click.
+	 */
+	public function setSelectionChanged()
+	{
+		$this->selectionChanged = 'function(id){$.fn.yiiGridView.showActions(id)}';
+	}
 
 	/**
 	 * Display current model attributes as json string in hidden block
@@ -229,7 +229,7 @@ class SGridView extends CGridView {
 			foreach ($filters as $filter)
 			{
 				$filtersHtml .= strtr('
-					<li>
+					<li id="SGridViewFilter_'.$filter->id.'">
 						<div style="clear:both;">
 							<div style="float:left;">
 								<a href="#" onClick="return loadSGridViewFilterById(\'{gridId}\',{filterId})">{name}</a>
@@ -242,15 +242,19 @@ class SGridView extends CGridView {
 					'{name}'=>CHtml::encode($filter->name),
 					'{gridId}'=>$this->getId(),
 					'{filterId}'=>$filter->id,
-					'{delete}'=>CHtml::link(
-					    CHtml::image($this->baseScriptUrl.'/cross.png', Yii::t('SGridView.core', 'Удалить')),
-					    Yii::app()->createUrl('core/admin/gridView/deleteFilter',array(
-                            'id'=>$filter->id,
-                            'redirect'=>base64_encode(Yii::app()->request->url),
-                        )),
-					    array(
-						    'confirm'=>Yii::t('SGridView.core','Вы действительно хотите удалить этот фильтр?'),
-						    'id'=>'fdLink'.$filter->id
+					'{delete}'=>CHtml::ajaxLink(
+						CHtml::image($this->baseScriptUrl.'/cross.png', Yii::t('SGridView.core', 'Удалить')),
+						Yii::app()->createUrl('core/admin/gridView/deleteFilter',array(
+							'id'=>$filter->id,
+						)),
+						// Ajax options
+						array(
+							'success'=>"js:function(){\$('#SGridViewFilter_{$filter->id}').remove();}"
+						),
+						// Html options
+						array(
+							'confirm'=>Yii::t('SGridView.core','Вы действительно хотите удалить этот фильтр?'),
+							'id'=>'fdLink'.$filter->id
 						)
 					)
 				));
@@ -286,10 +290,10 @@ class SGridView extends CGridView {
 		echo $this->createSaveDialog();
 	}
 
-    /**
-     * Create jquery.ui dialog to save custom filters
-     * @return string
-     */
+	/**
+	 * Create jquery.ui dialog to save custom filters
+	 * @return string
+	 */
 	protected function createSaveDialog()
 	{
 		return Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
@@ -314,10 +318,10 @@ class SGridView extends CGridView {
 class SGridIdColumn extends CDataColumn
 {
 
-    public function renderHeaderCell()
-    {
-        $this->headerHtmlOptions['width']='40px';
-        parent::renderHeaderCell();
-    }
+	public function renderHeaderCell()
+	{
+		$this->headerHtmlOptions['width']='40px';
+		parent::renderHeaderCell();
+	}
 
 }
