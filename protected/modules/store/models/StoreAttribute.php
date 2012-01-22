@@ -37,6 +37,13 @@ class StoreAttribute extends BaseModel
 		return 'StoreAttribute';
 	}
 
+	public function defaultScope()
+	{
+		return array(
+			'order'=>'position ASC',
+		);
+	}
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -61,6 +68,7 @@ class StoreAttribute extends BaseModel
 	public function relations()
 	{
 		return array(
+			'options'=>array(self::HAS_MANY, 'StoreAttributeOption', 'attribute_id', 'order'=>'options.position ASC'),
 		);
 	}
 

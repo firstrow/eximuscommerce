@@ -46,6 +46,11 @@ class AttributeController extends SAdminController {
 			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Атрибут не найден.'));
 
 		$form = new STabbedForm('application.modules.store.views.admin.attribute.attributeForm', $model);
+		$form->additionalTabs = array(
+			'Опции'=>$this->renderPartial('_options', array(
+				'model'=>$model,
+			), true),
+		);
 
 		if (Yii::app()->request->isPostRequest)
 		{
@@ -54,6 +59,9 @@ class AttributeController extends SAdminController {
 			if ($model->validate())
 			{
 				$model->save();
+
+				$this->saveOptions($model);
+
 				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
 				if (isset($_POST['REDIRECT']))
@@ -67,6 +75,54 @@ class AttributeController extends SAdminController {
 			'model'=>$model,
 			'form'=>$form,
 		));
+	}
+
+	protected function saveOptions($model)
+	{
+		$dontDelete = array();
+		// Process options
+		if(!empty($_POST['options']))
+		{
+			$position = 0;
+			foreach($_POST['options'] as $key=>$val)
+			{
+				if(isset($val[0]) && $val[0] != '')
+				{
+					$attributeOption = StoreAttributeOption::model()->findByAttributes(array(
+						'id'=>$key,
+						'attribute_id'=>$model->id
+					));
+
+					if(!$attributeOption)
+					{
+						$attributeOption = new StoreAttributeOption;
+						$attributeOption->attribute_id = $model->id;
+					}
+					$attributeOption->value = $val[0];
+					$attributeOption->position = $position;
+					$attributeOption->save(false);
+
+					array_push($dontDelete, $attributeOption->id);
+					$position++;
+				}
+			}
+		}
+
+		if(sizeof($dontDelete))
+		{
+			$cr = new CDbCriteria;
+			$cr->addNotInCondition('id', $dontDelete);
+			StoreAttributeOption::model()->deleteAllByAttributes(array(
+				'attribute_id'=>$model->id
+			), $cr);
+		}
+		else
+		{
+			// Clear all attribute options
+			StoreAttributeOption::model()->deleteAllByAttributes(array(
+				'attribute_id'=>$model->id
+			));
+		}
 	}
 
 	/**
