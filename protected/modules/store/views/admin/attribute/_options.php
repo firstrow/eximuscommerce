@@ -1,3 +1,9 @@
+<?php
+	Yii::app()
+		->getClientScript()
+		->registerScriptFile($this->module->assetsUrl.'/admin/attribute.options.js');
+?>
+
 <style type="text/css">
 	table.optionsEditTable td {
 		padding: 3px;
@@ -18,7 +24,7 @@
 		<tr>
 			<td></td>
 			<td>
-				Russian
+				Language
 			</td>
 			<td>
 				<a href="#" class="plusOne">Plus</a>
@@ -68,27 +74,3 @@
 		?>
 	</tbody>
 </table>
-
-<script type="text/javascript">
-	$(".optionsEditTable .plusOne").click(function(){
-		var row = $(".optionsEditTable .copyMe").clone().removeClass('copyMe');
-		row.appendTo(".optionsEditTable tbody");
-		row.find(".value").each(function(i, el){
-			$(el).attr('name', 'options['+Math.random()+'][]');
-		});
-		return false;
-	});
-
-	$(".optionsEditTable").delegate(".deleteRow", "click", function(){
-		$(this).parent().parent().remove();
-
-		if($(".optionsEditTable tbody tr").length == 1)
-		{
-			$(".optionsEditTable .plusOne").click();
-		}
-
-		return false;
-	});
-
-	$(".optionsEditTable tbody").sortable();
-</script>

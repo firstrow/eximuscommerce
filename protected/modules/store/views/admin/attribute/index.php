@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Display products list
+ * Display attributes list
  **/
 
 $this->pageHeader = Yii::t('StoreModule.admin', 'Атрибуты');

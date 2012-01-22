@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'id'=>'productUpdateForm',
+	'id'=>'attributeUpdateForm',
 	'showErrorSummary'=>true,
 	'elements'=>array(
 		'content'=>array(

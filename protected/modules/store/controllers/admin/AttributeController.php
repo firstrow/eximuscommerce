@@ -47,7 +47,7 @@ class AttributeController extends SAdminController {
 
 		$form = new STabbedForm('application.modules.store.views.admin.attribute.attributeForm', $model);
 		$form->additionalTabs = array(
-			'Опции'=>$this->renderPartial('_options', array(
+			Yii::t('StoreModule.admin', 'Опции')=>$this->renderPartial('_options', array(
 				'model'=>$model,
 			), true),
 		);
@@ -59,9 +59,7 @@ class AttributeController extends SAdminController {
 			if ($model->validate())
 			{
 				$model->save();
-
 				$this->saveOptions($model);
-
 				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
 				if (isset($_POST['REDIRECT']))
@@ -77,10 +75,13 @@ class AttributeController extends SAdminController {
 		));
 	}
 
+	/**
+	 * Save attribute options
+	 * @param StoreAttribute $model
+	 */
 	protected function saveOptions($model)
 	{
 		$dontDelete = array();
-		// Process options
 		if(!empty($_POST['options']))
 		{
 			$position = 0;
