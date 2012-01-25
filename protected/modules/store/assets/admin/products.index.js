@@ -1,6 +1,6 @@
 
 $('#StoreCategoryTreeFilter').bind('loaded.jstree', function (event, data) {
-	data.inst.open_all(-1);
+	//data.inst.open_all(0);
 }).delegate("a", "click", function (event) {
 	try{
 		var id = $(this).parent("li").attr('id').replace('StoreCategoryTreeFilterNode_', '');

@@ -70,7 +70,9 @@ class ProductsController extends SAdminController
 				'model'=>$model,
 			), true),
 			Yii::t('StoreModule.admin','Характеристики')=>'',
-			Yii::t('StoreModule.admin','Свойства')=>'',
+			Yii::t('StoreModule.admin','Свойства')=>$this->renderPartial('_attributes', array(
+				'model'=>$model,
+			), true),
 			Yii::t('StoreModule.admin','Отзывы')=>'',
 		);
 

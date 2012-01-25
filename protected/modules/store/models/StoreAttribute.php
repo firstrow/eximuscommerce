@@ -103,6 +103,37 @@ class StoreAttribute extends BaseModel
 	}
 
 	/**
+	 * @return string html field based on attribute type
+	 */
+	public function renderField()
+	{
+		$name = 'StoreAttribute['.$this->id.']';
+		switch ($this->type):
+			case self::TYPE_TEXT:
+				return CHtml::textField($name);
+			break;
+			case self::TYPE_TEXTAREA:
+				return CHtml::textArea($name);
+			break;
+			case self::TYPE_DROPDOWN:
+				$data = CHtml::listData($this->options, 'id', 'value');
+				return CHtml::dropDownList($name, '', $data, array('empty'=>'---'));
+			break;
+			case self::TYPE_SELECT_MANY:
+				$data = CHtml::listData($this->options, 'id', 'value');
+				return CHtml::dropDownList($name, '', $data, array('multiple'=>'multiple'));
+			break;
+			case self::TYPE_YESNO:
+				$data = array(
+					1=>Yii::t('StoreModule.core', 'Да'),
+					2=>Yii::t('StoreModule.core', 'Нет')
+				);
+				return CHtml::dropDownList($name, 'asd', $data, array('empty'=>'---'));
+			break;
+		endswitch;
+	}
+
+	/**
 	 * Get type label
 	 * @static
 	 * @param $type
@@ -131,5 +162,11 @@ class StoreAttribute extends BaseModel
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function afterDelete()
+	{
+		foreach($this->options as $o)
+			$o->delete();
 	}
 }

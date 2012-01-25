@@ -1,7 +1,12 @@
 <?php
+
+	/**
+	 * Attribute options tab.
+	 */
+
 	Yii::app()
 		->getClientScript()
-		->registerScriptFile($this->module->assetsUrl.'/admin/attribute.options.js');
+		->registerScriptFile($this->module->assetsUrl.'/admin/attribute.options.js', CClientScript::POS_END);
 ?>
 
 <style type="text/css">
@@ -27,7 +32,7 @@
 				Language
 			</td>
 			<td>
-				<a href="#" class="plusOne">Plus</a>
+				<a href="#" class="plusOne"><?php echo Yii::t('StoreModule.admin', 'Добавить') ?></a>
 			</td>
 		</tr>
 	</thead>
@@ -38,7 +43,7 @@
 				<input name="sample" type="text" class="value">
 			</td>
 			<td>
-				<a href="#" class="deleteRow">Delete</a>
+				<a href="#" class="deleteRow"><?php echo Yii::t('StoreModule.admin', 'Удалить') ?></a>
 			</td>
 		</tr>
 		<?php
@@ -53,7 +58,7 @@
 								<input name="options[<?php echo $o->id ?>][]" type="text" value="<?php echo CHtml::encode($o->value) ?>">
 							</td>
 							<td>
-								<a href="#" class="deleteRow">Delete</a>
+								<a href="#" class="deleteRow"><?php echo Yii::t('StoreModule.admin', 'Удалить') ?></a>
 							</td>
 						</tr>
 					<?php
