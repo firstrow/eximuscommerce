@@ -104,6 +104,10 @@ div.wide .hint
     font-size:11px;
 }
 
+div.wide .rowInput {
+    margin: 0 0 0 190px;
+}
+
 div.form .note
 {
     font-style: italic;

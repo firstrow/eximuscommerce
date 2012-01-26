@@ -28,6 +28,11 @@ return array(
 				'url'=>Yii::app()->createUrl('store/admin/attribute'),
 				'position'=>4
 			),
+			array(
+				'label'=>Yii::t('StoreModule.admin', 'Типы продуктов'),
+				'url'=>Yii::app()->createUrl('store/admin/productType'),
+				'position'=>5
+			),
 		),
 	),
 );

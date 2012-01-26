@@ -38,7 +38,8 @@ if(!isset($model))
 
 $this->widget('ext.sgridview.SGridView', array(
     'dataProvider'=>$model->search(),
-    'ajaxUrl'=>Yii::app()->createUrl('store/admin/products/applyProductsFilter/exclude/'.$exclude),
+    //'ajaxUrl'=>Yii::app()->createUrl('store/admin/products/applyProductsFilter/exclude/'.$exclude),
+    'ajaxUrl'=>Yii::app()->createUrl('/store/admin/products/applyProductsFilter', array('exclude'=>$exclude)),
     'id'=>'RelatedProductsGrid',
     'template'=>'{items}{summary}{pager}',
     'enableCustomActions'=>false,

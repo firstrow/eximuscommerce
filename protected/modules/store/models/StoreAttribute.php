@@ -56,9 +56,9 @@ class StoreAttribute extends BaseModel
 				'pattern'=>'/^([a-z0-9_])+$/i',
 				'message'=>Yii::t('StoreModule.core', 'Название может содержать только буквы, цифры и подчеркивания.')
 			),
-			array('type, position', 'numerical', 'integerOnly'=>true),
+			array('type', 'numerical', 'integerOnly'=>true),
 			array('name, title', 'length', 'max'=>255),
-			array('id, name, title, type, position', 'safe', 'on'=>'search'),
+			array('id, name, title, type', 'safe', 'on'=>'search'),
 		);
 	}
 
