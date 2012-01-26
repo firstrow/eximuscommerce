@@ -19,6 +19,9 @@
 		($model->isNewRecord) ? Yii::t('StoreModule.admin', 'Создание продукта') : CHtml::encode($model->name),
 	);
 
+	if($model->type)
+		$title .= ' "'.CHtml::encode($model->type->name).'"';
+
 	$this->pageHeader = $title;
 
 	$this->widget('application.modules.admin.widgets.schosen.SChosen', array(
@@ -28,5 +31,29 @@
 ?>
 
 <div class="form wide padding-all">
-	<?php echo $form->asTabs(); ?>
+	<?php
+		/**
+		 * @var $model StoreProduct
+		 */
+		if($model->isNewRecord && !$model->type_id)
+		{
+			// Display "choose type" form
+			echo CHtml::form('', 'get');
+			echo CHtml::activeLabel($model, 'type_id');
+			echo CHtml::dropDownList('type_id',$model->type_id, CHtml::listData(StoreProductType::model()->findAll(), 'id', 'name'));
+			echo CHtml::openTag('div', array('class'=>'rowInput'));
+			echo '<br>';
+			echo CHtml::submitButton(Yii::t('StoreModule.admin', 'Создать'), array('name'=>false));
+			echo CHtml::closeTag('div');
+			echo CHtml::endForm();
+
+			$this->widget('application.modules.admin.widgets.schosen.SChosen', array(
+				'elements'=>array('type_id')
+			));
+		}
+		else
+		{
+			echo $form->asTabs();
+		}
+	?>
 </div>

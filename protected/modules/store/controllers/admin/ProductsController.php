@@ -57,6 +57,16 @@ class ProductsController extends SAdminController
 
 		$form = new STabbedForm('application.modules.store.views.admin.products.productForm', $model);
 
+		// On create new product first display "Choose type" form.
+		if($model->isNewRecord && isset($_GET['type_id']))
+		{
+			$model->type_id = $_GET['type_id'];
+			if(StoreProductType::model()->countByAttributes(array('id'=>$model->type_id)) === '0')
+			{
+				throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка. Тип продука указан неправильно'));
+			}
+		}
+
 		// Set additional tabs
 		$form->additionalTabs = array(
 			Yii::t('StoreModule.admin','Категории')=>$this->renderPartial('_tree', array(
@@ -149,6 +159,7 @@ class ProductsController extends SAdminController
 					$this->redirect(array('index'));
 			}
 		}
+
 
 		$this->render('update', array(
 			'model'=>$model,

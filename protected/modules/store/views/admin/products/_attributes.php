@@ -1,11 +1,24 @@
 <?php
 
-	$attributes = StoreAttribute::model()->findAll();
+	/**
+	 * Product update.
+	 * Options tab.
+	 */
 
-	foreach($attributes as $a)
+	if ($model->type)
 	{
-		echo CHtml::openTag('div', array('class'=>'row'));
-		echo CHtml::label($a->title, $a->name);
-		echo $a->renderField();
-		echo CHtml::closeTag('div');
+		$attributes = $model->type->attributes;
+
+		if(empty($attributes))
+			echo Yii::t('StoreModule.admin', 'Список свойств пустой');
+		else
+		{
+			foreach($attributes as $a)
+			{
+				echo CHtml::openTag('div', array('class'=>'row'));
+				echo CHtml::label($a->title, $a->name);
+				echo $a->renderField();
+				echo CHtml::closeTag('div');
+			}
+		}
 	}
