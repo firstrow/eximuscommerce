@@ -107,4 +107,9 @@ class StoreProductType extends BaseModel
 			$record->save(false);
 		}
 	}
+
+	public function __toString()
+	{
+		return $this->name;
+	}
 }

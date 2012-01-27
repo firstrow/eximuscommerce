@@ -57,6 +57,12 @@
 			'sku',
 			'price',
 			array(
+				'name'=>'type_id',
+				'type'=>'raw',
+				'value'=>'$data->type->name',
+				'filter'=>CHtml::listData(StoreProductType::model()->findAll(), "id", "name"),
+			),
+			array(
 				'name'=>'is_active',
 				'filter'=>array(1=>Yii::t('StoreModule.admin', 'Да'), 0=>Yii::t('StoreModule.admin', 'Нет')),
 				'value'=>'$data->is_active ? Yii::t("StoreModule.admin", "Да") : Yii::t("StoreModule.admin", "Нет")'
