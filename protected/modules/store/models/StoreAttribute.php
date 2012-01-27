@@ -56,7 +56,7 @@ class StoreAttribute extends BaseModel
 				'pattern'=>'/^([a-z0-9_])+$/i',
 				'message'=>Yii::t('StoreModule.core', 'Название может содержать только буквы, цифры и подчеркивания.')
 			),
-			array('type', 'numerical', 'integerOnly'=>true),
+			array('type, position', 'numerical', 'integerOnly'=>true),
 			array('name, title', 'length', 'max'=>255),
 			array('id, name, title, type', 'safe', 'on'=>'search'),
 		);
@@ -78,7 +78,7 @@ class StoreAttribute extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id'       => 'ID',
 			'name'     => Yii::t('StoreModule.core', 'Идентификатор'),
 			'title'    => Yii::t('StoreModule.core', 'Название'),
 			'type'     => Yii::t('StoreModule.core', 'Тип'),

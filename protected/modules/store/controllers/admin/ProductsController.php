@@ -69,20 +69,14 @@ class ProductsController extends SAdminController
 
 		// Set additional tabs
 		$form->additionalTabs = array(
-			Yii::t('StoreModule.admin','Категории')=>$this->renderPartial('_tree', array(
-				'model'=>$model,
-			), true),
+			Yii::t('StoreModule.admin','Категории')=>$this->renderPartial('_tree', array('model'=>$model), true),
 			Yii::t('StoreModule.admin','Сопутствующие продукты')=>$this->renderPartial('_relatedProducts',array(
 				'exclude'=>$model->id,
 				'product'=>$model,
 			),true),
-			Yii::t('StoreModule.admin','Изображения')=>$this->renderPartial('_images', array(
-				'model'=>$model,
-			), true),
+			Yii::t('StoreModule.admin','Изображения')=>$this->renderPartial('_images', array('model'=>$model), true),
 			Yii::t('StoreModule.admin','Характеристики')=>'',
-			Yii::t('StoreModule.admin','Свойства')=>$this->renderPartial('_attributes', array(
-				'model'=>$model,
-			), true),
+			Yii::t('StoreModule.admin','Свойства')=>$this->renderPartial('_attributes', array('model'=>$model), true),
 			Yii::t('StoreModule.admin','Отзывы')=>'',
 		);
 

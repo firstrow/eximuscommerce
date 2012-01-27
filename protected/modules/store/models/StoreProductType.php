@@ -65,8 +65,8 @@ class StoreProductType extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
+			'id'   => 'ID',
+			'name' => Yii::t('StoreModule.admin','Название'),
 		);
 	}
 

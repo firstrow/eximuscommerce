@@ -12,6 +12,9 @@ class AttributeController extends SAdminController {
 	{
 		$model = new StoreAttribute('search');
 
+		// By default position is 0, we set it to null to display all results
+		$model->position = null;
+
 		if (!empty($_GET['StoreAttribute']))
 			$model->attributes = $_GET['StoreAttribute'];
 

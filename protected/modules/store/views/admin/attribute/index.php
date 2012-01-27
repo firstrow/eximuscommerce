@@ -47,6 +47,7 @@ $this->widget('ext.sgridview.SGridView', array(
 			'filter'=>StoreAttribute::getTypesList(),
 			'value'=>'CHtml::encode(StoreAttribute::getTypeTitle($data->type))'
 		),
+		'position',
 		// Buttons
 		array(
 			'class'=>'CButtonColumn',
