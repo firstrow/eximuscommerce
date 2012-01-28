@@ -20,6 +20,12 @@
 	);
 
 	$this->pageHeader = $title;
+
+	// Register scripts
+	Yii::app()->clientScript->registerScriptFile(
+		$this->module->assetsUrl.'/admin/productType.update.js',
+		CClientScript::POS_END
+	);
 ?>
 
 <div class="form wide padding-all">
@@ -85,20 +91,3 @@
 		padding: 5px;
 	}
 </style>
-
-<script type="text/javascript">
-	$("#StoreProductTypeForm").submit(function(){
-		$("#attributes option").attr('selected', 'selected');
-	});
-
-	$("#allAttributes").delegate('option', 'click', function(){
-		var clon = $(this).clone();
-		$(this).remove();
-		$(clon).appendTo($("#attributes"));
-	});
-	$("#attributes").delegate('option', 'click', function(){
-		var clon = $(this).clone();
-		$(this).remove();
-		$(clon).appendTo($("#allAttributes"));
-	});
-</script>
