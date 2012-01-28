@@ -169,6 +169,9 @@ class StoreAttribute extends BaseModel
 				$data = CHtml::listData($this->options, 'id', 'value');
 				$result = array();
 
+				if(!is_array($value))
+					$value = array($value);
+
 				foreach($data as $key=>$val)
 				{
 					if(in_array($key, $value))
