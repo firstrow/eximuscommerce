@@ -55,7 +55,7 @@ class StoreProductType extends BaseModel
 	{
 		return array(
 			'attributeRelation'=>array(self::HAS_MANY, 'StoreTypeAttribute', 'type_id'),
-			'attributes'=>array(self::HAS_MANY, 'StoreAttribute', array('attribute_id'=>'id'), 'through'=>'attributeRelation'),
+			'storeAttributes'=>array(self::HAS_MANY, 'StoreAttribute', array('attribute_id'=>'id'), 'through'=>'attributeRelation'),
 		);
 	}
 
@@ -101,11 +101,20 @@ class StoreProductType extends BaseModel
 
 		foreach($attributes as $attribute_id)
 		{
-			$record = new StoreTypeAttribute;
-			$record->type_id = $this->id;
-			$record->attribute_id = $attribute_id;
-			$record->save(false);
+			if($attribute_id)
+			{
+				$record = new StoreTypeAttribute;
+				$record->type_id = $this->id;
+				$record->attribute_id = $attribute_id;
+				$record->save(false);
+			}
 		}
+	}
+
+	public function afterDelete()
+	{
+		StoreTypeAttribute::model()->deleteAllByAttributes(array('type_id'=>$this->id));
+		return parent::afterDelete();
 	}
 
 	public function __toString()

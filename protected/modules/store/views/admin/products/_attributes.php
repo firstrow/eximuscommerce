@@ -7,7 +7,7 @@
 
 	if ($model->type)
 	{
-		$attributes = $model->type->attributes;
+		$attributes = $model->type->storeAttributes;
 
 		if(empty($attributes))
 			echo Yii::t('StoreModule.admin', 'Список свойств пустой');

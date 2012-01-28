@@ -37,10 +37,7 @@ class ProductTypeController extends SAdminController {
 		if ($new === true)
 			$model = new StoreProductType;
 		else
-		{
-			$model = StoreProductType::model()
-				->findByPk($_GET['id']);
-		}
+			$model = StoreProductType::model()->findByPk($_GET['id']);
 
 		if (!$model)
 			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Тип продукта не найден.'));

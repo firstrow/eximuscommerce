@@ -32,8 +32,8 @@
 	?>
 
 	<div class="row">
-		<?php echo CHtml::activeLabel($model,'name', array('required'=>true)); ?>
-		<?php echo CHtml::activeTextField($model,'name'); ?>
+		<?php echo CHtml::activeLabel($model, 'name', array('required'=>true)); ?>
+		<?php echo CHtml::activeTextField($model, 'name'); ?>
 	</div>
 
 	<div class="row">
@@ -51,7 +51,7 @@
 						<?php
 						echo CHtml::dropDownList('attributes[]',
 							null,
-							CHtml::listData($model->attributes, 'id', 'title'),
+							CHtml::listData($model->storeAttributes, 'id', 'title'),
 							array('multiple'=>true, 'class'=>'attributesList')
 						);
 						?>
