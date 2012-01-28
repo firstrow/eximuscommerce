@@ -111,7 +111,6 @@ class StoreAttribute extends BaseModel
 	 */
 	public function renderField($value = null)
 	{
-		//$name = 'StoreAttribute['.$this->id.']';
 		$name = 'StoreAttribute['.$this->name.']';
 		switch ($this->type):
 			case self::TYPE_TEXT:
@@ -146,6 +145,11 @@ class StoreAttribute extends BaseModel
 		endswitch;
 	}
 
+	/**
+	 * Get attribute value
+	 * @param $value
+	 * @return string attribute value
+	 */
 	public function renderValue($value)
 	{
 		switch ($this->type):
