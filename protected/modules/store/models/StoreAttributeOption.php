@@ -39,4 +39,8 @@ class StoreAttributeOption extends BaseModel
 		);
 	}
 
+	public function afterDelete()
+	{
+		return parent::afterDelete();
+	}
 }

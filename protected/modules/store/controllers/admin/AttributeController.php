@@ -116,16 +116,22 @@ class AttributeController extends SAdminController {
 		{
 			$cr = new CDbCriteria;
 			$cr->addNotInCondition('id', $dontDelete);
-			StoreAttributeOption::model()->deleteAllByAttributes(array(
+			$optionsToDelete = StoreAttributeOption::model()->findAllByAttributes(array(
 				'attribute_id'=>$model->id
 			), $cr);
 		}
 		else
 		{
 			// Clear all attribute options
-			StoreAttributeOption::model()->deleteAllByAttributes(array(
+			$optionsToDelete = StoreAttributeOption::model()->findAllByAttributes(array(
 				'attribute_id'=>$model->id
 			));
+		}
+
+		if(!empty($optionsToDelete))
+		{
+			foreach($optionsToDelete as $o)
+				$o->delete();
 		}
 	}
 
