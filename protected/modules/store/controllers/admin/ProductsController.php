@@ -47,10 +47,7 @@ class ProductsController extends SAdminController
 		if ($new === true)
 			$model = new StoreProduct;
 		else
-		{
-			$model = StoreProduct::model()
-				->findByPk($_GET['id']);
-		}
+			$model = StoreProduct::model()->findByPk($_GET['id']);
 
 		if (!$model)
 			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Продукт не найден.'));
@@ -97,6 +94,9 @@ class ProductsController extends SAdminController
 
 				// Process categories
 				$model->setCategories(Yii::app()->request->getPost('categories', array()), Yii::app()->request->getPost('main_category', 1));
+
+				// Process attributes
+				$this->processAttributes($model);
 
 				// Handle images
 				$images = CUploadedFile::getInstancesByName('StoreProductImages');
@@ -154,11 +154,34 @@ class ProductsController extends SAdminController
 			}
 		}
 
-
 		$this->render('update', array(
 			'model'=>$model,
 			'form'=>$form,
 		));
+	}
+
+	/**
+	 * Save custom model attributes
+	 * @param StoreProduct $model
+	 * @return boolean
+	 */
+	protected function processAttributes(StoreProduct $model)
+	{
+		$attributes = new CMap(Yii::app()->request->getPost('StoreAttribute', array()));
+		if(empty($attributes))
+			return false;
+
+		$deleteModel = StoreProduct::model()->findByPk($model->id);
+		$deleteModel->deleteEavAttributes(array(), true);
+
+		// Delete empty values
+		foreach($attributes as $key=>$val)
+		{
+			if(is_string($val) && $val === '')
+				$attributes->remove($key);
+		}
+
+		return $model->setEavAttributes($attributes->toArray(), true);
 	}
 
 	/**

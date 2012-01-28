@@ -17,7 +17,7 @@
 			{
 				echo CHtml::openTag('div', array('class'=>'row'));
 				echo CHtml::label($a->title, $a->name);
-				echo $a->renderField();
+				echo '<div class="rowInput">'.$a->renderField($model).'</div>';
 				echo CHtml::closeTag('div');
 			}
 		}

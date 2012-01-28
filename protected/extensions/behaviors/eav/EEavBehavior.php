@@ -321,10 +321,21 @@ class EEavBehavior extends CActiveRecordBehavior {
         foreach($data as $row) {
             $attribute = $this->stripPrefix($row[$this->attributeField]);
             $value = $row[$this->valueField];
+
             // Check if value exists.
-            if (!is_null($current = $this->attributes->itemAt($attribute)) && $current != $value) {
-                $value = is_array($current) ? $current[] = $value : array($current, $value);
+            if (!is_null($current = $this->attributes->itemAt($attribute)) && $current != $value)
+            {
+                //$value = is_array($current) ? $current[] = $value : array($current, $value);
+                // Fix if entity has many values
+                if(is_array($current))
+                {
+                   $current[] = $value;
+                   $value = $current;
+                }
+                else
+                     $value = array($current, $value);
             }
+
             $this->attributes->add($attribute, $value);
         }
         // Save loaded attributes to cache.

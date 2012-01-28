@@ -105,30 +105,32 @@ class StoreAttribute extends BaseModel
 	/**
 	 * @return string html field based on attribute type
 	 */
-	public function renderField()
+	public function renderField(StoreProduct $model)
 	{
-		$name = 'StoreAttribute['.$this->id.']';
+		//$name = 'StoreAttribute['.$this->id.']';
+		$name = 'StoreAttribute['.$this->name.']';
+		$value = $model->getEavAttribute($this->name);
 		switch ($this->type):
 			case self::TYPE_TEXT:
-				return CHtml::textField($name);
+				return CHtml::textField($name, $value);
 			break;
 			case self::TYPE_TEXTAREA:
-				return CHtml::textArea($name);
+				return CHtml::textArea($name, $value);
 			break;
 			case self::TYPE_DROPDOWN:
 				$data = CHtml::listData($this->options, 'id', 'value');
-				return CHtml::dropDownList($name, '', $data, array('empty'=>'---'));
+				return CHtml::dropDownList($name, $value, $data, array('empty'=>'---'));
 			break;
 			case self::TYPE_SELECT_MANY:
 				$data = CHtml::listData($this->options, 'id', 'value');
-				return CHtml::dropDownList($name, '', $data, array('multiple'=>'multiple'));
+				return CHtml::checkBoxList($name.'[]', $value, $data, array('multiple'=>'multiple'));
 			break;
 			case self::TYPE_YESNO:
 				$data = array(
 					1=>Yii::t('StoreModule.core', 'Да'),
 					2=>Yii::t('StoreModule.core', 'Нет')
 				);
-				return CHtml::dropDownList($name, 'asd', $data, array('empty'=>'---'));
+				return CHtml::dropDownList($name, $value, $data, array('empty'=>'---'));
 			break;
 		endswitch;
 	}
