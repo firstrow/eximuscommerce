@@ -26,6 +26,7 @@
 		$this->module->assetsUrl.'/admin/productType.update.js',
 		CClientScript::POS_END
 	);
+
 ?>
 
 <div class="form wide padding-all">

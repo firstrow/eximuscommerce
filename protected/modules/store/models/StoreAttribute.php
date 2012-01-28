@@ -185,5 +185,12 @@ class StoreAttribute extends BaseModel
 
 		// Delete relations used in product type.
 		StoreTypeAttribute::model()->deleteAllByAttributes(array('attribute_id'=>$this->id));
+
+		// Delete attributes assigned to products
+		$conn = $this->getDbConnection();
+		$command = $conn->createCommand("DELETE FROM `StoreProductAttributeEAV` WHERE `attribute`=:attr");
+		$name = $this->name;
+		$command->bindParam(':attr', $name, PDO::PARAM_STR);
+		$command->execute();
 	}
 }

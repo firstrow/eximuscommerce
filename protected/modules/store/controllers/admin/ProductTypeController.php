@@ -85,7 +85,12 @@ class ProductTypeController extends SAdminController {
 			if (!empty($model))
 			{
 				foreach($model as $m)
-					$m->delete();
+				{
+					if($m->productsCount > 0)
+						throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка удаления типа продукта. Он используется в продуктах.'));
+					else
+						$m->delete();
+				}
 			}
 
 			if (!Yii::app()->request->isAjaxRequest)

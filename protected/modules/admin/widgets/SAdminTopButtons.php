@@ -196,7 +196,8 @@ class SAdminTopButtons extends CWidget {
 						'data'=>array(
 							Yii::app()->request->csrfTokenName=>Yii::app()->request->csrfToken,
 						),
-						'success'=>"function(){ window.location = '$fullUrlToListAction' }"
+						'success'=>"function(){ window.location = '$fullUrlToListAction' }",
+						'error'=>"function(jqXHR, textStatus, errorThrown){ alert(jqXHR.responseText); }"
 					),
 				),
 				'options'=>array(
