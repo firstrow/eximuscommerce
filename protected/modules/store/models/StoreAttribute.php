@@ -42,7 +42,8 @@ class StoreAttribute extends BaseModel
 	public function defaultScope()
 	{
 		return array(
-			'order'=>'position ASC',
+			'order'=>'StoreAttribute.position ASC',
+			'alias'=>'StoreAttribute'
 		);
 	}
 
