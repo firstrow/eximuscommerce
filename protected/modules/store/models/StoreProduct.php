@@ -197,6 +197,16 @@ class StoreProduct extends BaseModel
 		));
 	}
 
+	public function behaviors()
+	{
+		return array(
+			'eavAttr' => array(
+				'class' => 'ext.behaviors.eav.EEavBehavior',
+				'tableName' => 'StoreProductAttributeEAV',
+			)
+		);
+	}
+
 	/**
 	 * Save related products. Notice, related product will be saved after save() method called.
 	 * @param array $ids Array of related products
