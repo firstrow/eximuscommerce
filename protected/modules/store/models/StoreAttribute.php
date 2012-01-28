@@ -166,7 +166,11 @@ class StoreAttribute extends BaseModel
 
 	public function afterDelete()
 	{
+		// Delete options
 		foreach($this->options as $o)
 			$o->delete();
+
+		// Delete relations used in product type.
+		StoreTypeAttribute::model()->deleteAllByAttributes(array('attribute_id'=>$this->id));
 	}
 }

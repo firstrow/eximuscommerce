@@ -113,6 +113,7 @@ class StoreProductType extends BaseModel
 
 	public function afterDelete()
 	{
+		// Clear type attribute relations
 		StoreTypeAttribute::model()->deleteAllByAttributes(array('type_id'=>$this->id));
 		return parent::afterDelete();
 	}
