@@ -1,4 +1,12 @@
 <?php
+/**
+ * Usage:
+ * $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
+ *		'elements'=>array('id1','id2')
+ *	));
+ */
+
+Yii::import('application.modules.admin.AdminModule');
 
 class SChosen extends CWidget {
 

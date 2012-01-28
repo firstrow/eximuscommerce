@@ -105,11 +105,10 @@ class StoreAttribute extends BaseModel
 	/**
 	 * @return string html field based on attribute type
 	 */
-	public function renderField(StoreProduct $model)
+	public function renderField($value = null)
 	{
 		//$name = 'StoreAttribute['.$this->id.']';
 		$name = 'StoreAttribute['.$this->name.']';
-		$value = $model->getEavAttribute($this->name);
 		switch ($this->type):
 			case self::TYPE_TEXT:
 				return CHtml::textField($name, $value);
@@ -123,7 +122,7 @@ class StoreAttribute extends BaseModel
 			break;
 			case self::TYPE_SELECT_MANY:
 				$data = CHtml::listData($this->options, 'id', 'value');
-				return CHtml::checkBoxList($name.'[]', $value, $data, array('multiple'=>'multiple'));
+				return CHtml::dropDownList($name.'[]', $value, $data, array('multiple'=>'multiple'));
 			break;
 			case self::TYPE_YESNO:
 				$data = array(
