@@ -20,6 +20,10 @@ if ($model->mainCategory->id != 1)
 
 $this->breadcrumbs[] = $model->name;
 
+$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
+	'model'=>$model,
+));
+
 ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>

@@ -146,6 +146,42 @@ class StoreAttribute extends BaseModel
 		endswitch;
 	}
 
+	public function renderValue($value)
+	{
+		switch ($this->type):
+			case self::TYPE_TEXT:
+			case self::TYPE_TEXTAREA:
+				return $value;
+			break;
+			case self::TYPE_DROPDOWN:
+			case self::TYPE_RADIO_LIST:
+				$data = CHtml::listData($this->options, 'id', 'value');
+				if(!is_array($value) && isset($data[$value]))
+					return $data[$value];
+			break;
+			case self::TYPE_SELECT_MANY:
+			case self::TYPE_CHECKBOX_LIST:
+				$data = CHtml::listData($this->options, 'id', 'value');
+				$result = array();
+
+				foreach($data as $key=>$val)
+				{
+					if(in_array($key, $value))
+						$result[] = $val;
+				}
+				return implode(', ', $result);
+			break;
+			case self::TYPE_YESNO:
+				$data = array(
+					1=>Yii::t('StoreModule.core', 'Да'),
+					2=>Yii::t('StoreModule.core', 'Нет')
+				);
+				if(isset($data[$value]))
+					return $data[$value];
+			break;
+		endswitch;
+	}
+
 	/**
 	 * Get type label
 	 * @static
