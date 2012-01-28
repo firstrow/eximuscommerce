@@ -107,6 +107,10 @@ div.wide .hint
 div.wide .rowInput {
     margin: 0 0 0 190px;
 }
+div.wide .rowInput label {
+    float: none;
+    display: inline;
+}
 
 div.form .note
 {

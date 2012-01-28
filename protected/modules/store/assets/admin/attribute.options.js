@@ -32,7 +32,7 @@ $(function() {
 
     $("#attributeUpdateForm").submit(function(){
         var el = $("#StoreAttribute_type");
-        if($(el).val() != 3 && $(el).val() != 4)
+        if($(el).val() != 3 && $(el).val() != 4 && $(el).val() != 5 && $(el).val() != 6)
         {
             $(".optionsEditTable").remove();
         }
@@ -47,13 +47,12 @@ $(function() {
     {
         var optionsTab = $(".SidebarTabsControl li")[1];
         // Show options tab when type is dropdown or select
-        if($(el).val() == 3 || $(el).val() == 4)
+        if($(el).val() == 3 || $(el).val() == 4 || $(el).val() == 5 || $(el).val() == 6)
         {
             $(optionsTab).show();
         }else{
             $(optionsTab).hide();
         }
     }
-
 
 });

@@ -17,7 +17,9 @@ class StoreAttribute extends BaseModel
 	const TYPE_TEXTAREA=2;
 	const TYPE_DROPDOWN=3;
 	const TYPE_SELECT_MANY=4;
-	const TYPE_YESNO=5;
+	const TYPE_RADIO_LIST=5;
+	const TYPE_CHECKBOX_LIST=6;
+	const TYPE_YESNO=7;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -94,11 +96,13 @@ class StoreAttribute extends BaseModel
 	public static function getTypesList()
 	{
 		return array(
-			self::TYPE_TEXT        =>'Text',
-			self::TYPE_TEXTAREA    =>'Textarea',
-			self::TYPE_DROPDOWN    =>'Dropdown',
-			self::TYPE_SELECT_MANY =>'Multiple Select',
-			self::TYPE_YESNO       =>'Yes/No',
+			self::TYPE_TEXT           => 'Text',
+			self::TYPE_TEXTAREA       => 'Textarea',
+			self::TYPE_DROPDOWN       => 'Dropdown',
+			self::TYPE_SELECT_MANY    => 'Multiple Select',
+			self::TYPE_RADIO_LIST     => 'Radio List',
+			self::TYPE_CHECKBOX_LIST  => 'Checkbox List',
+			self::TYPE_YESNO          => 'Yes/No',
 		);
 	}
 
@@ -123,6 +127,14 @@ class StoreAttribute extends BaseModel
 			case self::TYPE_SELECT_MANY:
 				$data = CHtml::listData($this->options, 'id', 'value');
 				return CHtml::dropDownList($name.'[]', $value, $data, array('multiple'=>'multiple'));
+			break;
+			case self::TYPE_RADIO_LIST:
+				$data = CHtml::listData($this->options, 'id', 'value');
+				return CHtml::radioButtonList($name, (string)$value, $data);
+			break;
+			case self::TYPE_CHECKBOX_LIST:
+				$data = CHtml::listData($this->options, 'id', 'value');
+				return CHtml::checkBoxList($name.'[]', $value, $data);
 			break;
 			case self::TYPE_YESNO:
 				$data = array(
