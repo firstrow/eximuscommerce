@@ -3,11 +3,11 @@
 
 	$this->pageHeader = Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Список доступных модулей'));
 
-    $this->breadcrumbs = array(
-        'Home'=>$this->createUrl('/admin'),
-        Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Модули'))=>$this->createUrl('index'),
-        Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Установка')),
-    );
+	$this->breadcrumbs = array(
+		'Home'=>$this->createUrl('/admin'),
+		Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Модули'))=>$this->createUrl('index'),
+		Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Установка')),
+	);
 
 ?>
 <div class="padding-all">
