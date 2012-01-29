@@ -3,6 +3,13 @@
 /**
  * Render product attributes table.
  * Basically used on product view page.
+ * Usage:
+ *     $this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
+ *        // SProduct model
+ *        'model'=>$model,
+ *         // Optional. Html table attributes.
+ *        'htmlOptions'=>array('class'=>'...', 'id'=>'...', etc...)
+ *    ));
  */
 class SAttributesTableRenderer extends CWidget
 {
@@ -11,6 +18,11 @@ class SAttributesTableRenderer extends CWidget
 	 * @var BaseModel with EAV behavior enabled
 	 */
 	public $model;
+
+	/**
+	 * @var array table element attributes
+	 */
+	public $htmlOptions = array();
 
 	/**
 	 * @var array model attributes loaded with getEavAttributes method
@@ -22,6 +34,9 @@ class SAttributesTableRenderer extends CWidget
 	 */
 	protected $_models;
 
+	/**
+	 * Render attributes table
+	 */
 	public function run()
 	{
 		$this->_attributes = $this->model->getEavAttributes();
@@ -36,9 +51,16 @@ class SAttributesTableRenderer extends CWidget
 
 		if(!empty($data))
 		{
-			var_dump(array_reverse($data));
+			echo CHtml::openTag('table', $this->htmlOptions);
+			foreach(array_reverse($data) as $title=>$value)
+			{
+				echo CHtml::openTag('tr');
+				echo '<td>'.CHtml::encode($title).'</td>';
+				echo '<td>'.CHtml::encode($value).'</td>';
+				echo CHtml::closeTag('tr');
+			}
+			echo CHtml::closeTag('table');
 		}
-
 	}
 
 	/**
@@ -54,7 +76,6 @@ class SAttributesTableRenderer extends CWidget
 		$cr->addInCondition('StoreAttribute.name', array_keys($this->_attributes));
 
 		foreach(StoreAttribute::model()->with(array('options'))->findAll($cr) as $m)
-//		foreach(StoreAttribute::model()->findAll($cr) as $m)
 			$this->_models[$m->name] = $m;
 
 		return $this->_models;

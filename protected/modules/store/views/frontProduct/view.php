@@ -20,28 +20,31 @@ if ($model->mainCategory->id != 1)
 
 $this->breadcrumbs[] = $model->name;
 
-$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
-	'model'=>$model,
-));
-
 ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>
 
 <div class="row show-grid">
-    <!-- Left column  -->
-    <div class="span-one-third">
-        <a href="#">
-            <img class="thumbnail" src="http://placehold.it/300x230" alt="">
-        </a>
-    </div>
-    <!-- Right column -->
-    <div class="span-two-thirds">
-        <p><?php echo $model->short_description; ?></p>
-        <p><?php echo $model->full_description; ?></p>
+	<!-- Left column  -->
+	<div class="span-one-third">
+		<a href="#">
+			<img class="thumbnail" src="http://placehold.it/300x230" alt="">
+		</a>
+	</div>
+	<!-- Right column -->
+	<div class="span-two-thirds">
+		<p><?php echo $model->short_description; ?></p>
+		<p><?php echo $model->full_description; ?></p>
 
-        <h4>Цена: <?php echo $model->price ?></h4>
-        <input type="submit" class="btn success" value="Купить">
+		<h4>Цена: <?php echo $model->price ?></h4>
+		<input type="submit" class="btn success" value="Купить">
 
-    </div>
+		<h5>Характеристики</h5>
+		<?php
+			// Display product custom options table.
+			$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
+				'model'=>$model,
+			));
+		?>
+	</div>
 </div>
