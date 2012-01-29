@@ -2,6 +2,7 @@
 
 /**
  * Display category products
+ * TODO: Add default sorting by rating, etc...
  */
 class CategoryController extends Controller
 {
