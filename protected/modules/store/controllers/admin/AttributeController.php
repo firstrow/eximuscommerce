@@ -18,8 +18,12 @@ class AttributeController extends SAdminController {
 		if (!empty($_GET['StoreAttribute']))
 			$model->attributes = $_GET['StoreAttribute'];
 
+		$dataProvider = $model->search();
+		$dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
+
 		$this->render('index', array(
-			'model'=>$model
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 

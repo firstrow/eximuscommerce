@@ -15,8 +15,12 @@ class ProductTypeController extends SAdminController {
 		if (!empty($_GET['StoreProductType']))
 			$model->attributes = $_GET['StoreProductType'];
 
+		$dataProvider = $model->search();
+		$dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
+
 		$this->render('index', array(
-			'model'=>$model
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 

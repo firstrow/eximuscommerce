@@ -22,7 +22,7 @@
     ));
 
     $this->widget('ext.sgridview.SGridView', array(
-        'dataProvider'=>$model->search(),
+        'dataProvider'=>$dataProvider,
         'id'=>'pagesListGrid',
         'afterAjaxUpdate'=>"function(){registerFilterDatePickers()}",
         'filter'=>$model,

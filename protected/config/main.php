@@ -128,6 +128,7 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		//'adminEmail'=>'webmaster@example.com',
+		'adminPageSize'=>20,
 		'storeImages'=>array(
 			'path'=>'webroot.uploads.product',
 			'maxFileSize'=>10*1024*1024,
