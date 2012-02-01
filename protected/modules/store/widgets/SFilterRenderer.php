@@ -25,7 +25,7 @@ class SFilterRenderer extends CWidget
 	/**
 	 * @var string Tag to surround attribute title.
 	 */
-	public $titleTag = 'h4';
+	public $titleTag = 'h5';
 
 	/**
 	 * Render filter

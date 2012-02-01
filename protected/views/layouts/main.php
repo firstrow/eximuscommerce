@@ -48,7 +48,10 @@
 	<div class="container-fluid">
 	  <div class="sidebar">
 		<div class="well">
-		  <h5>Sidebar</h5>
+			<!--<h5>Sidebar</h5>-->
+			<?php
+				echo $this->sidebarContent;
+			?>
 		</div>
 	  </div>
 

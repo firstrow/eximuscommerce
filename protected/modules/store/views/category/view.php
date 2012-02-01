@@ -16,10 +16,10 @@ foreach($ancestors as $c)
 
 $this->breadcrumbs[] = $model->name;
 
-$this->widget('application.modules.store.widgets.SFilterRenderer', array(
+$this->sidebarContent = $this->widget('application.modules.store.widgets.SFilterRenderer', array(
 	'model'=>$model,
 	'attributes'=>$usedAttributes
-));
+), true);
 
 ?>
 
