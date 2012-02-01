@@ -56,7 +56,6 @@ class SFilterRenderer extends CWidget
 	 */
 	public function addUrlParam($data)
 	{
-		$newData = CMap::mergeArray($_GET, $data);
-		return Yii::app()->createUrl('/store/category/view', $newData);
+		return Yii::app()->createUrl('/store/category/view', CMap::mergeArray($_GET, $data));
 	}
 }
