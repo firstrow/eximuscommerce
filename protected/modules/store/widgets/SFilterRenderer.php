@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Base class to render attributes in sidebar to filter products.
+ * Usage:
+ * $this->widget('application.modules.store.widgets.SFilterRenderer', array(
+ *      // StoreCategory model. Used to create url
+ *      'model'=>$model,
+ *      'attributes'=>$usedAttributes
+ *  ));
+ */
 class SFilterRenderer extends CWidget
 {
 
