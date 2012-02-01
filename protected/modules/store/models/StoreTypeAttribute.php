@@ -35,6 +35,7 @@ class StoreTypeAttribute extends BaseModel
 	public function relations()
 	{
 		return array(
+			'attribute'=>array(self::BELONGS_TO, 'StoreAttribute', 'attribute_id'),
 		);
 	}
 

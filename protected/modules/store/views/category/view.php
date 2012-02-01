@@ -15,6 +15,12 @@ foreach($ancestors as $c)
 	$this->breadcrumbs[$c->name] = $c->getViewUrl();
 
 $this->breadcrumbs[] = $model->name;
+
+$this->widget('application.modules.store.widgets.SFilterRenderer', array(
+	'model'=>$model,
+	'attributes'=>$usedAttributes
+));
+
 ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>

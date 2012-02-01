@@ -9,6 +9,7 @@
  * @property string $title
  * @property integer $type
  * @property integer $position
+ * @property boolean $use_in_filter
  */
 class StoreAttribute extends BaseModel
 {
@@ -39,14 +40,6 @@ class StoreAttribute extends BaseModel
 		return 'StoreAttribute';
 	}
 
-	public function defaultScope()
-	{
-		return array(
-			'order'=>'StoreAttribute.position ASC',
-			'alias'=>'StoreAttribute'
-		);
-	}
-
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -55,6 +48,7 @@ class StoreAttribute extends BaseModel
 		return array(
 			array('name, title', 'required'),
 			array('name', 'unique'),
+			array('use_in_filter', 'boolean'),
 			array('name', 'match',
 				'pattern'=>'/^([a-z0-9_])+$/i',
 				'message'=>Yii::t('StoreModule.core', 'Название может содержать только буквы, цифры и подчеркивания.')
@@ -65,6 +59,22 @@ class StoreAttribute extends BaseModel
 		);
 	}
 
+	public function defaultScope()
+	{
+		return array(
+			'order'=>'StoreAttribute.position ASC',
+			'alias'=>'StoreAttribute'
+		);
+	}
+
+	public function scopes()
+	{
+		$t=$this->getTableAlias();
+		return array(
+			'useInFilter'=>array('condition'=>$t.'.use_in_filter=1'),
+		);
+	}
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -72,6 +82,8 @@ class StoreAttribute extends BaseModel
 	{
 		return array(
 			'options'=>array(self::HAS_MANY, 'StoreAttributeOption', 'attribute_id', 'order'=>'options.position ASC'),
+			// Used in types
+			'types'=>array(self::HAS_MANY, 'StoreTypeAttribute', 'attribute_id'),
 		);
 	}
 
@@ -81,11 +93,12 @@ class StoreAttribute extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id'       => 'ID',
-			'name'     => Yii::t('StoreModule.core', 'Идентификатор'),
-			'title'    => Yii::t('StoreModule.core', 'Название'),
-			'type'     => Yii::t('StoreModule.core', 'Тип'),
-			'position' => Yii::t('StoreModule.core', 'Позиция'),
+			'id'            => 'ID',
+			'name'          => Yii::t('StoreModule.core', 'Идентификатор'),
+			'title'         => Yii::t('StoreModule.core', 'Название'),
+			'type'          => Yii::t('StoreModule.core', 'Тип'),
+			'position'      => Yii::t('StoreModule.core', 'Позиция'),
+			'use_in_filter' => Yii::t('StoreModule.core', 'Использовать в фильтре'),
 		);
 	}
 

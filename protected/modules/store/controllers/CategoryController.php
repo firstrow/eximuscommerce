@@ -8,29 +8,33 @@ class CategoryController extends Controller
 {
 
 	/**
+	 * @var StoreProduct
+	 */
+	public $query;
+
+	/**
 	 * Display products list
 	 * @param string $url category url
 	 */
 	public function actionView($url)
 	{
-//		$result = StoreProduct::model()
-//			->with(array(
-//				'categorization'=>array(
-//					'condition'=>'categorization.category=:c',
-//					'params'=>array(':c'=>$model->id)
-//				),
-//			))
-//			->findAll($criteria);
-//		var_dump($result);
-
 		$model = $this->_loadModel($url);
+		$this->query = StoreProduct::model()
+			->with(array(
+				'categorization'=>array(
+					'condition'=>'categorization.category=:c',
+					'params'=>array(':c'=>$model->id),
+					'together'=>true,
+				),
+			));
 
-		$criteria=new CDbCriteria;
-		$criteria->with = array(
-			'categorization'=>array('together'=>true),
-		);
-		$criteria->addCondition('categorization.category='.$model->id);
-		$criteria->scopes = array('active');
+		$criteria = $this->query->getDbCriteria();
+
+		// List of attributes available in category
+		$usedAttributes = StoreProduct::getAttributesByCriteria($criteria);
+
+		// Apply EAV attributes from $_GET
+		$this->applyEAVCriteria($usedAttributes);
 
 		$provider = new CActiveDataProvider('StoreProduct', array(
 			// Set id to false to not display model name in
@@ -38,6 +42,7 @@ class CategoryController extends Controller
 			'id'=>false,
 			'criteria'=>$criteria,
 			'pagination'=>array(
+				// TODO: Apply from settings
 				'pageSize'=>20,
 			)
 		));
@@ -45,7 +50,8 @@ class CategoryController extends Controller
 		$view = $this->setDesign($model, 'view');
 		$this->render($view, array(
 			'provider'=>$provider,
-			'model'=>$model
+			'model'=>$model,
+			'usedAttributes'=>$usedAttributes
 		));
 	}
 
@@ -65,5 +71,21 @@ class CategoryController extends Controller
 		if (!$model) throw new CHttpException(404, Yii::t('StoreModule.core', 'Категория не найдена.'));
 
 		return $model;
+	}
+
+	/**
+	 * Use EAV in product search query
+	 * @param $usedAttributes list of allowed attribute models
+	 */
+	private function applyEAVCriteria($usedAttributes)
+	{
+		if(empty($usedAttributes))
+			return;
+
+		foreach($usedAttributes as $attr)
+		{
+			if(isset($_GET[$attr->name]))
+				$this->query->withEavAttributes(array($attr->name=>$_GET[$attr->name]));
+		}
 	}
 }
