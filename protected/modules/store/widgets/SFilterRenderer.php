@@ -45,7 +45,7 @@ class SFilterRenderer extends CWidget
 				echo CHtml::link($option->value, $this->addUrlParam(array('url'=>$this->model->url, $attribute->name=>$option->id)));
 				echo CHtml::closeTag('li');
 			}
-			echo CHtml::openTag('ul');
+			echo CHtml::closeTag('ul');
 		}
 	}
 

@@ -133,10 +133,12 @@ class CategoryController extends Controller
 		if(empty($attributes))
 			return;
 
+		$data = array();
 		foreach($attributes as $attr)
 		{
 			if(isset($_GET[$attr->name]))
-				$this->query->withEavAttributes(array($attr->name=>$_GET[$attr->name]));
+				$data[$attr->name]=$_GET[$attr->name];
 		}
+		$this->query->withEavAttributes($data);
 	}
 }
