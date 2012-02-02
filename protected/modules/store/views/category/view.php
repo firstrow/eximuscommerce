@@ -1,6 +1,10 @@
 <?php
+
 /**
  * Category view
+ * @var $model StoreCategory
+ * @var $provider CActiveDataProvider
+ * @var $categoryAttributes
  */
 
 // Set meta tags
@@ -18,7 +22,7 @@ $this->breadcrumbs[] = $model->name;
 
 $this->sidebarContent = $this->widget('application.modules.store.widgets.SFilterRenderer', array(
 	'model'=>$model,
-	'attributes'=>$usedAttributes
+	'attributes'=>$this->categoryAttributes
 ), true);
 
 ?>

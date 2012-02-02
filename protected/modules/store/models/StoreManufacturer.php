@@ -52,13 +52,6 @@ class StoreManufacturer extends BaseModel
 		);
 	}
 
-	public function defaultScope()
-	{
-		return array(
-			'order'=>'name ASC',
-		);
-	}
-
 	/**
 	 * Find manufacturer by url.
 	 * Scope.

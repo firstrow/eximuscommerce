@@ -368,35 +368,4 @@ class StoreProduct extends BaseModel
 		}
 	}
 
-	/**
-	 * Find attributes based on products criteria.
-	 * Mostly used to display attrs in sidebar to filter product.
-	 * @param CDbCriteria|StoreProduct $criteria to find product types
-	 * @return array
-	 */
-	public function getAttributesByCriteria($criteria)
-	{
-		$model = new StoreProduct(null);
-
-		$criteria = clone $criteria;
-		$criteria->select = 'type_id';
-		$criteria->group = 'type_id';
-		$criteria->distinct = true;
-		$typesUsed = $model->findAll($criteria);
-
-		if(empty($typesUsed))
-			return array();
-
-		$types = array();
-		foreach($typesUsed as $key)
-			array_push($types, $key->type_id);
-
-		// Find attributes by type
-		$criteria = new CDbCriteria;
-		$criteria->addInCondition('types.type_id', $types);
-		return StoreAttribute::model()
-			->useInFilter()
-			->with(array('types'))
-			->findAll($criteria);
-	}
 }

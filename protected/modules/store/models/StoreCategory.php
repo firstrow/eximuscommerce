@@ -86,6 +86,9 @@ class StoreCategory extends BaseModel
 		return $this;
 	}
 
+	/**
+	 * @return StoreCategory
+	 */
 	public function excludeRoot()
 	{
 		$this->getDbCriteria()->mergeWith(array(
