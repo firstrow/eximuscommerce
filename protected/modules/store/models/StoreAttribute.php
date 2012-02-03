@@ -10,6 +10,7 @@
  * @property integer $type
  * @property integer $position
  * @property boolean $use_in_filter
+ * @method StoreCategory useInFilter()
  */
 class StoreAttribute extends BaseModel
 {

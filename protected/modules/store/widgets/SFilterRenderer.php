@@ -27,6 +27,8 @@ class SFilterRenderer extends CWidget
 	 */
 	public $titleTag = 'h5';
 
+	public $criteria;
+
 	/**
 	 * Render filter
 	 */
@@ -41,12 +43,53 @@ class SFilterRenderer extends CWidget
 			echo CHtml::openTag('ul');
 			foreach($attribute->options as $option)
 			{
+				$htmlOptions = array();
+				$v = $this->count($attribute, $option);
 				echo CHtml::openTag('li');
-				echo CHtml::link($option->value, $this->addUrlParam(array('url'=>$this->model->url, $attribute->name=>$option->id)));
+				if($v>0)
+				{
+					$url = $this->addUrlParam(array('url'=>$this->model->url, $attribute->name=>$option->id));
+					if(Yii::app()->request->getQuery($attribute->name) == $option->id)
+						echo CHtml::link($option->value, $url, array('style'=>'color:green'));
+					else
+						echo CHtml::link($option->value.'('.$v.')', $url, $htmlOptions);
+				}
+				else
+					echo CHtml::encode($option->value.'(0)');
 				echo CHtml::closeTag('li');
 			}
 			echo CHtml::closeTag('ul');
 		}
+	}
+
+	public function count($attribute, $option)
+	{
+		$model = new StoreProduct(null);
+		$model->attachBehaviors($model->behaviors());
+
+		$cr = new CDbCriteria;
+		$cr->select = 't.id';
+		$cr->join = 'LEFT OUTER JOIN `StoreProductCategoryRef` `categorization` ON (`categorization`.`product`=`t`.`id`)';
+		$cr->condition = 'categorization.category='.$this->model->id;
+
+		return $model->withEavAttributes(array($attribute->name=>$option->id))->count($cr);
+	}
+
+	/**
+	 * @return array of category manufacturers
+	 */
+	public function getCategoryManufacturers()
+	{
+		$builder  = new CDbCommandBuilder(Yii::app()->db->getSchema());
+		$criteria = new CDbCriteria;
+
+		$criteria->select    = 'manufacturer_id';
+		$criteria->group     = 'manufacturer_id';
+		$criteria->condition = 'manufacturer_id IS NOT NULL';
+		$criteria->distinct  = true;
+		$manufacturers = $builder->createFindCommand(StoreProduct::tableName(), $criteria)->queryColumn();
+
+		return StoreManufacturer::model()->findAllByPk($manufacturers);
 	}
 
 	/**

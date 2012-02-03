@@ -3,6 +3,9 @@
 /**
  * Display category products
  * TODO: Add default sorting by rating, etc...
+ *
+ * @property $activeAttributes
+ * @property $eavAttributes
  */
 class CategoryController extends Controller
 {
@@ -12,8 +15,21 @@ class CategoryController extends Controller
 	 */
 	public $query;
 
-	public $categoryAttributes;
-	public $categoryManufacturers;
+	/**
+	 * @var StoreCategory
+	 */
+	public $model;
+
+	/**
+	 * @var array Eav attributes used in http query
+	 */
+	private $_eavAttributes;
+
+	public function beforeAction()
+	{
+		$this->model = $this->_loadModel(Yii::app()->request->getQuery('url'));
+		return true;
+	}
 
 	/**
 	 * Display products list
@@ -21,39 +37,80 @@ class CategoryController extends Controller
 	 */
 	public function actionView($url)
 	{
-		$model = $this->_loadModel($url);
-		$this->query = StoreProduct::model();
-
-		$criteria = new CDbCriteria;
-		$criteria->select = 't.*';
-		$criteria->join = 'LEFT OUTER JOIN `StoreProductCategoryRef` `categorization` ON (`categorization`.`product`=`t`.`id`)';
-		$criteria->condition = 'categorization.category='.$model->id;
-
-		// List of attributes available in category
-		$this->categoryAttributes = $this->getCategoryAttributes($criteria);
-
-		// List of manufacturers available in category
-		$this->categoryManufacturers = $this->getCategoryManufacturers($criteria);
-
-		// Apply EAV attributes from $_GET
-		$this->applyEAVCriteria($this->categoryAttributes);
+		$this->query = StoreProduct::model()
+			->applyCategories($this->model)
+			->applyAttributes($this->activeAttributes)
+			->active();
 
 		$provider = new CActiveDataProvider($this->query, array(
 			// Set id to false to not display model name in
 			// sort and page params
 			'id'=>false,
-			'criteria'=>$criteria,
 			'pagination'=>array(
 				// TODO: Apply from settings
 				'pageSize'=>20,
 			)
 		));
 
-		$view = $this->setDesign($model, 'view');
+		$view = $this->setDesign($this->model, 'view');
 		$this->render($view, array(
 			'provider'=>$provider,
-			'model'=>$model,
+			'criteria'=>clone $this->query->getDbCriteria(),
 		));
+	}
+
+	/**
+	 * @return array of attributes used in http query and available in category
+	 */
+	public function getActiveAttributes()
+	{
+		$data = array();
+
+		foreach(array_keys($_GET) as $key)
+		{
+			if(array_key_exists($key, $this->eavAttributes))
+				$data[$key] =$_GET[$key];
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @return array of available attributes in category
+	 */
+	public function getEavAttributes()
+	{
+		if(is_array($this->_eavAttributes))
+			return $this->_eavAttributes;
+
+		// Find category types
+		$model = new StoreProduct(null);
+		$criteria = $model
+			->applyCategories($this->model)
+			->active()
+			->getDbCriteria();
+
+		unset($model);
+
+		$builder = new CDbCommandBuilder(Yii::app()->db->getSchema());
+
+		$criteria->select    = 'type_id';
+		$criteria->group     = 'type_id';
+		$criteria->distinct  = true;
+		$typesUsed = $builder->createFindCommand(StoreProduct::tableName(), $criteria)->queryColumn();
+
+		// Find attributes by type
+		$criteria = new CDbCriteria;
+		$criteria->addInCondition('types.type_id', $typesUsed);
+		$query = StoreAttribute::model()
+			->useInFilter()
+			->with(array('types'))
+			->findAll($criteria);
+
+		$this->_eavAttributes = array();
+		foreach($query as $attr)
+			$this->_eavAttributes[$attr->name] = $attr;
+		return $this->_eavAttributes;
 	}
 
 	/**
@@ -72,73 +129,5 @@ class CategoryController extends Controller
 		if (!$model) throw new CHttpException(404, Yii::t('StoreModule.core', 'Категория не найдена.'));
 
 		return $model;
-	}
-
-	/**
-	 * Find attributes based on products criteria.
-	 * Mostly used to display attrs in sidebar to filter product.
-	 * @param CDbCriteria|StoreProduct $criteria to find product types
-	 * @return array
-	 */
-	private function getCategoryAttributes($criteria)
-	{
-		// Find category types
-		$criteria = clone $criteria;
-		$builder = new CDbCommandBuilder(Yii::app()->db->getSchema());
-		$criteria->select = 'type_id';
-		$criteria->group = 'type_id';
-		$criteria->distinct = true;
-		$typesUsed = $builder->createFindCommand(StoreProduct::tableName(), $criteria)->queryColumn();
-
-		if(empty($typesUsed))
-			return array();
-
-		$types = array();
-		foreach($typesUsed as $key)
-			array_push($types, $key);
-
-		// Find attributes by type
-		$criteria = new CDbCriteria;
-		$criteria->addInCondition('types.type_id', $types);
-		return StoreAttribute::model()
-			->useInFilter()
-			->with(array('types'))
-			->findAll($criteria);
-	}
-
-	/**
-	 *
-	 * @param CDbCriteria $criteria
-	 * @return array
-	 */
-	private function getCategoryManufacturers($criteria)
-	{
-		$criteria = clone $criteria;
-		$builder = new CDbCommandBuilder(Yii::app()->db->getSchema());
-
-		$criteria->select = 'manufacturer_id';
-		$criteria->group = 'manufacturer_id';
-		$criteria->distinct = true;
-		$manufacturers = $builder->createFindCommand(StoreProduct::tableName(), $criteria)->queryColumn();
-
-		return StoreManufacturer::model()->findAllByPk($manufacturers);
-	}
-
-	/**
-	 * Use EAV in product search query
-	 * @param array $attributes list of allowed attribute models
-	 */
-	private function applyEAVCriteria($attributes)
-	{
-		if(empty($attributes))
-			return;
-
-		$data = array();
-		foreach($attributes as $attr)
-		{
-			if(isset($_GET[$attr->name]))
-				$data[$attr->name]=$_GET[$attr->name];
-		}
-		$this->query->withEavAttributes($data);
 	}
 }

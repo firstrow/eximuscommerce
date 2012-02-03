@@ -8,26 +8,27 @@
  */
 
 // Set meta tags
-$this->pageTitle = ($model->meta_title) ? $model->meta_title : $model->name;
-$this->pageKeywords = $model->meta_keywords;
-$this->pageDescription = $model->meta_description;
+$this->pageTitle = ($this->model->meta_title) ? $this->model->meta_title : $this->model->name;
+$this->pageKeywords = $this->model->meta_keywords;
+$this->pageDescription = $this->model->meta_description;
 
 // Create breadcrumbs
-$ancestors = $model->excludeRoot()->ancestors()->findAll();
+$ancestors = $this->model->excludeRoot()->ancestors()->findAll();
 
 foreach($ancestors as $c)
 	$this->breadcrumbs[$c->name] = $c->getViewUrl();
 
-$this->breadcrumbs[] = $model->name;
+$this->breadcrumbs[] = $this->model->name;
 
-$this->sidebarContent = $this->widget('application.modules.store.widgets.SFilterRenderer', array(
-	'model'=>$model,
-	'attributes'=>$this->categoryAttributes
-), true);
+//$this->sidebarContent = $this->widget('application.modules.store.widgets.SFilterRenderer', array(
+//	'model'=>$model,
+//	'attributes'=>$this->categoryAttributes,
+//	'criteria'=>$criteria
+//), true);
 
 ?>
 
-<h3><?php echo CHtml::encode($model->name); ?></h3>
+<h3><?php echo CHtml::encode($this->model->name); ?></h3>
 
 <div class="row show-grid">
 	<?php

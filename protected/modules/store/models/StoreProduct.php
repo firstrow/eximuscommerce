@@ -24,6 +24,7 @@
  * @property string $availability
  * @property string $created
  * @property string $updated
+ * @method StoreProduct active() Find Only active products
  */
 class StoreProduct extends BaseModel
 {
@@ -58,28 +59,13 @@ class StoreProduct extends BaseModel
 
 	public function scopes()
 	{
+		$alias = $this->getTableAlias(true);
 		return array(
 			'active'=>array(
-				'condition'=>'is_active=1',
+				'condition'=>$alias.'.is_active=1',
 			),
 		);
 	}
-
-	/**
-	 * Find product by url.
-	 * Scope.
-	 * @param string Product url
-	 * @return StoreProduct
-	 */
-	public function withUrl($url)
-	{
-		$this->getDbCriteria()->mergeWith(array(
-			'condition'=>'url=:url',
-			'params'=>array(':url'=>$url)
-		));
-		return $this;
-	}
-
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -98,6 +84,59 @@ class StoreProduct extends BaseModel
 			// Search
 			array('id, name, url, price, short_description, full_description, created, updated', 'safe', 'on'=>'search'),
 		);
+	}
+
+	/**
+	 * Find product by url.
+	 * Scope.
+	 * @param string Product url
+	 * @return StoreProduct
+	 */
+	public function withUrl($url)
+	{
+		$this->getDbCriteria()->mergeWith(array(
+			'condition'=>'url=:url',
+			'params'=>array(':url'=>$url)
+		));
+		return $this;
+	}
+
+	/**
+	 * Filter products by category
+	 * Scope
+	 * @param StoreCategory|string|array $categories to search products
+	 * @return StoreProduct
+	 */
+	public function applyCategories($categories)
+	{
+		if($categories instanceof StoreCategory)
+			$categories = array($categories->id);
+		else
+		{
+			if(!is_array($categories))
+				$categories = array($categories);
+		}
+
+		$criteria = new CDbCriteria;
+		$criteria->select = 't.*';
+		$criteria->join = 'LEFT OUTER JOIN `StoreProductCategoryRef` `categorization` ON (`categorization`.`product`=`t`.`id`)';
+		$criteria->addInCondition('categorization.category', $categories);
+		$this->getDbCriteria()->mergeWith($criteria);
+
+		return $this;
+	}
+
+	/**
+	 * Filter products by EAV attributes.
+	 * Example: $model->applyAttributes(array('color'=>'green'))->findAll();
+	 * @param array $attributes list of allowed attribute models
+	 * @return StoreProduct
+	 */
+	public function applyAttributes(array $attributes)
+	{
+		if(empty($attributes))
+			return $this;
+		return $this->withEavAttributes($attributes);
 	}
 
 	/**
