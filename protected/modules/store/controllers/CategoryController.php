@@ -33,14 +33,21 @@ class CategoryController extends Controller
 
 	/**
 	 * Display products list
-	 * @param string $url category url
 	 */
-	public function actionView($url)
+	public function actionView()
 	{
-		$this->query = StoreProduct::model()
-			->applyCategories($this->model)
+		$this->query = new StoreProduct(null);
+		$this->query->attachBehaviors($this->query->behaviors());
+		$this->query->applyCategories($this->model)
 			->applyAttributes($this->activeAttributes)
 			->active();
+
+		 // Filter by manufacturer
+		if(Yii::app()->request->getQuery('manufacturer'))
+		{
+			$manufacturers = explode(';', Yii::app()->request->getParam('manufacturer', ''));
+			$this->query->applyManufacturers($manufacturers);
+		}
 
 		$provider = new CActiveDataProvider($this->query, array(
 			// Set id to false to not display model name in
@@ -69,7 +76,7 @@ class CategoryController extends Controller
 		foreach(array_keys($_GET) as $key)
 		{
 			if(array_key_exists($key, $this->eavAttributes))
-				$data[$key] =$_GET[$key];
+				$data[$key] = explode(';', $_GET[$key]);
 		}
 
 		return $data;

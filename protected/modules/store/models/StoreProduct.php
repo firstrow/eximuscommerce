@@ -25,6 +25,7 @@
  * @property string $created
  * @property string $updated
  * @method StoreProduct active() Find Only active products
+ * @method StoreProduct withEavAttributes
  */
 class StoreProduct extends BaseModel
 {
@@ -107,7 +108,7 @@ class StoreProduct extends BaseModel
 	 * @param StoreCategory|string|array $categories to search products
 	 * @return StoreProduct
 	 */
-	public function applyCategories($categories)
+	public function applyCategories($categories, $select = 't.*')
 	{
 		if($categories instanceof StoreCategory)
 			$categories = array($categories->id);
@@ -117,8 +118,12 @@ class StoreProduct extends BaseModel
 				$categories = array($categories);
 		}
 
+		$alias = $this->getTableAlias(true);
+
 		$criteria = new CDbCriteria;
-		$criteria->select = 't.*';
+
+		if($select)
+			$criteria->select = $select;
 		$criteria->join = 'LEFT OUTER JOIN `StoreProductCategoryRef` `categorization` ON (`categorization`.`product`=`t`.`id`)';
 		$criteria->addInCondition('categorization.category', $categories);
 		$this->getDbCriteria()->mergeWith($criteria);
@@ -129,6 +134,7 @@ class StoreProduct extends BaseModel
 	/**
 	 * Filter products by EAV attributes.
 	 * Example: $model->applyAttributes(array('color'=>'green'))->findAll();
+	 * Scope
 	 * @param array $attributes list of allowed attribute models
 	 * @return StoreProduct
 	 */
@@ -137,6 +143,26 @@ class StoreProduct extends BaseModel
 		if(empty($attributes))
 			return $this;
 		return $this->withEavAttributes($attributes);
+	}
+
+	/**
+	 * Filter product by manufacturers
+	 * Scope
+	 * @param string|array $manufacturers
+	 * @return StoreProduct
+	 */
+	public function applyManufacturers($manufacturers)
+	{
+		if(!is_array($manufacturers))
+			$manufacturers = array($manufacturers);
+
+		if(empty($manufacturers))
+			return $this;
+
+		$criteria = new CDbCriteria;
+		$criteria->addInCondition('manufacturer_id', $manufacturers);
+		$this->getDbCriteria()->mergeWith($criteria);
+		return $this;
 	}
 
 	/**

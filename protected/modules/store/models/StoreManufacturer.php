@@ -73,6 +73,7 @@ class StoreManufacturer extends BaseModel
 	public function relations()
 	{
 		return array(
+			'productsCount'=>array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
 		);
 	}
 
@@ -128,7 +129,7 @@ class StoreManufacturer extends BaseModel
 	{
 		// Clear product relations
 		StoreProduct::model()->updateAll(array(
-			'manufacturer_id'=>0,
+			'manufacturer_id'=>0, // TODO: Check result writed to DB. ust be `NULL`
 		), 'manufacturer_id = :id', array(':id'=>$this->id));
 	}
 

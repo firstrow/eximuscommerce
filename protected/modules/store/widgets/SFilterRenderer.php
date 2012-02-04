@@ -6,7 +6,6 @@
  * $this->widget('application.modules.store.widgets.SFilterRenderer', array(
  *      // StoreCategory model. Used to create url
  *      'model'=>$model,
- *      'attributes'=>$usedAttributes
  *  ));
  */
 class SFilterRenderer extends CWidget
@@ -23,56 +22,90 @@ class SFilterRenderer extends CWidget
 	public $model;
 
 	/**
-	 * @var string Tag to surround attribute title.
+	 * @var string Tag to surround attribute set title.
 	 */
 	public $titleTag = 'h5';
 
-	public $criteria;
-
 	/**
-	 * Render filter
+	 * Render filters
 	 */
 	public function run()
 	{
-		foreach($this->attributes as $attribute)
-		{
-			echo CHtml::openTag($this->titleTag);
-			echo $attribute->title;
-			echo CHtml::closeTag($this->titleTag);
-
-			echo CHtml::openTag('ul');
-			foreach($attribute->options as $option)
-			{
-				$htmlOptions = array();
-				$v = $this->count($attribute, $option);
-				echo CHtml::openTag('li');
-				if($v>0)
-				{
-					$url = $this->addUrlParam(array('url'=>$this->model->url, $attribute->name=>$option->id));
-					if(Yii::app()->request->getQuery($attribute->name) == $option->id)
-						echo CHtml::link($option->value, $url, array('style'=>'color:green'));
-					else
-						echo CHtml::link($option->value.'('.$v.')', $url, $htmlOptions);
-				}
-				else
-					echo CHtml::encode($option->value.'(0)');
-				echo CHtml::closeTag('li');
-			}
-			echo CHtml::closeTag('ul');
-		}
+		$this->renderData($this->getCategoryManufacturers());
+		foreach($this->getCategoryAttributes() as $attrData)
+			$this->renderData($attrData);
 	}
 
-	public function count($attribute, $option)
+	public function renderData($data)
+	{
+		// Render title
+		if(isset($data['title']))
+		{
+			echo CHtml::openTag($this->titleTag);
+			echo CHtml::encode($data['title']);
+			echo CHtml::closeTag($this->titleTag);
+		}
+
+		echo CHtml::openTag('ul');
+		foreach($data['filters'] as $filter)
+		{
+			$url = $this->addUrlParam(array($filter['queryKey'] => $filter['queryParam']), $data['selectMany']);
+			$queryData = explode(';', Yii::app()->request->getQuery($filter['queryKey']));
+
+			echo CHtml::openTag('li');
+			// Filter link was selected.
+			if(in_array($filter['queryParam'], $queryData))
+			{
+				// Create link to clear current filter
+				$url = $this->removeUrlParam($filter['queryKey'], $filter['queryParam']);
+				echo CHtml::link($filter['title'], $url, array('style'=>'color:green'));
+			}
+			elseif($filter['count'] > 0)
+				echo CHtml::link($filter['title'], $url).'('.$filter['count'].')';
+			else
+				echo Chtml::encode($filter['title']).'(0)';
+
+			echo CHtml::closeTag('li');
+		}
+		echo CHtml::closeTag('ul');
+	}
+
+	public function getCategoryAttributes()
+	{
+		$data = array();
+		foreach($this->attributes as $attribute)
+		{
+			$data[$attribute->name] = array(
+				'title'=>$attribute->title,
+				'selectMany'=>true,
+				'filters'=>array()
+			);
+			foreach($attribute->options as $option)
+			{
+				$data[$attribute->name]['filters'][] = array(
+					'title'      => $option->value,
+					'count'      => $this->countAttributeProducts($attribute, $option),
+					'queryKey'   => $attribute->name,
+					'queryParam' => $option->id,
+				);
+			}
+		}
+		return $data;
+	}
+
+	public function countAttributeProducts($attribute, $option)
 	{
 		$model = new StoreProduct(null);
 		$model->attachBehaviors($model->behaviors());
+		$model->active()->applyCategories($this->model);
 
-		$cr = new CDbCriteria;
-		$cr->select = 't.id';
-		$cr->join = 'LEFT OUTER JOIN `StoreProductCategoryRef` `categorization` ON (`categorization`.`product`=`t`.`id`)';
-		$cr->condition = 'categorization.category='.$this->model->id;
+		if(Yii::app()->request->getParam('manufacturer'))
+			$model->applyManufacturers(explode(';', Yii::app()->request->getParam('manufacturer')));
 
-		return $model->withEavAttributes(array($attribute->name=>$option->id))->count($cr);
+		$data = array($attribute->name=>$option->id);
+		$current = $this->getOwner()->activeAttributes;
+
+		return $model->withEavAttributes(array_merge($current,$data))->count();
 	}
 
 	/**
@@ -80,25 +113,83 @@ class SFilterRenderer extends CWidget
 	 */
 	public function getCategoryManufacturers()
 	{
-		$builder  = new CDbCommandBuilder(Yii::app()->db->getSchema());
-		$criteria = new CDbCriteria;
+		$manufacturers = StoreManufacturer::model()
+			->findAll(array('with'=>array(
+			'productsCount'=>array(
+				'scopes'=>array(
+					'active',
+					'applyCategories'=>array($this->model, null),
+					'applyAttributes'=>array($this->getOwner()->activeAttributes)
+				),
+			),
+			)));
 
-		$criteria->select    = 'manufacturer_id';
-		$criteria->group     = 'manufacturer_id';
-		$criteria->condition = 'manufacturer_id IS NOT NULL';
-		$criteria->distinct  = true;
-		$manufacturers = $builder->createFindCommand(StoreProduct::tableName(), $criteria)->queryColumn();
+		$data = array(
+			'title'=>'Manufacturers',
+			'selectMany'=>true,
+			'filters'=>array()
+		);
+		foreach($manufacturers as $m)
+		{
+			$data['filters'][] = array(
+				'title'      => $m->name,
+				'count'      => $m->productsCount,
+				'queryKey'   => 'manufacturer',
+				'queryParam' => $m->id,
+			);
+		}
 
-		return StoreManufacturer::model()->findAllByPk($manufacturers);
+		return $data;
 	}
 
 	/**
 	 * Add param to current url. Url is based on $data and $_GET arrays
 	 * @param $data array of the data to add to the url.
+	 * @param $selectMany
 	 * @return string
 	 */
-	public function addUrlParam($data)
+	public function addUrlParam($data, $selectMany=false)
 	{
+		foreach($data as $key=>$val)
+		{
+			if(isset($_GET[$key]) && $key !== 'url' && $selectMany === true)
+			{
+				$tempData = explode(';', $_GET[$key]);
+				$data[$key] = implode(';', array_unique(array_merge((array)$data[$key], $tempData)));
+			}
+		}
+
 		return Yii::app()->createUrl('/store/category/view', CMap::mergeArray($_GET, $data));
+	}
+
+	/**
+	 * Delete param/value from current
+	 * @param string $key to remove from query
+	 * @param null $value If not value - delete whole key
+	 * @return string new url
+	 */
+	public function removeUrlParam($key, $value=null)
+	{
+		$get = $_GET;
+		if(isset($get[$key]))
+		{
+			if($value === null)
+				unset($get[$key]);
+			else
+			{
+				$get[$key] = explode(';', $get[$key]);
+				$pos = array_search($value, $get[$key]);
+				// Delete value
+				if(isset($get[$key][$pos]))
+					unset($get[$key][$pos]);
+				// Save changes
+				if(!empty($get[$key]))
+					$get[$key] = implode(';', $get[$key]);
+				// Delete key if empty
+				else
+					unset($get[$key]);
+			}
+		}
+		return Yii::app()->createUrl('/store/category/view', $get);
 	}
 }

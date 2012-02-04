@@ -2,6 +2,7 @@
 
 /**
  * Category view
+ * @var $this CategoryController
  * @var $model StoreCategory
  * @var $provider CActiveDataProvider
  * @var $categoryAttributes
@@ -20,11 +21,10 @@ foreach($ancestors as $c)
 
 $this->breadcrumbs[] = $this->model->name;
 
-//$this->sidebarContent = $this->widget('application.modules.store.widgets.SFilterRenderer', array(
-//	'model'=>$model,
-//	'attributes'=>$this->categoryAttributes,
-//	'criteria'=>$criteria
-//), true);
+$this->sidebarContent = $this->widget('application.modules.store.widgets.SFilterRenderer', array(
+	'model'=>$this->model,
+	'attributes'=>$this->eavAttributes
+), true);
 
 ?>
 
