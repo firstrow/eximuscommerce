@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Base class to render attributes in sidebar to filter products.
+ * Base class to render filters by:
+ *  Manufacturer
+ *  Price
+ *  Eav attributes
+ *
  * Usage:
  * $this->widget('application.modules.store.widgets.SFilterRenderer', array(
  *      // StoreCategory model. Used to create url
@@ -31,6 +35,7 @@ class SFilterRenderer extends CWidget
 	 */
 	public function run()
 	{
+		$this->renderActiveFilters();
 		$this->renderData($this->getCategoryManufacturers());
 		foreach($this->getCategoryAttributes() as $attrData)
 			$this->renderData($attrData);
@@ -84,6 +89,15 @@ class SFilterRenderer extends CWidget
 		echo CHtml::closeTag('ul');
 	}
 
+	public function renderActiveFilters()
+	{
+		// Render links to cancel applied filters
+		$manufacturers = Yii::app()->request->getQuery('manufacturers');
+		$attributes = $this->getOwner()->activeAttributes;
+
+		var_dump($attributes);
+	}
+
 	/**
 	 * @return array of attributes used in category
 	 */
@@ -112,8 +126,8 @@ class SFilterRenderer extends CWidget
 
 	/**
 	 * Count products by attribute and option
-	 * @param $attribute
-	 * @param $option
+	 * @param StoreAttribute $attribute
+	 * @param string $option option id to search
 	 * @return string
 	 */
 	public function countAttributeProducts($attribute, $option)
@@ -137,6 +151,7 @@ class SFilterRenderer extends CWidget
 	public function getCategoryManufacturers()
 	{
 		$manufacturers = StoreManufacturer::model()
+			->orderByName()
 			->findAll(array('with'=>array(
 			'productsCount'=>array(
 				'scopes'=>array(
@@ -144,11 +159,11 @@ class SFilterRenderer extends CWidget
 					'applyCategories'=>array($this->model, null),
 					'applyAttributes'=>array($this->getOwner()->activeAttributes)
 				),
-			),
+			)
 			)));
 
 		$data = array(
-			'title'=>'Manufacturers',
+			'title'=>Yii::t('StoreModule.core', 'Производитель'),
 			'selectMany'=>true,
 			'filters'=>array()
 		);

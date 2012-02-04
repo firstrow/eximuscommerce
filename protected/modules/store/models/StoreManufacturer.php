@@ -14,6 +14,7 @@
  * @property string $meta_description
  * @property string $layout
  * @property string $view
+ * @method StoreManufacturer orderByName()
  */
 class StoreManufacturer extends BaseModel
 {
@@ -74,6 +75,14 @@ class StoreManufacturer extends BaseModel
 	{
 		return array(
 			'productsCount'=>array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
+		);
+	}
+
+	public function scopes()
+	{
+		$alias = $this->getTableAlias(true);
+		return array(
+			'orderByName'=>array('order'=>$alias.'.name'),
 		);
 	}
 
