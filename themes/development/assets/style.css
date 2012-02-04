@@ -5,6 +5,12 @@ ul.currentFilters a {
     background-repeat: no-repeat;
     background-position: 3px;
 }
+ul.currentFilters li a.clearOptions {
+    background-image: none;
+    font-size: 12px;
+    color: #08C;
+}
+
 ul.filters {
     list-style: none;
     padding: 0;

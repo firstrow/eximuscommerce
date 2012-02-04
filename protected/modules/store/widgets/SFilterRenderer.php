@@ -36,6 +36,11 @@ class SFilterRenderer extends CWidget
 	public $htmlOptions = array();
 
 	/**
+	 * @var array html option to apply to `Clear attributes` link
+	 */
+	public $clearLinkOptions = array('class'=>'clearOptions');
+
+	/**
 	 * @var array of options to apply to 'active filters' menu
 	 */
 	public $activeFiltersHtmlOptions = array();
@@ -154,6 +159,12 @@ class SFilterRenderer extends CWidget
 			echo CHtml::openTag($this->titleTag);
 			echo Yii::t('StoreModule.core', 'Текущие фильтры');
 			echo CHtml::closeTag($this->titleTag);
+
+			array_push($menuItems, array(
+				'label'=>Yii::t('StoreModule.core', 'Очистить фильтры'),
+				'url'=>$this->getOwner()->createUrl('view', array('url'=>$this->model->url)),
+				'linkOptions'=>$this->clearLinkOptions,
+			));
 
 			$this->widget('zii.widgets.CMenu', array(
 				'htmlOptions'=>$this->activeFiltersHtmlOptions,
