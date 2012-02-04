@@ -36,6 +36,20 @@ class SFilterRenderer extends CWidget
 			$this->renderData($attrData);
 	}
 
+	/**
+	 * Render filters based on the next array:
+	 * $data[attributeName] = array(
+	 *	    'title'=>'Filter Title',
+	 *	    'selectMany'=>true, // Can user select many filter options
+	 *	    'filters'=>array(array(
+	 *	        'title'      => 'Title',
+	 *	        'count'      => 'Products count',
+	 *	        'queryKey'   => '$_GET param',
+	 *	        'queryParam' => 'many',
+	 *	    ))
+	 *  );
+	 * @param $data
+	 */
 	public function renderData($data)
 	{
 		// Render title
