@@ -31,12 +31,25 @@ class SFilterRenderer extends CWidget
 	public $titleTag = 'h5';
 
 	/**
+	 * @var array of option to apply to filter html ul list
+	 */
+	public $htmlOptions = array();
+
+	/**
+	 * @var array of options to apply to 'active filters' menu
+	 */
+	public $activeFiltersHtmlOptions = array();
+
+	/**
 	 * Render filters
 	 */
 	public function run()
 	{
+		// Render active filters
 		$this->renderActiveFilters();
+		// Render manufacturers
 		$this->renderData($this->getCategoryManufacturers());
+		// Render eav attributes
 		foreach($this->getCategoryAttributes() as $attrData)
 			$this->renderData($attrData);
 	}
@@ -65,11 +78,12 @@ class SFilterRenderer extends CWidget
 			echo CHtml::closeTag($this->titleTag);
 		}
 
-		echo CHtml::openTag('ul');
+		echo CHtml::openTag('ul', $this->htmlOptions);
 		foreach($data['filters'] as $filter)
 		{
 			$url = $this->addUrlParam(array($filter['queryKey'] => $filter['queryParam']), $data['selectMany']);
 			$queryData = explode(';', Yii::app()->request->getQuery($filter['queryKey']));
+			$filter = CHtml::encodeArray($filter);
 
 			echo CHtml::openTag('li');
 			// Filter link was selected.
@@ -80,22 +94,72 @@ class SFilterRenderer extends CWidget
 				echo CHtml::link($filter['title'], $url, array('style'=>'color:green'));
 			}
 			elseif($filter['count'] > 0)
-				echo CHtml::link($filter['title'], $url).'('.$filter['count'].')';
+				echo CHtml::link($filter['title'], $url).' ('.$filter['count'].')';
 			else
-				echo Chtml::encode($filter['title']).'(0)';
+				echo Chtml::encode($filter['title']).' (0)';
 
 			echo CHtml::closeTag('li');
 		}
 		echo CHtml::closeTag('ul');
 	}
 
+	/**
+	 * Render active/applied filters to make easier to cancel them.
+	 */
 	public function renderActiveFilters()
 	{
-		// Render links to cancel applied filters
-		$manufacturers = Yii::app()->request->getQuery('manufacturers');
-		$attributes = $this->getOwner()->activeAttributes;
+		// Render links to cancel applied filters.
+		// Render link to cancel filter by manufacturer.
+		$menuItems = array();
+		$manufacturers = array_filter(explode(';', Yii::app()->request->getQuery('manufacturer')));
+		$manufacturers = StoreManufacturer::model()->findAllByPk($manufacturers);
 
-		var_dump($attributes);
+		if(!empty($manufacturers))
+		{
+			foreach($manufacturers as $manufacturer)
+			{
+				array_push($menuItems, array(
+					'label'=> $manufacturer->name,
+					'url'  => $this->removeUrlParam('manufacturer', $manufacturer->id)
+				));
+			}
+		}
+
+		// Render eav attributes
+		$activeAttributes = $this->getOwner()->activeAttributes;
+		if(!empty($activeAttributes))
+		{
+			foreach($activeAttributes as $attributeName=>$value)
+			{
+				if(isset($this->getOwner()->eavAttributes[$attributeName]))
+				{
+					$attribute = $this->getOwner()->eavAttributes[$attributeName];
+					foreach($attribute->options as $option)
+					{
+						if(isset($activeAttributes[$attribute->name]) && in_array($option->id, $activeAttributes[$attribute->name]))
+						{
+							array_push($menuItems, array(
+								'label'=> CHtml::encode($option->value),
+								'url'  => $this->removeUrlParam($attribute->name, $option->id)
+							));
+						}
+					}
+				}
+			}
+		}
+
+		// Render
+		if(!empty($menuItems))
+		{
+			echo CHtml::openTag($this->titleTag);
+			echo Yii::t('StoreModule.core', 'Текущие фильтры');
+			echo CHtml::closeTag($this->titleTag);
+
+			$this->widget('zii.widgets.CMenu', array(
+				'htmlOptions'=>$this->activeFiltersHtmlOptions,
+				'items'=>$menuItems
+			));
+		}
 	}
 
 	/**

@@ -111,7 +111,7 @@ class CategoryController extends Controller
 		$criteria->addInCondition('types.type_id', $typesUsed);
 		$query = StoreAttribute::model()
 			->useInFilter()
-			->with(array('types'))
+			->with(array('types', 'options'))
 			->findAll($criteria);
 
 		$this->_eavAttributes = array();

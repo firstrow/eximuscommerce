@@ -23,7 +23,13 @@ $this->breadcrumbs[] = $this->model->name;
 
 $this->sidebarContent = $this->widget('application.modules.store.widgets.SFilterRenderer', array(
 	'model'=>$this->model,
-	'attributes'=>$this->eavAttributes
+	'attributes'=>$this->eavAttributes,
+	'htmlOptions'=>array(
+		'class'=>'filters',
+	),
+	'activeFiltersHtmlOptions'=>array(
+		'class'=>'nav nav-list currentFilters',
+	),
 ), true);
 
 ?>

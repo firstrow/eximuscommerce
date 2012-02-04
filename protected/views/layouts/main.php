@@ -13,6 +13,7 @@
 
 		<!-- Le styles -->
 		<link href="/themes/development/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/themes/development/assets/style.css" rel="stylesheet">
 		<style type="text/css">
 		  body {
 			padding-top: 60px;
