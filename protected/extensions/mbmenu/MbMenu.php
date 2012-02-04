@@ -209,14 +209,14 @@ class MbMenu extends CMenu
     {
           $this->publishAssets();
           $this->registerClientScripts();
-			    $this->registerCssFile($this->cssFile);    
-          $htmlOptions['id']='nav-container';
-          echo CHtml::openTag('div',$htmlOptions)."\n";          
-          $htmlOptions['id']='nav-bar';
-          echo CHtml::openTag('div',$htmlOptions)."\n";
+	      $this->registerCssFile($this->cssFile);
+//          $htmlOptions['id']='nav-container';
+//          echo CHtml::openTag('div',$htmlOptions)."\n";
+//          $htmlOptions['id']='nav-bar';
+//          echo CHtml::openTag('div',$htmlOptions)."\n";
           parent::run();
-          echo CHtml::closeTag('div');
-          echo CHtml::closeTag('div');
+//          echo CHtml::closeTag('div');
+//          echo CHtml::closeTag('div');
     }
 	
 }

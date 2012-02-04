@@ -70,6 +70,9 @@ class SFilterRenderer extends CWidget
 		echo CHtml::closeTag('ul');
 	}
 
+	/**
+	 * @return array of attributes used in category
+	 */
 	public function getCategoryAttributes()
 	{
 		$data = array();
@@ -93,6 +96,12 @@ class SFilterRenderer extends CWidget
 		return $data;
 	}
 
+	/**
+	 * Count products by attribute and option
+	 * @param $attribute
+	 * @param $option
+	 * @return string
+	 */
 	public function countAttributeProducts($attribute, $option)
 	{
 		$model = new StoreProduct(null);

@@ -12,7 +12,7 @@
 		<![endif]-->
 
 		<!-- Le styles -->
-		<link href="/themes/development/assets/bootstrap.min.css" rel="stylesheet">
+		<link href="/themes/development/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<style type="text/css">
 		  body {
 			padding-top: 60px;
@@ -22,57 +22,68 @@
 
   <body>
 
-	<div class="topbar">
-	  <div class="topbar-inner">
-		<div class="container-fluid">
-		  <a class="brand" href="#">CMS</a>
-		  <ul class="nav">
-			<li><a href="/">Главная</a></li>
-		  </ul>
-		  <p class="pull-right">Logged in as <a href="#">username</a></p>
+  <div class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+		  <div class="container-fluid">
+			  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				  <span class="icon-bar"></span>
+				  <span class="icon-bar"></span>
+				  <span class="icon-bar"></span>
+			  </a>
+			  <a class="brand" href="/">Eximius</a>
+			  <div class="nav-collapse">
+<!--				  <ul class="nav">-->
+<!--					  <li class="active"><a href="#">Home</a></li>-->
+<!--					  <li><a href="#about">About</a></li>-->
+<!--					  <li><a href="#contact">Contact</a></li>-->
+<!--				  </ul>-->
 
-			<?php
-				Yii::import('application.modules.store.models.StoreCategory');
-				$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
-				$this->widget('application.extensions.mbmenu.MbMenu',array(
-					'cssFile'=>'/themes/development/assets/mbmenu.css',
-					'htmlOptions'=>array('class'=>'nav'),
-					'items'=>$items['items'])
-				);
-			?>
+					<?php
+						Yii::import('application.modules.store.models.StoreCategory');
+						$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
+						$this->widget('application.extensions.mbmenu.MbMenu',array(
+							'cssFile'=>'/themes/development/assets/mbmenu.css',
+							'htmlOptions'=>array('class'=>'nav'),
+							'items'=>$items['items'])
+						);
+					?>
 
-		</div>
+				  <div class="navbar-text pull-right" style="float: right;">Logged in as <a href="#">username</a></div>
+			  </div><!--/.nav-collapse -->
+		  </div>
 	  </div>
+  </div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span3">
+			<div class="well sidebar-nav">
+				<!--<h5>Sidebar</h5>-->
+				<?php
+					echo $this->sidebarContent;
+				?>
+			</div>
+		</div>
+
+		<div class="span9">
+			<div>
+				<?php
+				$this->widget('zii.widgets.CBreadcrumbs', array(
+					'links'=>$this->breadcrumbs,
+					'separator'=>'<span class="divider">/</span>',
+					'htmlOptions'=>array(
+						'class'=>'breadcrumb',
+					)
+				));
+				?>
+			</div>
+
+			<div class="well">
+				<?php echo $content; ?>
+			</div>
+		</div>
 	</div>
-
-	<div class="container-fluid">
-	  <div class="sidebar">
-		<div class="well">
-			<!--<h5>Sidebar</h5>-->
-			<?php
-				echo $this->sidebarContent;
-			?>
-		</div>
-	  </div>
-
-	  <div class="content">
-		<div>
-		  <?php
-			$this->widget('zii.widgets.CBreadcrumbs', array(
-				'links'=>$this->breadcrumbs,
-				'separator'=>'<span class="divider">/</span>',
-				'htmlOptions'=>array(
-				  'class'=>'breadcrumb',
-				)
-			));
-		  ?>
-		</div>
-
-		<div class="well">
-		  <?php echo $content; ?>
-		</div>
-	  </div>
-	</div>
+</div>
 
   </body>
 </html>
