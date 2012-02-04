@@ -32,12 +32,6 @@
 			  </a>
 			  <a class="brand" href="/">Eximius</a>
 			  <div class="nav-collapse">
-<!--				  <ul class="nav">-->
-<!--					  <li class="active"><a href="#">Home</a></li>-->
-<!--					  <li><a href="#about">About</a></li>-->
-<!--					  <li><a href="#contact">Contact</a></li>-->
-<!--				  </ul>-->
-
 					<?php
 						Yii::import('application.modules.store.models.StoreCategory');
 						$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
@@ -47,8 +41,7 @@
 							'items'=>$items['items'])
 						);
 					?>
-
-				  <div class="navbar-text pull-right" style="float: right;">Logged in as <a href="#">username</a></div>
+				<div class="navbar-text pull-right" style="float: right;">Logged in as <a href="#">username</a></div>
 			  </div><!--/.nav-collapse -->
 		  </div>
 	  </div>

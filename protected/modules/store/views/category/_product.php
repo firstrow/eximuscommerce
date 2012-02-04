@@ -11,4 +11,4 @@
 	<?php echo $data->price; ?>
 </div>
 
-<div style="clear:both;"></div>
+<div style="clear:both;height: 10px;"></div>
