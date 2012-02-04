@@ -5,6 +5,9 @@ ul.currentFilters a {
     background-repeat: no-repeat;
     background-position: 3px;
 }
+ul.currentFilters a:hover {
+    text-decoration: underline;
+}
 ul.currentFilters li a.clearOptions {
     background-image: none;
     font-size: 12px;
