@@ -9,7 +9,8 @@
  * @property string $title
  * @property integer $type
  * @property integer $position
- * @property boolean $use_in_filter
+ * @property boolean $use_in_filter Display attribute options as filter on front
+ * @property boolean $select_many Allow to filter products on front by more than one option value.
  * @method StoreCategory useInFilter()
  */
 class StoreAttribute extends BaseModel
@@ -49,7 +50,7 @@ class StoreAttribute extends BaseModel
 		return array(
 			array('name, title', 'required'),
 			array('name', 'unique'),
-			array('use_in_filter', 'boolean'),
+			array('use_in_filter, select_many', 'boolean'),
 			array('name', 'match',
 				'pattern'=>'/^([a-z0-9_])+$/i',
 				'message'=>Yii::t('StoreModule.core', 'Название может содержать только буквы, цифры и подчеркивания.')
@@ -100,6 +101,7 @@ class StoreAttribute extends BaseModel
 			'type'          => Yii::t('StoreModule.core', 'Тип'),
 			'position'      => Yii::t('StoreModule.core', 'Позиция'),
 			'use_in_filter' => Yii::t('StoreModule.core', 'Использовать в фильтре'),
+			'select_many'   => Yii::t('StoreModule.core', 'Множественный выбор'),
 		);
 	}
 
@@ -113,9 +115,9 @@ class StoreAttribute extends BaseModel
 		return array(
 			self::TYPE_TEXT           => 'Text',
 			self::TYPE_TEXTAREA       => 'Textarea',
-			self::TYPE_DROPDOWN       => 'Dropdown',
+			self::TYPE_DROPDOWN      => 'Dropdown',
 			self::TYPE_SELECT_MANY    => 'Multiple Select',
-			self::TYPE_RADIO_LIST     => 'Radio List',
+			self::TYPE_RADIO_LIST      => 'Radio List',
 			self::TYPE_CHECKBOX_LIST  => 'Checkbox List',
 			self::TYPE_YESNO          => 'Yes/No',
 		);
