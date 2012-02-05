@@ -42,11 +42,8 @@ class SAttributesTableRenderer extends CWidget
 		$this->_attributes = $this->model->getEavAttributes();
 
 		$data = array();
-		foreach($this->_attributes as $name=>$value)
-		{
-			$attributeModel = $this->models[$name];
-			$data[$attributeModel->title] = $attributeModel->renderValue($value);
-		}
+		foreach($this->getModels() as $model)
+			$data[$model->title] = $model->renderValue($this->_attributes[$model->name]);
 
 		if(!empty($data))
 		{

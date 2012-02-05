@@ -38,14 +38,14 @@ $this->sidebarContent = $this->widget('application.modules.store.widgets.SFilter
 
 <div class="row show-grid">
 	<?php
-	$this->widget('zii.widgets.CListView', array(
-		'dataProvider'=>$provider,
-		'ajaxUpdate'=>false,
-		'template'=>'{sorter} {items} {pager} {summary}',
-		'itemView'=>'_product',
-		'sortableAttributes'=>array(
-			'name', 'price'
-		),
-	));
+		$this->widget('zii.widgets.CListView', array(
+			'dataProvider'=>$provider,
+			'ajaxUpdate'=>false,
+			'template'=>'{sorter} {items} {pager} {summary}',
+			'itemView'=>'_product',
+			'sortableAttributes'=>array(
+				'name', 'price'
+			),
+		));
 	?>
 </div>

@@ -543,14 +543,13 @@ class EEavBehavior extends CActiveRecordBehavior {
 				{
 					$parts = array();
 					foreach ($values as $value) {
-						$value = $conn->quoteValue($value);
-						$parts[] = "eavb$i.{$this->valueField} = $value";
+						$parts[] = $conn->quoteValue($value);
 					}
 
 					$criteria->join .= "\nJOIN {$this->tableName} eavb$i"
 					.  "\nON t.{$pk} = eavb$i.{$this->entityField}"
 					.  "\nAND eavb$i.{$this->attributeField} = $attribute"
-					.  "\nAND (".implode(' OR ', $parts).")";
+					.  "\nAND eavb$i.{$this->valueField} IN (".implode(' , ', $parts).")";
 
 					$i++;
 				}

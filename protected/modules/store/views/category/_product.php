@@ -8,6 +8,12 @@
 <div class="span8">
 	<?php
 		echo CHtml::link(CHtml::encode($data->name), array('frontProduct/view', 'url'=>$data->url));
+
+		$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
+			'model'=>$data,
+			'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
+		));
+
 	?>
 	<br>
 	<?php echo $data->price; ?>

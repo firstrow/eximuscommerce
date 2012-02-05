@@ -36,6 +36,10 @@ class StoreAttributeOption extends BaseModel
 	public function relations()
 	{
 		return array(
+			'eavData'=>array(self::HAS_MANY, 'StoreProductAttributeEAV', 'value'),
+			'products'=>array(self::HAS_MANY, 'StoreProduct', array('entity'),'through'=>'eavData'),
+			'productsCount'=>array(self::STAT, 'StoreProductAttributeEAV', 'value'),
+//			'productsCount'=>array(self::STAT, 'StoreProductAttributeEAV', 'value'),
 		);
 	}
 

@@ -179,6 +179,7 @@ class SFilterRenderer extends CWidget
 	public function getCategoryAttributes()
 	{
 		$data = array();
+
 		foreach($this->attributes as $attribute)
 		{
 			$data[$attribute->name] = array(
