@@ -329,11 +329,11 @@ class EEavBehavior extends CActiveRecordBehavior {
 				// Fix if entity has many values
 				if(is_array($current))
 				{
-				   $current[] = $value;
-				   $value = $current;
+					$current[] = $value;
+					$value = $current;
 				}
 				else
-					 $value = array($current, $value);
+					$value = array($current, $value);
 			}
 
 			$this->attributes->add($attribute, $value);
@@ -551,8 +551,8 @@ class EEavBehavior extends CActiveRecordBehavior {
 			elseif (is_int($attribute)) {
 				$values = $conn->quoteValue($values);
 				$criteria->join .= "\nJOIN {$this->tableName} eavb$i"
-								.  "\nON t.{$pk} = eavb$i.{$this->entityField}"
-								.  "\nAND eavb$i.{$this->attributeField} = $values";
+					.  "\nON t.{$pk} = eavb$i.{$this->entityField}"
+					.  "\nAND eavb$i.{$this->attributeField} = $values";
 				$i++;
 			}
 		}

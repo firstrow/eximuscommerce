@@ -222,19 +222,17 @@ class SFilterRenderer extends CWidget
 
 		foreach($current as $key=>$row)
 		{
-			if(!isset($newData[$key])) $newData = array();
+			if(!isset($newData[$key])) $newData[$key] = array();
 			if(is_array($row))
 			{
 				foreach($row as $v)
 					$newData[$key][] = $v;
 			}
 			else
-			{
-				$newData[$key][] = $v;
-			}
+				$newData[$key][] = $row;
 		}
-		$newData[$attribute->name][] = $option->id;
 
+		$newData[$attribute->name][] = $option->id;
 		return $model->withEavAttributes($newData)->count();
 	}
 
