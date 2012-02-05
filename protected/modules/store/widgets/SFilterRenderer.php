@@ -218,7 +218,24 @@ class SFilterRenderer extends CWidget
 		$data = array($attribute->name=>$option->id);
 		$current = $this->getOwner()->activeAttributes;
 
-		return $model->withEavAttributes(array_merge($current,$data))->count();
+		$newData = array();
+
+		foreach($current as $key=>$row)
+		{
+			if(!isset($newData[$key])) $newData = array();
+			if(is_array($row))
+			{
+				foreach($row as $v)
+					$newData[$key][] = $v;
+			}
+			else
+			{
+				$newData[$key][] = $v;
+			}
+		}
+		$newData[$attribute->name][] = $option->id;
+
+		return $model->withEavAttributes($newData)->count();
 	}
 
 	/**

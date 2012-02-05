@@ -535,34 +535,16 @@ class EEavBehavior extends CActiveRecordBehavior {
 			// If search models with attribute name with specified values.
 			if (is_string($attribute)) {
 				// Get attribute compare operator
-				$operator = StoreAttribute::getOperator($attribute);
 				$attribute = $conn->quoteValue($attribute);
 				if (!is_array($values)) $values = array($values);
 
-				if($operator === 'OR')
-				{
-					$parts = array();
-					foreach ($values as $value) {
-						$parts[] = $conn->quoteValue($value);
-					}
-
+				foreach ($values as $value) {
+					$value = $conn->quoteValue($value);
 					$criteria->join .= "\nJOIN {$this->tableName} eavb$i"
-					.  "\nON t.{$pk} = eavb$i.{$this->entityField}"
-					.  "\nAND eavb$i.{$this->attributeField} = $attribute"
-					.  "\nAND eavb$i.{$this->valueField} IN (".implode(' , ', $parts).")";
-
+						.  "\nON t.{$pk} = eavb$i.{$this->entityField}"
+						.  "\nAND eavb$i.{$this->attributeField} = $attribute"
+						.  "\nAND eavb$i.{$this->valueField} = $value";
 					$i++;
-				}
-				else
-				{
-					foreach ($values as $value) {
-						$value = $conn->quoteValue($value);
-						$criteria->join .= "\nJOIN {$this->tableName} eavb$i"
-							.  "\nON t.{$pk} = eavb$i.{$this->entityField}"
-							.  "\nAND eavb$i.{$this->attributeField} = $attribute"
-							.  "\nAND eavb$i.{$this->valueField} = $value";
-						$i++;
-					}
 				}
 			}
 			// If search models with attribute name with anything values.
