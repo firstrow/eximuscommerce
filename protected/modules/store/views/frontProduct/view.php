@@ -24,15 +24,15 @@ $this->breadcrumbs[] = $model->name;
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>
 
-<div class="row show-grid">
+<div class="row">
 	<!-- Left column  -->
-	<div class="span-one-third">
-		<a href="#">
-			<img class="thumbnail" src="http://placehold.it/300x230" alt="">
+	<div class="span4 container">
+		<a href="#" class="thumbnail">
+			<img src="http://placehold.it/300x230" alt="">
 		</a>
 	</div>
 	<!-- Right column -->
-	<div class="span-two-thirds">
+	<div class="span6">
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 

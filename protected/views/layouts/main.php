@@ -52,7 +52,6 @@
 	<div class="row-fluid">
 		<div class="span3">
 			<div class="well sidebar-nav">
-				<!--<h5>Sidebar</h5>-->
 				<?php
 					echo $this->sidebarContent;
 				?>

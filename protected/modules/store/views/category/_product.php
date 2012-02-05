@@ -1,6 +1,8 @@
 <!-- Left column  -->
 <div class="span3">
-	<img class="thumbnail" src="http://placehold.it/210x150" alt="">
+	<a href="" class="thumbnail">
+		<img src="http://placehold.it/210x150" alt="">
+	</a>
 </div>
 <!-- Right column -->
 <div class="span8">
