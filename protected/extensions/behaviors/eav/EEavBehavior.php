@@ -534,10 +534,12 @@ class EEavBehavior extends CActiveRecordBehavior {
 		foreach ($attributes as $attribute => $values) {
 			// If search models with attribute name with specified values.
 			if (is_string($attribute)) {
+				// Get attribute compare operator
+				$operator = StoreAttribute::getOperator($attribute);
 				$attribute = $conn->quoteValue($attribute);
 				if (!is_array($values)) $values = array($values);
 
-				if($attribute == $conn->quoteValue('color'))
+				if($operator === 'OR')
 				{
 					$parts = array();
 					foreach ($values as $value) {

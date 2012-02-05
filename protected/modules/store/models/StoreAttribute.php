@@ -9,6 +9,7 @@
  * @property string $title
  * @property integer $type
  * @property integer $position
+ * @property string $operator
  * @property boolean $use_in_filter Display attribute options as filter on front
  * @property boolean $select_many Allow to filter products on front by more than one option value.
  * @method StoreCategory useInFilter()
@@ -23,6 +24,12 @@ class StoreAttribute extends BaseModel
 	const TYPE_RADIO_LIST=5;
 	const TYPE_CHECKBOX_LIST=6;
 	const TYPE_YESNO=7;
+
+	/**
+	 * Store operators across request
+	 * @var array of attribute operators e.g array('color'=>'AND', 'size'=>'OR')
+	 */
+	private static $_getOperatorCache;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -51,6 +58,7 @@ class StoreAttribute extends BaseModel
 			array('name, title', 'required'),
 			array('name', 'unique'),
 			array('use_in_filter, select_many', 'boolean'),
+			array('operator', 'in', 'range'=>array('OR', 'AND')),
 			array('name', 'match',
 				'pattern'=>'/^([a-z0-9_])+$/i',
 				'message'=>Yii::t('StoreModule.core', 'Название может содержать только буквы, цифры и подчеркивания.')
@@ -102,6 +110,7 @@ class StoreAttribute extends BaseModel
 			'position'      => Yii::t('StoreModule.core', 'Позиция'),
 			'use_in_filter' => Yii::t('StoreModule.core', 'Использовать в фильтре'),
 			'select_many'   => Yii::t('StoreModule.core', 'Множественный выбор'),
+			'operator'      => Yii::t('StoreModule.core', 'Оператор сравнения'),
 		);
 	}
 
@@ -235,6 +244,24 @@ class StoreAttribute extends BaseModel
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	/**
+	 * Get attribute operator by its name.
+	 * @static
+	 * @param $attrName attribute name
+	 * @return string `AND` or `OR`
+	 */
+	public static function getOperator($attrName)
+	{
+		if(!is_array(self::$_getOperatorCache))
+		{
+			// TODO: cache DB query
+			$query = StoreAttribute::model()->findAll();
+			foreach($query as $attr)
+				self::$_getOperatorCache[$attr->name] = $attr->operator;
+		}
+		return self::$_getOperatorCache[$attrName];
 	}
 
 	public function afterDelete()

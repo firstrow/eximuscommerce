@@ -35,6 +35,14 @@ return array(
 					),
 					'hint'=>Yii::t('StoreModule.admin', 'Позволяет искать продукты по более чем одному параметру одновременно')
 				),
+				'operator'=>array(
+					'type'=>'dropdownlist',
+					'items'=>array(
+						'AND'=>'AND',
+						'OR' =>'OR'
+					),
+					'hint'=>Yii::t('StoreModule.admin', 'Оператор который будет использоваться для поиска продуктов')
+				),
 				'position'=>array(
 					'type'=>'text',
 				),

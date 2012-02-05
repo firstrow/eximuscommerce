@@ -76,7 +76,12 @@ class CategoryController extends Controller
 		foreach(array_keys($_GET) as $key)
 		{
 			if(array_key_exists($key, $this->eavAttributes))
-				$data[$key] = explode(';', $_GET[$key]);
+			{
+				if((boolean) $this->eavAttributes[$key]->select_many === true)
+					$data[$key] = explode(';', $_GET[$key]);
+				else
+					$data[$key] = array($_GET[$key]);
+			}
 		}
 
 		return $data;
