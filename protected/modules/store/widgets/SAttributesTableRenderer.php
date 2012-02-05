@@ -42,7 +42,6 @@ class SAttributesTableRenderer extends CWidget
 		$this->_attributes = $this->model->getEavAttributes();
 
 		$data = array();
-
 		foreach($this->_attributes as $name=>$value)
 		{
 			$attributeModel = $this->models[$name];
@@ -52,7 +51,7 @@ class SAttributesTableRenderer extends CWidget
 		if(!empty($data))
 		{
 			echo CHtml::openTag('table', $this->htmlOptions);
-			foreach(array_reverse($data) as $title=>$value)
+			foreach($data as $title=>$value)
 			{
 				echo CHtml::openTag('tr');
 				echo '<td>'.CHtml::encode($title).'</td>';

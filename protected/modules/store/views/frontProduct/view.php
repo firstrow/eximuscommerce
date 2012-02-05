@@ -39,11 +39,14 @@ $this->breadcrumbs[] = $model->name;
 		<h4>Цена: <?php echo $model->price ?></h4>
 		<input type="submit" class="btn success" value="Купить">
 
-		<h5>Характеристики</h5>
+		<?php if($model->getEavAttributes()): ?>
+			<h4>Характеристики</h4>
+		<?php endif; ?>
 		<?php
 			// Display product custom options table.
 			$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
 				'model'=>$model,
+				'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
 			));
 		?>
 	</div>
