@@ -11,6 +11,8 @@
  *      // StoreCategory model. Used to create url
  *      'model'=>$model,
  *  ));
+ *
+ * @method CategoryController getOwner()
  */
 class SFilterRenderer extends CWidget
 {
@@ -204,6 +206,7 @@ class SFilterRenderer extends CWidget
 	 * Count products by attribute and option
 	 * @param StoreAttribute $attribute
 	 * @param string $option option id to search
+	 * @todo Optimize attributes merging
 	 * @return string
 	 */
 	public function countAttributeProducts($attribute, $option)

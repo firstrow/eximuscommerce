@@ -74,7 +74,7 @@ class StoreCategory extends BaseModel
 	/**
 	 * Find category by url.
 	 * Scope.
-	 * @param string Category url
+	 * @param string $url
 	 * @return StoreProduct
 	 */
 	public function withUrl($url)
@@ -170,6 +170,15 @@ class StoreCategory extends BaseModel
 		}
 
 		return parent::beforeSave();
+	}
+
+	public function afterDelete()
+	{
+		// Remove all category-product relations
+		StoreProductCategoryRef::model()->deleteAllByAttributes(array(
+			'category'=>$this,
+			'is_main'=>'0'
+		));
 	}
 
 	/**

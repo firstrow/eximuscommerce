@@ -86,7 +86,7 @@ class CategoryController extends SAdminController {
 
 	/**
 	 * Redirect to category front.
-	 * @param $id Category id
+	 * @param $id
 	 */
 	public function actionRedirect($id)
 	{
@@ -103,9 +103,16 @@ class CategoryController extends SAdminController {
 		if (Yii::app()->request->isPostRequest)
 		{
 			$model = StoreCategory::model()->findByPk($id);
-			// Delete if not root node
-			if ($model && $model->id != 1)
-				$model->deleteNode();
+
+			if($model->descendants()->count() > 0)
+				throw new CHttpException(424, Yii::t('StoreModule.admin','Ошибка удаления категории. Сперва нужно удалить все подкатегории.'));
+
+			if(StoreProductCategoryRef::model()->countByAttributes(array('category'=>$model->id, 'is_main'=>'1')) > 0)
+				throw new CHttpException(424, Yii::t('StoreModule.admin','Ошибка удаления категории. Сперва нужно удалить все подкатегории.'));
+
+            //Delete if not root node
+            if ($model && $model->id != 1)
+                $model->deleteNode();
 
 			if (!Yii::app()->request->isAjaxRequest)
 				$this->redirect('create');

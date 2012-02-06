@@ -30,21 +30,4 @@ class StoreAttributeOption extends BaseModel
 		return 'StoreAttributeOption';
 	}
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		return array(
-			'eavData'=>array(self::HAS_MANY, 'StoreProductAttributeEAV', 'value'),
-			'products'=>array(self::HAS_MANY, 'StoreProduct', array('entity'),'through'=>'eavData'),
-			'productsCount'=>array(self::STAT, 'StoreProductAttributeEAV', 'value'),
-//			'productsCount'=>array(self::STAT, 'StoreProductAttributeEAV', 'value'),
-		);
-	}
-
-	public function afterDelete()
-	{
-		return parent::afterDelete();
-	}
 }

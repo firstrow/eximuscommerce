@@ -238,7 +238,7 @@ class StoreAttribute extends BaseModel
 			'criteria'=>$criteria,
 		));
 	}
-	
+
 	public function afterDelete()
 	{
 		// Delete options
@@ -251,8 +251,7 @@ class StoreAttribute extends BaseModel
 		// Delete attributes assigned to products
 		$conn = $this->getDbConnection();
 		$command = $conn->createCommand("DELETE FROM `StoreProductAttributeEAV` WHERE `attribute`=:attr");
-		$name = $this->name;
-		$command->bindParam(':attr', $name, PDO::PARAM_STR);
+		$command->bindParam(':attr', $this->name, PDO::PARAM_STR);
 		$command->execute();
 	}
 }
