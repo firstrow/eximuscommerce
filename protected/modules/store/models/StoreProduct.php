@@ -40,6 +40,11 @@ class StoreProduct extends BaseModel
 	 */
 	private $_related;
 
+    /**
+     * @var string used in search() method to filter products by manufacturer name.
+     */
+    public $manufacturer_search;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className
@@ -83,7 +88,7 @@ class StoreProduct extends BaseModel
 			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
 			array('short_description, full_description, auto_decrease_quantity', 'type'),
 			// Search
-			array('id, name, url, price, short_description, full_description, created, updated', 'safe', 'on'=>'search'),
+			array('id, name, url, price, short_description, full_description, created, updated, manufacturer_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -199,6 +204,7 @@ class StoreProduct extends BaseModel
 		return array(
 			'id'                     => 'ID',
 			'manufacturer_id'        => Yii::t('StoreModule.core', 'Производитель'),
+			'manufacturer_search'    => Yii::t('StoreModule.core', 'Производитель'),
 			'type_id'                => Yii::t('StoreModule.core', 'Тип'),
 			'name'                   => Yii::t('StoreModule.core', 'Название'),
 			'url'                    => Yii::t('StoreModule.core', 'URL'),
@@ -230,6 +236,7 @@ class StoreProduct extends BaseModel
 
 		$criteria->with = array(
 			'categorization'=>array('together'=>true),
+            'manufacturer',
 		);
 
 		$criteria->compare('t.id',$this->id);
@@ -243,6 +250,7 @@ class StoreProduct extends BaseModel
 		$criteria->compare('t.created',$this->created,true);
 		$criteria->compare('t.updated',$this->updated,true);
 		$criteria->compare('type_id', $this->type_id);
+        $criteria->compare('manufacturer.name', $this->manufacturer_search,true);
 
 		if (isset($params['category']) && $params['category'])
 			$criteria->compare('categorization.category', $params['category']);
@@ -251,11 +259,20 @@ class StoreProduct extends BaseModel
 		if($this->exclude)
 			$criteria->compare('t.id !', array(':id'=>$this->exclude));
 
+        // Create sorting by translation title
+        $sort=new CSort;
+        $sort->attributes=array(
+            '*',
+            'defaultOrder'=>'t.created DESC',
+            'manufacturer_search' => array(
+                'asc'   => 'manufacturer.name',
+                'desc'  => 'manufacturer.name DESC',
+            )
+        );
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'sort'=>array(
-				'defaultOrder'=>'t.created DESC'
-			),
+			'sort'=>$sort,
 			'pagination'=>array(
 				'pageSize'=>20,
 			)
