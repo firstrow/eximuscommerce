@@ -36,7 +36,7 @@ $this->sidebarContent = $this->widget('application.modules.store.widgets.SFilter
 
 <h3><?php echo CHtml::encode($this->model->name); ?></h3>
 
-<div class="row show-grid">
+<div class="row">
 	<?php
 		$this->widget('zii.widgets.CListView', array(
 			'dataProvider'=>$provider,

@@ -1,20 +1,12 @@
 <!-- Left column  -->
-<div class="span3">
+<div class="span2">
 	<a href="" class="thumbnail">
 		<img src="http://placehold.it/210x150" alt="">
 	</a>
 </div>
 <!-- Right column -->
-<div class="span8">
-	<?php
-		echo CHtml::link(CHtml::encode($data->name), array('frontProduct/view', 'url'=>$data->url));
-
-		$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
-			'model'=>$data,
-			'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
-		));
-
-	?>
+<div class="span5">
+	<?php echo CHtml::link(CHtml::encode($data->name), array('frontProduct/view', 'url'=>$data->url)) ?>
 	<br>
 	<?php echo $data->price; ?>
 </div>

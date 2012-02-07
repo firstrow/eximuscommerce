@@ -26,13 +26,14 @@ $this->breadcrumbs[] = $model->name;
 
 <div class="row">
 	<!-- Left column  -->
-	<div class="span4 container">
+	<div class="span3">
 		<a href="#" class="thumbnail">
 			<img src="http://placehold.it/300x230" alt="">
 		</a>
 	</div>
+
 	<!-- Right column -->
-	<div class="span6">
+	<div class="span5">
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 
