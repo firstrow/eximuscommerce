@@ -33,7 +33,7 @@ $this->breadcrumbs[] = $model->name;
 	</div>
 
 	<!-- Right column -->
-	<div class="span5">
+	<div class="span8">
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 

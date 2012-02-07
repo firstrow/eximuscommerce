@@ -1,7 +1,7 @@
 <!-- Left column  -->
 <div class="span2">
 	<a href="" class="thumbnail">
-		<img src="http://placehold.it/210x150" alt="">
+		<img src="http://placehold.it/170x124" alt="">
 	</a>
 </div>
 <!-- Right column -->
