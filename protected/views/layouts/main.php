@@ -26,11 +26,6 @@
   <div class="navbar navbar-fixed-top">
 	  <div class="navbar-inner">
 		  <div class="container">
-			  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-			  </a>
 			  <a class="brand" href="/">Eximius</a>
 			  <div class="nav-collapse">
 					<?php
@@ -50,6 +45,7 @@
 
 <div class="container">
 	<div class="row">
+        <?php if(!empty($this->sidebarContent)): ?>
 		<div class="span3">
 			<div class="well sidebar-nav">
 				<?php
@@ -57,8 +53,14 @@
 				?>
 			</div>
 		</div>
+        <?php endif; ?>
 
-		<div class="span9">
+        <?php
+            if(!empty($this->sidebarContent))
+                echo '<div class="span9">';
+            else
+                echo '<div>';
+        ?>
 			<div>
 				<?php
 				$this->widget('zii.widgets.CBreadcrumbs', array(
