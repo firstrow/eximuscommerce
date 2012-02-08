@@ -186,6 +186,7 @@ class StoreProduct extends BaseModel
 	{
 		return array(
 			'images'=>array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
+			'mainImage'=>array(self::HAS_ONE, 'StoreProductImage', 'product_id', 'condition'=>'is_main=1'),
 			'manufacturer'=>array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id'),
 			'type'=>array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
 			'related'=>array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),

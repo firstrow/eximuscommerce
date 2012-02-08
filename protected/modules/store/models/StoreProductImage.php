@@ -46,24 +46,48 @@ class StoreProductImage extends BaseModel
     }
 
     /**
-     * @return string Url to image file
+     * Get url to product image. Enter $size to resize image.
+     * @param string $size New size of the image. e.g. '150x150'
+     * @param bool $random Add random number to the end of the string
+     * @return string
      */
-    public function getUrl($random = false)
+    public function getUrl($size = false, $random = false)
     {
+        if($size !== false)
+        {
+            $thumbName = $size.'-'.$this->name;
+            // Path to source image
+            $fullPath  = Yii::getPathOfAlias(Yii::app()->params['storeImages']['path']).'/'.$this->name;
+            // Path to thumb
+            $thumbPath = Yii::getPathOfAlias(Yii::app()->params['storeImages']['thumbPath']).'/'.$thumbName;
+
+            if(!file_exists($thumbPath))
+            {
+                // Resize if needed
+                Yii::import('ext.phpthumb.PhpThumbFactory');
+                $sizes  = explode('x', $size);
+                $thumb  = PhpThumbFactory::create($fullPath);
+                $method = Yii::app()->params['storeImages']['sizes']['resizeMethod'];
+                $thumb->$method($sizes[0],$sizes[1])->save($thumbPath);
+            }
+
+            return Yii::app()->params['storeImages']['thumbUrl'].$size.'-'.$this->name;
+        }
+
         if ($random === true)
-            return Yii::app()->params['storeImages']['url'].$this->name.'?'.rand(1,10000);
+            return Yii::app()->params['storeImages']['url'].$this->name.'?'.rand(1, 10000);
         return Yii::app()->params['storeImages']['url'].$this->name;
     }
 
     public function attributeLabels()
     {
         return array(
-            'product_id'=>Yii::t('StoreModule.admin', 'Продукт'),
-            'name'=>Yii::t('StoreModule.admin', 'Имя файла'),
-            'is_main'=>Yii::t('StoreModule.admin', 'Главное'),
-            'author'=>Yii::t('StoreModule.admin', 'Автор'),
-            'uploaded_by'=>Yii::t('StoreModule.admin', 'Автор'),
-            'date_uploaded'=>Yii::t('StoreModule.admin', 'Дата загрузки'),
+            'product_id'    => Yii::t('StoreModule.admin', 'Продукт'),
+            'name'          => Yii::t('StoreModule.admin', 'Имя файла'),
+            'is_main'       => Yii::t('StoreModule.admin', 'Главное'),
+            'author'        => Yii::t('StoreModule.admin', 'Автор'),
+            'uploaded_by'   => Yii::t('StoreModule.admin', 'Автор'),
+            'date_uploaded' => Yii::t('StoreModule.admin', 'Дата загрузки'),
         );
     }
 

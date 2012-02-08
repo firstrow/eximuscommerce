@@ -141,7 +141,7 @@ class ProductsController extends SAdminController
 				if (Yii::app()->request->getPost('mainImageId'))
 				{
 					// Ensure we have no main images
-					StoreProductImage::model()->updateAll(array('is_main'=>0));
+					StoreProductImage::model()->updateAll(array('is_main'=>0), 'product_id=:pid', array(':pid'=>$model->id));
 					// Set new main image
 					StoreProductImage::model()->updateByPk(Yii::app()->request->getPost('mainImageId'),array('is_main'=>1));
 				}

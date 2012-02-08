@@ -6,6 +6,8 @@
 		<meta name="description" content="<?php echo CHtml::encode($this->pageDescription) ?>">
 		<meta name="keywords" content="<?php echo CHtml::encode($this->pageKeywords) ?>">
 
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl ?>/assets/bootstrap/js/bootstrap.min.js"></script>
+
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
 		  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -37,8 +39,11 @@
 							'items'=>$items['items'])
 						);
 					?>
-				<div class="navbar-text pull-right" style="float: right;">Logged in as <a href="#">username</a></div>
-			  </div><!--/.nav-collapse -->
+				<div class="navbar-text pull-right" style="float: right;">
+                    <a href="">Auth</a> /
+                    <a href="">Register</a>
+                </div>
+              </div><!--/.nav-collapse -->
 		  </div>
 	  </div>
   </div>

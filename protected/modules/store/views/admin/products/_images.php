@@ -32,7 +32,7 @@ echo CHtml::closeTag('div');
 // Images
 if ($model->images)
 {
-    foreach ($model->images as $image)
+    foreach($model->images as $image)
     {
         $this->widget('zii.widgets.CDetailView', array(
             'data'=>$image,
@@ -45,8 +45,8 @@ if ($model->images)
                     'label'=>Yii::t('StoreModule.admin', 'Изображение'),
                     'type'=>'raw',
                     'value'=>CHtml::link(
-                        CHtml::image($image->getUrl(true), CHtml::encode($image->name), array('height'=>'150px',)),
-                        $image->getUrl(true),
+                        CHtml::image($image->getUrl(false, true), CHtml::encode($image->name), array('height'=>'150px',)),
+                        $image->getUrl(false, true),
                         array('target'=>'_blank', 'class'=>'pretty', 'title'=>CHtml::encode($model->name))
                     ),
                 ),
@@ -76,7 +76,8 @@ if ($model->images)
                         array(
                             'id'=>'DeleteImageLink'.$image->id,
                             'confirm'=>Yii::t('StoreModule.admin', 'Вы действительно хотите удалить это изображение?'),
-                        )),
+                        )
+                    ),
                 ),
             ),
         ));
