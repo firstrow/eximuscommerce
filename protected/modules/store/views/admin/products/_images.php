@@ -45,8 +45,8 @@ if ($model->images)
                     'label'=>Yii::t('StoreModule.admin', 'Изображение'),
                     'type'=>'raw',
                     'value'=>CHtml::link(
-                        CHtml::image($image->getUrl(false, true), CHtml::encode($image->name), array('height'=>'150px',)),
-                        $image->getUrl(false, true),
+                        CHtml::image($image->getUrl(false, false,true), CHtml::encode($image->name), array('height'=>'150px',)),
+                        $image->getUrl(false, false, true),
                         array('target'=>'_blank', 'class'=>'pretty', 'title'=>CHtml::encode($model->name))
                     ),
                 ),

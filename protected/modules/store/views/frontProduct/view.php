@@ -20,20 +20,43 @@ if ($model->mainCategory->id != 1)
 
 $this->breadcrumbs[] = $model->name;
 
+// Fancybox ext
+$this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a.thumbnail',
+        'config'=>array(),
+    )
+);
+
 ?>
 
 <h3><?php echo CHtml::encode($model->name); ?></h3>
 
 <div class="row">
 	<!-- Left column  -->
-	<div class="span3">
-		<a href="#" class="thumbnail">
-			<img src="http://placehold.it/300x230" alt="">
-		</a>
+	<div class="span4">
+        <ul class="thumbnails">
+            <li class="span4">
+                <?php
+                    if($model->mainImage)
+                        $imgSource = $model->mainImage->getUrl('360x268', 'resize');
+                    else
+                        $imgSource = 'http://placehold.it/300x230';
+                    echo CHtml::link(CHtml::image($imgSource), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
+                ?>
+            </li>
+            <?php
+                foreach($model->imagesNoMain as $image)
+                {
+                    echo CHtml::openTag('li', array('class'=>'span2'));
+                    echo CHtml::link(CHtml::image($image->getUrl('160x120')), $image->getUrl(), array('class'=>'thumbnail'));
+                    echo CHtml::closeTag('li');
+                }
+            ?>
+        </ul>
 	</div>
 
 	<!-- Right column -->
-	<div class="span8">
+	<div class="span6">
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 

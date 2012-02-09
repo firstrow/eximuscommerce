@@ -47,11 +47,12 @@ class StoreProductImage extends BaseModel
 
     /**
      * Get url to product image. Enter $size to resize image.
-     * @param string $size New size of the image. e.g. '150x150'
-     * @param bool $random Add random number to the end of the string
+     * @param mixed $size New size of the image. e.g. '150x150'
+     * @param mixed $resizeMethod Resize method name to override config
+     * @param mixed $random Add random number to the end of the string
      * @return string
      */
-    public function getUrl($size = false, $random = false)
+    public function getUrl($size = false, $resizeMethod = false, $random = false)
     {
         if($size !== false)
         {
@@ -67,8 +68,10 @@ class StoreProductImage extends BaseModel
                 Yii::import('ext.phpthumb.PhpThumbFactory');
                 $sizes  = explode('x', $size);
                 $thumb  = PhpThumbFactory::create($fullPath);
-                $method = Yii::app()->params['storeImages']['sizes']['resizeMethod'];
-                $thumb->$method($sizes[0],$sizes[1])->save($thumbPath);
+
+                if($resizeMethod === false)
+                    $resizeMethod = Yii::app()->params['storeImages']['sizes']['resizeThumbMethod'];
+                $thumb->$resizeMethod($sizes[0],$sizes[1])->save($thumbPath);
             }
 
             return Yii::app()->params['storeImages']['thumbUrl'].$size.'-'.$this->name;

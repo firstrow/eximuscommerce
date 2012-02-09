@@ -133,14 +133,15 @@ return array(
 		'adminPageSize'=>20,
 		'storeImages'=>array(
 			'path'=>'webroot.uploads.product',
-			'thumbPath'=>'webroot.assets',
+			'thumbPath'=>'webroot.assets.productThumbs',
 			'maxFileSize'=>10*1024*1024,
 			'extensions'=>array('jpg', 'jpeg','png', 'gif'),
 			'types'=>array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
 			'url'=>'/uploads/product/', // With ending slash
-			'thumbUrl'=>'/assets/', // With ending slash
+			'thumbUrl'=>'/assets/productThumbs/', // With ending slash
 			'sizes'=>array(
-				'resizeMethod'=>'resize', // or resizeAdaptive
+				'resizeMethod'=>'resize', // resize/adaptiveResize
+				'resizeThumbMethod'=>'adaptiveResize', // resize/adaptiveResize
 				'maximum'=>array(800, 600), // All uploaded images
 			)
 		)
