@@ -86,7 +86,6 @@ if ($model->images)
 
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
-        'target'=>'a.pretty',
-        'config'=>array(),
-    )
-);
+    'target'=>'a.pretty',
+    'config'=>array(),
+));

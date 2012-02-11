@@ -64,18 +64,18 @@
 					<?php
 				}
 			}else{
-				?>
-					<tr>
-						<td><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></td>
-						<td>
-							<input name="options[<?php rand(1,9999) ?>][]" type="text">
-						</td>
-						<td>
-							<a href="#" class="deleteRow">Delete</a>
-						</td>
-					</tr>
-				<?php
-			}
-		?>
+        ?>
+            <tr>
+                <td><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></td>
+                <td>
+                    <input name="options[<?php rand(1,9999) ?>][]" type="text">
+                </td>
+                <td>
+                    <a href="#" class="deleteRow"><?php echo Yii::t('StoreModule.admin', 'Удалить') ?></a>
+                </td>
+            </tr>
+        <?php
+            }
+        ?>
 	</tbody>
 </table>

@@ -28,7 +28,7 @@ Yii::app()->clientScript->registerScript("rti18n",
     )),
 CClientScript::POS_HEAD);
 
-Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/admin/relatedProductsTab.js');
+Yii::app()->getClientScript()->registerScriptFile($this->module->assetsUrl.'/admin/relatedProductsTab.js');
 
 if(!isset($model))
 {
@@ -38,7 +38,6 @@ if(!isset($model))
 
 $this->widget('ext.sgridview.SGridView', array(
     'dataProvider'=>$model->search(),
-    //'ajaxUrl'=>Yii::app()->createUrl('store/admin/products/applyProductsFilter/exclude/'.$exclude),
     'ajaxUrl'=>Yii::app()->createUrl('/store/admin/products/applyProductsFilter', array('exclude'=>$exclude)),
     'id'=>'RelatedProductsGrid',
     'template'=>'{items}{summary}{pager}',
