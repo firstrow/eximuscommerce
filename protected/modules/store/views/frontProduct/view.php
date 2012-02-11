@@ -38,10 +38,9 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
             <li class="span4">
                 <?php
                     if($model->mainImage)
-                        $imgSource = $model->mainImage->getUrl('360x268', 'resize');
+                        echo CHtml::link(CHtml::image($model->mainImage->getUrl('360x268', 'resize')), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
                     else
-                        $imgSource = 'http://placehold.it/300x230';
-                    echo CHtml::link(CHtml::image($imgSource), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
+                        echo CHtml::link(CHtml::image('http://placehold.it/360x268'), '#', array('class'=>'thumbnail'));
                 ?>
             </li>
             <?php
@@ -56,33 +55,37 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 	</div>
 
 	<!-- Right column -->
-	<div class="span6">
+	<div class="span7">
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 
 		<h4>Цена: <?php echo $model->price ?></h4>
         <a href="#" class="btn btn-large btn-primary">Купить</a>
 
-		<?php if($model->getEavAttributes()): ?>
-			<h4>Характеристики</h4>
-		<?php endif; ?>
-		<?php
-			// Display product custom options table.
-			$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
-				'model'=>$model,
-				'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
-			));
-		?>
+        <div class="row">&nbsp;</div>
 
         <ul class="tabs nav nav-tabs" id="tab">
-            <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+            <li class="active"><a href="#eav" data-toggle="tab">Характеристики</a></li>
             <li><a href="#profile" data-toggle="tab">Profile</a></li>
             <li><a href="#messages" data-toggle="tab">Messages</a></li>
             <li><a href="#settings" data-toggle="tab">Settings</a></li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="home">1</div>
+            <div class="tab-pane active" id="eav">
+                <?php
+                    if($model->getEavAttributes())
+                    {
+                        // Display product custom options table.
+                        $this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
+                            'model'=>$model,
+                            'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
+                        ));
+                    }else
+                        echo 'Нет характеристик';
+                ?>
+
+            </div>
             <div class="tab-pane" id="profile">2</div>
             <div class="tab-pane" id="messages">..3.</div>
             <div class="tab-pane" id="settings">4</div>
