@@ -19,6 +19,14 @@ return array(
 					'type'=>'dropdownlist',
 					'items'=>StoreAttribute::getTypesList()
 				),
+                'display_on_front'=>array(
+                    'type'=>'dropdownlist',
+                    'items'=>array(
+                        1=>Yii::t('StoreModule.admin', 'Да'),
+                        0=>Yii::t('StoreModule.admin', 'Нет')
+                    ),
+                    //'hint'=>Yii::t('StoreModule.admin', 'Позволяет искать продукты по более чем одному параметру одновременно')
+                ),
 				'use_in_filter'=>array(
 					'type'=>'dropdownlist',
 					'items'=>array(
@@ -42,4 +50,3 @@ return array(
 		),
 	),
 );
-

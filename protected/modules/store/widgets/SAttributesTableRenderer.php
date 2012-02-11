@@ -64,14 +64,18 @@ class SAttributesTableRenderer extends CWidget
 	 */
 	public function getModels()
 	{
-		if (is_array($this->_models))
+		if(is_array($this->_models))
 			return $this->_models;
 
 		$this->_models = array();
 		$cr = new CDbCriteria;
 		$cr->addInCondition('StoreAttribute.name', array_keys($this->_attributes));
+        $query = StoreAttribute::model()
+            ->displayOnFront()
+            ->with(array('options'))
+            ->findAll($cr);
 
-		foreach(StoreAttribute::model()->with(array('options'))->findAll($cr) as $m)
+		foreach($query as $m)
 			$this->_models[$m->name] = $m;
 
 		return $this->_models;
