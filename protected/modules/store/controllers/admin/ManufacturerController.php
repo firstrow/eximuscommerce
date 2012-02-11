@@ -15,7 +15,7 @@ class ManufacturerController extends SAdminController {
 		if (!empty($_GET['StoreManufacturer']))
 			$model->attributes = $_GET['StoreManufacturer'];
 
-		$dataProvider = $model->search();
+		$dataProvider = $model->orderByName()->search();
 		$dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
 
 		$this->render('index', array(

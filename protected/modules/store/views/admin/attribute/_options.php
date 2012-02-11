@@ -1,12 +1,11 @@
 <?php
 
-	/**
-	 * Attribute options tab.
-	 */
+/**
+ * Attribute options tab.
+ */
 
-	Yii::app()
-		->getClientScript()
-		->registerScriptFile($this->module->assetsUrl.'/admin/attribute.options.js', CClientScript::POS_END);
+Yii::app()->getClientScript()
+    ->registerScriptFile($this->module->assetsUrl.'/admin/attribute.options.js', CClientScript::POS_END);
 ?>
 
 <style type="text/css">
