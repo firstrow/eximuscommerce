@@ -16,6 +16,9 @@ $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
     .variantsTable tr td {
         padding: 3px;
     }
+    .variantsTable tr td input[type=text]{
+        width: 90%;
+    }
 </style>
 
 <script type="text/javascript">
@@ -75,7 +78,7 @@ $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
     <hr>
     <div id="variantsData">
         <?php
-            foreach($model->loadVariants() as $row)
+            foreach($model->processVariants() as $row)
             {
                 $this->renderPartial('variants/_table', array(
                     'attribute'=>$row['attribute'],

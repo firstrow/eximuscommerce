@@ -195,8 +195,8 @@ class StoreProduct extends BaseModel
 			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
 			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
 			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1'),
-
-            'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id')),
+            // Product variation
+            'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id'), 'with'=>array('attribute', 'option'), 'order'=>'option.position'),
 		);
 	}
 
@@ -454,17 +454,14 @@ class StoreProduct extends BaseModel
 		}
 	}
 
-    public function loadVariants()
+    /**
+     * Prepare variations
+     * @return array product variations
+     */
+    public function processVariants()
     {
-        $cr = new CDbCriteria;
-        $cr->order = 'option.position ASC';
-
-        $variants = StoreProductVariant::model()
-            ->with(array('attribute', 'option'))
-            ->findAllByAttributes(array('product_id'=>$this->id), $cr);
-
         $result = array();
-        foreach($variants as $v)
+        foreach($this->variants as $v)
         {
             $result[$v->attribute->id]['attribute'] = $v->attribute;
             $result[$v->attribute->id]['options'][] = $v;
