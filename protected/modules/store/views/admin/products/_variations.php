@@ -10,9 +10,6 @@ $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
 ?>
 
 <style type="text/css">
-    .variants h4 {
-        padding-left: 5px;
-    }
     .variantsTable thead tr td {
         padding: 5px;
     }
@@ -27,6 +24,20 @@ $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
         var tableId = $(el).attr('rel');
         var baseRow = $(tableId + ' tbody tr')[0];
         $(baseRow).clone().removeClass('baseRow').show().appendTo($(tableId + ' tbody'));
+        return false;
+    }
+
+    function deleteVariantRow(el)
+    {
+        var table = el.parent().parent().parent().parent();
+        el.parent().parent().remove();
+
+        // Check if table has any rows
+        if($(table).find('tbody tr').length == 0)
+        {
+            $(table).remove();
+        }
+
         return false;
     }
 

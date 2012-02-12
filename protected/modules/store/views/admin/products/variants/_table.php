@@ -6,18 +6,21 @@
  */
 ?>
 
-<h4>
-<?php
-    echo CHtml::encode($attribute->title);
-    echo CHtml::link(' +', '#', array(
-        'rel'=>'#variantAttribute'.$attribute->id,
-        'onclick'=>'js: return cloneVariantRow($(this));'
-    ));
-?>
-</h4>
-
 <table class="variantsTable" id="variantAttribute<?php echo $attribute->id ?>">
     <thead>
+    <tr>
+        <td colspan="6">
+            <h4>
+                <?php
+                echo CHtml::encode($attribute->title);
+                echo CHtml::link(' +', '#', array(
+                    'rel'=>'#variantAttribute'.$attribute->id,
+                    'onclick'=>'js: return cloneVariantRow($(this));'
+                ));
+                ?>
+            </h4>
+        </td>
+    </tr>
     <tr>
         <td>Значение</td>
         <td>Цена</td>
@@ -46,7 +49,7 @@
                 <input type="text" name="variants[<?php echo $attribute->id ?>][sku][]">
             </td>
             <td>
-                <a href="#" onclick="$(this).parent().parent().remove(); return false;">Удалить</a>
+                <a href="#" onclick="return deleteVariantRow($(this));">Удалить</a>
             </td>
         </tr>
         <?php
@@ -72,7 +75,7 @@
                 <input type="text" name="variants[<?php echo $attribute->id ?>][sku][]" value="<?php echo $o->sku ?>">
             </td>
             <td>
-                <a href="#" onclick="$(this).parent().parent().remove(); return false;">Удалить</a>
+                <a href="#" onclick="return deleteVariantRow($(this));">Удалить</a>
             </td>
         </tr>
         <?php
