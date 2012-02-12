@@ -64,38 +64,17 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 
         <div class="row">&nbsp;</div>
 
-        <ul class="tabs nav nav-tabs" id="tab">
-            <li class="active"><a href="#eav" data-toggle="tab">Характеристики</a></li>
-            <li><a href="#profile" data-toggle="tab">Profile</a></li>
-            <li><a href="#messages" data-toggle="tab">Messages</a></li>
-            <li><a href="#settings" data-toggle="tab">Settings</a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div class="tab-pane active" id="eav">
-                <?php
-                    if($model->getEavAttributes())
-                    {
-                        // Display product custom options table.
-                        $this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
-                            'model'=>$model,
-                            'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
-                        ));
-                    }else
-                        echo 'Нет характеристик';
-                ?>
-
-            </div>
-            <div class="tab-pane" id="profile">2</div>
-            <div class="tab-pane" id="messages">..3.</div>
-            <div class="tab-pane" id="settings">4</div>
-        </div>
-
-        <script>
-            $(function () {
-                $('#tab').tab();
-            })
-        </script>
+        <?php
+            if($model->getEavAttributes())
+            {
+                // Display product custom options table.
+                $this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
+                    'model'=>$model,
+                    'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
+                ));
+            }else
+                echo 'Нет характеристик';
+        ?>
 	</div>
 
 </div>
