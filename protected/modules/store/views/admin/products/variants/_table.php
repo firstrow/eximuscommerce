@@ -40,10 +40,7 @@
                 <input type="text" name="variants[<?php echo $attribute->id ?>][price][]">
             </td>
             <td>
-                <select name="variants[<?php echo $attribute->id ?>][price_type][]">
-                    <option value="fixed">Фиксированная</option>
-                    <option value="percent">Процент</option>
-                </select>
+                <?php echo CHtml::dropDownList('variants['.$attribute->id.'][price_type][]', null, array(0=>'Фиксированная', 1=>'Процент')); ?>
             </td>
             <td>
                 <input type="text" name="variants[<?php echo $attribute->id ?>][sku][]">
@@ -69,10 +66,7 @@
                 <input type="text" name="variants[<?php echo $attribute->id ?>][price][]" value="<?php echo $o->price ?>">
             </td>
             <td>
-                <select name="variants[<?php echo $attribute->id ?>][price_type][]">
-                    <option value="fixed">Фиксированная</option>
-                    <option value="percent">Процент</option>
-                </select>
+                <?php echo CHtml::dropDownList('variants['.$attribute->id.'][price_type][]', $o->price_type, array(0=>'Фиксированная', 1=>'Процент')); ?>
             </td>
             <td>
                 <input type="text" name="variants[<?php echo $attribute->id ?>][sku][]" value="<?php echo $o->sku ?>">
