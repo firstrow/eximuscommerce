@@ -11,6 +11,7 @@
  * @property boolean $display_on_front
  * @property integer $position
  * @property boolean $use_in_filter Display attribute options as filter on front
+ * @property boolean $use_in_variants Use attribute and its options to configure products
  * @property boolean $select_many Allow to filter products on front by more than one option value.
  * @method StoreCategory useInFilter()
  */
@@ -51,7 +52,7 @@ class StoreAttribute extends BaseModel
 		return array(
 			array('name, title', 'required'),
 			array('name', 'unique'),
-			array('use_in_filter, select_many, display_on_front', 'boolean'),
+			array('use_in_filter, select_many, display_on_front, use_in_variants', 'boolean'),
 			array('name', 'match',
 				'pattern'=>'/^([a-z0-9_])+$/i',
 				'message'=>Yii::t('StoreModule.core', 'Название может содержать только буквы, цифры и подчеркивания.')
@@ -74,8 +75,9 @@ class StoreAttribute extends BaseModel
 	{
 		$t=$this->getTableAlias();
 		return array(
-			'useInFilter'=>array('condition'=>$t.'.use_in_filter=1'),
-			'displayOnFront'=>array('condition'=>$t.'.display_on_front=1'),
+			'useInFilter'    => array('condition'=>$t.'.use_in_filter=1'),
+			'useInVariants'  => array('condition'=>$t.'.use_in_variants=1'),
+			'displayOnFront' => array('condition'=>$t.'.display_on_front=1'),
 		);
 	}
 
@@ -104,6 +106,7 @@ class StoreAttribute extends BaseModel
 			'display_on_front' => Yii::t('StoreModule.core', 'Отображать на странице продукта'),
 			'position'         => Yii::t('StoreModule.core', 'Позиция'),
 			'use_in_filter'    => Yii::t('StoreModule.core', 'Использовать в фильтре'),
+			'use_in_variants'  => Yii::t('StoreModule.core', 'Использовать в вариантах'),
 			'select_many'      => Yii::t('StoreModule.core', 'Множественный выбор'),
 		);
 	}

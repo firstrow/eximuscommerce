@@ -40,7 +40,6 @@ $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
         {
             $(table).remove();
         }
-
         return false;
     }
 
@@ -68,7 +67,7 @@ $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
         <?php
             if($model->type)
 	        {
-                $attributes = $model->type->storeAttributes;
+                $attributes = $model->type->storeConfigurableAttributes;
                 echo CHtml::dropDownList('variantAttribute', null, CHtml::listData($attributes, 'id', 'title'));
             }
         ?>

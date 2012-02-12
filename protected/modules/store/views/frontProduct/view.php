@@ -58,6 +58,27 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 
+        <div>
+            <table class="table table-striped table-bordered table-condensed">
+                <?php
+                foreach($model->processVariants() as $variant)
+                {
+                    echo '<tr>';
+                    echo '<td>';
+                    echo $variant['attribute']->title;
+                    echo '</td>';
+                    echo '<td>';
+                    $dropDownData = array();
+                    foreach($variant['options'] as $v)
+                        $dropDownData[$v->id] = $v->option->value;
+                    echo CHtml::dropDownList(1, null, $dropDownData);
+                    echo '</td>';
+                    echo '</tr>';
+                }
+                ?>
+            </table>
+        </div>
+
 		<h4>Цена: <?php echo $model->price ?></h4>
         <a href="#" class="btn btn-large btn-primary">Купить</a>
 
