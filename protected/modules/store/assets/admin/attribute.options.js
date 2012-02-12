@@ -50,8 +50,13 @@ $(function() {
         if($(el).val() == 3 || $(el).val() == 4 || $(el).val() == 5 || $(el).val() == 6)
         {
             $(optionsTab).show();
+
+            $(".field_use_in_filter").show();
+            $(".field_select_many").show();
         }else{
             $(optionsTab).hide();
+            $(".field_use_in_filter").hide();
+            $(".field_select_many").hide();
         }
     }
 
