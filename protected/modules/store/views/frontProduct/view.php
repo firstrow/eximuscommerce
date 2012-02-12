@@ -14,7 +14,7 @@ $ancestors = $model->mainCategory->excludeRoot()->ancestors()->findAll();
 foreach($ancestors as $c)
 	$this->breadcrumbs[$c->name] = $c->getViewUrl();
 
-// Do not add root category
+// Do not add root category to breadcrumbs
 if ($model->mainCategory->id != 1)
 	$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
 
@@ -22,10 +22,9 @@ $this->breadcrumbs[] = $model->name;
 
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
-        'target'=>'a.thumbnail',
-        'config'=>array(),
-    )
-);
+    'target'=>'a.thumbnail',
+    'config'=>array(),
+));
 
 ?>
 

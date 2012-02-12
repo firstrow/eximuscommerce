@@ -185,16 +185,18 @@ class StoreProduct extends BaseModel
 	public function relations()
 	{
 		return array(
-			'images'=>array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
-			'mainImage'=>array(self::HAS_ONE, 'StoreProductImage', 'product_id', 'condition'=>'is_main=1'),
-			'imagesNoMain'=>array(self::HAS_MANY, 'StoreProductImage', 'product_id', 'condition'=>'is_main=0'),
-			'manufacturer'=>array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id'),
-			'type'=>array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
-			'related'=>array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
-			'relatedProducts'=>array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
-			'categorization'=>array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
-			'categories'=>array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
-			'mainCategory'=>array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1')
+			'images'          => array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
+			'mainImage'       => array(self::HAS_ONE, 'StoreProductImage', 'product_id', 'condition'=>'is_main=1'),
+			'imagesNoMain'    => array(self::HAS_MANY, 'StoreProductImage', 'product_id', 'condition'=>'is_main=0'),
+			'manufacturer'    => array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id'),
+			'type'            => array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
+			'related'         => array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
+			'relatedProducts' => array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
+			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
+			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
+			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1'),
+
+            'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id')),
 		);
 	}
 
@@ -451,5 +453,23 @@ class StoreProduct extends BaseModel
 			));
 		}
 	}
+
+    public function loadVariants()
+    {
+        $cr = new CDbCriteria;
+        $cr->order = 'option.position ASC';
+
+        $variants = StoreProductVariant::model()
+            ->with(array('attribute', 'option'))
+            ->findAllByAttributes(array('product_id'=>$this->id), $cr);
+
+        $result = array();
+        foreach($variants as $v)
+        {
+            $result[$v->attribute->id]['attribute'] = $v->attribute;
+            $result[$v->attribute->id]['options'][] = $v;
+        };
+        return $result;
+    }
 
 }
