@@ -1,3 +1,5 @@
+// Products controller. Variations tab.
+
 $(document).ready(function(){
     $("#addAttribute").click(function(){
         if($('#variantAttribute'+$('#variantAttribute').val()).length == 0)
@@ -15,6 +17,9 @@ $(document).ready(function(){
     });
 });
 
+/**
+ * @param el clicked link
+ */
 function cloneVariantRow(el)
 {
     var tableId = $(el).attr('rel');
@@ -23,12 +28,15 @@ function cloneVariantRow(el)
     return false;
 }
 
+/**
+ * @param el clicked link
+ */
 function deleteVariantRow(el)
 {
     var table = el.parent().parent().parent().parent();
     el.parent().parent().remove();
 
-    // Check if table has any rows
+    // Check if table has any rows and remove table.
     if($(table).find('tbody tr').length == 0)
     {
         $(table).remove();
