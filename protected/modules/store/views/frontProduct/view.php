@@ -22,8 +22,8 @@ $this->breadcrumbs[] = $model->name;
 
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
-    'target'=>'a.thumbnail',
-    'config'=>array(),
+	'target'=>'a.thumbnail',
+	'config'=>array(),
 ));
 
 ?>
@@ -33,24 +33,24 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 <div class="row">
 	<!-- Left column  -->
 	<div class="span4">
-        <ul class="thumbnails">
-            <li class="span4">
-                <?php
-                    if($model->mainImage)
-                        echo CHtml::link(CHtml::image($model->mainImage->getUrl('360x268', 'resize')), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
-                    else
-                        echo CHtml::link(CHtml::image('http://placehold.it/360x268'), '#', array('class'=>'thumbnail'));
-                ?>
-            </li>
-            <?php
-                foreach($model->imagesNoMain as $image)
-                {
-                    echo CHtml::openTag('li', array('class'=>'span2'));
-                    echo CHtml::link(CHtml::image($image->getUrl('160x120')), $image->getUrl(), array('class'=>'thumbnail'));
-                    echo CHtml::closeTag('li');
-                }
-            ?>
-        </ul>
+		<ul class="thumbnails">
+			<li class="span4">
+				<?php
+					if($model->mainImage)
+						echo CHtml::link(CHtml::image($model->mainImage->getUrl('360x268', 'resize')), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
+					else
+						echo CHtml::link(CHtml::image('http://placehold.it/360x268'), '#', array('class'=>'thumbnail'));
+				?>
+			</li>
+			<?php
+				foreach($model->imagesNoMain as $image)
+				{
+					echo CHtml::openTag('li', array('class'=>'span2'));
+					echo CHtml::link(CHtml::image($image->getUrl('160x120')), $image->getUrl(), array('class'=>'thumbnail'));
+					echo CHtml::closeTag('li');
+				}
+			?>
+		</ul>
 	</div>
 
 	<!-- Right column -->
@@ -58,43 +58,43 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 
-        <div>
-            <table class="table table-striped table-bordered table-condensed">
-                <?php
-                foreach($model->processVariants() as $variant)
-                {
-                    echo '<tr>';
-                    echo '<td>';
-                    echo $variant['attribute']->title;
-                    echo '</td>';
-                    echo '<td>';
-                    $dropDownData = array();
-                    foreach($variant['options'] as $v)
-                        $dropDownData[$v->id] = $v->option->value;
-                    echo CHtml::dropDownList(1, null, $dropDownData);
-                    echo '</td>';
-                    echo '</tr>';
-                }
-                ?>
-            </table>
-        </div>
+		<div>
+			<table class="table table-striped table-bordered table-condensed">
+				<?php
+				foreach($model->processVariants() as $variant)
+				{
+					echo '<tr>';
+					echo '<td>';
+					echo $variant['attribute']->title;
+					echo '</td>';
+					echo '<td>';
+					$dropDownData = array();
+					foreach($variant['options'] as $v)
+						$dropDownData[$v->id] = $v->option->value;
+					echo CHtml::dropDownList(1, null, $dropDownData);
+					echo '</td>';
+					echo '</tr>';
+				}
+				?>
+			</table>
+		</div>
 
 		<h4>Цена: <?php echo $model->price ?></h4>
-        <a href="#" class="btn btn-large btn-primary">Купить</a>
+		<a href="#" class="btn btn-large btn-primary">Купить</a>
 
-        <div class="row">&nbsp;</div>
+		<div class="row">&nbsp;</div>
 
-        <?php
-            if($model->getEavAttributes())
-            {
-                // Display product custom options table.
-                $this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
-                    'model'=>$model,
-                    'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
-                ));
-            }else
-                echo 'Нет характеристик';
-        ?>
+		<?php
+			if($model->getEavAttributes())
+			{
+				// Display product custom options table.
+				$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
+					'model'=>$model,
+					'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
+				));
+			}else
+				echo 'Нет характеристик';
+		?>
 	</div>
 
 </div>

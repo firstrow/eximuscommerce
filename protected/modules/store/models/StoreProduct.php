@@ -351,6 +351,9 @@ class StoreProduct extends BaseModel
 		return parent::afterSave();
 	}
 
+	/**
+	 * Delete related data.
+	 */
 	public function afterDelete()
 	{
 		// Delete related products
@@ -369,6 +372,11 @@ class StoreProduct extends BaseModel
 			foreach ($images as $image)
 				$image->delete();
 		}
+
+		// Delete variants
+		$variants = StoreProductVariant::model()->findAllByAttributes(array('product_id'=>$this->id));
+		foreach ($variants as $v)
+			$v->delete();
 
 		return parent::afterDelete();
 	}
