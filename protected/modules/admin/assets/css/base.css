@@ -8,7 +8,6 @@ html, body {
     font-family:"Lucida Grande", verdana, arial, helvetica, sans-serif;
     font-size:12px;
     background-color:#F5F5F5;
-    /*background-color: #D2D1D0;*/
 }
 
 /* Links */
@@ -49,7 +48,7 @@ a:hover, a:active, a.selected {
 }
 
 #doc3 {
-	margin: 0;
+    margin: 0;
 }
 /* Header */
 #hd {
@@ -63,7 +62,7 @@ a:hover, a:active, a.selected {
 }
 /* Body */
 #bd {
-	min-height:500px;
+    min-height:500px;
 }
 /* Footer */
 #ft {
@@ -139,7 +138,7 @@ a:hover, a:active, a.selected {
 }
 
 #sidebar .sidebarBlock input[type=text], .sidebarBlock select {
-	width:200px;
+    width:200px;
 }
 
 #topRightMenu {
@@ -158,4 +157,14 @@ a:hover, a:active, a.selected {
 
 select {
     font-size:12px;
+}
+
+.variantsTable thead tr td {
+    padding: 5px;
+}
+.variantsTable tr td {
+    padding: 3px;
+}
+.variantsTable tr td input[type=text]{
+    width: 90%;
 }
