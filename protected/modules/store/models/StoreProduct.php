@@ -403,7 +403,7 @@ class StoreProduct extends BaseModel
 	/**
 	 * Set product categories and main category
 	 * @param array $categories ids.
-	 * @param $main_category Main category id.
+	 * @param integer $main_category Main category id.
 	 */
 	public function setCategories(array $categories, $main_category)
 	{
