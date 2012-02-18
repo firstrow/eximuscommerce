@@ -83,9 +83,11 @@ class ProductsController extends SAdminController
 			Yii::t('StoreModule.admin','Изображения')    => $this->renderPartial('_images', array('model'=>$model), true),
 			Yii::t('StoreModule.admin','Характеристики') => $this->renderPartial('_attributes', array('model'=>$model), true),
 			Yii::t('StoreModule.admin','Варианты')       => $this->renderPartial('_variations', array('model'=>$model), true),
-			Yii::t('StoreModule.admin','Конфигурации')   => $this->renderPartial('_configurations', array('product'=>$model), true),
 			Yii::t('StoreModule.admin','Отзывы')         => '',
 		);
+
+		if($model->use_configurations)
+			$form->additionalTabs[Yii::t('StoreModule.admin','Конфигурации')] = $this->renderPartial('_configurations', array('product'=>$model), true);
 
 		if (Yii::app()->request->isPostRequest)
 		{

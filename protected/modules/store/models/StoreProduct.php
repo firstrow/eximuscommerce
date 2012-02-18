@@ -282,14 +282,16 @@ class StoreProduct extends BaseModel
 
 		// Create sorting by translation title
 		$sort=new CSort;
+		$sort->defaultOrder = 't.created DESC';
 		$sort->attributes=array(
 			'*',
-			'defaultOrder'=>'t.created DESC',
 			'manufacturer_search' => array(
 				'asc'   => 'manufacturer.name',
 				'desc'  => 'manufacturer.name DESC',
 			)
 		);
+
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -412,6 +414,9 @@ class StoreProduct extends BaseModel
 
 		// Clear configurable attributes
 		Yii::app()->db->createCommand()->delete('StoreProductConfigurableAttributes', 'product_id=:id', array(':id'=>$this->id));
+
+		// Delete configurations
+		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'product_id=:id', array(':id'=>$this->id));
 
 		return parent::afterDelete();
 	}
