@@ -69,7 +69,7 @@ class ProductsController extends SAdminController
 		// Set configurabe attributes on new record
 		if($model->isNewRecord)
 		{
-			if($model->use_configurations)
+			if($model->use_configurations && isset($_GET['StoreProduct']['configurable_attributes']))
 				$model->configurable_attributes = $_GET['StoreProduct']['configurable_attributes'];
 		}
 

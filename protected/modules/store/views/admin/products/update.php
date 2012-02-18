@@ -33,10 +33,26 @@ $this->widget('application.modules.admin.widgets.schosen.SChosen', array(
 
 <div class="form wide padding-all">
 <?php
-	if($model->isNewRecord && !$model->type_id)
+
+	// If selected `configurable` product without attributes display error
+	if($model->isNewRecord && $model->use_configurations == true && empty($model->configurable_attributes))
+		$attributeError = true;
+	else
+		$attributeError = false;
+
+	if($model->isNewRecord && !$model->type_id || $attributeError === true)
 	{
 		// Display "choose type" form
 		echo CHtml::form('', 'get');
+
+		if($attributeError)
+		{
+			echo '<div class="errorSummary"><p>'.Yii::t('StoreModule', 'Необходимо исправить следующие ошибки:').'</p>
+					<ul>
+						<li>'.Yii::t('StoreModule.admin','Выберите атрибуты для конфигурации продуктов.').'</li>
+					</ul>
+			</div>';
+		}
 
 		// Type
 		echo CHtml::openTag('div', array('class'=>'row'));

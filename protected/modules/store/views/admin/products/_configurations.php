@@ -67,8 +67,11 @@ if(!empty($product->configurations) && !isset($clearConfigurations) && !$product
 
 $model->exclude = $product->id;
 
+$dataProvider = $model->search(array(), $cr);
+$dataProvider->pagination->pageSize = 1000;
+
 $this->widget('ext.sgridview.SGridView', array(
-	'dataProvider'=>$model->search(array(), $cr),
+	'dataProvider'=>$dataProvider,
 	'ajaxUrl'=>Yii::app()->createUrl('/store/admin/products/ApplyConfigurationsFilter', array(
 		'product_id'=>$product->id,
 		'configurable_attributes'=>isset($_GET['StoreProduct']['configurable_attributes']) ? $_GET['StoreProduct']['configurable_attributes'] : $product->configurable_attributes,
