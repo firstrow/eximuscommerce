@@ -237,3 +237,8 @@
     background-color: #FF5F5F;
     opacity: 0.4;
 }
+
+.form .grid-view .filters input {
+    height: 18px;
+    padding: 1px;
+}

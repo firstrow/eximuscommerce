@@ -291,8 +291,6 @@ class StoreProduct extends BaseModel
 			)
 		);
 
-
-
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort'=>$sort,
@@ -417,6 +415,7 @@ class StoreProduct extends BaseModel
 
 		// Delete configurations
 		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'product_id=:id', array(':id'=>$this->id));
+		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'configurable=:id', array(':id'=>$this->id));
 
 		return parent::afterDelete();
 	}
@@ -558,6 +557,7 @@ class StoreProduct extends BaseModel
 		$this->_configurations = Yii::app()->db->createCommand()
 			->select('t.configurable_id')
 			->from('StoreProductConfigurations t')
+			->where('product_id=:id', array(':id'=>$this->id))
 			->group('t.configurable_id')
 			->queryColumn();
 

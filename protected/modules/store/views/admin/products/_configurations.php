@@ -18,7 +18,7 @@ if(isset($_GET['ConfProduct']))
 $columns = array(
 	array(
 		'class'=>'CCheckBoxColumn',
-		'checked'=>(!$product->isNewRecord && !isset($clearConfigurations) && !empty($product->configurations)) ? 'true' : 'false'
+		'checked'=>(!empty($product->configurations) && !isset($clearConfigurations) && !$product->isNewRecord) ? 'true' : 'false'
 	),
 	array(
 		'name'=>'id',
@@ -50,15 +50,28 @@ $attributeModels = StoreAttribute::model()->findAllByPk($product->configurable_a
 
 foreach($attributeModels as $attribute)
 {
-	array_push($eavAttributes, $attribute->name);
+	$selected = null;
+
+	if(isset($_GET['eav'][$attribute->name]) && !empty($_GET['eav'][$attribute->name]))
+	{
+		$eavAttributes[$attribute->name] = $_GET['eav'][$attribute->name];
+		$selected = $_GET['eav'][$attribute->name];
+	}
+	else
+		array_push($eavAttributes, $attribute->name);
+
 	$columns[] = array(
 		'name'        => 'eav_'.$attribute->name,
 		'header'      => $attribute->title,
 		'htmlOptions' => array('class'=>'eav'),
+		'filter'      => CHtml::dropDownList('eav['.$attribute->name.']', $selected, CHtml::listData($attribute->options, 'id', 'value'), array(
+			'empty'=>'---',
+		))
 	);
 }
 
-$model = $model->withEavAttributes($eavAttributes);
+if(!empty($eavAttributes))
+	$model = $model->withEavAttributes($eavAttributes);
 
 // On edit display only saved configurations
 $cr = new CDbCriteria;
