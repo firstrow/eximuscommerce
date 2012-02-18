@@ -19,8 +19,6 @@ class SGridView extends CGridView {
 	 */
 	public $extended = true;
 
-	public $selectionChanged;
-
 	/**
 	 * @var array List of custom actions to display in footer.
 	 * See example in {@link SGridView::getFooterActions}
@@ -81,7 +79,6 @@ class SGridView extends CGridView {
 			'cssFile'=>$this->baseScriptUrl.'/pager.css',
 		);
 
-		$this->setSelectionChanged();
 		$this->initColumns();
 	}
 
@@ -156,15 +153,6 @@ class SGridView extends CGridView {
 			));
 		}
 		return $this->_customActions;
-	}
-
-
-	/**
-	 * Set js function on grid row click.
-	 */
-	public function setSelectionChanged()
-	{
-		$this->selectionChanged = 'function(id){$.fn.yiiGridView.showActions(id)}';
 	}
 
 	/**

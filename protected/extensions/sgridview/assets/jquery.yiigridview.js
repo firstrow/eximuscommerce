@@ -64,12 +64,12 @@
 							var sboxallname=this.name.substring(0,this.name.length-2)+'_all';	//.. remove '[]' and add '_all'
 							$("input[name='"+sboxallname+"']").attr('checked', $("input[name='"+this.name+"']").length==$("input[name='"+this.name+"']:checked").length);
 						});
+						$.fn.yiiGridView.showActions(id);
 						if(settings.selectionChanged !== undefined)
 							settings.selectionChanged(id);
 					}
 				});
 			}
-
 			$('#'+id+' .'+settings.tableClass+' > tbody > tr > td > input.select-on-check').die('click').live('click',function(){
 					if(settings.selectableRows === 0)
 						return false;
@@ -83,6 +83,7 @@
 						$('#'+id+' .'+settings.tableClass+' > thead > tr > th >input.select-on-check-all').attr('checked', $("input.select-on-check").length==$("input.select-on-check:checked").length);
 
 					$row.toggleClass('selected',this.checked);
+					$.fn.yiiGridView.showActions(id);
 					if(settings.selectionChanged !== undefined)
 						settings.selectionChanged(id);
 					return true;
@@ -96,6 +97,7 @@
 						this.checked=checkedall;
 						$(this).parent().parent().toggleClass('selected',checkedall);
 					});
+					$.fn.yiiGridView.showActions(id);
 					if(settings.selectionChanged !== undefined)
 						settings.selectionChanged(id);
 				});
@@ -312,74 +314,74 @@
 		return checked;
 	};
 
-    /**
-     * Modifications goes below
-     */
+	/**
+	 * Modifications goes below
+	 */
 
-    /**
-     * If grid have selected rows display actions list
-     * @param id string the ID of the grid view container
-     */
-    $.fn.yiiGridView.showActions = function(id) {
-        var actions = $('#'+id+'Actions');
-        if($.fn.yiiGridView.getSelection(id) == '') {
-            actions.css('visibility', 'hidden');
-        }else{
-            actions.css('visibility', 'visible');
-        }
-    };
+	/**
+	 * If grid have selected rows display actions list
+	 * @param id string the ID of the grid view container
+	 */
+	$.fn.yiiGridView.showActions = function(id) {
+		var actions = $('#'+id+'Actions');
+		if($.fn.yiiGridView.getSelection(id) == '') {
+			actions.css('visibility', 'hidden');
+		}else{
+			actions.css('visibility', 'visible');
+		}
+	};
 
-    /**
-     * Send selected rows to url specified in link href
-     * @param id string the ID of the grid view container
-     * @param el link clicked
-     */
-    $.fn.yiiGridView.runAction = function(id, el) {
-        var selection = $.fn.yiiGridView.getSelection(id);
-        var url = $(el).attr('href');
-        var sendRequest = false;
+	/**
+	 * Send selected rows to url specified in link href
+	 * @param id string the ID of the grid view container
+	 * @param el link clicked
+	 */
+	$.fn.yiiGridView.runAction = function(id, el) {
+		var selection = $.fn.yiiGridView.getSelection(id);
+		var url = $(el).attr('href');
+		var sendRequest = false;
 
-        if($(el).attr('data-question'))
-        {
-            sendRequest = confirm($(el).attr('data-question'));
-        }
+		if($(el).attr('data-question'))
+		{
+			sendRequest = confirm($(el).attr('data-question'));
+		}
 
-        if(selection && url && sendRequest)
-        {
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data:{
-                    YII_CSRF_TOKEN: $(el).attr('data-token'),
-                    id: selection
-                },
-                success:function(){
-                    $.fn.yiiGridView.update(id);
-                },
-                error:function(XHR, textStatus, errorThrown){
-                    var err='';
-                    switch(textStatus) {
-                        case 'timeout':
-                            err='The request timed out!';
-                            break;
-                        case 'parsererror':
-                            err='Parser error!';
-                            break;
-                        case 'error':
-                            if(XHR.status && !/^\s*$/.test(XHR.status))
-                                err='Error ' + XHR.status;
-                            else
-                                err='Error';
-                            if(XHR.responseText && !/^\s*$/.test(XHR.responseText))
-                                err=err + ': ' + XHR.responseText;
-                            break;
-                    }
-                    alert(err);
-                }
-            });
-        }
+		if(selection && url && sendRequest)
+		{
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data:{
+					YII_CSRF_TOKEN: $(el).attr('data-token'),
+					id: selection
+				},
+				success:function(){
+					$.fn.yiiGridView.update(id);
+				},
+				error:function(XHR, textStatus, errorThrown){
+					var err='';
+					switch(textStatus) {
+						case 'timeout':
+							err='The request timed out!';
+							break;
+						case 'parsererror':
+							err='Parser error!';
+							break;
+						case 'error':
+							if(XHR.status && !/^\s*$/.test(XHR.status))
+								err='Error ' + XHR.status;
+							else
+								err='Error';
+							if(XHR.responseText && !/^\s*$/.test(XHR.responseText))
+								err=err + ': ' + XHR.responseText;
+							break;
+					}
+					alert(err);
+				}
+			});
+		}
 
-        return false;
-    };
+		return false;
+	};
 
 })(jQuery);

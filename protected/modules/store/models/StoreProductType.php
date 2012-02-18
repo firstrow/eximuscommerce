@@ -28,13 +28,13 @@ class StoreProductType extends BaseModel
 		return 'StoreProductType';
 	}
 
-	public function defaultScope()
+	public function scopes()
 	{
+		$alias = $this->getTableAlias(true);
 		return array(
-			'order'=>'name ASC',
+			'orderByName'=>array('order'=>$alias.'.name'),
 		);
 	}
-
 	/**
 	 * @return array validation rules for model attributes.
 	 */

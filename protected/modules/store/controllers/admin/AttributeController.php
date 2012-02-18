@@ -152,7 +152,12 @@ class AttributeController extends SAdminController {
 			if (!empty($model))
 			{
 				foreach($model as $m)
+				{
+					$count = StoreProduct::model()->withEavAttributes(array($m->name))->count();
+					if($count)
+						throw new CHttpException(503, Yii::t('StoreModule.admin', 'Ошибка удаления атрибута - он используется продуктами.'));
 					$m->delete();
+				}
 			}
 
 			if (!Yii::app()->request->isAjaxRequest)

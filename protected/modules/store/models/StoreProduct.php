@@ -6,10 +6,11 @@
  * The followings are the available columns in table 'StoreProduct':
  * @property integer $id
  * @property integer $manufacturer_id
+ * @property boolean $use_configurations
  * @property integer $type_id
  * @property string $name
  * @property string $url
- * @property double $price
+ * @property float $price
  * @property boolean $is_active
  * @property string $short_description
  * @property string $full_description
@@ -40,10 +41,21 @@ class StoreProduct extends BaseModel
 	 */
 	private $_related;
 
-    /**
-     * @var string used in search() method to filter products by manufacturer name.
-     */
-    public $manufacturer_search;
+	/**
+	 * @var string used in search() method to filter products by manufacturer name.
+	 */
+	public $manufacturer_search;
+
+	/**
+	 * @var array of attributes used to configure product
+	 */
+	private $_configurable_attributes;
+	private $_configurable_attribute_changed = false;
+
+	/**
+	 * @var array
+	 */
+	private $_configurations;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -82,6 +94,7 @@ class StoreProduct extends BaseModel
 			array('price', 'commaToDot'),
 			array('price, type_id', 'numerical'),
 			array('is_active', 'boolean'),
+			array('use_configurations', 'boolean', 'on'=>'insert'),
 			array('quantity, availability, manufacturer_id', 'numerical', 'integerOnly'=>true),
 			array('name, price', 'required'),
 			array('url', 'LocalUrlValidator'),
@@ -195,8 +208,8 @@ class StoreProduct extends BaseModel
 			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
 			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
 			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1'),
-            // Product variation
-            'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id'), 'with'=>array('attribute', 'option'), 'order'=>'option.position'),
+			// Product variation
+			'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id'), 'with'=>array('attribute', 'option'), 'order'=>'option.position'),
 		);
 	}
 
@@ -210,6 +223,7 @@ class StoreProduct extends BaseModel
 			'manufacturer_id'        => Yii::t('StoreModule.core', 'Производитель'),
 			'manufacturer_search'    => Yii::t('StoreModule.core', 'Производитель'),
 			'type_id'                => Yii::t('StoreModule.core', 'Тип'),
+			'use_configurations'     => Yii::t('StoreModule.core', 'Использовать конфигурации'),
 			'name'                   => Yii::t('StoreModule.core', 'Название'),
 			'url'                    => Yii::t('StoreModule.core', 'URL'),
 			'price'                  => Yii::t('StoreModule.core', 'Цена'),
@@ -234,14 +248,17 @@ class StoreProduct extends BaseModel
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search($params = array())
+	public function search($params = array(), $additionalCriteria = null)
 	{
 		$criteria=new CDbCriteria;
 
 		$criteria->with = array(
 			'categorization'=>array('together'=>true),
-            'manufacturer',
+			'manufacturer',
 		);
+
+		if($additionalCriteria !== null)
+			$criteria->mergeWith($additionalCriteria);
 
 		$criteria->compare('t.id',$this->id);
 		$criteria->compare('t.name',$this->name,true);
@@ -254,7 +271,7 @@ class StoreProduct extends BaseModel
 		$criteria->compare('t.created',$this->created,true);
 		$criteria->compare('t.updated',$this->updated,true);
 		$criteria->compare('type_id', $this->type_id);
-        $criteria->compare('manufacturer.name', $this->manufacturer_search,true);
+		$criteria->compare('manufacturer.name', $this->manufacturer_search,true);
 
 		if (isset($params['category']) && $params['category'])
 			$criteria->compare('categorization.category', $params['category']);
@@ -263,16 +280,16 @@ class StoreProduct extends BaseModel
 		if($this->exclude)
 			$criteria->compare('t.id !', array(':id'=>$this->exclude));
 
-        // Create sorting by translation title
-        $sort=new CSort;
-        $sort->attributes=array(
-            '*',
-            'defaultOrder'=>'t.created DESC',
-            'manufacturer_search' => array(
-                'asc'   => 'manufacturer.name',
-                'desc'  => 'manufacturer.name DESC',
-            )
-        );
+		// Create sorting by translation title
+		$sort=new CSort;
+		$sort->attributes=array(
+			'*',
+			'defaultOrder'=>'t.created DESC',
+			'manufacturer_search' => array(
+				'asc'   => 'manufacturer.name',
+				'desc'  => 'manufacturer.name DESC',
+			)
+		);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -348,6 +365,21 @@ class StoreProduct extends BaseModel
 			}
 		}
 
+		// Save configurable attributes
+		if($this->_configurable_attribute_changed === true)
+		{
+			// Clear
+			Yii::app()->db->createCommand()->delete('StoreProductConfigurableAttributes', 'product_id = :id', array(':id'=>$this->id));
+
+			foreach($this->_configurable_attributes as $attr_id)
+			{
+				Yii::app()->db->createCommand()->insert('StoreProductConfigurableAttributes', array(
+					'product_id'   => $this->id,
+					'attribute_id' => $attr_id
+				));
+			}
+		}
+
 		return parent::afterSave();
 	}
 
@@ -377,6 +409,9 @@ class StoreProduct extends BaseModel
 		$variants = StoreProductVariant::model()->findAllByAttributes(array('product_id'=>$this->id));
 		foreach ($variants as $v)
 			$v->delete();
+
+		// Clear configurable attributes
+		Yii::app()->db->createCommand()->delete('StoreProductConfigurableAttributes', 'product_id=:id', array(':id'=>$this->id));
 
 		return parent::afterDelete();
 	}
@@ -462,19 +497,87 @@ class StoreProduct extends BaseModel
 		}
 	}
 
-    /**
-     * Prepare variations
-     * @return array product variations
-     */
-    public function processVariants()
-    {
-        $result = array();
-        foreach($this->variants as $v)
-        {
-            $result[$v->attribute->id]['attribute'] = $v->attribute;
-            $result[$v->attribute->id]['options'][] = $v;
-        };
-        return $result;
-    }
+	/**
+	 * Prepare variations
+	 * @return array product variations
+	 */
+	public function processVariants()
+	{
+		$result = array();
+		foreach($this->variants as $v)
+		{
+			$result[$v->attribute->id]['attribute'] = $v->attribute;
+			$result[$v->attribute->id]['options'][] = $v;
+		};
+		return $result;
+	}
+
+	/**
+	 * @param $ids array of StoreAttribute pks
+	 */
+	public function setConfigurable_attributes(array $ids)
+	{
+		$this->_configurable_attributes = $ids;
+		$this->_configurable_attribute_changed = true;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getConfigurable_attributes()
+	{
+		if($this->_configurable_attribute_changed === true)
+			return $this->_configurable_attributes;
+
+		if($this->_configurable_attributes === null)
+		{
+			$this->_configurable_attributes = Yii::app()->db->createCommand()
+				->select('t.attribute_id')
+				->from('StoreProductConfigurableAttributes t')
+				->where('t.product_id=:id', array(':id'=>$this->id))
+				->group('t.attribute_id')
+				->queryColumn();
+		}
+
+		return $this->_configurable_attributes;
+	}
+
+	/**
+	 * @return array of product ids
+	 */
+	public function getConfigurations()
+	{
+		if(is_array($this->_configurations))
+			return $this->_configurations;
+
+		$this->_configurations = Yii::app()->db->createCommand()
+			->select('t.configurable_id')
+			->from('StoreProductConfigurations t')
+			->group('t.configurable_id')
+			->queryColumn();
+
+		return $this->_configurations;
+	}
+
+	public function __get($name)
+	{
+		if(substr($name,0,4) === 'eav_')
+		{
+			if($this->getIsNewRecord())
+				return null;
+
+			$attribute = substr($name, 4);
+			$eavData = $this->getEavAttributes();
+
+			if(isset($eavData[$attribute]))
+				$value = $eavData[$attribute];
+			else
+				return null;
+
+			$attributeModel = StoreAttribute::model()->with('options')->findByAttributes(array('name'=>$attribute));
+			return $attributeModel->renderValue($value);
+		}
+		return parent::__get($name);
+	}
 
 }

@@ -55,27 +55,36 @@ class ProductsController extends SAdminController
 
 		$form = new STabbedForm('application.modules.store.views.admin.products.productForm', $model);
 
-		// On create new product first display "Choose type" form.
-		if($model->isNewRecord && isset($_GET['type_id']))
+		// Apply use_configurations, configurable_attributes, type_id
+		if(isset($_GET['StoreProduct']))
+			$model->attributes = $_GET['StoreProduct'];
+
+		// On create new product first display "Choose type" form first.
+		if($model->isNewRecord && isset($_GET['StoreProduct']['type_id']))
 		{
-			$model->type_id = $_GET['type_id'];
 			if(StoreProductType::model()->countByAttributes(array('id'=>$model->type_id)) === '0')
-			{
-				throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка. Тип продука указан неправильно'));
-			}
+				throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка. Тип продукта указан неправильно.'));
+		}
+
+		// Set configurabe attributes on new record
+		if($model->isNewRecord)
+		{
+			if($model->use_configurations)
+				$model->configurable_attributes = $_GET['StoreProduct']['configurable_attributes'];
 		}
 
 		// Set additional tabs
 		$form->additionalTabs = array(
-			Yii::t('StoreModule.admin','Категории')=>$this->renderPartial('_tree', array('model'=>$model), true),
-			Yii::t('StoreModule.admin','Сопутствующие продукты')=>$this->renderPartial('_relatedProducts',array(
+			Yii::t('StoreModule.admin','Категории') => $this->renderPartial('_tree', array('model'=>$model), true),
+			Yii::t('StoreModule.admin','Сопутствующие продукты') => $this->renderPartial('_relatedProducts',array(
 				'exclude'=>$model->id,
 				'product'=>$model,
 			),true),
-			Yii::t('StoreModule.admin','Изображения')=>$this->renderPartial('_images', array('model'=>$model), true),
-			Yii::t('StoreModule.admin','Характеристики')=>$this->renderPartial('_attributes', array('model'=>$model), true),
-			Yii::t('StoreModule.admin','Варианты')=>$this->renderPartial('_variations', array('model'=>$model), true),
-			Yii::t('StoreModule.admin','Отзывы')=>'',
+			Yii::t('StoreModule.admin','Изображения')    => $this->renderPartial('_images', array('model'=>$model), true),
+			Yii::t('StoreModule.admin','Характеристики') => $this->renderPartial('_attributes', array('model'=>$model), true),
+			Yii::t('StoreModule.admin','Варианты')       => $this->renderPartial('_variations', array('model'=>$model), true),
+			Yii::t('StoreModule.admin','Конфигурации')   => $this->renderPartial('_configurations', array('product'=>$model), true),
+			Yii::t('StoreModule.admin','Отзывы')         => '',
 		);
 
 		if (Yii::app()->request->isPostRequest)
@@ -99,8 +108,11 @@ class ProductsController extends SAdminController
 				// Process attributes
 				$this->processAttributes($model);
 
-                // Process variants
-                $this->processVariants($model);
+				// Process variants
+				$this->processVariants($model);
+
+				// Process configurations
+				$this->processConfigurations($model);
 
 				// Handle images
 				$images = CUploadedFile::getInstancesByName('StoreProductImages');
@@ -165,7 +177,7 @@ class ProductsController extends SAdminController
 	}
 
 	/**
-	 * Save custom model attributes
+	 * Save model attributes
 	 * @param StoreProduct $model
 	 * @return boolean
 	 */
@@ -188,51 +200,81 @@ class ProductsController extends SAdminController
 		return $model->setEavAttributes($attributes->toArray(), true);
 	}
 
-    protected function processVariants(StoreProduct $model)
-    {
-        $dontDelete = array();
+	/**
+	 * Save product variants
+	 * @param StoreProduct $model
+	 */
+	protected function processVariants(StoreProduct $model)
+	{
+		$dontDelete = array();
 
-        if(!empty($_POST['variants']))
-        {
-            foreach($_POST['variants'] as $attribute_id=>$values)
-            {
-                $i=0;
-                foreach($values['option_id'] as $option_id)
-                {
-                    // Try to load variant from DB
-                    $variant = StoreProductVariant::model()->findByAttributes(array(
-                        'product_id'   => $model->id,
-                        'attribute_id' => $attribute_id,
-                        'option_id'    => $option_id
-                    ));
-                    // If not - create new.
-                    if(!$variant)
-                        $variant = new StoreProductVariant;
+		if(!empty($_POST['variants']))
+		{
+			foreach($_POST['variants'] as $attribute_id=>$values)
+			{
+				$i=0;
+				foreach($values['option_id'] as $option_id)
+				{
+					// Try to load variant from DB
+					$variant = StoreProductVariant::model()->findByAttributes(array(
+						'product_id'   => $model->id,
+						'attribute_id' => $attribute_id,
+						'option_id'    => $option_id
+					));
+					// If not - create new.
+					if(!$variant)
+						$variant = new StoreProductVariant;
 
-                    $variant->setAttributes(array(
-                        'attribute_id' => $attribute_id,
-                        'option_id'    => $option_id,
-                        'product_id'   => $model->id,
-                        'price'        => $values['price'][$i],
-                        'price_type'   => $values['price_type'][$i],
-                        'sku'          => $values['sku'][$i],
-                    ), false);
+					$variant->setAttributes(array(
+						'attribute_id' => $attribute_id,
+						'option_id'    => $option_id,
+						'product_id'   => $model->id,
+						'price'        => $values['price'][$i],
+						'price_type'   => $values['price_type'][$i],
+						'sku'          => $values['sku'][$i],
+					), false);
 
-                    $variant->save(false);
-                    array_push($dontDelete, $variant->id);
-                    $i++;
-                }
-            }
-        }
+					$variant->save(false);
+					array_push($dontDelete, $variant->id);
+					$i++;
+				}
+			}
+		}
 
-        if(!empty($dontDelete))
-        {
-            $cr = new CDbCriteria;
-            $cr->addNotInCondition('id', $dontDelete);
-            StoreProductVariant::model()->deleteAll($cr);
-        }else
-            StoreProductVariant::model()->deleteAllByAttributes(array('product_id'=>$model->id));
-    }
+		if(!empty($dontDelete))
+		{
+			$cr = new CDbCriteria;
+			$cr->addNotInCondition('id', $dontDelete);
+			StoreProductVariant::model()->deleteAll($cr);
+		}else
+			StoreProductVariant::model()->deleteAllByAttributes(array('product_id'=>$model->id));
+	}
+
+	/**
+	 * Save product configurations
+	 * @param StoreProduct $model
+	 * @return mixed
+	 */
+	protected function processConfigurations(StoreProduct $model)
+	{
+		$productPks = Yii::app()->request->getPost('ConfigurationsProductGrid_c0', array());
+
+		// Clear relations
+		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', array(
+			'product_id='.$model->id
+		));
+
+		if(!sizeof($productPks))
+			return;
+
+		foreach($productPks as $pk)
+		{
+			Yii::app()->db->createCommand()->insert('StoreProductConfigurations', array(
+				'product_id'      => $model->id,
+				'configurable_id' => $pk
+			));
+		}
+	}
 
 	/**
 	 * Create gridview for "Related Products" tab
@@ -252,19 +294,52 @@ class ProductsController extends SAdminController
 		));
 	}
 
-    public function actionRenderVariantTable()
-    {
-        $attribute = StoreAttribute::model()
-            ->with('options')
-            ->findByPk($_GET['attr_id']);
+	/**
+	 * Render configurations tab gridview.
+	 */
+	public function actionApplyConfigurationsFilter()
+	{
+		$product = StoreProduct::model()->findByPk($_GET['product_id']);
 
-        if(!$attribute)
-            throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка загрузки атрибута'));
+		// On create new product
+		if(!$product)
+		{
+			$product = new StoreProduct;
+			$product->configurable_attributes = $_GET['configurable_attributes'];
+		}
 
-        $this->renderPartial('variants/_table', array(
-            'attribute'=>$attribute
-        ));
-    }
+		$this->renderPartial('_configurations', array(
+			'product'=>$product,
+			'clearConfigurations'=>true // Show all products
+		));
+	}
+
+	public function actionRenderVariantTable()
+	{
+		$attribute = StoreAttribute::model()
+			->with('options')
+			->findByPk($_GET['attr_id']);
+
+		if(!$attribute)
+			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка загрузки атрибута'));
+
+		$this->renderPartial('variants/_table', array(
+			'attribute'=>$attribute
+		));
+	}
+
+	/**
+	 * Load attributes relative to type and available for product configurations.
+	 * Used on creating new product.
+	 */
+	public function actionLoadConfigurableOptions()
+	{
+		// For configurations that  are available only dropdown and radio lists.
+		$cr = new CDbCriteria;
+		$cr->addInCondition('StoreAttribute.type', array(StoreAttribute::TYPE_DROPDOWN, StoreAttribute::TYPE_RADIO_LIST));
+		$type = StoreProductType::model()->with(array('storeAttributes'))->findByPk($_GET['type_id'], $cr);
+		echo CJSON::encode($type->storeAttributes);
+	}
 
 	/**
 	 * @param $id StoreProductImage id

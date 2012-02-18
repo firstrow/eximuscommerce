@@ -232,3 +232,8 @@
     padding: 0;
     width: 99%;
 }
+
+.grid-view table.items tr.disabled {
+    background-color: #FF5F5F;
+    opacity: 0.4;
+}

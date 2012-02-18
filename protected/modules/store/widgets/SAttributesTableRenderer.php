@@ -70,10 +70,10 @@ class SAttributesTableRenderer extends CWidget
 		$this->_models = array();
 		$cr = new CDbCriteria;
 		$cr->addInCondition('StoreAttribute.name', array_keys($this->_attributes));
-        $query = StoreAttribute::model()
-            ->displayOnFront()
-            ->with(array('options'))
-            ->findAll($cr);
+		$query = StoreAttribute::model()
+			->displayOnFront()
+			->with(array('options'))
+			->findAll($cr);
 
 		foreach($query as $m)
 			$this->_models[$m->name] = $m;
