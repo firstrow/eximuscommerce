@@ -25,22 +25,22 @@ $('#StoreCategoryTree').delegate("a", "click", function (event) {
 
 // On change `use configurations` select - load available attributes
 $('#StoreProduct_use_configurations, #StoreProduct_type_id').change(function(){
-    var attrs_block = $('#availableAttributes');
-    var type_id = $('#StoreProduct_type_id').val();
-    attrs_block.html('');
+	var attrs_block = $('#availableAttributes');
+	var type_id = $('#StoreProduct_type_id').val();
+	attrs_block.html('');
 
-    if($('#StoreProduct_use_configurations').val() == '0') return;
+	if($('#StoreProduct_use_configurations').val() == '0') return;
 
-    $.getJSON('/admin/store/products/loadConfigurableOptions/?type_id='+type_id, function(data){
-        var items = [];
+	$.getJSON('/admin/store/products/loadConfigurableOptions/?type_id='+type_id, function(data){
+		var items = [];
 
-        $.each(data, function(key, option) {
-            items.push('<li style="clear: both;"><label><input type="checkbox" name="StoreProduct[configurable_attributes][]" value="' + option.id + '" name=""> ' + option.title + '</label></li>');
-        });
+		$.each(data, function(key, option) {
+			items.push('<li style="clear: both;"><label><input type="checkbox" name="StoreProduct[configurable_attributes][]" value="' + option.id + '" name=""> ' + option.title + '</label></li>');
+		});
 
-        $('<ul/>', {
-            'class': 'rowInput',
-            html: items.join('')
-        }).appendTo(attrs_block);
-    });
+		$('<ul/>', {
+			'class': 'rowInput',
+			html: items.join('')
+		}).appendTo(attrs_block);
+	});
 });

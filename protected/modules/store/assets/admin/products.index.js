@@ -1,6 +1,4 @@
 
-console.log($.cookie('productsSidebarStatus'));
-
 // Init sidebar
 if($.cookie('productsSidebarStatus') == 'hidden')
 {
