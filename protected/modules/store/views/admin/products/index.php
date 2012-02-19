@@ -21,13 +21,22 @@ $this->breadcrumbs = array(
 );
 
 $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
-	'template'=>array('create'),
+	'template'=>array('create', 'showSidebar'),
 	'elements'=>array(
 		'create'=>array(
 			'link'=>$this->createUrl('create'),
 			'title'=>Yii::t('StoreModule.admin', 'Создать продукт'),
 			'options'=>array(
 				'icons'=>array('primary'=>'ui-icon-plus')
+			)
+		),
+		'showSidebar'=>array(
+			'link'=>'#',
+			'title'=>Yii::t('StoreModule.admin', 'Переключить сайдбар'),
+			'onclick'=>'js:function(){productToggleSidebar()}',
+			'options'=>array(
+				'text'=>false,
+				'icons'=>array('primary'=>'ui-icon-triangle-2-e-w')
 			)
 		),
 	),

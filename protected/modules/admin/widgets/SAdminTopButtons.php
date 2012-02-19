@@ -141,6 +141,7 @@ class SAdminTopButtons extends CWidget {
 					'url'=>$item['link'],
 					'buttonType'=>'link',
 					'caption'=>$item['title'],
+					'onclick'=>isset($item['onclick']) ? $item['onclick'] : false,
 					'htmlOptions'=>CMap::mergeArray($item['htmlOptions'], array('class'=>implode(' ', $linkClasses))),
 					'options'=>$item['options']
 					)

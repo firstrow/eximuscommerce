@@ -1,7 +1,47 @@
 <h3><?php echo Yii::t('StoreModule.admin', 'Поиск по категории') ?></h3>
+
 <div class="form wide">
-	<input type="text" style="width: 90%" onkeyup='$("#StoreCategoryTreeFilter").jstree("search", $(this).val());' />
+	<input type="text" style="width: 190px;float: left; margin-right: 5px;" onkeyup='$("#StoreCategoryTreeFilter").jstree("search", $(this).val());' />
+	<?php
+		$this->beginWidget('zii.widgets.jui.CJuiButton', array(
+			'buttonType'=>'buttonset',
+			'name'=>'tree-set',
+			'htmlOptions'=>array(
+				'style'=>'padding-top:2px;',
+			)
+		));
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'button1',
+			'buttonType'=>'button',
+			'caption'=>Yii::t('StoreModule.admin', 'Развернуть все'),
+			'onclick'=>'js:function(){
+				 $("#StoreCategoryTreeFilter").jstree("open_all");
+			}',
+			'options'=>array(
+				'text'=>false,
+				'icons'=>array('primary'=>'ui-icon-triangle-1-s'),
+			),
+		));
+
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'button12',
+			'buttonType'=>'button',
+			'caption'=>Yii::t('StoreModule.admin', 'Свернуть все'),
+			'onclick'=>'js:function(){
+				 $("#StoreCategoryTreeFilter").jstree("close_all");
+				 $("#StoreCategoryTreeFilter").jstree("open_node", "#StoreCategoryTreeFilterNode_1", false, true);
+			}',
+			'options'=>array(
+				'text'=>false,
+				'icons'=>array('primary'=>'ui-icon-triangle-1-n')
+			),
+		));
+		$this->endWidget();
+	?>
+
 </div>
+
+<div style="clear: both;"></div>
 
 <?php
 
