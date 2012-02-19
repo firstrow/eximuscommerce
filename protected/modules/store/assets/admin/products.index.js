@@ -1,7 +1,11 @@
 
+console.log($.cookie('productsSidebarStatus'));
+
 // Init sidebar
-if( $.cookie('productsSidebarStatus') == 'hidden')
+if($.cookie('productsSidebarStatus') == 'hidden')
+{
 	productsHideSidebar();
+}
 
 // Init tree
 $('#StoreCategoryTreeFilter').bind('loaded.jstree', function (event, data) {
@@ -25,7 +29,7 @@ function productToggleSidebar()
 {
 	if($('#sidebar').css('display') == 'none')
 	{
-        $.cookie('productsSidebarStatus', 'visible', {expires: 31});
+		$.cookie('productsSidebarStatus', 'visible', {expires: 31, path: '/'});
 		$("#yui-main").children('.marright').addClass("yui-b");
 		$("#sidebar").show();
 	}
@@ -38,7 +42,7 @@ function productToggleSidebar()
  */
 function productsHideSidebar()
 {
-	$.cookie('productsSidebarStatus', 'hidden', {expires: 31});
+	$.cookie('productsSidebarStatus', 'hidden', {expires: 31, path: '/'});
 	$("#yui-main .yui-b").removeClass("yui-b");
 	$("#sidebar").hide();
 }
