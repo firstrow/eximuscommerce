@@ -75,8 +75,100 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					echo '</td>';
 					echo '</tr>';
 				}
+
+				if($model->use_configurations)
+				{
+					$configurables = $model->configurations;
+					$attributeModels = StoreAttribute::model()->findAllByPk($model->configurable_attributes);
+					$models = StoreProduct::model()->findAllByPk($configurables);
+
+					$data = array();
+					foreach($attributeModels as $attr)
+					{
+						foreach($models as $m)
+						{
+							if(!isset($data[$attr->name]))
+								$data[$attr->name] = array('---'=>'---');
+
+							$method = 'eav_'.$attr->name;
+							$value = $m->$method;
+
+							if(!isset($data[$attr->name][$value]))
+									$data[$attr->name][$value] = '';
+
+							$data[$attr->name][$value] .= $m->id.'/';
+						}
+					}
+
+					foreach($attributeModels as $attr)
+					{
+						echo $attr->title.': ';
+						echo CHtml::dropDownList('eav_'.$attr->name, null, array_flip($data[$attr->name]), array('class'=>'eavData'));
+
+						echo '<br/>';
+					}
+				}
+
 				?>
 			</table>
+
+			<script type="text/javascript">
+				// Disable all dropdowns exclude first
+				$('.eavData:not(:first)').attr('disabled','disabled');
+
+				$('.eavData').change(function(){
+					if($(this).val() == '---')
+					{
+						// If selected empty - reset all next dropdowns
+						$(this).nextAll('.eavData').each(function(){
+							$(this).find('option:first').attr('selected', 'selected');
+							$(this).attr('disabled', 'disabled');
+						});
+						return;
+					}
+
+					var val = prepArray($(this).val().split('/'));
+
+					// Disable all next
+					$(this).nextAll('.eavData').attr('disabled', 'disabled');
+					// Activate first closest
+					$(this).nextAll('.eavData:first').removeAttr('disabled');
+
+					$(this).nextAll('.eavData').each(function(){
+						// Reset current selection
+						$(this).find('option:first').attr('selected', 'selected');
+
+						$(this).find('option').each(function(){
+							var optionVals = prepArray($(this).val().split('/'));
+							var found = false;
+							// Check if one of previous values are present in current option
+							$(val).each(function(i,el){
+								if($.inArray(el, optionVals))
+									found = true;
+							});
+
+							if(!found)
+								$(this).hide();
+							else
+								$(this).show();
+						});
+					});
+				});
+
+				/**
+				 * Remove from array ampty values and '---'
+				 * @param arr
+				 */
+				function prepArray(arr)
+				{
+					$.each(arr, function(i, v) {
+						if(v == '' || v == '---') {
+							arr.splice(i,1);
+						}
+					});
+					return arr;
+				}
+			</script>
 		</div>
 
 		<h4>Цена: <?php echo $model->price ?></h4>

@@ -7,6 +7,8 @@
  * @property integer $id
  * @property integer $manufacturer_id
  * @property boolean $use_configurations
+ * @property array $configurations array of product pks
+ * @property array $configurable_attributes array of StoreAttribute pks used to configure product
  * @property integer $type_id
  * @property string $name
  * @property string $url

@@ -79,6 +79,7 @@ if(!empty($product->configurations) && !isset($clearConfigurations) && !$product
 	$cr->addInCondition('t.id', $product->configurations);
 
 $model->exclude = $product->id;
+$model->use_configurations = false;
 
 $dataProvider = $model->search(array(), $cr);
 $dataProvider->pagination->pageSize = 1000;
