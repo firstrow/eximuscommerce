@@ -39,9 +39,7 @@ CREATE TABLE IF NOT EXISTS `AuthItem` (
 INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
   ('Admin', '2', NULL, NULL, 'N;'),
   ('Authenticated', '2', NULL, NULL, 'N;'),
-  ('Guest', '2', NULL, NULL, 'N;'),
-  ('Store.FrontProduct.View', '0', NULL, NULL, 'N;'),
-  ('Store.FrontProduct.*', '1', NULL, NULL, 'N;');
+  ('Guest', '2', NULL, NULL, 'N;');
 
 --
 -- Structure for table `AuthItemChild`
@@ -190,23 +188,23 @@ CREATE TABLE IF NOT EXISTS `StoreAttribute` (
   `type` tinyint(4) NOT NULL,
   `display_on_front` tinyint(1) NOT NULL DEFAULT '1',
   `use_in_filter` tinyint(1) NOT NULL,
+  `use_in_variants` tinyint(1) NOT NULL,
   `select_many` tinyint(1) NOT NULL,
   `position` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `use_in_filter` (`use_in_filter`),
   KEY `display_on_front` (`display_on_front`),
-  KEY `position` (`position`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+  KEY `position` (`position`),
+  KEY `use_in_variants` (`use_in_variants`)
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 --
 -- Data for table `StoreAttribute`
 --
 
-INSERT INTO `StoreAttribute` (`id`, `name`, `title`, `type`, `display_on_front`, `use_in_filter`, `select_many`, `position`) VALUES
-  ('1', 'color', 'Цвет', '6', '1', '1', '1', '1'),
-  ('3', 'size', 'Размер', '3', '1', '1', '0', '2'),
-  ('7', 'garanty', 'Имеет гарантию', '7', '1', '0', '0', '4'),
-  ('6', 'display', 'Дисплей', '2', '1', '0', '0', '3');
+INSERT INTO `StoreAttribute` (`id`, `name`, `title`, `type`, `display_on_front`, `use_in_filter`, `use_in_variants`, `select_many`, `position`) VALUES
+  ('27', 'color', 'Цвет', '3', '1', '1', '0', '0', '0'),
+  ('28', 'size', 'Размер', '3', '1', '1', '0', '0', '0');
 
 --
 -- Structure for table `StoreAttributeOption`
@@ -220,22 +218,21 @@ CREATE TABLE IF NOT EXISTS `StoreAttributeOption` (
   `position` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`attribute_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 --
 -- Data for table `StoreAttributeOption`
 --
 
 INSERT INTO `StoreAttributeOption` (`id`, `attribute_id`, `value`, `position`) VALUES
-  ('43', '1', 'Orange', '5'),
-  ('24', '3', 'XXL', '2'),
-  ('23', '3', 'XL', '1'),
-  ('22', '3', 'L', '0'),
-  ('42', '1', 'Yellow', '4'),
-  ('41', '1', 'Silver', '3'),
-  ('40', '1', 'Blue', '2'),
-  ('36', '1', 'Green', '1'),
-  ('39', '1', 'Red', '0');
+  ('50', '27', 'Blue', '3'),
+  ('51', '27', 'Silver', '4'),
+  ('44', '28', 'Small', '0'),
+  ('45', '28', 'Medium', '1'),
+  ('46', '28', 'Large', '2'),
+  ('47', '27', 'Red', '0'),
+  ('48', '27', 'White', '1'),
+  ('49', '27', 'Black', '2');
 
 --
 -- Structure for table `StoreCategory`
@@ -261,19 +258,20 @@ CREATE TABLE IF NOT EXISTS `StoreCategory` (
   KEY `level` (`level`),
   KEY `url` (`url`),
   KEY `full_path` (`full_path`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 --
 -- Data for table `StoreCategory`
 --
 
 INSERT INTO `StoreCategory` (`id`, `lft`, `rgt`, `level`, `name`, `url`, `full_path`, `meta_title`, `meta_keywords`, `meta_description`, `layout`, `view`) VALUES
-  ('1', '1', '20', '1', 'root', 'root', '', '', '', '', '', ''),
+  ('1', '1', '22', '1', 'root', 'root', '', '', '', '', '', ''),
   ('26', '4', '11', '2', 'Техника', 'tehnika', 'tehnika', 'title', 'keywords', 'desc', '', ''),
   ('29', '5', '6', '3', 'Холодильники', 'xolodilniki', 'tehnika/xolodilniki', '', '', '', '', ''),
   ('16', '8', '9', '4', 'Second', 'secosdfs-ssss', 'secosdfs-ssss', '', '', '', '', ''),
   ('35', '7', '10', '3', 'Ноутбуки', 'noutbuki', 'tehnika/noutbuki', '', '', '', '', ''),
-  ('36', '2', '3', '2', 'Test Category', 'test-category', 'tehnika/noutbuki/test-category', '', '', '', '', '');
+  ('36', '2', '3', '2', 'Test Category', 'test-category', 'tehnika/noutbuki/test-category', '', '', '', '', ''),
+  ('38', '12', '13', '2', 'Shirts', 'shirts', 'shirts', '', '', '', '', '');
 
 --
 -- Structure for table `StoreManufacturer`
@@ -313,6 +311,7 @@ CREATE TABLE IF NOT EXISTS `StoreProduct` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `manufacturer_id` int(11) DEFAULT NULL,
   `type_id` int(11) NOT NULL,
+  `use_configurations` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `price` float(10,2) NOT NULL,
@@ -333,22 +332,26 @@ CREATE TABLE IF NOT EXISTS `StoreProduct` (
   PRIMARY KEY (`id`),
   KEY `manufacturer_id` (`manufacturer_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 --
 -- Data for table `StoreProduct`
 --
 
-INSERT INTO `StoreProduct` (`id`, `manufacturer_id`, `type_id`, `name`, `url`, `price`, `is_active`, `short_description`, `full_description`, `meta_title`, `meta_keywords`, `meta_description`, `layout`, `view`, `sku`, `quantity`, `availability`, `auto_decrease_quantity`, `created`, `updated`) VALUES
-  ('6', '3', '2', 'Apple iPod touch 4Gen 8GB', 'apple-ipod-touch-4gen-8gb', '455', '1', '8 ГБ / AAC, защищённый AAC, HE-AAC, MP3, MP3 VBR, Audible, Apple Lossless, AIFF, WAV, H.264, M4V, MP4, MOV, MPEG-4, M-JPEG / сенсорный 3.5\" Multi-Touch дисплей / камера / USB 2.0 / 101 г', 'Теперь, с новым усовершенствованным Apple iPod touch, ваша любимая музыка, фильмы, игры и многое другое умещаются у вас на ладони.\r\nОтличный iPod\r\niPod Touch работает до 40 часов в режиме воспроизведения аудио — вся ваша любимая музыка всегда будет с вами.\r\nОтличный карманный компьютер\r\nНовое поколение iPod Touch почти на 50% быстрее, чем предыдущее. Программы запускаются быстрее, а веб-страницы загружаются почти мгновенно.', 'custom meta title', 'description', 'meta desc', '', '', '21334213', '0', '1', '1', '2012-01-07 21:31:35', '2012-02-09 00:27:55'),
-  ('12', '3', '2', 'Android Tablet', 'android-tablet', '344', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 16:26:05', '2012-02-05 18:17:09'),
-  ('13', '2', '2', 'Samsung Galaxy', 'samsung-galaxy', '233', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 16:26:23', '2012-01-28 11:40:20'),
-  ('14', '2', '2', 'Lenovo G656', 'lenovo-g656', '350', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 18:10:00', '2012-02-11 19:50:44'),
-  ('15', '1', '2', 'Antlant Cooler', 'antlant-cooler', '1200', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 19:28:13', '2012-02-05 18:18:24'),
-  ('16', '1', '2', 'Asus eee pc', 'asus-eee-pc', '345', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 22:41:17', '2012-02-09 00:56:13'),
-  ('21', NULL, '3', 'LG Flatron', 'lg-flatron', '570', '1', 'Среди производителей мониторов компания LG занимает одно из ведущих мест. Это стало возможным благодаря тому, что мониторы LG обладают исключительно высоким качеством изображения, эргономичным дизайном и высокой технологичностью. Неповторимый контраст, цвет \"<и обработка данных у мониторов CINEMA 3D, LCD мониторов и LED мониторов дают изображение невероятного качества.', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-28 00:18:57', '2012-02-05 22:37:19'),
-  ('23', NULL, '2', 'test product', 'test-product', '123', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-06 23:48:47', '2012-02-09 00:57:36'),
-  ('24', NULL, '2', 'no category product', 'no-category-product', '5', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-09 00:56:29', '2012-02-09 00:56:29');
+INSERT INTO `StoreProduct` (`id`, `manufacturer_id`, `type_id`, `use_configurations`, `name`, `url`, `price`, `is_active`, `short_description`, `full_description`, `meta_title`, `meta_keywords`, `meta_description`, `layout`, `view`, `sku`, `quantity`, `availability`, `auto_decrease_quantity`, `created`, `updated`) VALUES
+  ('6', '3', '2', '0', 'Apple iPod touch 4Gen 8GB', 'apple-ipod-touch-4gen-8gb', '455', '1', '8 ГБ / AAC, защищённый AAC, HE-AAC, MP3, MP3 VBR, Audible, Apple Lossless, AIFF, WAV, H.264, M4V, MP4, MOV, MPEG-4, M-JPEG / сенсорный 3.5\" Multi-Touch дисплей / камера / USB 2.0 / 101 г', 'Теперь, с новым усовершенствованным Apple iPod touch, ваша любимая музыка, фильмы, игры и многое другое умещаются у вас на ладони.\r\nОтличный iPod\r\niPod Touch работает до 40 часов в режиме воспроизведения аудио — вся ваша любимая музыка всегда будет с вами.\r\nОтличный карманный компьютер\r\nНовое поколение iPod Touch почти на 50% быстрее, чем предыдущее. Программы запускаются быстрее, а веб-страницы загружаются почти мгновенно.', 'custom meta title', 'description', 'meta desc', '', '', '21334213', '0', '1', '1', '2012-01-07 21:31:35', '2012-02-16 22:09:28'),
+  ('12', '3', '2', '0', 'Android Tablet', 'android-tablet', '344', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 16:26:05', '2012-02-05 18:17:09'),
+  ('13', '2', '2', '0', 'Samsung Galaxy', 'samsung-galaxy', '233', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 16:26:23', '2012-01-28 11:40:20'),
+  ('14', '2', '2', '0', 'Lenovo G656', 'lenovo-g656', '350', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 18:10:00', '2012-02-11 19:50:44'),
+  ('15', '1', '2', '0', 'Antlant Cooler', 'antlant-cooler', '1200', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 19:28:13', '2012-02-05 18:18:24'),
+  ('16', '1', '2', '0', 'Asus eee pc', 'asus-eee-pc', '345', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-14 22:41:17', '2012-02-09 00:56:13'),
+  ('21', NULL, '3', '0', 'LG Flatron', 'lg-flatron', '570', '1', 'Среди производителей мониторов компания LG занимает одно из ведущих мест. Это стало возможным благодаря тому, что мониторы LG обладают исключительно высоким качеством изображения, эргономичным дизайном и высокой технологичностью. Неповторимый контраст, цвет \"<и обработка данных у мониторов CINEMA 3D, LCD мониторов и LED мониторов дают изображение невероятного качества.', '', '', '', '', '', '', '', '0', '1', '1', '2012-01-28 00:18:57', '2012-02-05 22:37:19'),
+  ('27', NULL, '11', '0', 'Red medium shirt', 'red-medium-shirt', '16', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-16 23:14:24', '2012-02-16 23:14:24'),
+  ('26', NULL, '11', '0', 'White small shirt', 'white-small-shirt', '15', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-16 23:13:47', '2012-02-16 23:13:47'),
+  ('28', NULL, '11', '1', 'Configurbale T-Shirt', 'configurbale-t-shirt', '0', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-16 23:48:01', '2012-02-19 17:34:52'),
+  ('32', NULL, '11', '1', 'Antoher White Small Shirt', 'antoher-white-small-shirt', '12', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-18 13:57:48', '2012-02-18 13:57:48'),
+  ('33', NULL, '11', '1', 'Red Medium Futbolko', 'red-medium-futbolko', '12', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-18 19:00:21', '2012-02-18 20:01:57'),
+  ('34', NULL, '11', '0', 'White medium t-shirt', 'white-medium-t-shirt', '16', '1', '', '', '', '', '', '', '', '', '0', '1', '1', '2012-02-19 17:34:43', '2012-02-19 17:34:43');
 
 --
 -- Structure for table `StoreProductAttributeEAV`
@@ -367,21 +370,14 @@ CREATE TABLE IF NOT EXISTS `StoreProductAttributeEAV` (
 --
 
 INSERT INTO `StoreProductAttributeEAV` (`entity`, `attribute`, `value`) VALUES
-  ('16', 'size', '23'),
-  ('16', 'color', '42'),
-  ('12', 'size', '24'),
-  ('12', 'color', '40'),
-  ('12', 'color', '36'),
-  ('12', 'color', '39'),
-  ('6', 'size', '22'),
-  ('6', 'color', '36'),
-  ('15', 'color', '39'),
-  ('15', 'color', '36'),
-  ('15', 'color', '40'),
-  ('15', 'size', '23'),
-  ('16', 'color', '36'),
-  ('21', 'size', '22'),
-  ('21', 'color', '39');
+  ('27', 'color', '47'),
+  ('26', 'size', '44'),
+  ('26', 'color', '48'),
+  ('34', 'size', '45'),
+  ('34', 'color', '48'),
+  ('32', 'size', '44'),
+  ('27', 'size', '45'),
+  ('32', 'color', '48');
 
 --
 -- Structure for table `StoreProductCategoryRef`
@@ -397,14 +393,14 @@ CREATE TABLE IF NOT EXISTS `StoreProductCategoryRef` (
   KEY `category` (`category`),
   KEY `product` (`product`),
   KEY `is_main` (`is_main`)
-) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
 --
 -- Data for table `StoreProductCategoryRef`
 --
 
 INSERT INTO `StoreProductCategoryRef` (`id`, `product`, `category`, `is_main`) VALUES
-  ('63', '23', '1', '1'),
+  ('66', '27', '1', '1'),
   ('42', '13', '1', '0'),
   ('41', '13', '35', '1'),
   ('45', '14', '35', '1'),
@@ -415,7 +411,54 @@ INSERT INTO `StoreProductCategoryRef` (`id`, `product`, `category`, `is_main`) V
   ('49', '16', '1', '1'),
   ('51', '12', '26', '1'),
   ('58', '21', '35', '1'),
-  ('62', '24', '1', '1');
+  ('65', '26', '38', '1'),
+  ('76', '34', '1', '1'),
+  ('75', '28', '38', '1'),
+  ('72', '32', '1', '1'),
+  ('74', '33', '38', '1');
+
+--
+-- Structure for table `StoreProductConfigurableAttributes`
+--
+
+DROP TABLE IF EXISTS `StoreProductConfigurableAttributes`;
+CREATE TABLE IF NOT EXISTS `StoreProductConfigurableAttributes` (
+  `product_id` int(11) NOT NULL COMMENT 'Attributes available to configure product',
+  `attribute_id` int(11) NOT NULL,
+  UNIQUE KEY `product_attribute_index` (`product_id`,`attribute_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Data for table `StoreProductConfigurableAttributes`
+--
+
+INSERT INTO `StoreProductConfigurableAttributes` (`product_id`, `attribute_id`) VALUES
+  ('28', '27'),
+  ('28', '28'),
+  ('32', '27'),
+  ('32', '28'),
+  ('33', '27'),
+  ('33', '28');
+
+--
+-- Structure for table `StoreProductConfigurations`
+--
+
+DROP TABLE IF EXISTS `StoreProductConfigurations`;
+CREATE TABLE IF NOT EXISTS `StoreProductConfigurations` (
+  `product_id` int(11) NOT NULL COMMENT 'Saves relations beetwen product and configurations',
+  `configurable_id` int(11) NOT NULL,
+  UNIQUE KEY `product_conf_index` (`product_id`,`configurable_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Data for table `StoreProductConfigurations`
+--
+
+INSERT INTO `StoreProductConfigurations` (`product_id`, `configurable_id`) VALUES
+  ('28', '27'),
+  ('28', '32'),
+  ('28', '34');
 
 --
 -- Structure for table `StoreProductImage`
@@ -454,7 +497,7 @@ CREATE TABLE IF NOT EXISTS `StoreProductType` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Data for table `StoreProductType`
@@ -462,7 +505,27 @@ CREATE TABLE IF NOT EXISTS `StoreProductType` (
 
 INSERT INTO `StoreProductType` (`id`, `name`) VALUES
   ('2', 'Ноутбук'),
-  ('3', 'Телевизор');
+  ('3', 'Телевизор'),
+  ('11', 'Shirt');
+
+--
+-- Structure for table `StoreProductVariant`
+--
+
+DROP TABLE IF EXISTS `StoreProductVariant`;
+CREATE TABLE IF NOT EXISTS `StoreProductVariant` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attribute_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `price` float(10,2) DEFAULT NULL,
+  `price_type` tinyint(1) NOT NULL,
+  `sku` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `attribute_id` (`attribute_id`),
+  KEY `option_id` (`option_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Structure for table `StoreRelatedProduct`
@@ -475,7 +538,7 @@ CREATE TABLE IF NOT EXISTS `StoreRelatedProduct` (
   `related_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=442 DEFAULT CHARSET=utf8 COMMENT='Handle related products';
+) ENGINE=MyISAM AUTO_INCREMENT=446 DEFAULT CHARSET=utf8 COMMENT='Handle related products';
 
 --
 -- Data for table `StoreRelatedProduct`
@@ -504,14 +567,8 @@ CREATE TABLE IF NOT EXISTS `StoreTypeAttribute` (
 --
 
 INSERT INTO `StoreTypeAttribute` (`type_id`, `attribute_id`) VALUES
-  ('2', '1'),
-  ('2', '3'),
-  ('2', '6'),
-  ('2', '7'),
-  ('3', '1'),
-  ('3', '3'),
-  ('3', '6'),
-  ('3', '7');
+  ('11', '27'),
+  ('11', '28');
 
 --
 -- Structure for table `SystemLanguage`
@@ -573,7 +630,7 @@ CREATE TABLE IF NOT EXISTS `grid_view_filter` (
   `name` varchar(100) NOT NULL,
   `data` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 --
 -- Structure for table `user`
@@ -596,6 +653,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `created_at`, `last_login`, `login_ip`) VALUES
-  ('1', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'firstrow@gmail.com', '2011-08-21 10:17:15', '2012-02-07 23:33:52', '127.0.0.1'),
+  ('1', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'firstrow@gmail.com', '2011-08-21 10:17:15', '2012-02-19 16:55:12', '127.0.0.1'),
   ('10', 'tester', 'ab4d8d2a5f480a137067da17100271cd176607a1', 'tester@localhost.local', '2011-08-29 18:58:37', '2011-08-29 18:59:38', '127.0.0.1');
 
