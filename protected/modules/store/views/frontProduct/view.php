@@ -1,6 +1,7 @@
 <?php
 /**
  * Product view
+ * @var StoreProduct $model
  */
 
 // Set meta tags
@@ -19,6 +20,10 @@ if ($model->mainCategory->id != 1)
 	$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
 
 $this->breadcrumbs[] = $model->name;
+
+// Register script for configurable products
+if($model->use_configurations)
+	Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
 
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
@@ -76,6 +81,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					echo '</tr>';
 				}
 
+				// Display product configurations
 				if($model->use_configurations)
 				{
 					$configurables = $model->configurations;
@@ -83,10 +89,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					$models = StoreProduct::model()->findAllByPk($configurables);
 
 					$data = array();
+					$prices = array();
 					foreach($attributeModels as $attr)
 					{
 						foreach($models as $m)
 						{
+							$prices[$m->id] = $m->price;
 							if(!isset($data[$attr->name]))
 								$data[$attr->name] = array('---'=>'---');
 
@@ -94,11 +102,17 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 							$value = $m->$method;
 
 							if(!isset($data[$attr->name][$value]))
-									$data[$attr->name][$value] = '';
+								$data[$attr->name][$value] = '';
 
 							$data[$attr->name][$value] .= $m->id.'/';
 						}
 					}
+
+					Yii::app()->clientScript->registerScript('productPrices', strtr('
+						var productPrices = {prices};
+					', array(
+						'{prices}'=>CJavaScript::encode($prices)
+					)), CClientScript::POS_END);
 
 					foreach($attributeModels as $attr)
 					{
@@ -111,67 +125,9 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 
 				?>
 			</table>
-
-			<script type="text/javascript">
-				// Disable all dropdowns exclude first
-				$('.eavData:not(:first)').attr('disabled','disabled');
-
-				$('.eavData').change(function(){
-					if($(this).val() == '---')
-					{
-						// If selected empty - reset all next dropdowns
-						$(this).nextAll('.eavData').each(function(){
-							$(this).find('option:first').attr('selected', 'selected');
-							$(this).attr('disabled', 'disabled');
-						});
-						return;
-					}
-
-					var val = prepArray($(this).val().split('/'));
-
-					// Disable all next
-					$(this).nextAll('.eavData').attr('disabled', 'disabled');
-					// Activate first closest
-					$(this).nextAll('.eavData:first').removeAttr('disabled');
-
-					$(this).nextAll('.eavData').each(function(){
-						// Reset current selection
-						$(this).find('option:first').attr('selected', 'selected');
-
-						$(this).find('option').each(function(){
-							var optionVals = prepArray($(this).val().split('/'));
-							var found = false;
-							// Check if one of previous values are present in current option
-							$(val).each(function(i,el){
-								if($.inArray(el, optionVals))
-									found = true;
-							});
-
-							if(!found)
-								$(this).hide();
-							else
-								$(this).show();
-						});
-					});
-				});
-
-				/**
-				 * Remove from array ampty values and '---'
-				 * @param arr
-				 */
-				function prepArray(arr)
-				{
-					$.each(arr, function(i, v) {
-						if(v == '' || v == '---') {
-							arr.splice(i,1);
-						}
-					});
-					return arr;
-				}
-			</script>
 		</div>
 
-		<h4>Цена: <?php echo $model->price ?></h4>
+		<h4>Цена: <span id="productPrice"><?php echo $model->price ?></span></h4>
 		<a href="#" class="btn btn-large btn-primary">Купить</a>
 
 		<div class="row">&nbsp;</div>
