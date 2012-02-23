@@ -68,58 +68,36 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				<?php
 				foreach($model->processVariants() as $variant)
 				{
-					echo '<tr>';
-					echo '<td>';
+					echo '<tr><td>';
 					echo $variant['attribute']->title;
-					echo '</td>';
-					echo '<td>';
+					echo '</td><td>';
 					$dropDownData = array();
 					foreach($variant['options'] as $v)
 						$dropDownData[$v->id] = $v->option->value;
 					echo CHtml::dropDownList(1, null, $dropDownData);
-					echo '</td>';
-					echo '</tr>';
+					echo '</td></tr>';
 				}
 
 				// Display product configurations
 				if($model->use_configurations)
 				{
-					$configurables = $model->configurations;
-					$attributeModels = StoreAttribute::model()->findAllByPk($model->configurable_attributes);
-					$models = StoreProduct::model()->findAllByPk($configurables);
+					// Get data
+					$confData = $this->getConfigurableData();
 
-					$data = array();
-					$prices = array();
-					foreach($attributeModels as $attr)
-					{
-						foreach($models as $m)
-						{
-							$prices[$m->id] = $m->price;
-							if(!isset($data[$attr->name]))
-								$data[$attr->name] = array('---'=>'---');
-
-							$method = 'eav_'.$attr->name;
-							$value = $m->$method;
-
-							if(!isset($data[$attr->name][$value]))
-								$data[$attr->name][$value] = '';
-
-							$data[$attr->name][$value] .= $m->id.'/';
-						}
-					}
-
+					// Register configuration script
 					Yii::app()->clientScript->registerScript('productPrices', strtr('
 						var productPrices = {prices};
 					', array(
-						'{prices}'=>CJavaScript::encode($prices)
+						'{prices}'=>CJavaScript::encode($confData['prices'])
 					)), CClientScript::POS_END);
 
-					foreach($attributeModels as $attr)
+					foreach($confData['attributes'] as $attr)
 					{
-						echo $attr->title.': ';
-						echo CHtml::dropDownList('eav_'.$attr->name, null, array_flip($data[$attr->name]), array('class'=>'eavData'));
-
-						echo '<br/>';
+						echo '<tr><td>';
+						echo $attr->title;
+						echo '</td><td>';
+						echo CHtml::dropDownList('eav_'.$attr->name, null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
+						echo '</td></tr>';
 					}
 				}
 

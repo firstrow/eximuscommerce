@@ -2,6 +2,23 @@
  * Script for configurable products
  */
 
+/**
+ * Find all next object in DOM
+ * Usage $('.selector').nextAllData(this).attr(...)
+ * @param startFrom
+ */
+jQuery.fn.nextAllData = function(startFrom){
+    var selectedObjects = this;
+    var result = [];
+    selectedObjects.each(function(i){
+        if(this == startFrom) {
+            result = selectedObjects.slice(i+1);
+        }
+    });
+    return result;
+};
+
+
 // Disable all dropdowns exclude first
 $('.eavData:not(:first)').attr('disabled','disabled');
 
@@ -9,7 +26,7 @@ $('.eavData').change(function(){
     if($(this).val() == '---')
     {
         // If selected empty - reset all next dropdowns
-        $(this).nextAll('.eavData').each(function(){
+        $('.eavData').nextAllData(this).each(function(){
             $(this).find('option:first').attr('selected', 'selected');
             $(this).attr('disabled', 'disabled');
         });
@@ -19,11 +36,11 @@ $('.eavData').change(function(){
     var val = pconfPrepArray($(this).val().split('/'));
 
     // Disable all next
-    $(this).nextAll('.eavData').attr('disabled', 'disabled');
+    $('.eavData').nextAllData(this).attr('disabled', 'disabled');
     // Activate first closest
-    $(this).nextAll('.eavData:first').removeAttr('disabled');
+    $('.eavData').nextAllData(this).first().removeAttr('disabled');
 
-    $(this).nextAll('.eavData').each(function(){
+    $('.eavData').nextAllData(this).each(function(){
         // Reset current selection
         $(this).find('option:first').attr('selected', 'selected');
 
@@ -45,6 +62,7 @@ $('.eavData').change(function(){
     });
 });
 
+// Change price on last dropdown change
 $('.eavData:last').change(function(){
     var productId = parseInt($(this).val());
     if(productPrices[productId] != undefined)

@@ -7,22 +7,81 @@ class FrontProductController extends Controller
 {
 
 	/**
+	 * @var StoreProduct
+	 */
+	public $model;
+
+	/**
 	 * Display product
 	 * @param string $url product url
 	 */
 	public function actionView($url)
 	{
-		$model = StoreProduct::model()
+		$this->_loadModel($url);
+		$view = $this->setDesign($this->model, 'view');
+
+		$this->render($view, array(
+			'model'=>$this->model,
+		));
+	}
+
+	/**
+	 * Load StoreProduct by url
+	 * @param $url
+	 * @return StoreProduct
+	 * @throws CHttpException
+	 */
+	protected function _loadModel($url)
+	{
+		$this->model = StoreProduct::model()
 			->active()
 			->withUrl($url)
 			->find();
 
-		if (!$model) throw new CHttpException(404, Yii::t('StoreModule.core', 'Продукт не найден.'));
+		if (!$this->model) throw new CHttpException(404, Yii::t('StoreModule.core', 'Продукт не найден.'));
 
-		$view = $this->setDesign($model, 'view');
+		return $this->model;
+	}
 
-		$this->render($view, array(
-			'model'=>$model,
-		));
+	/**
+	 * Get data to render dropdowns for configurable product.
+	 * array(
+	 *      'attributes' // Array for StoreAttribute models used for configurations
+	 *      'prices'     // Key/value array with configurations prices array(product_id=>price)
+	 *      'data'       // Array to render dropdowns. array(color=>array('Green'=>'1/3/5/', 'Silver'=>'7/'))
+	 * )
+	 * @todo Optimize. Cache quries.
+	 * @return array
+	 */
+	public function getConfigurableData()
+	{
+		$attributeModels = StoreAttribute::model()->findAllByPk($this->model->configurable_attributes);
+		$models = StoreProduct::model()->findAllByPk($this->model->configurations);
+
+		$data = array();
+		$prices = array();
+		foreach($attributeModels as $attr)
+		{
+			foreach($models as $m)
+			{
+				$prices[$m->id] = $m->price;
+				if(!isset($data[$attr->name]))
+					$data[$attr->name] = array('---'=>'---');
+
+				$method = 'eav_'.$attr->name;
+				$value = $m->$method;
+
+				if(!isset($data[$attr->name][$value]))
+					$data[$attr->name][$value] = '';
+
+				$data[$attr->name][$value] .= $m->id.'/';
+			}
+		}
+
+		return array(
+			'attributes'=>$attributeModels,
+			'prices'=>$prices,
+			'data'=>$data,
+		);
 	}
 }
