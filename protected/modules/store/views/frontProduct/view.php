@@ -93,11 +93,14 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 
 					foreach($confData['attributes'] as $attr)
 					{
-						echo '<tr><td>';
-						echo $attr->title;
-						echo '</td><td>';
-						echo CHtml::dropDownList('eav_'.$attr->name, null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
-						echo '</td></tr>';
+						if(isset($confData['data'][$attr->name]))
+						{
+							echo '<tr><td>';
+							echo $attr->title;
+							echo '</td><td>';
+							echo CHtml::dropDownList('eav_'.$attr->name, null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
+							echo '</td></tr>';
+						}
 					}
 				}
 
