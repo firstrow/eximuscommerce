@@ -244,25 +244,44 @@ class SFilterRenderer extends CWidget
 	 */
 	public function getCategoryManufacturers()
 	{
-		$manufacturers = StoreManufacturer::model()
-			->orderByName()
-			->findAll(array('with'=>array(
-			'productsCount'=>array(
-				'scopes'=>array(
-					'active',
-					'applyCategories'=>array($this->model, null),
-					'applyAttributes'=>array($this->getOwner()->activeAttributes)
-				),
-			)
-			)));
+//		$manufacturers = StoreManufacturer::model()
+//			->orderByName()
+//			->findAll(array('with'=>array(
+//			'productsCount'=>array(
+//				'scopes'=>array(
+//					'active',
+//					'applyCategories'=>array($this->model, null),
+//					'applyAttributes'=>array($this->getOwner()->activeAttributes)
+//				),
+//			)
+//			)));
+
+		$cr = new CDbCriteria;
+		$cr->select = 't.manufacturer_id, t.id';
+		$cr->group = 't.manufacturer_id';
+		$cr->addCondition('t.manufacturer_id IS NOT NULL');
+
+		$manufacturers = StoreProduct::model()
+			->active()
+			->applyCategories($this->model, null)
+			->with(array('manufacturer'=>array(
+			'with'=>array('productsCount'=>array('scopes'=>array(
+				'active',
+				'applyCategories'=>array($this->model, null),
+				'applyAttributes'=>array($this->getOwner()->activeAttributes)
+			))),
+			)))
+			->findAll($cr);
 
 		$data = array(
 			'title'=>Yii::t('StoreModule.core', 'Производитель'),
 			'selectMany'=>true,
 			'filters'=>array()
 		);
+
 		foreach($manufacturers as $m)
 		{
+			$m = $m->manufacturer;
 			$data['filters'][] = array(
 				'title'      => $m->name,
 				'count'      => $m->productsCount,
