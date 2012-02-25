@@ -123,7 +123,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<!-- Display errors here -->
 		<div class="alert alert-error" id="productErrors" style="display: none;"></div>
 
-		<h4>Цена: <span id="productPrice"><?php echo $model->price ?></span></h4>
+		<h4>Цена: <span id="productPrice"><?php echo StoreProduct::formatPrice($model->price); ?></span></h4>
 		<?php
 			echo CHtml::hiddenField('product_id', $model->id);
 			echo CHtml::hiddenField('product_price', $model->price);

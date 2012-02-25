@@ -18,7 +18,7 @@
 <div class="span5">
 	<?php echo CHtml::link(CHtml::encode($data->name), array('frontProduct/view', 'url'=>$data->url)) ?>
 	<br>
-	<?php echo $data->price; ?>
+	<?php echo StoreProduct::formatPrice($data->price) ?>
 </div>
 
 <div style="clear:both;height: 10px;"></div>

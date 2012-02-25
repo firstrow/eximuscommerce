@@ -20,7 +20,12 @@ class CartController extends Controller
 	public function actionIndex()
 	{
 		if(Yii::app()->request->isPostRequest && Yii::app()->request->getPost('recount') && !empty($_POST['quantities']))
+		{
 			Yii::app()->cart->recount(Yii::app()->request->getPost('quantities'));
+
+			if(!Yii::app()->request->isAjaxRequest)
+				Yii::app()->request->redirect($this->createUrl('index'));
+		}
 
 		$this->render('index');
 	}

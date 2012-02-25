@@ -68,7 +68,10 @@
 			</td>
 			<td><?php echo CHtml::textField("quantities[$index]", $product['quantity'], array('class'=>'span1')) ?></td>
 			<td>
-				sum
+				<?php
+					$price = StoreProduct::calculatePrices($product['model'], $product['variants'], $product['configurable_id']);
+					echo StoreProduct::formatPrice($price);
+				?>
 			</td>
 			<td>
 				<?php echo CHtml::link('Удалить', array('/orders/cart/remove', 'index'=>$index)) ?>

@@ -6,9 +6,9 @@
 $('.eavData:not(:first)').attr('disabled','disabled');
 
 $('.eavData').change(function(){
+    $('#configurable_id').val(0);
     if($(this).val() == '---' || $(this).val() == '0')
     {
-        $('#configurable_id').val(0);
         recalculateProductPrice();
         // If selected empty - reset all next dropdowns
         $('.eavData').nextAllData(this).each(function(){
@@ -78,7 +78,6 @@ $(document).ready(function(){
 function recalculateProductPrice()
 {
     var result = parseFloat($('#product_price').val());
-    var original_price = parseFloat($('#product_price').val());
 
     // Update price
     if(typeof(productPrices) != "undefined" && productPrices[$('#configurable_id').val()] != undefined){
@@ -90,7 +89,7 @@ function recalculateProductPrice()
         if(jsVariantsData[variant_id]){
             if(jsVariantsData[variant_id].price_type == "1"){
                 // Price type is percent
-                result = result + (original_price / 100 * parseFloat(jsVariantsData[variant_id].price));
+                result = result + (result / 100 * parseFloat(jsVariantsData[variant_id].price));
             }else{
                 result = result + parseFloat(jsVariantsData[variant_id].price);
             }

@@ -567,6 +567,51 @@ class StoreProduct extends BaseModel
 		return $this->_configurations;
 	}
 
+	/**
+	 * Calculate product price by its variants, confirugation and self price
+	 * @static
+	 * @param $product
+	 * @param array $variants
+	 * @param $configuration
+	 */
+	public static function calculatePrices($product, array $variants, $configuration)
+	{
+		if(($product instanceof StoreProduct) === false)
+			$product = StoreProduct::model()->findByPk($product);
+
+		if(($configuration instanceof StoreProduct) === false && $configuration > 0)
+			$configuration = StoreProduct::model()->findByPk($configuration);
+
+		if($configuration instanceof StoreProduct)
+			$result = $configuration->price;
+		else
+			$result = $product->price;
+
+		$variants = StoreProductVariant::model()->findAllByPk($variants);
+
+		foreach ($variants as $variant)
+		{
+			// Price is percent
+			if($variant->price_type == 1)
+				$result += ($result / 100 * $variant->price);
+			else
+				$result += $variant->price;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Apply price format
+	 * @static
+	 * @param $price
+	 * @return string formatted price
+	 */
+	public static function formatPrice($price)
+	{
+		return money_format('%.2n', $price);
+	}
+
 	public function __get($name)
 	{
 		if(substr($name,0,4) === 'eav_')
