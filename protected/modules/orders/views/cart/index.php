@@ -42,7 +42,7 @@
 			<td>
 				<?php
 					// Display product name with its variants and configurations
-					echo CHtml::encode($product['model']->name).'<br/>';
+					echo CHtml::link(CHtml::encode($product['model']->name), array('/store/frontProduct/view', 'url'=>$product['model']->url)).'<br/>';
 
 					// Display variant options
 					if(!empty($product['variant_models']))

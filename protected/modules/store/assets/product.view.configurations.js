@@ -53,7 +53,12 @@ $('.eavData:last').change(function(){
     });
 
     temp = pconfPrepArray(temp.split('/'));
-    var productId = parseInt(find_duplicates(temp)[0]);
+
+    if(temp.length > 1){
+        var productId = parseInt(find_duplicates(temp)[0]);
+    }else{
+        var productId = temp[0];
+    }
 
     if(productPrices[productId] != undefined){
         $('#configurable_id').val(productId);
