@@ -12,6 +12,7 @@
 		echo CHtml::closeTag('h4');
 		return;
 	}
+
 ?>
 
 <?php echo CHtml::form() ?>
@@ -69,7 +70,7 @@
 			<td><?php echo CHtml::textField("quantities[$index]", $product['quantity'], array('class'=>'span1')) ?></td>
 			<td>
 				<?php
-					$price = StoreProduct::calculatePrices($product['model'], $product['variants'], $product['configurable_id']);
+					$price = StoreProduct::calculatePrices($product['model'], $product['variant_models'], $product['configurable_id']);
 					echo StoreProduct::formatPrice($price * $product['quantity']);
 				?>
 			</td>

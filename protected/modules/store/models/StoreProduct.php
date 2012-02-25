@@ -587,7 +587,9 @@ class StoreProduct extends BaseModel
 		else
 			$result = $product->price;
 
-		$variants = StoreProductVariant::model()->findAllByPk($variants);
+		// if $variants containts not models
+		if(!empty($variants) && ($variants[0] instanceof StoreProductVariant) === false)
+			$variants = StoreProductVariant::model()->findAllByPk($variants);
 
 		foreach ($variants as $variant)
 		{

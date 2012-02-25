@@ -109,9 +109,20 @@ class SCart extends CComponent
 		return $data;
 	}
 
+	/**
+	 * Count total price
+	 */
 	public function getTotalPrice()
 	{
+		$result = 0;
+		$data = $this->getDataWithModels();
+		foreach($data as $item)
+		{
+			$configurable = isset($item['configurable_model']) ? $item['configurable_model'] : 0;
+			$result += StoreProduct::calculatePrices($item['model'], $item['variants'], $configurable) * $item['quantity'];
+		}
 
+		return $result;
 	}
 
 	/**

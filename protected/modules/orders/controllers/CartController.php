@@ -122,6 +122,14 @@ class CartController extends Controller
 	{
 	}
 
+	public function actionClear()
+	{
+		Yii::app()->cart->clear();
+
+		if(!Yii::app()->request->isAjaxRequest)
+			Yii::app()->request->redirect($this->createUrl('index'));
+	}
+
 	/**
 	 * Process result and exit!
 	 */

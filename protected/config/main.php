@@ -83,7 +83,7 @@ return array(
 			'enableProfiling' => YII_DEBUG, // Disable in production
 			'enableParamLogging' => TRUE, // Disable in production
 			'emulatePrepare' => true,
-			//'schemaCachingDuration'=>3600, // Enable in production
+			'schemaCachingDuration'=>3600, // Enable in production
 			'username' => 'root',
 			'password' => 'mysqlpass',
 			'charset' => 'utf8',
