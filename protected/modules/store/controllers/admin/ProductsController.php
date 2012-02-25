@@ -262,9 +262,7 @@ class ProductsController extends SAdminController
 		$productPks = Yii::app()->request->getPost('ConfigurationsProductGrid_c0', array());
 
 		// Clear relations
-		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', array(
-			'product_id='.$model->id
-		));
+		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'product_id=:id', array(':id'=>$model->id));
 
 		if(!sizeof($productPks))
 			return;
