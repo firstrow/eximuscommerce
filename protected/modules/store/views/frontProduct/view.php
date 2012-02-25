@@ -120,7 +120,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<?php
 			echo CHtml::hiddenField('product_id', $model->id);
 			echo CHtml::hiddenField('configurable_id', 0);
-			echo CHtml::textField('quantity', 1, array('class'=>'span1'));
+			echo CHtml::textField('quantity', 1, array('class'=>'span1', 'style'=>'margin:3px'));
 
 			echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(
 				'dataType'=>'json',

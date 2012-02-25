@@ -2,23 +2,6 @@
  * Script for configurable products
  */
 
-/**
- * Find all next object in DOM
- * Usage $('.selector').nextAllData(this).attr(...)
- * @param startFrom
- */
-jQuery.fn.nextAllData = function(startFrom){
-    var selectedObjects = this;
-    var result = [];
-    selectedObjects.each(function(i){
-        if(this == startFrom) {
-            result = selectedObjects.slice(i+1);
-        }
-    });
-    return result;
-};
-
-
 // Disable all dropdowns exclude first
 $('.eavData:not(:first)').attr('disabled','disabled');
 
@@ -78,6 +61,22 @@ $('.eavData:last').change(function(){
     }
 });
 
+/**
+ * Find all next object in DOM
+ * Usage $('.selector').nextAllData(this).attr(...)
+ * @param startFrom
+ */
+jQuery.fn.nextAllData = function(startFrom){
+    var selectedObjects = this;
+    var result = [];
+    selectedObjects.each(function(i){
+        if(this == startFrom) {
+            result = selectedObjects.slice(i+1);
+        }
+    });
+    return result;
+};
+
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
@@ -86,8 +85,7 @@ Array.prototype.contains = function(obj) {
         }
     }
     return false;
-}
-
+};
 
 function find_duplicates(arr) {
     var len=arr.length,
