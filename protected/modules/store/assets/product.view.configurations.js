@@ -73,7 +73,7 @@ $(document).ready(function(){
 
 /**
  * Recalculate product price on change variant or configurable options.
- * Sum product price + varint prices + configurable prices.
+ * Sum product price + variant prices + configurable prices.
  */
 function recalculateProductPrice()
 {
@@ -86,7 +86,7 @@ function recalculateProductPrice()
     });
 
     // Update price
-    if(productPrices[$('#configurable_id').val()] != undefined){
+    if(typeof(productPrices) != "undefined" && productPrices[$('#configurable_id').val()] != undefined){
         result = result + parseFloat(productPrices[$('#configurable_id').val()]);
     }
 

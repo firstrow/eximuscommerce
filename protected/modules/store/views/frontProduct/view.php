@@ -86,6 +86,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						echo '</td></tr>';
 					}
 
+					// Register variant prices script
 					Yii::app()->clientScript->registerScript('jsVariantsData','
 						var jsVariantsData = '.CJavaScript::jsonEncode($jsVariantsData).';
 					', CClientScript::POS_END);

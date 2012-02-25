@@ -418,7 +418,7 @@ class StoreProduct extends BaseModel
 
 		// Delete configurations
 		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'product_id=:id', array(':id'=>$this->id));
-		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'configurable=:id', array(':id'=>$this->id));
+		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'configurable_id=:id', array(':id'=>$this->id));
 
 		return parent::afterDelete();
 	}
