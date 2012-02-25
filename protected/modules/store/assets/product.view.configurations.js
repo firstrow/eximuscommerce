@@ -23,8 +23,10 @@ jQuery.fn.nextAllData = function(startFrom){
 $('.eavData:not(:first)').attr('disabled','disabled');
 
 $('.eavData').change(function(){
-    if($(this).val() == '---')
+    if($(this).val() == '---' || $(this).val() == '0')
     {
+        $('#configurable_id').val(0);
+
         // If selected empty - reset all next dropdowns
         $('.eavData').nextAllData(this).each(function(){
             $(this).find('option:first').attr('selected', 'selected');
@@ -67,6 +69,7 @@ $('.eavData:last').change(function(){
     var productId = parseInt($(this).val());
     if(productPrices[productId] != undefined)
     {
+        $('#configurable_id').val(productId);
         $('#productPrice').html(productPrices[productId]);
     }
 });
@@ -78,7 +81,7 @@ $('.eavData:last').change(function(){
 function pconfPrepArray(arr)
 {
     $.each(arr, function(i, v) {
-        if(v == '' || v == '---') {
+        if(v == '' || v == '---' || v == '0' ){
             arr.splice(i,1);
         }
     });

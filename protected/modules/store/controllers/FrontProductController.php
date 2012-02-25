@@ -45,12 +45,13 @@ class FrontProductController extends Controller
 
 	/**
 	 * Get data to render dropdowns for configurable product.
+	 * Used on product view.
 	 * array(
 	 *      'attributes' // Array for StoreAttribute models used for configurations
 	 *      'prices'     // Key/value array with configurations prices array(product_id=>price)
 	 *      'data'       // Array to render dropdowns. array(color=>array('Green'=>'1/3/5/', 'Silver'=>'7/'))
 	 * )
-	 * @todo Optimize. Cache quries.
+	 * @todo Optimize. Cache queries.
 	 * @return array
 	 */
 	public function getConfigurableData()
@@ -66,7 +67,7 @@ class FrontProductController extends Controller
 			{
 				$prices[$m->id] = $m->price;
 				if(!isset($data[$attr->name]))
-					$data[$attr->name] = array('---'=>'---');
+					$data[$attr->name] = array('---'=>'0');
 
 				$method = 'eav_'.$attr->name;
 				$value = $m->$method;

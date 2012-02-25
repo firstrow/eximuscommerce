@@ -111,6 +111,9 @@ return array(
 		'fixture'=>array(
 			'class'=>'system.test.CDbFixtureManager',
 		),
+		'cart'=>array(
+			'class'=>'ext.cart.SCart',
+		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

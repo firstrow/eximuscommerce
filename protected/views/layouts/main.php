@@ -40,8 +40,9 @@
 						);
 					?>
 				<div class="navbar-text pull-right" style="float: right;">
-					<a href="">Auth</a> /
-					<a href="">Register</a>
+					<a href="">Авторизация</a> /
+					<a href="">Регистрация</a> /
+					<?php echo CHtml::link('Корзина', array('/orders/cart/index')) ?>
 				</div>
 			  </div><!--/.nav-collapse -->
 		  </div>

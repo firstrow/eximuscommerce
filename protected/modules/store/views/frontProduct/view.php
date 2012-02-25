@@ -21,6 +21,9 @@ if ($model->mainCategory->id != 1)
 
 $this->breadcrumbs[] = $model->name;
 
+// Register main script
+Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.js', CClientScript::POS_END);
+
 // Register script for configurable products
 if($model->use_configurations)
 	Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
@@ -63,6 +66,9 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<p><?php echo $model->short_description; ?></p>
 		<p><?php echo $model->full_description; ?></p>
 
+		<?php
+			echo CHtml::form(array('/orders/cart/add'));
+		?>
 		<div>
 			<table class="table table-striped table-bordered table-condensed">
 				<?php
@@ -71,13 +77,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					echo '<tr><td>';
 					echo $variant['attribute']->title;
 					echo '</td><td>';
-					$dropDownData = array();
+					$dropDownData = array('---');
 					foreach($variant['options'] as $v)
 						$dropDownData[$v->id] = $v->option->value;
-					echo CHtml::dropDownList(1, null, $dropDownData);
+					echo CHtml::dropDownList('eav['.$variant['attribute']->id.']', null, $dropDownData);
 					echo '</td></tr>';
 				}
-
 				// Display product configurations
 				if($model->use_configurations)
 				{
@@ -98,7 +103,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 							echo '<tr><td>';
 							echo $attr->title;
 							echo '</td><td>';
-							echo CHtml::dropDownList('eav_'.$attr->name, null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
+							echo CHtml::dropDownList('configurations['.$attr->name.']', null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
 							echo '</td></tr>';
 						}
 					}
@@ -108,8 +113,22 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			</table>
 		</div>
 
+		<!-- Display errors here -->
+		<div class="alert alert-error" id="productErrors" style="display: none;"></div>
+
 		<h4>Цена: <span id="productPrice"><?php echo $model->price ?></span></h4>
-		<a href="#" class="btn btn-large btn-primary">Купить</a>
+		<?php
+			echo CHtml::hiddenField('product_id', $model->id);
+			echo CHtml::hiddenField('configurable_id', 0);
+			echo CHtml::textField('quantity', 1, array('class'=>'span1'));
+
+			echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(
+				'dataType'=>'json',
+				'success'=>'js:function(data, textStatus, jqXHR){processCartResponse(data, textStatus, jqXHR)}',
+			), array('class'=>'btn-primary'));
+
+			echo CHtml::endForm();
+		?>
 
 		<div class="row">&nbsp;</div>
 
