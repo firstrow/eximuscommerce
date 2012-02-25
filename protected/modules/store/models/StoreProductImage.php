@@ -47,7 +47,7 @@ class StoreProductImage extends BaseModel
     /**
      * Get url to product image. Enter $size to resize image.
      * @param mixed $size New size of the image. e.g. '150x150'
-     * @param mixed $resizeMethod Resize method name to override config
+     * @param mixed $resizeMethod Resize method name to override config. resize/adaptiveResize
      * @param mixed $random Add random number to the end of the string
      * @return string
      */

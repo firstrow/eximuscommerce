@@ -8,6 +8,12 @@ class CartController extends Controller
 
 	protected $_errors = false;
 
+	public function beforeAction()
+	{
+		Yii::import('application.modules.store.models.*');
+		return true;
+	}
+
 	/**
 	 * Display list of product added to cart
 	 */
@@ -21,8 +27,6 @@ class CartController extends Controller
 	 */
 	public function actionAdd()
 	{
-		Yii::import('application.modules.store.models.*');
-
 		$variants = array();
 
 		// Load product model
@@ -62,7 +66,7 @@ class CartController extends Controller
 			'product_id'      => $model->id,
 			'variants'        => $variants,
 			'configurable_id' => $configurable_id,
-			'quantity'        => Yii::app()->request->getPost('quantity', 1),
+			'quantity'        => (int) Yii::app()->request->getPost('quantity', 1),
 			'price'           => $model->price,
 		));
 
@@ -88,9 +92,12 @@ class CartController extends Controller
 	/**
 	 * Remove product from cart
 	 */
-	public function actionRemove()
+	public function actionRemove($index)
 	{
+		Yii::app()->cart->remove($index);
 
+		if(!Yii::app()->request->isAjaxRequest)
+			Yii::app()->request->redirect($this->createUrl('index'));
 	}
 
 	/**

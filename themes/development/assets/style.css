@@ -28,3 +28,11 @@ ul.filters li {
 ul.filters li:hover {
     background-color: #E8E8E8;
 }
+
+/* Cart */
+.cartTable tr td {
+    padding: 5px;
+}
+.cartProductOptions {
+    font-size:12px;
+}

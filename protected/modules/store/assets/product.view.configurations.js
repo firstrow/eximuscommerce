@@ -26,7 +26,6 @@ $('.eavData').change(function(){
     if($(this).val() == '---' || $(this).val() == '0')
     {
         $('#configurable_id').val(0);
-
         // If selected empty - reset all next dropdowns
         $('.eavData').nextAllData(this).each(function(){
             $(this).find('option:first').attr('selected', 'selected');
@@ -48,31 +47,66 @@ $('.eavData').change(function(){
 
         $(this).find('option').each(function(){
             var optionVals = pconfPrepArray($(this).val().split('/'));
+            var option = this;
 
-            var found = false;
+            $(option).hide();
             // Check if one of previous values are present in current option
-            $(val).each(function(i,el){
-                if($.inArray(el, optionVals))
-                    found = true;
+            $(val).each(function(i, el){
+                if(optionVals.contains(el) || $(option).val() == '0'){
+                    $(option).show();
+                }
             });
 
-            if(!found)
-                $(this).hide();
-            else
-                $(this).show();
         });
     });
 });
 
 // Change price on last dropdown change
 $('.eavData:last').change(function(){
-    var productId = parseInt($(this).val());
+    var temp = '';
+    $('.eavData').each(function(){
+        temp = temp + $(this).val();
+    });
+
+    temp = pconfPrepArray(temp.split('/'));
+    var productId = parseInt(find_duplicates(temp)[0]);
+
     if(productPrices[productId] != undefined)
     {
         $('#configurable_id').val(productId);
         $('#productPrice').html(productPrices[productId]);
     }
 });
+
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+function find_duplicates(arr) {
+    var len=arr.length,
+        out=[],
+        counts={};
+
+    for (var i=0;i<len;i++) {
+        var item = arr[i];
+        var count = counts[item];
+        counts[item] = counts[item] >= 1 ? counts[item] + 1 : 1;
+    }
+
+    for (var item in counts) {
+        if(counts[item] > 1)
+            out.push(item);
+    }
+
+    return out;
+}
 
 /**
  * Remove from array ampty values and '---'
@@ -81,8 +115,8 @@ $('.eavData:last').change(function(){
 function pconfPrepArray(arr)
 {
     $.each(arr, function(i, v) {
-        if(v == '' || v == '---' || v == '0' ){
-            arr.splice(i,1);
+        if(v == '' || v == '---' || v == '0'){
+            arr.splice(i, 1);
         }
     });
     return arr;

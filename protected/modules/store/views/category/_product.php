@@ -5,14 +5,14 @@
 ?>
 <!-- Left column  -->
 <div class="span2">
-    <?php
-        if($data->mainImage)
-            $imgSource = $data->mainImage->getUrl('170x124');
-        else
-            $imgSource = 'http://placehold.it/170x124';
+	<?php
+		if($data->mainImage)
+			$imgSource = $data->mainImage->getUrl('170x124');
+		else
+			$imgSource = 'http://placehold.it/170x124';
 
-        echo CHtml::link(CHtml::image($imgSource), array('frontProduct/view', 'url'=>$data->url), array('class'=>'thumbnail'));
-    ?>
+		echo CHtml::link(CHtml::image($imgSource), array('frontProduct/view', 'url'=>$data->url), array('class'=>'thumbnail'));
+	?>
 </div>
 <!-- Right column -->
 <div class="span5">
