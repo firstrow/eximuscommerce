@@ -1,5 +1,5 @@
 /**
- * Script for configurable products
+ * Script for configurable products and variants
  */
 
 // Disable all dropdowns exclude first
@@ -9,6 +9,7 @@ $('.eavData').change(function(){
     if($(this).val() == '---' || $(this).val() == '0')
     {
         $('#configurable_id').val(0);
+        recalculateProductPrice();
         // If selected empty - reset all next dropdowns
         $('.eavData').nextAllData(this).each(function(){
             $(this).find('option:first').attr('selected', 'selected');
@@ -54,12 +55,43 @@ $('.eavData:last').change(function(){
     temp = pconfPrepArray(temp.split('/'));
     var productId = parseInt(find_duplicates(temp)[0]);
 
-    if(productPrices[productId] != undefined)
-    {
+    if(productPrices[productId] != undefined){
         $('#configurable_id').val(productId);
-        $('#productPrice').html(productPrices[productId]);
     }
+
+    recalculateProductPrice();
 });
+
+
+// Process product variants.
+// Calculate prices.
+$(document).ready(function(){
+    $('.variantData').change(function(){
+        recalculateProductPrice();
+    });
+});
+
+/**
+ * Recalculate product price on change variant or configurable options.
+ * Sum product price + varint prices + configurable prices.
+ */
+function recalculateProductPrice()
+{
+    var result = parseFloat($('#product_price').val());
+    $('.variantData').each(function(){
+        var variant_id = $(this).val();
+        if(jsVariantsData[variant_id]){
+            result = result + parseFloat(jsVariantsData[variant_id].price);
+        }
+    });
+
+    // Update price
+    if(productPrices[$('#configurable_id').val()] != undefined){
+        result = result + parseFloat(productPrices[$('#configurable_id').val()]);
+    }
+
+    $('#productPrice').html(result.toFixed(2));
+}
 
 /**
  * Find all next object in DOM
@@ -77,6 +109,10 @@ jQuery.fn.nextAllData = function(startFrom){
     return result;
 };
 
+/**
+ * Check if array contains value
+ * @param obj
+ */
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
@@ -87,6 +123,10 @@ Array.prototype.contains = function(obj) {
     return false;
 };
 
+/**
+ * Find duplicates in array
+ * @param arr
+ */
 function find_duplicates(arr) {
     var len=arr.length,
         out=[],

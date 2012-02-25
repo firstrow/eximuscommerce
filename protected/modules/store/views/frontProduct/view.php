@@ -23,10 +23,7 @@ $this->breadcrumbs[] = $model->name;
 
 // Register main script
 Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.js', CClientScript::POS_END);
-
-// Register script for configurable products
-if($model->use_configurations)
-	Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
 
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
@@ -72,43 +69,52 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<div>
 			<table class="table table-striped table-bordered table-condensed">
 				<?php
-				foreach($model->processVariants() as $variant)
-				{
-					echo '<tr><td>';
-					echo $variant['attribute']->title;
-					echo '</td><td>';
-					$dropDownData = array('---');
-					foreach($variant['options'] as $v)
-						$dropDownData[$v->id] = $v->option->value;
-					echo CHtml::dropDownList('eav['.$variant['attribute']->id.']', null, $dropDownData);
-					echo '</td></tr>';
-				}
-				// Display product configurations
-				if($model->use_configurations)
-				{
-					// Get data
-					$confData = $this->getConfigurableData();
+					$jsVariantsData = array();
 
-					// Register configuration script
-					Yii::app()->clientScript->registerScript('productPrices', strtr('
-						var productPrices = {prices};
-					', array(
-						'{prices}'=>CJavaScript::encode($confData['prices'])
-					)), CClientScript::POS_END);
-
-					foreach($confData['attributes'] as $attr)
+					foreach($model->processVariants() as $variant)
 					{
-						if(isset($confData['data'][$attr->name]))
+						echo '<tr><td>';
+						echo $variant['attribute']->title;
+						echo '</td><td>';
+						$dropDownData = array('---');
+						foreach($variant['options'] as $v)
 						{
-							echo '<tr><td>';
-							echo $attr->title;
-							echo '</td><td>';
-							echo CHtml::dropDownList('configurations['.$attr->name.']', null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
-							echo '</td></tr>';
+							$jsVariantsData[$v->id] = $v;
+							$dropDownData[$v->id] = $v->option->value;
+						}
+						echo CHtml::dropDownList('eav['.$variant['attribute']->id.']', null, $dropDownData, array('class'=>'variantData'));
+						echo '</td></tr>';
+					}
+
+					Yii::app()->clientScript->registerScript('jsVariantsData','
+						var jsVariantsData = '.CJavaScript::jsonEncode($jsVariantsData).';
+					', CClientScript::POS_END);
+
+					// Display product configurations
+					if($model->use_configurations)
+					{
+						// Get data
+						$confData = $this->getConfigurableData();
+
+						// Register configuration script
+						Yii::app()->clientScript->registerScript('productPrices', strtr('
+							var productPrices = {prices};
+						', array(
+							'{prices}'=>CJavaScript::encode($confData['prices'])
+						)), CClientScript::POS_END);
+
+						foreach($confData['attributes'] as $attr)
+						{
+							if(isset($confData['data'][$attr->name]))
+							{
+								echo '<tr><td>';
+								echo $attr->title;
+								echo '</td><td>';
+								echo CHtml::dropDownList('configurations['.$attr->name.']', null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
+								echo '</td></tr>';
+							}
 						}
 					}
-				}
-
 				?>
 			</table>
 		</div>
@@ -119,8 +125,10 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<h4>Цена: <span id="productPrice"><?php echo $model->price ?></span></h4>
 		<?php
 			echo CHtml::hiddenField('product_id', $model->id);
+			echo CHtml::hiddenField('product_price', $model->price);
 			echo CHtml::hiddenField('configurable_id', 0);
-			echo CHtml::textField('quantity', 1, array('class'=>'span1', 'style'=>'margin:3px'));
+			echo '<br/>';
+			echo CHtml::textField('quantity', 1, array('class'=>'span1'));
 
 			echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(
 				'dataType'=>'json',

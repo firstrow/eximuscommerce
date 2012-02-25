@@ -29,6 +29,11 @@ ul.filters li:hover {
     background-color: #E8E8E8;
 }
 
+/* Textbox quantity on product view page */
+#quantity {
+    margin-right:10px
+}
+
 /* Cart */
 .cartTable tr td {
     padding: 5px;
