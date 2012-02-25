@@ -70,7 +70,7 @@
 			<td>
 				<?php
 					$price = StoreProduct::calculatePrices($product['model'], $product['variants'], $product['configurable_id']);
-					echo StoreProduct::formatPrice($price);
+					echo StoreProduct::formatPrice($price * $product['quantity']);
 				?>
 			</td>
 			<td>
