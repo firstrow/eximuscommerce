@@ -78,22 +78,24 @@ $(document).ready(function(){
 function recalculateProductPrice()
 {
     var result = parseFloat($('#product_price').val());
-    $('.variantData').each(function(){
-        var variant_id = $(this).val();
-        if(jsVariantsData[variant_id]){
-            if(jsVariantsData[variant_id].price_type == "1"){
-                // Price type is percent
-                result = result + (result / 100 * parseFloat(jsVariantsData[variant_id].price));
-            }else{
-                result = result + parseFloat(jsVariantsData[variant_id].price);
-            }
-        }
-    });
+    var original_price = parseFloat($('#product_price').val());
 
     // Update price
     if(typeof(productPrices) != "undefined" && productPrices[$('#configurable_id').val()] != undefined){
         result = result + parseFloat(productPrices[$('#configurable_id').val()]);
     }
+
+    $('.variantData').each(function(){
+        var variant_id = $(this).val();
+        if(jsVariantsData[variant_id]){
+            if(jsVariantsData[variant_id].price_type == "1"){
+                // Price type is percent
+                result = result + (original_price / 100 * parseFloat(jsVariantsData[variant_id].price));
+            }else{
+                result = result + parseFloat(jsVariantsData[variant_id].price);
+            }
+        }
+    });
 
     $('#productPrice').html(result.toFixed(2));
 }

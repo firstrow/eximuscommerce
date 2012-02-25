@@ -57,9 +57,12 @@ class SCart extends CComponent
 	public function remove($index)
 	{
 		$currentData = $this->getData();
+
 		if(isset($currentData[$index]))
+		{
 			unset($currentData[$index]);
-		$this->session['cart_data'] = $currentData;
+			$this->session['cart_data'] = $currentData;
+		}
 	}
 
 	/**
@@ -86,7 +89,6 @@ class SCart extends CComponent
 
 		foreach($data as $index=>&$item)
 		{
-
 			$item['variant_models'] = array();
 			$item['model'] = StoreProduct::model()->findByPk($item['product_id']);
 
@@ -98,11 +100,10 @@ class SCart extends CComponent
 			if(!empty($item['variants']))
 				$item['variant_models'] = StoreProductVariant::model()->with(array('attribute', 'option'))->findAllByPk($item['variants']);
 
-			// If product was deleted or id changed.
+			// If product was deleted during user session!.
 			if(!$item['model'])
 				unset($data[$index]);
 		}
-
 		unset($item);
 
 		return $data;
