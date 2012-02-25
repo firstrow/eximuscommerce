@@ -114,6 +114,27 @@ class SCart extends CComponent
 	}
 
 	/**
+	 * Recount quantity by index
+	 * @param $data array(index=>quntity)
+	 */
+	public function recount($data)
+	{
+		if(!is_array($data) || empty($data))
+			return;
+
+		$currentData = $this->getData();
+		foreach($data as $index=>$quantity)
+		{
+			if((int)$quantity < 1)
+				$quantity = 1;
+
+			if(isset($currentData[$index]))
+				$currentData[$index]['quantity'] = (int) $quantity;
+		}
+		$this->session['cart_data'] = $currentData;
+	}
+
+	/**
 	 * @return int nuber of items in cart
 	 */
 	public function countItems()

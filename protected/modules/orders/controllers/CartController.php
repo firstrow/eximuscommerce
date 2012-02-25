@@ -19,6 +19,9 @@ class CartController extends Controller
 	 */
 	public function actionIndex()
 	{
+		if(Yii::app()->request->isPostRequest && Yii::app()->request->getPost('recount') && !empty($_POST['quantities']))
+			Yii::app()->cart->recount(Yii::app()->request->getPost('quantities'));
+
 		$this->render('index');
 	}
 
