@@ -84,8 +84,9 @@ class SCart extends CComponent
 
 		if(empty($data)) return array();
 
-		foreach($data as &$item)
+		foreach($data as $index=>&$item)
 		{
+
 			$item['variant_models'] = array();
 			$item['model'] = StoreProduct::model()->findByPk($item['product_id']);
 
@@ -96,6 +97,10 @@ class SCart extends CComponent
 			// Process variants
 			if(!empty($item['variants']))
 				$item['variant_models'] = StoreProductVariant::model()->with(array('attribute', 'option'))->findAllByPk($item['variants']);
+
+			// If product was deleted or id changed.
+			if(!$item['model'])
+				unset($data[$index]);
 		}
 
 		unset($item);

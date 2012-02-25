@@ -81,7 +81,12 @@ function recalculateProductPrice()
     $('.variantData').each(function(){
         var variant_id = $(this).val();
         if(jsVariantsData[variant_id]){
-            result = result + parseFloat(jsVariantsData[variant_id].price);
+            if(jsVariantsData[variant_id].price_type == "1"){
+                // Price type is percent
+                result = result + (result / 100 * parseFloat(jsVariantsData[variant_id].price));
+            }else{
+                result = result + parseFloat(jsVariantsData[variant_id].price);
+            }
         }
     });
 
