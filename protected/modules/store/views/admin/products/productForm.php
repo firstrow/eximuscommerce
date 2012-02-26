@@ -13,7 +13,7 @@ return array(
 					'type'=>'text',
 				),
 				'price'=>array(
-					'type'=>'text',
+					'type'=>$this->model->use_configurations ? 'hidden' : 'text',
 				),
 				'url'=>array(
 					'type'=>'text',

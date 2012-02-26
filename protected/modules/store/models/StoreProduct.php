@@ -352,6 +352,15 @@ class StoreProduct extends BaseModel
 		return parent::beforeSave();
 	}
 
+	public function beforeValidate()
+	{
+		// For configurable product set 0 price
+		if($this->use_configurations)
+			$this->price = 0;
+
+		return parent::beforeValidate();
+	}
+
 	public function afterSave()
 	{
 		// Process related products

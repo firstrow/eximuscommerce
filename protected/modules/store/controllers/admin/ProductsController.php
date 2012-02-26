@@ -53,8 +53,6 @@ class ProductsController extends SAdminController
 		if (!$model)
 			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Продукт не найден.'));
 
-		$form = new STabbedForm('application.modules.store.views.admin.products.productForm', $model);
-
 		// Apply use_configurations, configurable_attributes, type_id
 		if(isset($_GET['StoreProduct']))
 			$model->attributes = $_GET['StoreProduct'];
@@ -72,6 +70,8 @@ class ProductsController extends SAdminController
 			if($model->use_configurations && isset($_GET['StoreProduct']['configurable_attributes']))
 				$model->configurable_attributes = $_GET['StoreProduct']['configurable_attributes'];
 		}
+
+		$form = new STabbedForm('application.modules.store.views.admin.products.productForm', $model);
 
 		// Set additional tabs
 		$form->additionalTabs = array(
