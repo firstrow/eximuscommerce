@@ -13,6 +13,7 @@
  * @property string $name
  * @property string $url
  * @property float $price
+ * @property float $max_price for configurable products.
  * @property boolean $is_active
  * @property string $short_description
  * @property string $full_description
@@ -390,6 +391,24 @@ class StoreProduct extends BaseModel
 					'attribute_id' => $attr_id
 				));
 			}
+		}
+
+		// Process min and max price for configurable product
+		if($this->use_configurations)
+		{
+			// Get min and max prices
+			$query = Yii::app()->db->createCommand()
+				->select('MIN(t.price) as min_price, MAX(t.price) as max_price')
+				->from('StoreProduct t')
+				->where(array('in', 't.id', $this->configurations))
+				->queryRow();
+
+			// Update
+			Yii::app()->db->createCommand()
+				->update('StoreProduct', array(
+				'price'     => $query['min_price'],
+				'max_price' => $query['max_price']
+			), 'id=:id', array(':id'=>$this->id));
 		}
 
 		return parent::afterSave();
