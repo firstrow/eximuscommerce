@@ -10,6 +10,7 @@
  * @property integer $type
  * @property boolean $display_on_front
  * @property integer $position
+ * @property boolean $required
  * @property boolean $use_in_filter Display attribute options as filter on front
  * @property boolean $use_in_variants Use attribute and its options to configure products
  * @property boolean $select_many Allow to filter products on front by more than one option value.
@@ -51,6 +52,7 @@ class StoreAttribute extends BaseModel
 	{
 		return array(
 			array('name, title', 'required'),
+			array('required', 'boolean'),
 			array('name', 'unique'),
 			array('use_in_filter, select_many, display_on_front, use_in_variants', 'boolean'),
 			array('name', 'match',
@@ -108,6 +110,7 @@ class StoreAttribute extends BaseModel
 			'use_in_filter'    => Yii::t('StoreModule.core', 'Использовать в фильтре'),
 			'use_in_variants'  => Yii::t('StoreModule.core', 'Использовать в вариантах'),
 			'select_many'      => Yii::t('StoreModule.core', 'Множественный выбор'),
+			'required'         => Yii::t('StoreModule.core', 'Обязательно к заполнению'),
 		);
 	}
 

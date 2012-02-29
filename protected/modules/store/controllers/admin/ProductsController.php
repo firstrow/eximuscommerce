@@ -100,7 +100,7 @@ class ProductsController extends SAdminController
 			// Handle related products
 			$model->setRelatedProducts(Yii::app()->getRequest()->getPost('RelatedProductId', array()));
 
-			if ($model->validate())
+			if ($model->validate() && $this->validateAttributes(&$model))
 			{
 				$model->save();
 
@@ -372,6 +372,31 @@ class ProductsController extends SAdminController
 			if (!Yii::app()->request->isAjaxRequest)
 				$this->redirect('index');
 		}
+	}
+
+	/**
+	 * Validate required store attrbiutes
+	 * @param StoreProduct $model
+	 * @return bool
+	 */
+	public function validateAttributes(StoreProduct $model)
+	{
+		$attributes = $model->type->storeAttributes;
+
+		if(empty($attributes))
+			return true;
+
+		$errors = false;
+		foreach($attributes as $attr)
+		{
+			if($attr->required && !$_POST['StoreAttribute'][$attr->name])
+			{
+				$errors = true;
+				$model->addError($attr->name, Yii::t('StoreModule.admin', 'Поле %s обязательно для заполнения', array('%s'=>$attr->title)));
+			}
+		}
+
+		return !$errors;
 	}
 
 }

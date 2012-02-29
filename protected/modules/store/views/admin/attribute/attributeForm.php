@@ -15,6 +15,9 @@ return array(
 					'type'=>'text',
 					'hint'=>Yii::t('StoreModule.admin', 'Укажите уникальный идентификатор')
 				),
+					'required'=>array(
+						'type'=>'checkbox',
+					),
 				'type'=>array(
 					'type'=>'dropdownlist',
 					'items'=>StoreAttribute::getTypesList()
