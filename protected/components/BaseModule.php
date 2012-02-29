@@ -9,48 +9,48 @@
  */
 class BaseModule extends CWebModule {
 
-    public $_assetsUrl = null;
+	public $_assetsUrl = null;
 
-    public function initAdmin()
-    {
-        $this->setImport(array(
-            'admin.models.*',
-            'admin.components.*',
-            'admin.widgets.*',
-        ));
-    }            
+	public function initAdmin()
+	{
+		$this->setImport(array(
+			'admin.models.*',
+			'admin.components.*',
+			'admin.widgets.*',
+		));
+	}
 
-    /**
-     * Publish admin stylesheets,images,scripts,etc.. and return assets url
-     *
-     * @access public
-     * @return string Assets url
-     */
-    public function getAssetsUrl()
-    {
-        if($this->_assetsUrl===null)
-        {
-            $this->_assetsUrl=Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('application.modules.'.$this->moduleName.'.assets'),
-                    true,
-                    -1,
-                    YII_DEBUG
-            );
-        }
+	/**
+	 * Publish admin stylesheets,images,scripts,etc.. and return assets url
+	 *
+	 * @access public
+	 * @return string Assets url
+	 */
+	public function getAssetsUrl()
+	{
+		if($this->_assetsUrl===null)
+		{
+			$this->_assetsUrl=Yii::app()->getAssetManager()->publish(
+					Yii::getPathOfAlias('application.modules.'.$this->moduleName.'.assets'),
+					true,
+					-1,
+					YII_DEBUG
+			);
+		}
 
-        return $this->_assetsUrl;
-    }
+		return $this->_assetsUrl;
+	}
 
-    /**
-     * Set assets url
-     * 
-     * @param string $url 
-     * @access public
-     * @return void
-     */
-    public function setAssetsUrl($url)
-    {
-        $this->_assetsUrl = $url;
-    }
+	/**
+	 * Set assets url
+	 *
+	 * @param string $url
+	 * @access public
+	 * @return void
+	 */
+	public function setAssetsUrl($url)
+	{
+		$this->_assetsUrl = $url;
+	}
 
 }
