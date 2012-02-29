@@ -383,7 +383,7 @@ class ProductsController extends SAdminController
 	{
 		$attributes = $model->type->storeAttributes;
 
-		if(empty($attributes))
+		if(empty($attributes) OR $model->use_configurations)
 			return true;
 
 		$errors = false;
