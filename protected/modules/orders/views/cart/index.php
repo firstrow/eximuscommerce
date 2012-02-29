@@ -23,7 +23,7 @@
 			<th>Название продукта</th>
 			<th>Количество</th>
 			<th>Сумма</th>
-			<th></th>
+			<th width="10px"></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -75,7 +75,7 @@
 				?>
 			</td>
 			<td>
-				<?php echo CHtml::link('Удалить', array('/orders/cart/remove', 'index'=>$index)) ?>
+				<?php echo CHtml::link('&times;', array('/orders/cart/remove', 'index'=>$index), array('class'=>'close')) ?>
 			</td>
 		</tr>
 		<?php endforeach ?>
