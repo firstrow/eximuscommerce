@@ -124,11 +124,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<div class="alert alert-error" id="productErrors" style="display: none;"></div>
 
 		<h4>Цена: <span id="productPrice"><?php echo StoreProduct::formatPrice($model->price); ?></span></h4>
+		<br>
 		<?php
 			echo CHtml::hiddenField('product_id', $model->id);
 			echo CHtml::hiddenField('product_price', $model->price);
+			echo CHtml::hiddenField('use_configurations', $model->use_configurations);
 			echo CHtml::hiddenField('configurable_id', 0);
-			echo '<br/>';
 			echo CHtml::textField('quantity', 1, array('class'=>'span1'));
 
 			echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(

@@ -87,6 +87,9 @@ function recalculateProductPrice()
     // Update price
     if(typeof(productPrices) != "undefined" && productPrices[$('#configurable_id').val()] != undefined){
         result = result + parseFloat(productPrices[$('#configurable_id').val()]);
+
+        if($("#use_configurations").val() == '1')
+            result = result - $('#product_price').val();
     }
 
     $('.variantData').each(function(){
