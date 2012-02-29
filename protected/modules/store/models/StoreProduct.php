@@ -395,23 +395,44 @@ class StoreProduct extends BaseModel
 
 		// Process min and max price for configurable product
 		if($this->use_configurations)
+			$this->updatePrices($this);
+		else
 		{
-			// Get min and max prices
+			// Check if product is configuration
 			$query = Yii::app()->db->createCommand()
-				->select('MIN(t.price) as min_price, MAX(t.price) as max_price')
-				->from('StoreProduct t')
-				->where(array('in', 't.id', $this->configurations))
-				->queryRow();
+				->from('StoreProductConfigurations t')
+				->where(array('in', 't.configurable_id', array($this->id)))
+				->queryAll();
 
-			// Update
-			Yii::app()->db->createCommand()
-				->update('StoreProduct', array(
-				'price'     => $query['min_price'],
-				'max_price' => $query['max_price']
-			), 'id=:id', array(':id'=>$this->id));
+			foreach ($query as $row)
+			{
+				$model = StoreProduct::model()->findByPk($row['product_id']);
+				if($model)
+					$this->updatePrices($model);
+			}
 		}
 
 		return parent::afterSave();
+	}
+
+	/**
+	 * Update price and max_price for configurbale product
+	 */
+	public function updatePrices(StoreProduct $model)
+	{
+		// Get min and max prices
+		$query = Yii::app()->db->createCommand()
+			->select('MIN(t.price) as min_price, MAX(t.price) as max_price')
+			->from('StoreProduct t')
+			->where(array('in', 't.id', $model->configurations))
+			->queryRow();
+
+		// Update
+		Yii::app()->db->createCommand()
+			->update('StoreProduct', array(
+			'price'     => $query['min_price'],
+			'max_price' => $query['max_price']
+		), 'id=:id', array(':id'=>$model->id));
 	}
 
 	/**
@@ -629,6 +650,16 @@ class StoreProduct extends BaseModel
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @return string "min - max" if configurable product
+	 */
+	public function getFormatted_price()
+	{
+		if($this->use_configurations && $this->max_price > 0)
+			return self::formatPrice($this->price).' - '.self::formatPrice($this->max_price);
+		return self::formatPrice($this->price);
 	}
 
 	/**
