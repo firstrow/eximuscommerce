@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('application.modules.orders.CommentsModule');
+Yii::import('application.modules.comments.CommentsModule');
 
 /**
  * Comments module info

@@ -143,15 +143,19 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<div class="row">&nbsp;</div>
 
 		<?php
+			// Display product custom options table.
 			if($model->getEavAttributes())
 			{
-				// Display product custom options table.
 				$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
 					'model'=>$model,
 					'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
 				));
-			}else
-				echo 'Нет характеристик';
+			}
+
+			// Process comments
+			$this->renderPartial('comments.views.comment.create', array(
+				'model'=>$model,
+			));
 		?>
 	</div>
 

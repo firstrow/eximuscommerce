@@ -24,17 +24,17 @@ class RController extends CController
 	*/
 	public $breadcrumbs=array();
 
-        /**
-         * Page title
-         * @var string
-         */
-        public $pageHeader;
-        
-        /**
-         * @property string Content to display in sidebar. If empty sidebar will be hidden.
-         */
-        public $sidebarContent = '';
-        
+		/**
+		 * Page title
+		 * @var string
+		 */
+		public $pageHeader;
+
+		/**
+		 * @property string Content to display in sidebar. If empty sidebar will be hidden.
+		 */
+		public $sidebarContent = '';
+
 	/**
 	* The filter method for 'rights' access filter.
 	* This filter is a wrapper of {@link CAccessControlFilter}.
