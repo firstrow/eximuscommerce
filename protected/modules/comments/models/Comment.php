@@ -107,7 +107,7 @@ class Comment extends BaseModel
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('model',$this->model,true);
+		$criteria->compare('class_name',$this->class_name,true);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('name',$this->name,true);
