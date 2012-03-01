@@ -2,6 +2,9 @@
 
 class CommentsModule extends BaseModule
 {
+	/**
+	 * @var string
+	 */
 	public $moduleName = 'comments';
 
 	/**

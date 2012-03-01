@@ -1,19 +1,15 @@
 <?php
 /**
  * @var $this FrontProductController
+ * @var $form CActiveForm
  */
 
+// Load module
 $module = Yii::app()->getModule('comments');
-$comment = new Comment();
-
 // Load model comments
-$comments = Comment::model()
-	->approved()
-	->orderByCreatedAsc()
-	->findAllByAttributes(array(
-		'class_name'=>get_class($model),
-		'object_pk'=>$model->id
-));
+$comments = Comment::getObjectComments($model);
+
+$comment = new Comment();
 
 if(Yii::app()->request->isPostRequest)
 {
@@ -59,11 +55,10 @@ if(!empty($comments))
 
 ?>
 
-	<h3>Оставить отзыв</h3>
+<h3>Оставить отзыв</h3>
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'comment-create-form',
 	'enableAjaxValidation'=>false,
-
 )); ?>
 
 <?php if(Yii::app()->user->isGuest): ?>

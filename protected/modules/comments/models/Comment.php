@@ -14,6 +14,7 @@
  * @property string $text
  * @property string $created
  * @property string $updated
+ * @method approved()
  * @method orderByCreatedAsc()
  * @method orderByCreatedDesc()
  */
@@ -140,6 +141,23 @@ class Comment extends BaseModel
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Load object comments
+	 * @static
+	 * @param CActiveRecord $model
+	 * @return array
+	 */
+	public static function getObjectComments(CActiveRecord $model)
+	{
+		return Comment::model()
+			->approved()
+			->orderByCreatedAsc()
+			->findAllByAttributes(array(
+				'class_name'=>get_class($model),
+				'object_pk'=>$model->id
 		));
 	}
 }
