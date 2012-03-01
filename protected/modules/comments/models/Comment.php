@@ -19,6 +19,11 @@
  */
 class Comment extends BaseModel
 {
+
+	const STATUS_WAITING = 0;
+	const STATUS_APPROVED = 1;
+	const STATUS_SPAM = 2;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -47,6 +52,15 @@ class Comment extends BaseModel
 			'orderByCreatedDesc'=>array(
 				'order'=>$alias.'.created DESC',
 			),
+			'waiting'=>array(
+				'condition'=>$alias.'.status='.self::STATUS_WAITING,
+			),
+			'approved'=>array(
+				'condition'=>$alias.'.status='.self::STATUS_APPROVED,
+			),
+			'spam'=>array(
+				'condition'=>$alias.'.status='.self::STATUS_SPAM,
+			)
 		);
 	}
 
@@ -80,14 +94,14 @@ class Comment extends BaseModel
 	{
 		return array(
 			'id'         => 'ID',
-			'user_id'    => 'Автор',
-			'class_name' => 'Class Name',
-			'status'     => 'Статус',
-			'email'      => 'Email',
-			'name'       => 'Имя',
-			'text'       => 'Комментарий',
-			'created'    => 'Дата создания',
-			'updated'    => 'Дата обновления',
+			'user_id'    => Yii::t('CommentsModule.core','Автор'),
+			'class_name' => Yii::t('CommentsModule.core','Class Name'),
+			'status'     => Yii::t('CommentsModule.core','Статус'),
+			'email'      => Yii::t('CommentsModule.core','Email'),
+			'name'       => Yii::t('CommentsModule.core','Имя'),
+			'text'       => Yii::t('CommentsModule.core','Комментарий'),
+			'created'    => Yii::t('CommentsModule.core','Дата создания'),
+			'updated'    => Yii::t('CommentsModule.core','Дата обновления'),
 		);
 	}
 

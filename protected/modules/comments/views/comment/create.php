@@ -8,6 +8,7 @@ $comment = new Comment();
 
 // Load model comments
 $comments = Comment::model()
+	->approved()
 	->orderByCreatedAsc()
 	->findAllByAttributes(array(
 		'class_name'=>get_class($model),
