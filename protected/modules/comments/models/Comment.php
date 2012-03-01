@@ -14,6 +14,8 @@
  * @property string $text
  * @property string $created
  * @property string $updated
+ * @method orderByCreatedAsc()
+ * @method orderByCreatedDesc()
  */
 class Comment extends BaseModel
 {
@@ -39,7 +41,10 @@ class Comment extends BaseModel
 	{
 		$alias = $this->getTableAlias();
 		return array(
-			'orderByCreated'=>array(
+			'orderByCreatedAsc'=>array(
+				'order'=>$alias.'.created ASC',
+			),
+			'orderByCreatedDesc'=>array(
 				'order'=>$alias.'.created DESC',
 			),
 		);

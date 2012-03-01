@@ -8,7 +8,7 @@ $comment = new Comment();
 
 // Load model comments
 $comments = Comment::model()
-	->orderByCreated()
+	->orderByCreatedAsc()
 	->findAllByAttributes(array(
 		'class_name'=>get_class($model),
 		'object_pk'=>$model->id
@@ -18,10 +18,17 @@ if(Yii::app()->request->isPostRequest)
 {
 	$comment->attributes = Yii::app()->request->getPost('Comment');
 
+	if(!Yii::app()->user->isGuest)
+	{
+		$comment->name = Yii::app()->user->name;
+		$comment->email = Yii::app()->user->email;
+	}
+
 	if($comment->validate())
 	{
 		$comment->class_name = get_class($model);
 		$comment->object_pk = $model->id;
+		$comment->user_id = Yii::app()->user->isGuest ? 0 : Yii::app()->user->id;
 		$comment->save();
 
 		// Refresh page
@@ -51,14 +58,14 @@ if(!empty($comments))
 
 ?>
 
-<div class="form">
 	<h3>Оставить отзыв</h3>
-	<?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'comment-create-form',
-		'enableAjaxValidation'=>false,
-		'htmlOptions'=>array('class'=>'well'),
-	)); ?>
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'comment-create-form',
+	'enableAjaxValidation'=>false,
 
+)); ?>
+
+<?php if(Yii::app()->user->isGuest): ?>
 	<div class="control-group">
 		<?php echo $form->labelEx($comment,'name'); ?>
 		<?php echo $form->textField($comment,'name'); ?>
@@ -70,6 +77,7 @@ if(!empty($comments))
 		<?php echo $form->textField($comment,'email'); ?>
 		<?php echo $form->error($comment,'email'); ?>
 	</div>
+<?php endif; ?>
 
 	<div class="control-group">
 		<?php echo $form->labelEx($comment,'text'); ?>
@@ -77,9 +85,8 @@ if(!empty($comments))
 		<?php echo $form->error($comment,'text'); ?>
 	</div>
 
-	<div class="control-group buttons">
+	<div class="control-group">
 		<?php echo CHtml::submitButton('Оставить отзыв', array('class'=>'btn')); ?>
 	</div>
 
-	<?php $this->endWidget(); ?>
-</div><!-- form -->
+<?php $this->endWidget(); ?><!-- /form -->

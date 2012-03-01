@@ -31,7 +31,7 @@ class User extends BaseModel
 	 */
 	public function tableName()
 	{
-			return 'user';
+		return 'user';
 	}
 
 	/**
@@ -57,8 +57,6 @@ class User extends BaseModel
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
 		);
 	}

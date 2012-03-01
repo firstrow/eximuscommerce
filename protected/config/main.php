@@ -46,8 +46,8 @@ return array(
 	'components'=>array(
 		'user'=>array(
 			// enable cookie-based authentication
-			'class'=>'RWebUser',
 			'allowAutoLogin'=>true,
+			'class'=>'BaseUser',
 		),
 		'urlManager'=>array(
 			'urlFormat'=>'path',
