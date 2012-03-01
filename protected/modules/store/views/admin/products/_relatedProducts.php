@@ -1,4 +1,3 @@
-
 <?php if(isset($product)): ?>
 	<table style="width: 70%" id="relatedProductsTable">
 		<?php foreach($product->relatedProducts as $related): ?>

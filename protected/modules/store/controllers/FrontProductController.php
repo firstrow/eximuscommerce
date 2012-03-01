@@ -11,6 +11,14 @@ class FrontProductController extends Controller
 	 */
 	public $model;
 
+	public function actions(){
+		return array(
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+			),
+		);
+	}
+
 	/**
 	 * Display product
 	 * @param string $url product url

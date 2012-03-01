@@ -24,6 +24,8 @@ class Comment extends BaseModel
 	const STATUS_APPROVED = 1;
 	const STATUS_SPAM = 2;
 
+	public $verifyCode;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -73,6 +75,7 @@ class Comment extends BaseModel
 			array('email, name, text', 'required'),
 			array('email', 'email'),
 			array('name', 'length', 'max'=>50),
+			array('verifyCode','captcha','allowEmpty'=>!Yii::app()->user->isGuest),
 			// Search
 			array('id, user_id, class_name, status, email, name, text, created, updated', 'safe', 'on'=>'search'),
 		);
@@ -95,13 +98,14 @@ class Comment extends BaseModel
 		return array(
 			'id'         => 'ID',
 			'user_id'    => Yii::t('CommentsModule.core','Автор'),
-			'class_name' => Yii::t('CommentsModule.core','Class Name'),
+			'class_name' => Yii::t('CommentsModule.core','Модель'),
 			'status'     => Yii::t('CommentsModule.core','Статус'),
-			'email'      => Yii::t('CommentsModule.core','Email'),
+			'email'      => Yii::t('CommentsModule.core','Почта'),
 			'name'       => Yii::t('CommentsModule.core','Имя'),
 			'text'       => Yii::t('CommentsModule.core','Комментарий'),
 			'created'    => Yii::t('CommentsModule.core','Дата создания'),
 			'updated'    => Yii::t('CommentsModule.core','Дата обновления'),
+			'verifyCode' => Yii::t('CommentsModule.core','Код проверки'),
 		);
 	}
 

@@ -86,6 +86,14 @@ if(!empty($comments))
 		<?php echo $form->error($comment,'text'); ?>
 	</div>
 
+	<?php if(Yii::app()->user->isGuest): ?>
+		<?php echo CHtml::activeLabelEx($comment, 'verifyCode')?>
+		<? $this->widget('CCaptcha') ?>
+		<br/>
+		<?php echo CHtml::activeTextField($comment, 'verifyCode')?>
+		<?php echo $form->error($comment,'verifyCode'); ?>
+	<?endif?>
+
 	<div class="control-group">
 		<?php echo CHtml::submitButton('Оставить отзыв', array('class'=>'btn')); ?>
 	</div>
