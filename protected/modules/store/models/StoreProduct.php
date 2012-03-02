@@ -314,7 +314,7 @@ class StoreProduct extends BaseModel
 			'comments' => array(
 				'class'       => 'comments.components.CommentBehavior',
 				'class_name'  => 'store.models.StoreProduct',
-				'owner_title' => 'name', // Attrubute name to present comment owner in admin panel
+				'owner_title' => 'name', // Attribute name to present comment owner in admin panel
 			)
 		);
 	}
