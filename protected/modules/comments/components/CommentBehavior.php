@@ -3,7 +3,7 @@
 /**
  * Behavior for commentabe models
  */
-class CommentBehavior extends CBehavior
+class CommentBehavior extends CActiveRecordBehavior
 {
 
 	/**
@@ -40,14 +40,23 @@ class CommentBehavior extends CBehavior
 		return $this->getOwner()->$attr;
 	}
 
+	public function attach($owner)
+	{
+		parent::attach($owner);
+	}
+
 	/**
 	 * @param CEvent $event
 	 * @return mixed
 	 */
 	public function afterDelete($event)
 	{
+		Yii::import('comments.models.Comment');
+
+		$pk = $this->getObjectPkAttribute();
 		Comment::model()->deleteAllByAttributes(array(
-			'class_name'=>get_class($this->getOwner()),
+				'class_name'=>$this->getClassName(),
+				'object_pk'=>$this->getOwner()->$pk
 		));
 		return parent::afterDelete($event);
 	}

@@ -61,9 +61,25 @@ class CommentsController extends SAdminController
 		));
 	}
 
-	public function actionDelete()
+	/**
+	 * Delete comments
+	 * @param array $id
+	 */
+	public function actionDelete($id = array())
 	{
+		if (Yii::app()->request->isPostRequest)
+		{
+			$model = Comment::model()->findAllByPk($_REQUEST['id']);
 
+			if (!empty($model))
+			{
+				foreach($model as $m)
+					$m->delete();
+			}
+
+			if (!Yii::app()->request->isAjaxRequest)
+				$this->redirect('index');
+		}
 	}
 
 }

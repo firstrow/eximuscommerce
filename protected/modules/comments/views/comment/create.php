@@ -23,7 +23,7 @@ if(!empty($comments))
 	<div class="row">
 		<div class="span7">
 			<h4><?php echo CHtml::encode($row->name); ?> <small><?php echo $row->created; ?></small></h4>
-			<?php echo CHtml::encode($row->text); ?>
+			<?php echo nl2br(CHtml::encode($row->text)); ?>
 			<hr>
 		</div>
 	</div>
