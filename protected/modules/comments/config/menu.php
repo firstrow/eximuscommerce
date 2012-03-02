@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var $this SSystemMenu
+ */
+
 Yii::import('comments.CommentsModule');
 
 /**

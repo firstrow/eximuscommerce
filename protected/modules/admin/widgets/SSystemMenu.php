@@ -5,9 +5,15 @@
  */
 class SSystemMenu extends CWidget {
 
-	public function run()
+	private $_items;
+
+	/**
+	 * Set default items
+	 */
+	public function init()
 	{
-		$items = array(
+		// Minimum configuration
+		$this->_items = array(
 			'users'=>array(
 				'label'=>Yii::t('AdminModule.admin', 'Система'),
 			),
@@ -18,8 +24,15 @@ class SSystemMenu extends CWidget {
 				'label'=>Yii::t('AdminModule.admin', 'Сайт'),
 			),
 		);
+	}
 
-		$items = CMap::mergeArray($items, $this->findMenuFiles());
+	/**
+	 * Render menu
+	 */
+	public function run()
+	{
+		$found = $this->findMenuFiles();
+		$items = CMap::mergeArray($this->_items, $found);
 
 		$this->processSorting($items);
 		$this->widget('application.extensions.mbmenu.MbMenu', array('items'=>$items));
