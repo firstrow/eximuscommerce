@@ -83,7 +83,7 @@ class ProductsController extends SAdminController
 			Yii::t('StoreModule.admin','Изображения')    => $this->renderPartial('_images', array('model'=>$model), true),
 			Yii::t('StoreModule.admin','Характеристики') => $this->renderPartial('_attributes', array('model'=>$model), true),
 			Yii::t('StoreModule.admin','Варианты')       => $this->renderPartial('_variations', array('model'=>$model), true),
-			Yii::t('StoreModule.admin','Отзывы')         => '',
+			Yii::t('StoreModule.admin','Отзывы')         => $this->renderPartial('_comments', array('model'=>$model), true),
 		);
 
 		if($model->use_configurations)
@@ -311,6 +311,16 @@ class ProductsController extends SAdminController
 		$this->renderPartial('_configurations', array(
 			'product'=>$product,
 			'clearConfigurations'=>true // Show all products
+		));
+	}
+
+	/**
+	 * Render comments tab
+	 */
+	public function actionApplyCommentsFilter()
+	{
+		$this->renderPartial('_comments', array(
+			'model'=>StoreProduct::model()->findByPk($_GET['product_id'])
 		));
 	}
 
