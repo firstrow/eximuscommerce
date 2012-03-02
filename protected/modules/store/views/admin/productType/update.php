@@ -31,7 +31,7 @@ Yii::app()->clientScript->registerScriptFile(
 
 ?>
 
-<div class="form wide">
+<div class="form wide padding-all">
 	<?php
 	echo CHtml::beginForm('', 'post',array(
 		'id'=>'StoreProductTypeForm'
@@ -40,7 +40,7 @@ Yii::app()->clientScript->registerScriptFile(
 
 	echo CHtml::hiddenField('main_category', $model->main_category);
 
-	$this->widget('zii.widgets.jui.CJuiTabs', array(
+	$this->widget('ext.sidebartabs.SAdminSidebarTabs', array(
 		'tabs'=>array(
 			Yii::t('StoreModule.admin','Опции')     => $this->renderPartial('_options', array('model'=>$model,'attributes'=>$attributes), true),
 			Yii::t('StoreModule.admin','Категории') => $this->renderPartial('_tree', array('model'=>$model), true),

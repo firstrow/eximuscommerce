@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerScriptFile(
 if($model->mainCategory)
     $mainCategory = ($model->isNewRecord) ? 0 : $model->mainCategory->id;
 else
-    $mainCategory = 0;
+    $mainCategory = $model->type->main_category;
 echo CHtml::hiddenField('main_category', $mainCategory);
 
 // Create jstree
@@ -38,6 +38,21 @@ $this->widget('ext.jstree.SJsTree', array(
 		),
 	),
 ));
+
+// Get categories preset
+$presetCategories = unserialize($model->type->categories_preset);
+if(!is_array($presetCategories))
+	$presetCategories = array();
+
+if($model->isNewRecord && empty($_POST['categories']))
+{
+	foreach($presetCategories as $id)
+	{
+		Yii::app()->getClientScript()->registerScript("checkNode{$id}", "
+		$('#StoreCategoryTree').checkNode({$id});
+	");
+	}
+}
 
 // Check tree nodes
 foreach($model->categories as $c)
