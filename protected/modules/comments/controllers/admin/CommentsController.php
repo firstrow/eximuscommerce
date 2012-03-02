@@ -25,6 +25,11 @@ class CommentsController extends SAdminController
 		));
 	}
 
+	/**
+	 * Update comment
+	 * @param $id
+	 * @throws CHttpException
+	 */
 	public function actionUpdate($id)
 	{
 		$model = Comment::model()->findByPk($id);
@@ -56,7 +61,7 @@ class CommentsController extends SAdminController
 		));
 	}
 
-	public function axctionDelete()
+	public function actionDelete()
 	{
 
 	}

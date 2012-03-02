@@ -134,8 +134,12 @@ class Comment extends BaseModel
 		if($this->user_id)
 			$criteria->compare('user_id',$this->user_id);
 
+		$sort=new CSort;
+		$sort->defaultOrder = $this->getTableAlias().'.created DESC';
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort,
 		));
 	}
 
