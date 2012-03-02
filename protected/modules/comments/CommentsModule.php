@@ -32,8 +32,9 @@ class CommentsModule extends BaseModule
 
 			if($comment->validate())
 			{
-				$comment->class_name = get_class($model);
-				$comment->object_pk = $model->id;
+				$pkAttr = $model->getObjectPkAttribute();
+				$comment->class_name = $model->getClassName();
+				$comment->object_pk = $model->$pkAttr;
 				$comment->user_id = Yii::app()->user->isGuest ? 0 : Yii::app()->user->id;
 				$comment->save();
 

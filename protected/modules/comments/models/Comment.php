@@ -75,19 +75,11 @@ class Comment extends BaseModel
 		return array(
 			array('email, name, text', 'required'),
 			array('email', 'email'),
+			array('status, created, updated', 'required', 'on'=>'update'),
 			array('name', 'length', 'max'=>50),
 			array('verifyCode','captcha','allowEmpty'=>!Yii::app()->user->isGuest),
 			// Search
 			array('id, user_id, class_name, status, email, name, text, created, updated', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		return array(
 		);
 	}
 
@@ -106,6 +98,7 @@ class Comment extends BaseModel
 			'text'       => Yii::t('CommentsModule.core','Комментарий'),
 			'created'    => Yii::t('CommentsModule.core','Дата создания'),
 			'updated'    => Yii::t('CommentsModule.core','Дата обновления'),
+			'owner_title'=> Yii::t('CommentsModule.core','Владелец'),
 			'verifyCode' => Yii::t('CommentsModule.core','Код проверки'),
 		);
 	}
@@ -130,7 +123,6 @@ class Comment extends BaseModel
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('class_name',$this->class_name,true);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('email',$this->email,true);
@@ -139,9 +131,65 @@ class Comment extends BaseModel
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('updated',$this->updated,true);
 
+		if($this->user_id)
+			$criteria->compare('user_id',$this->user_id);
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	/**
+	 * @static
+	 * @return array
+	 */
+	public static function getStatuses()
+	{
+		return array(
+			self::STATUS_WAITING  => Yii::t('CommentsModule.core', 'Ждет одобрения'),
+			self::STATUS_APPROVED => Yii::t('CommentsModule.core', 'Подтвержден'),
+			self::STATUS_SPAM     => Yii::t('CommentsModule.core', 'Спам'),
+		);
+	}
+
+	/**
+	 * @return string status title
+	 */
+	public function getStatusTitle()
+	{
+		$statuses = self::getStatuses();
+		return $statuses[$this->status];
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getOwner_title()
+	{
+		if(!$this->isNewRecord)
+		{
+			try{
+				$className = Yii::import($this->class_name, true);
+			}catch(CException $e){
+				return null;
+			}
+
+			$model = $className::model()->findByPk($this->object_pk);
+			if($model)
+				return $model->getOwnerTitle();
+		}
+		return '';
+	}
+
+	public static function truncate(Comment $model, $limit)
+	{
+		$result = $model->text;
+		$length = mb_strlen($result,'utf-8');
+		if($length > $limit)
+		{
+			return mb_substr($result,0,$limit,'utf-8').'...';
+		}
+		return $result;
 	}
 
 	/**
@@ -156,7 +204,7 @@ class Comment extends BaseModel
 			->approved()
 			->orderByCreatedAsc()
 			->findAllByAttributes(array(
-				'class_name'=>get_class($model),
+				'class_name'=>$model->getClassName(),
 				'object_pk'=>$model->id
 		));
 	}

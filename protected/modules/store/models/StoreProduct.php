@@ -308,8 +308,13 @@ class StoreProduct extends BaseModel
 	{
 		return array(
 			'eavAttr' => array(
-				'class' => 'ext.behaviors.eav.EEavBehavior',
+				'class'     => 'ext.behaviors.eav.EEavBehavior',
 				'tableName' => 'StoreProductAttributeEAV',
+			),
+			'comments' => array(
+				'class'       => 'comments.components.CommentBehavior',
+				'class_name'  => 'store.models.StoreProduct',
+				'owner_title' => 'name', // Attrubute name to present comment owner in admin panel
 			)
 		);
 	}

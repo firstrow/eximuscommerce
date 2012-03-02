@@ -1,37 +1,42 @@
 <?php
 
 /**
- * User create/update form data 
+ * Comment form
  */
 Yii::import('zii.widgets.jui.CJuiDatePicker');
 
 return array(
-	'id'=>'userUpdateForm',
-	//'showErrorSummary'=>true,
+	'id'=>'commentUpdateForm',
 	'elements'=>array(
 		'tab1'=>array(
 			'type'=>'form',
 			'title'=>'',
 			'elements'=>array(
-				'username'=>array(
+				'status'=>array(
+					'type'=>'dropdownlist',
+					'items'=>Comment::getStatuses()
+				),
+				'name'=>array(
 					'type'=>'text',
 				),
-				'email'=>array('type'=>'text',),
-				'created_at'=>array(
+				'email'=>array(
+					'type'=>'text'
+				),
+				'text'=>array(
+					'type'=>'textarea',
+					'style'=>'height:200px'
+				),
+				'created'=>array(
 					'type'=>'CJuiDatePicker',
 					'options'=>array(
 						'dateFormat'=>'yy-mm-dd '.date('H:i:s'),
 					),
 				),
-				'last_login'=>array(
+				'updated'=>array(
 					'type'=>'CJuiDatePicker',
 					'options'=>array(
 						'dateFormat'=>'yy-mm-dd '.date('H:i:s'),
 					),
-				),
-				'login_ip'=>array('type'=>'text',),
-				'new_password'=>array(
-					'type'=>'password',
 				),
 			),
 		),
