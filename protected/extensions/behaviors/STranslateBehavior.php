@@ -3,7 +3,7 @@
 /**
  * TranslateBehavior implements the basic methods
  * for translating dynamic content of models.
- * Behavoir takes language from SLanguageManager::active or you
+ * Behavior takes language from SLanguageManager::active or you
  * can specify language id thru language() method.
  *
  * Example:
@@ -31,7 +31,9 @@
  * 4. Create new db table to handle translated attribute values.
  *    Basic structure: id, object_id, language_id + attributes.
  * 5. Create 'Translate Storage Model' class and set $tableName.
+ * 6. Connect events onCreate and onDelete
  *
+ * @todo: Dont load translations when syste, has only  one language
  */
 class STranslateBehavior extends CActiveRecordBehavior {
 

@@ -7,6 +7,8 @@
  * The followings are the available columns in table 'StoreProductType':
  * @property integer $id
  * @property string $name
+ * @property string $categories_preset
+ * @property int $main_category preset
  */
 class StoreProductType extends BaseModel
 {

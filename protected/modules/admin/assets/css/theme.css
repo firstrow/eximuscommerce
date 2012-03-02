@@ -1,8 +1,8 @@
 
 h3 {
-	color:#333333;
-	text-shadow: silver 1px 1px 2px;
-	font-size:16px;
+    color:#333333;
+    text-shadow: silver 1px 1px 2px;
+    font-size:16px;
     margin-bottom:5px;
 }
 
@@ -17,3 +17,13 @@ hr {
     border:1px solid #EBEBEB;
 }
 
+.attributesList {
+    height: 350px;
+}
+table.attributesTable thead {
+    font-weight: bold;
+    color:#4C4C4C;
+}
+table.attributesTable thead td {
+    padding: 5px;
+}

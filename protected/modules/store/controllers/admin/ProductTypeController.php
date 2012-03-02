@@ -50,6 +50,12 @@ class ProductTypeController extends SAdminController {
 		{
 			$model->attributes = $_POST['StoreProductType'];
 
+			if(isset($_POST['categories']) && !empty($_POST['categories']))
+			{
+				$model->categories_preset = serialize($_POST['categories']);
+				$model->main_category = $_POST['main_category'];
+			}
+
 			if ($model->validate())
 			{
 				$model->save();
