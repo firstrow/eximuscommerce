@@ -39,9 +39,14 @@ return array(
 				'position'=>6
 			),
 			array(
+				'label'=>Yii::t('StoreModule.admin', 'Оплата'),
+				'url'=>Yii::app()->createUrl('store/admin/paymentMethod'),
+				'position'=>7
+			),
+			array(
 				'label'=>Yii::t('StoreModule.admin', 'Валюты'),
 				'url'=>Yii::app()->createUrl('store/admin/currency'),
-				'position'=>7
+				'position'=>8
 			),
 		),
 	),
