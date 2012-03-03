@@ -89,7 +89,14 @@ class CurrencyController extends SAdminController {
 			if (!empty($model))
 			{
 				foreach($model as $m)
+				{
+					if($m->main)
+						throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка. Удаление главной валюты запрещено.'));
+					if($m->default)
+						throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка. Удаление валюты по умолчанию запрещено.'));
+
 					$m->delete();
+				}
 			}
 
 			if (!Yii::app()->request->isAjaxRequest)

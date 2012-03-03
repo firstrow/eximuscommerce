@@ -48,13 +48,15 @@ class StoreCurrency extends BaseModel
 		);
 	}
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
+	public function afterSave()
 	{
-		return array(
-		);
+		if($this->default)
+			StoreCurrency::model()->updateAll(array('default'=>0), 'id != :id', array(':id'=>$this->id));
+
+		if($this->main)
+			StoreCurrency::model()->updateAll(array('main'=>0), 'id != :id', array(':id'=>$this->id));
+
+		return parent::afterSave();
 	}
 
 	/**
