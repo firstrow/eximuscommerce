@@ -114,6 +114,9 @@ return array(
 		'cart'=>array(
 			'class'=>'ext.cart.SCart',
 		),
+		'currency'=>array(
+			'class'=>'store.components.SCurrencyManager'
+		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

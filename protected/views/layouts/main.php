@@ -40,6 +40,12 @@
 						);
 					?>
 				<div class="navbar-text pull-right" style="float: right;">
+					<?php
+						$data = CHtml::listData(Yii::app()->currency->currencies, 'id', 'name');
+						echo CHtml::dropDownList('activateCurrency', Yii::app()->currency->active->id, $data, array(
+							'onChange'=>'$.get("/store/ajax/activateCurrency/"+$(this).val(), function(){window.location.reload(true);});',
+						));
+					?>
 					<a href="">Авторизация</a> /
 					<a href="">Регистрация</a> /
 					<?php echo CHtml::link('Корзина', array('/orders/cart/index')) ?>
