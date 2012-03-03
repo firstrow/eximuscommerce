@@ -18,7 +18,7 @@
 <div class="span5">
 	<?php echo CHtml::link(CHtml::encode($data->name), array('frontProduct/view', 'url'=>$data->url)) ?>
 	<br>
-	<?php echo $data->formatted_price ?>
+	<?php echo $data->priceRange() ?>
 </div>
 
 <div style="clear:both;height: 10px;"></div>

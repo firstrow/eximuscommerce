@@ -658,16 +658,6 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
-	 * @return string "min - max" if configurable product
-	 */
-	public function getFormatted_price()
-	{
-		if($this->use_configurations && $this->max_price > 0)
-			return self::formatPrice($this->price).' - '.self::formatPrice($this->max_price);
-		return self::formatPrice($this->price);
-	}
-
-	/**
 	 * Apply price format
 	 * @static
 	 * @param $price
@@ -676,6 +666,31 @@ class StoreProduct extends BaseModel
 	public static function formatPrice($price)
 	{
 		return money_format('%.2n', $price);
+	}
+
+	/**
+	 * Convert to active currency and format price
+	 * Used in product listing.
+	 * @return string
+	 */
+	public function priceRange()
+	{
+		$price = Yii::app()->currency->convert($this->price);
+		$max_price = Yii::app()->currency->convert($this->max_price);
+		$symbol = Yii::app()->currency->active->symbol;
+
+		if($this->use_configurations && $max_price > 0)
+			return self::formatPrice($price).' '.$symbol.' - '.self::formatPrice($max_price).' '.$symbol;
+		return self::formatPrice($price).' '.$symbol;
+	}
+
+	/**
+	 * Convert price to currenct currency
+	 * @return float
+	 */
+	public function toCurrentCurrency()
+	{
+		return Yii::app()->currency->convert($this->price);
 	}
 
 	public function __get($name)

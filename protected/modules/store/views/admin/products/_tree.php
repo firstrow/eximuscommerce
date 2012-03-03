@@ -14,7 +14,12 @@ Yii::app()->clientScript->registerScriptFile(
 if($model->mainCategory)
 	$mainCategory = ($model->isNewRecord) ? 0 : $model->mainCategory->id;
 else
-	$mainCategory = $model->type->main_category;
+{
+	if($model->type)
+		$mainCategory = $model->type->main_category;
+	else
+		$mainCategory = 0;
+}
 echo CHtml::hiddenField('main_category', $mainCategory);
 
 // Create jstree
@@ -40,26 +45,31 @@ $this->widget('ext.jstree.SJsTree', array(
 ));
 
 // Get categories preset
-$presetCategories = unserialize($model->type->categories_preset);
-if(!is_array($presetCategories))
-	$presetCategories = array();
+if($model->type)
+{
+	$presetCategories = unserialize($model->type->categories_preset);
+	if(!is_array($presetCategories))
+		$presetCategories = array();
+}
 
-if($model->isNewRecord && empty($_POST['categories']))
+if($model->isNewRecord && empty($_POST['categories']) && isset($presetCategories))
 {
 	foreach($presetCategories as $id)
 	{
 		Yii::app()->getClientScript()->registerScript("checkNode{$id}", "
-		$('#StoreCategoryTree').checkNode({$id});
-	");
+			$('#StoreCategoryTree').checkNode({$id});
+		");
 	}
 }
-
-// Check tree nodes
-foreach($model->categories as $c)
+else
 {
-	Yii::app()->getClientScript()->registerScript("checkNode{$c->id}", "
-		$('#StoreCategoryTree').checkNode({$c->id});
-	");
+	// Check tree nodes
+	foreach($model->categories as $c)
+	{
+		Yii::app()->getClientScript()->registerScript("checkNode{$c->id}", "
+			$('#StoreCategoryTree').checkNode({$c->id});
+		");
+	}
 }
 
 Yii::app()->getClientScript()->registerCss("StoreCategoryTreeStyles","#StoreCategoryTree { width:90% }");

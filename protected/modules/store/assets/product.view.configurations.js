@@ -104,6 +104,9 @@ function recalculateProductPrice()
         }
     });
 
+    // Apply current currency
+    result = result * parseFloat($('#currency_rate').val());
+
     $('#productPrice').html(result.toFixed(2));
 }
 

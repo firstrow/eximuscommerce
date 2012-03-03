@@ -123,12 +123,16 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 		<!-- Display errors here -->
 		<div class="alert alert-error" id="productErrors" style="display: none;"></div>
 
-		<h4>Цена: <span id="productPrice"><?php echo StoreProduct::formatPrice($model->price); ?></span></h4>
+		<h4>
+			Цена: <span id="productPrice"><?php echo StoreProduct::formatPrice($model->toCurrentCurrency()); ?></span>
+			<?php echo Yii::app()->currency->active->symbol; ?>
+		</h4>
 		<br>
 		<?php
 			echo CHtml::hiddenField('product_id', $model->id);
 			echo CHtml::hiddenField('product_price', $model->price);
 			echo CHtml::hiddenField('use_configurations', $model->use_configurations);
+			echo CHtml::hiddenField('currency_rate', Yii::app()->currency->active->rate);
 			echo CHtml::hiddenField('configurable_id', 0);
 			echo CHtml::textField('quantity', 1, array('class'=>'span1'));
 

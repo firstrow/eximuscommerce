@@ -71,7 +71,8 @@
 			<td>
 				<?php
 					$price = StoreProduct::calculatePrices($product['model'], $product['variant_models'], $product['configurable_id']);
-					echo StoreProduct::formatPrice($price * $product['quantity']);
+					echo StoreProduct::formatPrice(Yii::app()->currency->convert($price * $product['quantity']));
+					echo ' '.Yii::app()->currency->active->symbol;
 				?>
 			</td>
 			<td>

@@ -41,8 +41,9 @@
 					?>
 				<div class="navbar-text pull-right" style="float: right;">
 					<?php
-						$data = CHtml::listData(Yii::app()->currency->currencies, 'id', 'name');
-						echo CHtml::dropDownList('activateCurrency', Yii::app()->currency->active->id, $data, array(
+						// Display currencies droppdown
+						$currencies = CHtml::listData(Yii::app()->currency->currencies, 'id', 'name');
+						echo CHtml::dropDownList('activateCurrency', Yii::app()->currency->active->id, $currencies, array(
 							'onChange'=>'$.get("/store/ajax/activateCurrency/"+$(this).val(), function(){window.location.reload(true);});',
 						));
 					?>

@@ -51,6 +51,7 @@ class FrontProductController extends Controller
 		return $this->model;
 	}
 
+
 	/**
 	 * Get data to render dropdowns for configurable product.
 	 * Used on product view.
