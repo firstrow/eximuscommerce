@@ -52,6 +52,7 @@ class StorePaymentMethod extends BaseModel
 	{
 		$alias = $this->getTableAlias();
 		return array(
+			'active'=>array('order'=>$alias.'.active=1'),
 			'orderByPosition'=>array('order'=>$alias.'.position ASC'),
 			'orderByPositionDesc'=>array('order'=>$alias.'.position DESC'),
 			'orderByName'=>array('order'=>$alias.'.name ASC'),

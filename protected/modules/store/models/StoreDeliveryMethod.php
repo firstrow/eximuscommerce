@@ -37,6 +37,7 @@ class StoreDeliveryMethod extends BaseModel
 	{
 		$alias = $this->getTableAlias();
 		return array(
+			'active'=>array('order'=>$alias.'.active=1'),
 			'orderByPosition'=>array('order'=>$alias.'.position ASC'),
 			'orderByPositionDesc'=>array('order'=>$alias.'.position DESC'),
 			'orderByName'=>array('order'=>$alias.'.name ASC'),
@@ -57,15 +58,6 @@ class StoreDeliveryMethod extends BaseModel
 			array('description', 'type', 'type'=>'string'),
 
 			array('id, name, description, position', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		return array(
 		);
 	}
 
