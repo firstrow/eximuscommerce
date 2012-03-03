@@ -83,7 +83,32 @@
 		</tbody>
 	</table>
 
-	<div align="right" class="form-actions">
+	<div align="right">
 		<input type="submit" value="Пересчитать" name="recount" class="btn btn-small">
 	</div>
+
+	<div>
+		<h3>Способ доставки</h3>
+		<?php
+		$deliveryMethods = StoreDeliveryMethod::model()
+			->active()
+			->orderByName()
+			->findAll();
+
+		foreach($deliveryMethods as $delivery)
+		{
+			?>
+			<label class="radio">
+				<input type="radio" name="delivery_method" value="<?=$delivery->id?>"><h4><?=CHtml::encode($delivery->name)?></h4>
+				<p><?=CHtml::encode($delivery->description)?></p>
+			</label>
+			<?php
+		}
+		?>
+	</div>
+
+	<div align="right" class="form-actions">
+		<input type="submit" value="Оформить заказ" name="submit" class="btn btn-primary">
+	</div>
+
 <?php echo CHtml::endForm() ?>
