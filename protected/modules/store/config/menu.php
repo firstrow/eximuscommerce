@@ -38,6 +38,11 @@ return array(
 				'url'=>Yii::app()->createUrl('store/admin/delivery'),
 				'position'=>6
 			),
+			array(
+				'label'=>Yii::t('StoreModule.admin', 'Валюты'),
+				'url'=>Yii::app()->createUrl('store/admin/currency'),
+				'position'=>7
+			),
 		),
 	),
 );
