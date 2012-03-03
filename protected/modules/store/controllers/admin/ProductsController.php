@@ -163,6 +163,8 @@ class ProductsController extends SAdminController
 					StoreProductImage::model()->updateByPk(Yii::app()->request->getPost('mainImageId'),array('is_main'=>1));
 				}
 
+				$model->save();
+
 				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
 				if (isset($_POST['REDIRECT']))

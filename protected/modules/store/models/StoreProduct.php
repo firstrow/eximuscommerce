@@ -429,7 +429,7 @@ class StoreProduct extends BaseModel
 		$query = Yii::app()->db->createCommand()
 			->select('MIN(t.price) as min_price, MAX(t.price) as max_price')
 			->from('StoreProduct t')
-			->where(array('in', 't.id', $model->configurations))
+			->where(array('in', 't.id', $model->getConfigurations(true)))
 			->queryRow();
 
 		// Update
@@ -606,9 +606,9 @@ class StoreProduct extends BaseModel
 	/**
 	 * @return array of product ids
 	 */
-	public function getConfigurations()
+	public function getConfigurations($reload = false)
 	{
-		if(is_array($this->_configurations))
+		if(is_array($this->_configurations) && $reload === false)
 			return $this->_configurations;
 
 		$this->_configurations = Yii::app()->db->createCommand()
