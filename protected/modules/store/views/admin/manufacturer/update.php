@@ -7,7 +7,7 @@
 $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
 	'form'=>$form,
 	//'langSwitcher'=>!$model->isNewRecord,
-	'deleteAction'=>$this->createUrl('/store/admin/products/delete', array('id'=>$model->id))
+	'deleteAction'=>$this->createUrl('/store/admin/manufacturer/delete', array('id'=>$model->id))
 ));
 
 $title = ($model->isNewRecord) ? Yii::t('StoreModule.admin', 'Создание производителя') :

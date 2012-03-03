@@ -33,6 +33,11 @@ return array(
 				'url'=>Yii::app()->createUrl('store/admin/productType'),
 				'position'=>5
 			),
+			array(
+				'label'=>Yii::t('StoreModule.admin', 'Доставка'),
+				'url'=>Yii::app()->createUrl('store/admin/delivery'),
+				'position'=>6
+			),
 		),
 	),
 );

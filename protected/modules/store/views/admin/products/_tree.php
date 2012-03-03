@@ -12,9 +12,9 @@ Yii::app()->clientScript->registerScriptFile(
 
 // Insert hidden to handle main category
 if($model->mainCategory)
-    $mainCategory = ($model->isNewRecord) ? 0 : $model->mainCategory->id;
+	$mainCategory = ($model->isNewRecord) ? 0 : $model->mainCategory->id;
 else
-    $mainCategory = $model->type->main_category;
+	$mainCategory = $model->type->main_category;
 echo CHtml::hiddenField('main_category', $mainCategory);
 
 // Create jstree

@@ -1,9 +1,7 @@
 <?php
 
 return array(
-	'id'=>'productUpdateForm',
-	'showErrorSummary'=>true,
-	'enctype'=>'multipart/form-data',
+	'id'=>'manufacturerUpdateForm',
 	'elements'=>array(
 		'content'=>array(
 			'type'=>'form',
