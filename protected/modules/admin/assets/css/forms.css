@@ -34,14 +34,14 @@
 
 div.form
 {
-	margin-left: 0px;
+    margin-left: 0px;
 }
 
 div.form input,
 div.form textarea,
 div.form select
 {
-	margin: 0.2em 0 0.5em 0;
+    margin: 0.2em 0 0.5em 0;
 }
 
 div.form select
@@ -80,12 +80,12 @@ div.form label
 
 div.form .row
 {
-	padding: 5px 0;
+    padding: 5px 0;
 }
 
 div.form .row:hover
 {
-	
+
 }
 
 div.form .hint
@@ -173,6 +173,7 @@ div.form .errorMessage
 {
     color: red;
     font-size: 0.9em;
+    clear: both;
 }
 
 div.form .errorSummary p
@@ -338,4 +339,25 @@ div.hint
 {
     color: #999;
     font-size:11px;
+}
+
+
+/** Fir for checkboxlist **/
+div.form span br {
+    clear: both;
+    display: block;
+}
+
+div.form span label {
+    float: left;
+    clear: right;
+    display: block;
+    margin-left: 3px;
+}
+div.form span input[type=checkbox]:first-child {
+    margin: 0;
+}
+div.form span input[type=checkbox] {
+    float: left;
+    margin-left: 190px;
 }

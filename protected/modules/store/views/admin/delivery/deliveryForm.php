@@ -27,6 +27,10 @@ return array(
 					'type'=>'text',
 					'hint'=>Yii::t('StoreModule.admin', 'Оставьте пустым для установки максимального значения')
 				),
+				'payment_methods'=>array(
+					'type'=>'checkboxlist',
+					'items'=>CHtml::listData(StorePaymentMethod::model()->findAll(), 'id', 'name'),
+				),
 			),
 		),
 	),

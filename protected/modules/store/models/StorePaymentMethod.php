@@ -65,11 +65,13 @@ class StorePaymentMethod extends BaseModel
 	 */
 	public function beforeSave()
 	{
-		if(empty($this->position) === true)
+		if($this->position == '')
 		{
 			$max = StorePaymentMethod::model()->orderByPositionDesc()->find();
 			if($max)
-				$this->position = $max->position + 1;
+				$this->position = (int)$max->position + 1;
+			else
+				$this->position = 0;
 		}
 		return parent::beforeSave();
 	}
