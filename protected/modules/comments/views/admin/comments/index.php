@@ -46,6 +46,7 @@ $this->widget('ext.sgridview.SGridView', array(
 			'name'=>'owner_title',
 			'filter'=>false
 		),
+		'ip_address',
 		array(
 			'name'=>'created',
 		),

@@ -14,6 +14,7 @@
  * @property string $text
  * @property string $created
  * @property string $updated
+ * @property string $ip_address
  * @method approved()
  * @method orderByCreatedAsc()
  * @method orderByCreatedDesc()
@@ -100,6 +101,7 @@ class Comment extends BaseModel
 			'updated'    => Yii::t('CommentsModule.core','Дата обновления'),
 			'owner_title'=> Yii::t('CommentsModule.core','Владелец'),
 			'verifyCode' => Yii::t('CommentsModule.core','Код проверки'),
+			'ip_address' => Yii::t('CommentsModule.core','IP адрес'),
 		);
 	}
 
@@ -109,7 +111,10 @@ class Comment extends BaseModel
 	public function beforeSave()
 	{
 		if($this->isNewRecord)
+		{
+			$this->ip_address = Yii::app()->request->userHostAddress;
 			$this->created = date('Y-m-d H:i:s');
+		}
 		$this->updated = date('Y-m-d H:i:s');
 		return parent::beforeSave();
 	}
