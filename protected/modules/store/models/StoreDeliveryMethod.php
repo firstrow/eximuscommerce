@@ -40,11 +40,11 @@ class StoreDeliveryMethod extends BaseModel
 	{
 		$alias = $this->getTableAlias();
 		return array(
-			'active'=>array('order'=>$alias.'.active=1'),
-			'orderByPosition'=>array('order'=>$alias.'.position ASC'),
-			'orderByPositionDesc'=>array('order'=>$alias.'.position DESC'),
-			'orderByName'=>array('order'=>$alias.'.name ASC'),
-			'orderByNameDesc'=>array('order'=>$alias.'.name DESC'),
+			'active'              => array('order'=>$alias.'.active=1'),
+			'orderByPosition'     => array('order'=>$alias.'.position ASC'),
+			'orderByPositionDesc' => array('order'=>$alias.'.position DESC'),
+			'orderByName'         => array('order'=>$alias.'.name ASC'),
+			'orderByNameDesc'     => array('order'=>$alias.'.name DESC'),
 		);
 	}
 
@@ -156,11 +156,12 @@ class StoreDeliveryMethod extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name'        => Yii::t('StoreModule.core', 'Название'),
-			'active'      => Yii::t('StoreModule.core', 'Активен'),
-			'description' => Yii::t('StoreModule.core', 'Описание'),
-			'position'    => Yii::t('StoreModule.core', 'Позиция'),
+			'id'              => 'ID',
+			'name'            => Yii::t('StoreModule.core', 'Название'),
+			'active'          => Yii::t('StoreModule.core', 'Активен'),
+			'description'     => Yii::t('StoreModule.core', 'Описание'),
+			'position'        => Yii::t('StoreModule.core', 'Позиция'),
+			'payment_methods' => Yii::t('StoreModule.core', 'Способы оплаты'),
 		);
 	}
 
