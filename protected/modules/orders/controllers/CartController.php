@@ -1,10 +1,18 @@
 <?php
 
+Yii::import('orders.models.*');
+
 /**
  * Cart controller
+ *
  */
 class CartController extends Controller
 {
+
+	/**
+	 * @var OrderCreateForm
+	 */
+	public $form;
 
 	protected $_errors = false;
 
@@ -19,15 +27,43 @@ class CartController extends Controller
 	 */
 	public function actionIndex()
 	{
+		// Recount
 		if(Yii::app()->request->isPostRequest && Yii::app()->request->getPost('recount') && !empty($_POST['quantities']))
-		{
-			Yii::app()->cart->recount(Yii::app()->request->getPost('quantities'));
+			$this->processRecount();
 
-			if(!Yii::app()->request->isAjaxRequest)
-				Yii::app()->request->redirect($this->createUrl('index'));
+		$this->form = new OrderCreateForm;
+
+		// Make order
+		if(Yii::app()->request->isPostRequest && Yii::app()->request->getPost('create'))
+		{
+			if(isset($_POST['OrderCreateForm']))
+			{
+				$this->form->attributes = $_POST['OrderCreateForm'];
+
+				if($this->form->validate())
+					$this->createOrder();
+			}
 		}
 
 		$this->render('index');
+	}
+
+	/**
+	 * Create new order
+	 */
+	public function createOrder()
+	{
+		$order = new Order;
+
+		// Set user data
+		$order->user_name    = $this->form->name;
+		$order->user_email   = $this->form->email;
+		$order->user_phone   = $this->form->phone;
+		$order->user_address = $this->form->address;
+		$order->user_comment = $this->form->comment;
+		$order->delivery_id  = $this->form->delivery_id;
+
+		$order->save();
 	}
 
 	/**
@@ -97,6 +133,14 @@ class CartController extends Controller
 		));
 	}
 
+	public function processRecount()
+	{
+		Yii::app()->cart->recount(Yii::app()->request->getPost('quantities'));
+
+		if(!Yii::app()->request->isAjaxRequest)
+			Yii::app()->request->redirect($this->createUrl('index'));
+	}
+
 	/**
 	 * Remove product from cart
 	 */
@@ -106,13 +150,6 @@ class CartController extends Controller
 
 		if(!Yii::app()->request->isAjaxRequest)
 			Yii::app()->request->redirect($this->createUrl('index'));
-	}
-
-	/**
-	 * Create new order
-	 */
-	public function actionCreate()
-	{
 	}
 
 	/**

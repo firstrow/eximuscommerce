@@ -99,7 +99,14 @@
 		{
 			?>
 			<label class="radio">
-				<input type="radio" name="delivery_method" value="<?=$delivery->id?>"><h4><?=CHtml::encode($delivery->name)?></h4>
+				<?php
+					echo CHtml::activeRadioButton($this->form, 'delivery_id', array(
+						'checked'      => ($this->form->delivery_id == $delivery->id),
+						'uncheckValue' => null,
+						'value'        => $delivery->id
+					));
+				?>
+				<h4><?=CHtml::encode($delivery->name)?></h4>
 				<p><?=CHtml::encode($delivery->description)?></p>
 			</label>
 			<?php
@@ -107,8 +114,40 @@
 		?>
 	</div>
 
+	<div>
+		<h3>Данные пользователя</h3>
+		<div>
+			<?php echo CHtml::errorSummary($this->form); ?>
+
+			<div class="row">
+				<?php echo CHtml::activeLabel($this->form,'name', array('required'=>true)); ?>
+				<?php echo CHtml::activeTextField($this->form,'name'); ?>
+			</div>
+
+			<div class="row">
+				<?php echo CHtml::activeLabel($this->form,'email', array('required'=>true)); ?>
+				<?php echo CHtml::activeTextField($this->form,'email'); ?>
+			</div>
+
+			<div class="row">
+				<?php echo CHtml::activeLabel($this->form,'phone'); ?>
+				<?php echo CHtml::activeTextField($this->form,'phone'); ?>
+			</div>
+
+			<div class="row">
+				<?php echo CHtml::activeLabel($this->form,'address'); ?>
+				<?php echo CHtml::activeTextField($this->form,'address'); ?>
+			</div>
+
+			<div class="row">
+				<?php echo CHtml::activeLabel($this->form,'comment'); ?>
+				<?php echo CHtml::activeTextArea($this->form,'comment'); ?>
+			</div>
+		</div><!-- form -->
+	</div>
+
 	<div align="right" class="form-actions">
-		<input type="submit" value="Оформить заказ" name="submit" class="btn btn-primary">
+		<input type="submit" value="Оформить заказ" name="create" class="btn btn-primary">
 	</div>
 
 <?php echo CHtml::endForm() ?>
