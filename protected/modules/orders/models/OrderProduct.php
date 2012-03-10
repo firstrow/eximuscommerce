@@ -49,6 +49,7 @@ class OrderProduct extends BaseModel
 	public function relations()
 	{
 		return array(
+			'order'=>array(self::BELONGS_TO, 'Order', 'order_id')
 		);
 	}
 
@@ -58,15 +59,24 @@ class OrderProduct extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'order_id' => 'Order',
-			'product_id' => 'Product',
+			'id'              => 'ID',
+			'order_id'        => 'Order',
+			'product_id'      => 'Product',
 			'configurable_id' => 'Configurable',
-			'name' => 'Name',
-			'quantity' => 'Quantity',
-			'sku' => 'Sku',
-			'price' => 'Price',
+			'name'            => 'Name',
+			'quantity'        => 'Quantity',
+			'sku'             => 'Sku',
+			'price'           => 'Price',
 		);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function afterSave()
+	{
+		$this->order->updateTotalPrice();
+		return parent::afterSave();
 	}
 
 	/**

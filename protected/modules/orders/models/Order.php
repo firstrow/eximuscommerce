@@ -53,8 +53,16 @@ class Order extends BaseModel
 			array('user_comment', 'length', 'max'=>500),
 			array('user_address', 'length', 'max'=>255),
 			array('delivery_id', 'validateDelivery'),
-
+			array('paid', 'boolean', 'on'=>'update'),
+			// Search
 			array('id, user_id, delivery_id, delivery_price, total_price, status_id, paid, user_name, user_email, user_address, user_phone, user_comment, ip_address, created, updated', 'safe', 'on'=>'search'),
+		);
+	}
+
+	public function relations()
+	{
+		return array(
+			'products'=>array(self::HAS_MANY, 'OrderProduct', 'order_id'),
 		);
 	}
 
@@ -104,6 +112,31 @@ class Order extends BaseModel
 		$this->updated = date('Y-m-d H:i:s');
 
 		return parent::beforeSave();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function afterDelete()
+	{
+		foreach($this->products as $ordered_product)
+			$ordered_product->delete();
+
+		return parent::afterDelete();
+	}
+
+	/**
+	 * Update total
+	 */
+	public function updateTotalPrice()
+	{
+		$products = OrderProduct::model()->findAllByAttributes(array('order_id'=>$this->id));
+
+		$this->total_price = $this->delivery_price;
+		foreach($products as $p)
+			$this->total_price += $p->price * $p->quantity;
+
+		$this->save(false);
 	}
 
 	/**

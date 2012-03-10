@@ -87,6 +87,14 @@ class SCurrencyManager extends CComponent
 	}
 
 	/**
+	 * @return StoreCurrency main currency
+	 */
+	public function getMain()
+	{
+		return $this->_main;
+	}
+
+	/**
 	 * Convert cum from main currency to selected currency
 	 * @param mixed $sum
 	 * @param mixed $id StoreCurrnecy. If not set, sum will be convetred to active currency
