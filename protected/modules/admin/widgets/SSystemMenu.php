@@ -16,12 +16,15 @@ class SSystemMenu extends CWidget {
 		$this->_items = array(
 			'users'=>array(
 				'label'=>Yii::t('AdminModule.admin', 'Система'),
+				'position'=>1,
 			),
 			'catalog'=>array(
 				'label'=>Yii::t('AdminModule.admin', 'Каталог'),
+				'position'=>3,
 			),
 			'cms'=>array(
 				'label'=>Yii::t('AdminModule.admin', 'Сайт'),
+				'position'=>4,
 			),
 		);
 	}

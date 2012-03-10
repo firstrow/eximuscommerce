@@ -111,7 +111,7 @@ class StoreProduct extends BaseModel
 	/**
 	 * Find product by url.
 	 * Scope.
-	 * @param string Product url
+	 * @param string StoreProduct url
 	 * @return StoreProduct
 	 */
 	public function withUrl($url)
@@ -239,7 +239,7 @@ class StoreProduct extends BaseModel
 			'meta_description'       => Yii::t('StoreModule.core', 'Meta Description'),
 			'layout'                 => Yii::t('StoreModule.core', 'Макет'),
 			'view'                   => Yii::t('StoreModule.core', 'Шаблон'),
-			'sku'                    => Yii::t('StoreModule.core', 'Артикул'),
+			'sku'                    => Yii::t('StoreModule.core', 'Артикул')   ,
 			'quantity'               => Yii::t('StoreModule.core', 'Количество'),
 			'availability'           => Yii::t('StoreModule.core', 'Доступность'),
 			'auto_decrease_quantity' => Yii::t('StoreModule.core', 'Автоматически уменьшать количество'),

@@ -3,7 +3,7 @@
  * @var StoreProduct $model
  */
 
-$this->widget('application.modules.admin.widgets.schosen.SChosen', array(
+$this->widget('admin.widgets.schosen.SChosen', array(
 	'elements'=>array()
 ));
 
@@ -25,6 +25,7 @@ Yii::app()->getClientScript()->registerScriptFile($this->module->assetsUrl.'/adm
 	</div>
 
 	<hr>
+
 	<div id="variantsData">
 		<?php
 			foreach($model->processVariants() as $row)

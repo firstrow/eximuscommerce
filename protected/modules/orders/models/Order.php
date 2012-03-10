@@ -46,6 +46,14 @@ class Order extends BaseModel
 	public function rules()
 	{
 		return array(
+			array('user_name, user_email, delivery_id', 'required', 'on'=>'update'),
+			array('user_name, user_email', 'length', 'max'=>100),
+			array('user_phone', 'length', 'max'=>30),
+			array('user_email', 'email'),
+			array('user_comment', 'length', 'max'=>500),
+			array('user_address', 'length', 'max'=>255),
+			array('delivery_id', 'validateDelivery'),
+
 			array('id, user_id, delivery_id, delivery_price, total_price, status_id, paid, user_name, user_email, user_address, user_phone, user_comment, ip_address, created, updated', 'safe', 'on'=>'search'),
 		);
 	}
@@ -72,6 +80,15 @@ class Order extends BaseModel
 			'created'        => Yii::t('OrdersModule.core','Дата создания'),
 			'updated'        => Yii::t('OrdersModule.core','Дата обновления'),
 		);
+	}
+
+	/**
+	 * Check if delivery method exists
+	 */
+	public function validateDelivery()
+	{
+		if(StoreDeliveryMethod::model()->countByAttributes(array('id'=>$this->delivery_id)) == 0)
+			$this->addError('delivery_id', Yii::t('OrdersModule.core', 'Необходимо выбрать способ доставки.'));
 	}
 
 	/**

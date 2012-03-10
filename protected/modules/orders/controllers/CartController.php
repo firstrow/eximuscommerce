@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('orders.models.*');
+Yii::import('store.models.*');
 
 /**
  * Cart controller
@@ -15,12 +16,6 @@ class CartController extends Controller
 	public $form;
 
 	protected $_errors = false;
-
-	public function beforeAction()
-	{
-		Yii::import('application.modules.store.models.*');
-		return true;
-	}
 
 	/**
 	 * Display list of product added to cart
@@ -49,25 +44,7 @@ class CartController extends Controller
 	}
 
 	/**
-	 * Create new order
-	 */
-	public function createOrder()
-	{
-		$order = new Order;
-
-		// Set user data
-		$order->user_name    = $this->form->name;
-		$order->user_email   = $this->form->email;
-		$order->user_phone   = $this->form->phone;
-		$order->user_address = $this->form->address;
-		$order->user_comment = $this->form->comment;
-		$order->delivery_id  = $this->form->delivery_id;
-
-		$order->save();
-	}
-
-	/**
-	 * Add new product to cart
+	 * Validate POST data and add product to cart
 	 */
 	public function actionAdd()
 	{
@@ -101,7 +78,7 @@ class CartController extends Controller
 			// Get last conf item
 			$configurable_id  = Yii::app()->request->getPost('configurable_id', 0);
 
-			if(!in_array($configurable_id , $model->configurations))
+			if($configurable_id && !in_array($configurable_id , $model->configurations))
 				$this->_addError(Yii::t('OrdersModule.core', 'Ошибка. Выберите вариант продукта.'), true);
 		}else
 			$configurable_id  = 0;
@@ -115,6 +92,67 @@ class CartController extends Controller
 		));
 
 		$this->_finish();
+	}
+
+	/**
+	 * Remove product from cart and redirect
+	 */
+	public function actionRemove($index)
+	{
+		Yii::app()->cart->remove($index);
+
+		if(!Yii::app()->request->isAjaxRequest)
+			Yii::app()->request->redirect($this->createUrl('index'));
+	}
+
+	/**
+	 * Clear cart
+	 */
+	public function actionClear()
+	{
+		Yii::app()->cart->clear();
+
+		if(!Yii::app()->request->isAjaxRequest)
+			Yii::app()->request->redirect($this->createUrl('index'));
+	}
+
+	/**
+	 * Create new order
+	 * @return Order
+	 */
+	public function createOrder()
+	{
+		if(Yii::app()->cart->countItems() == 0)
+			return false;
+
+		$order = new Order;
+
+		// Set main data
+		$order->user_name    = $this->form->name;
+		$order->user_email   = $this->form->email;
+		$order->user_phone   = $this->form->phone;
+		$order->user_address = $this->form->address;
+		$order->user_comment = $this->form->comment;
+		$order->delivery_id  = $this->form->delivery_id;
+
+		$order->save();
+
+		// Process products
+		foreach(Yii::app()->cart->getDataWithModels() as $item)
+		{
+			$ordered_product = new OrderProduct;
+			$ordered_product->order_id        = $order->id;
+			$ordered_product->product_id      = $item['model']->id;
+			$ordered_product->configurable_id = $item['configurable_id'];
+			$ordered_product->name            = $item['model']->name;
+			$ordered_product->quantity        = $item['quantity'];
+			$ordered_product->sku             = $item['model']->sku;
+			$ordered_product->price           = $item['model']->price;
+
+			$ordered_product->save();
+		}
+
+		return $order;
 	}
 
 	/**
@@ -133,50 +171,15 @@ class CartController extends Controller
 		));
 	}
 
+	/**
+	 * Recount product quantity and redirect
+	 */
 	public function processRecount()
 	{
 		Yii::app()->cart->recount(Yii::app()->request->getPost('quantities'));
 
 		if(!Yii::app()->request->isAjaxRequest)
 			Yii::app()->request->redirect($this->createUrl('index'));
-	}
-
-	/**
-	 * Remove product from cart
-	 */
-	public function actionRemove($index)
-	{
-		Yii::app()->cart->remove($index);
-
-		if(!Yii::app()->request->isAjaxRequest)
-			Yii::app()->request->redirect($this->createUrl('index'));
-	}
-
-	/**
-	 * View created order
-	 */
-	public function actionView()
-	{
-	}
-
-	public function actionClear()
-	{
-		Yii::app()->cart->clear();
-
-		if(!Yii::app()->request->isAjaxRequest)
-			Yii::app()->request->redirect($this->createUrl('index'));
-	}
-
-	/**
-	 * Process result and exit!
-	 */
-	protected function _finish()
-	{
-		echo CJSON::encode(array(
-			'errors'=>$this->_errors,
-			'message'=>Yii::t('OrdersModule.core','Продукт успешно добавлен в корзину'),
-		));
-		exit;
 	}
 
 	/**
@@ -193,5 +196,17 @@ class CartController extends Controller
 
 		if($fatal === true)
 			$this->_finish();
+	}
+
+	/**
+	 * Process result and exit!
+	 */
+	protected function _finish()
+	{
+		echo CJSON::encode(array(
+			'errors'=>$this->_errors,
+			'message'=>Yii::t('OrdersModule.core','Продукт успешно добавлен в корзину'),
+		));
+		exit;
 	}
 }
