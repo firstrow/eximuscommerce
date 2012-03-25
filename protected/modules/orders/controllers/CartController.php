@@ -147,7 +147,24 @@ class CartController extends Controller
 			$ordered_product->name            = $item['model']->name;
 			$ordered_product->quantity        = $item['quantity'];
 			$ordered_product->sku             = $item['model']->sku;
-			$ordered_product->price           = $item['model']->price;
+			$ordered_product->price           = StoreProduct::calculatePrices($item['model'], $item['variant_models'], $item['configurable_id']);
+
+			// Process configurable product
+			if(isset($item['configurable_model']) && $item['configurable_model'] instanceof StoreProduct)
+			{
+				$ordered_product->configurable_name = $item['configurable_model']->name;
+				// Use configurable product sku
+				$ordered_product->sku = $item['configurable_model']->sku;
+			}
+
+			// Save selected variants as key/value array
+			if(!empty($item['variant_models']))
+			{
+				$variants = array();
+				foreach($item['variant_models'] as $variant)
+					$variants[$variant->attribute->title] = $variant->option->value;
+				$ordered_product->variants = serialize($variants);
+			}
 
 			$ordered_product->save();
 		}

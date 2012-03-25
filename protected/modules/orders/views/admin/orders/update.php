@@ -8,7 +8,6 @@
  */
 
 $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
-	//'form'=>$form,
 	'formId'=>'orderUpdateForm',
 	'deleteAction'=>$this->createUrl('/orders/admin/orders/delete', array('id'=>$model->id))
 ));
@@ -37,6 +36,9 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 	div.userData textarea {
 		width: 403px;
 	}
+	#orderedProducts {
+		padding: 0 0 5px 0;
+	}
 </style>
 
 <div class="form wide padding-all">
@@ -53,7 +55,7 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 				<td width="50%">
 					<!-- User data -->
 					<div class="userData">
-						<h4>Данные пользователя</h4>
+						<h4><?php echo Yii::t('OrdersModule.admin', 'Данные пользователя'); ?></h4>
 						<div class="row">
 							<?php echo CHtml::activeLabel($model,'delivery_id', array('required'=>true)); ?>
 							<?php echo CHtml::activeDropDownList($model, 'delivery_id', CHtml::listData($deliveryMethods, 'id', 'name')); ?>
@@ -92,25 +94,29 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 				</td>
 				<td>
 					<!-- Right block -->
-					<h4>Продукты</h4>
+					<h4><?php echo Yii::t('OrdersModule.admin','Продукты') ?></h4>
 					<?php
 						$products = new OrderProduct;
 						$products->order_id = $model->id;
 						$dataProvider = $products->search();
 
 						$this->widget('zii.widgets.grid.CGridView', array(
-							'id'=>'orderedProducts',
-							'enableSorting'=>false,
-							'enablePagination'=>false,
-							'dataProvider'=>$dataProvider,
-							'template'=>'{items}',
-							'columns'=>array(
-								'name',
+							'id'               => 'orderedProducts',
+							'enableSorting'    => false,
+							'enablePagination' => false,
+							'dataProvider'     =>  $dataProvider,
+							'template'         => '{items}',
+							'columns'          => array(
+								array(
+									'name'=>'renderFullName',
+									'type'=>'raw',
+									'header'=>Yii::t('OrdersModule.admin', 'Название')
+								),
 								'quantity',
 								'sku',
 								array(
 									'name'=>'price',
-									'value'=>'StoreProduct::formatPrice($data->price * $data->quantity)'
+									'value'=>'StoreProduct::formatPrice($data->price)'
 								),
 								array(
 									'type'=>'raw',
@@ -120,9 +126,13 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 						));
 					?>
 
+					<div align="right">
+						<a href="#"><?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?></a>
+					</div>
+
 					<div class="row">
-						<label><b>Итог:</b></label>
-						<?php echo StoreProduct::formatPrice($model->total_price) .' '.Yii::app()->currency->main->symbol; ?>
+						<b><?php Yii::t('OrdersModule.admin','Итог') ?>:</b>
+						<span><?php echo StoreProduct::formatPrice($model->total_price) .' '.Yii::app()->currency->main->symbol; ?></span>
 					</div>
 				</td>
 			</tr>

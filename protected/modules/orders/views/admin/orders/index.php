@@ -44,6 +44,7 @@ $this->widget('ext.sgridview.SGridView', array(
 		'user_email',
 		'user_phone',
 		'status_id',
+		'total_price',
 		'created',
 		// Buttons
 		array(

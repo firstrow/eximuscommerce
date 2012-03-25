@@ -9,6 +9,8 @@
  * @property integer $product_id
  * @property integer $configurable_id
  * @property string $name
+ * @property string $configurable_name Name of configurable product
+ * @property string $vairants Key/value array of selected vvariants. E.g: Color/Green, Size/Large
  * @property integer $quantity
  * @property string $sku
  * @property float $price
@@ -60,13 +62,13 @@ class OrderProduct extends BaseModel
 	{
 		return array(
 			'id'              => 'ID',
-			'order_id'        => 'Order',
-			'product_id'      => 'Product',
-			'configurable_id' => 'Configurable',
-			'name'            => 'Name',
-			'quantity'        => 'Quantity',
-			'sku'             => 'Sku',
-			'price'           => 'Price',
+			'order_id'        => Yii::t('OrdersModule.core', 'Заказы'),
+			'product_id'      => Yii::t('OrdersModule.core', 'Продукт'),
+			'configurable_id' => Yii::t('OrdersModule.core', 'Конфигурация'),
+			'name'            => Yii::t('OrdersModule.core', 'Название'),
+			'quantity'        => Yii::t('OrdersModule.core', 'Количество'),
+			'sku'             => Yii::t('OrdersModule.core', 'Артикул'),
+			'price'           => Yii::t('OrdersModule.core', 'Цена'),
 		);
 	}
 
@@ -99,5 +101,28 @@ class OrderProduct extends BaseModel
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	/**
+	 * Render full name to present product on order view
+	 * @return string
+	 */
+	public function getRenderFullName()
+	{
+		$result = $this->name;
+
+		if(!empty($this->configurable_name))
+			$result .= '<br/>'.$this->configurable_name;
+
+		$variants = unserialize($this->variants);
+		if(!empty($variants))
+		{
+			foreach($variants as $key=>$value)
+			{
+				$result .= "<br/> - {$key}: {$value}";
+			}
+		}
+
+		return $result;
 	}
 }
