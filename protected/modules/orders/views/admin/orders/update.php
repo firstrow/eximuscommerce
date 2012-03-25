@@ -131,7 +131,7 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 					</div>
 
 					<div class="row">
-						<b><?php Yii::t('OrdersModule.admin','Итог') ?>:</b>
+						<b><?php echo Yii::t('OrdersModule.admin','Итог') ?>:</b>
 						<span><?php echo StoreProduct::formatPrice($model->total_price) .' '.Yii::app()->currency->main->symbol; ?></span>
 					</div>
 				</td>
