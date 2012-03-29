@@ -32,6 +32,7 @@ function addProductToOrder(el, order_id, token)
         dataType: "html",
         success: function(){
             // reload product list
+            $('#orderedProducts').load('/admin/orders/orders/renderOrderedProducts/order_id/' + order_id);
         },
         error: function(){
             alert('error');

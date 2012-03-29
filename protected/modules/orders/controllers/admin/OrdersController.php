@@ -108,6 +108,17 @@ class OrdersController extends SAdminController {
 	}
 
 	/**
+	 * Render ordered products after new product added.
+	 * @param $order_id
+	 */
+	public function actionRenderOrderedProducts($order_id)
+	{
+		$this->renderPartial('_orderedProducts', array(
+			'model'=>$this->_loadModel($order_id)
+		));
+	}
+
+	/**
 	 * Load order model
 	 * @param $id
 	 * @return CActiveRecord

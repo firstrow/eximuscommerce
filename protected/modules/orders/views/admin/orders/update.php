@@ -102,54 +102,28 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 				</td>
 				<td>
 					<!-- Right block -->
-					<h4><?php echo Yii::t('OrdersModule.admin','Продукты') ?></h4>
-					<?php
-						$products = new OrderProduct;
-						$products->order_id = $model->id;
-						$dataProvider = $products->search();
 
-						$this->widget('zii.widgets.grid.CGridView', array(
-							'id'               => 'orderedProducts',
-							'enableSorting'    => false,
-							'enablePagination' => false,
-							'dataProvider'     =>  $dataProvider,
-							'template'         => '{items}',
-							'columns'          => array(
-								array(
-									'name'=>'renderFullName',
-									'type'=>'raw',
-									'header'=>Yii::t('OrdersModule.admin', 'Название')
-								),
-								'quantity',
-								'sku',
-								array(
-									'name'=>'price',
-									'value'=>'StoreProduct::formatPrice($data->price)'
-								),
-								array(
-									'type'=>'raw',
-									'value'=>'CHtml::link("&times", "#", array("style"=>"font-weight:bold;"))',
-								),
-							),
-						));
-					?>
-
-					<div align="right">
+					<div style="float: right;padding-right: 10px">
 						<a href="javascript:openAddProductDialog(<?php echo $model->id ?>);"><?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?></a>
 					</div>
-
 					<div id="dialog-modal" style="display: none;">
 						<?php
-							$this->renderPartial('_addProduct', array(
-								'model'=>$model,
-							));
+						$this->renderPartial('_addProduct', array(
+							'model'=>$model,
+						));
 						?>
 					</div>
 
-					<div class="row">
-						<b><?php echo Yii::t('OrdersModule.admin','Итог') ?>:</b>
-						<span><?php echo StoreProduct::formatPrice($model->total_price) .' '.Yii::app()->currency->main->symbol; ?></span>
+					<h4><?php echo Yii::t('OrdersModule.admin','Продукты') ?></h4>
+
+					<div id="orderedProducts">
+					<?php
+						$this->renderPartial('_orderedProducts', array(
+							'model'=>$model,
+						));
+					?>
 					</div>
+
 				</td>
 			</tr>
 		</table>

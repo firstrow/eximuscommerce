@@ -99,7 +99,8 @@ class OrderProduct extends BaseModel
 		$criteria->compare('price',$this->price);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria'   => $criteria,
+			'pagination' => false // By default disable pagination to show all products in amdin panel
 		));
 	}
 
