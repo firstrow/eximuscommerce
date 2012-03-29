@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('store.models.*');
+Yii::import('store.StoreModule');
 
 /**
  * Admin orders
@@ -46,10 +47,7 @@ class OrdersController extends SAdminController {
 			$model->unsetAttributes();
 		}
 		else
-			$model = Order::model()->findByPk($_GET['id']);
-
-		if (!$model)
-			throw new CHttpException(404, Yii::t('OrdersModule.admin', 'Заказ не найден.'));
+			$model = $this->_loadModel($_GET['id']);
 
 		$deliveryMethods = StoreDeliveryMethod::model()->orderByName()->findAll();
 
@@ -67,6 +65,62 @@ class OrdersController extends SAdminController {
 			'model'=>$model,
 			'deliveryMethods'=>$deliveryMethods,
 		));
+	}
+
+	/**
+	 * Display gridview with list of products to add to order
+	 * @param $order_id
+	 */
+	public function actionAddProductList($order_id)
+	{
+		$model = $this->_loadModel($order_id);
+		$dataProvider = new StoreProduct('search');
+
+		if(isset($_GET['StoreProduct']))
+			$dataProvider->attributes = $_GET['StoreProduct'];
+
+		$this->renderPartial('_addProduct', array(
+			'order_id'=>$order_id,
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	public function actionAddProduct()
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$order = $this->_loadModel($_POST['order_id']);
+			$product = StoreProduct::model()->findByPk($_POST['product_id']);
+
+			if(!$product)
+				throw new CHttpException(404, Yii::t('OrdersModule.admin', 'Ошибка. Продукт не найден.'));
+
+			$ordered_product = new OrderProduct;
+			$ordered_product->order_id        = $order->id;
+			$ordered_product->product_id      = $product->id;
+			$ordered_product->name            = $product->name;
+			$ordered_product->quantity        = $_POST['quantity'];
+			$ordered_product->sku             = $product->sku;
+			$ordered_product->price           = StoreProduct::calculatePrices($product, array(), 0);
+			$ordered_product->save();
+		}
+	}
+
+	/**
+	 * Load order model
+	 * @param $id
+	 * @return CActiveRecord
+	 * @throws CHttpException
+	 */
+	protected function _loadModel($id)
+	{
+		$model = Order::model()->findByPk($id);
+
+		if (!$model)
+			throw new CHttpException(404, Yii::t('OrdersModule.admin', 'Заказ не найден.'));
+
+		return $model;
 	}
 
 	/**

@@ -7,6 +7,8 @@
  * @var $this OrdersController
  */
 
+Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/admin/orders.update.js', CClientScript::POS_END);
+
 $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
 	'formId'=>'orderUpdateForm',
 	'deleteAction'=>$this->createUrl('/orders/admin/orders/delete', array('id'=>$model->id))
@@ -38,6 +40,12 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 	}
 	#orderedProducts {
 		padding: 0 0 5px 0;
+	}
+	.ui-dialog .ui-dialog-content {
+		padding: 0;
+	}
+	#dialog-modal .grid-view {
+		padding: 0;
 	}
 </style>
 
@@ -127,7 +135,15 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 					?>
 
 					<div align="right">
-						<a href="#"><?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?></a>
+						<a href="javascript:openAddProductDialog(<?php echo $model->id ?>);"><?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?></a>
+					</div>
+
+					<div id="dialog-modal" style="display: none;">
+						<?php
+							$this->renderPartial('_addProduct', array(
+								'model'=>$model,
+							));
+						?>
 					</div>
 
 					<div class="row">
