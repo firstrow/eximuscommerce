@@ -31,13 +31,42 @@ function addProductToOrder(el, order_id, token)
         },
         dataType: "html",
         success: function(){
-            // reload product list
-            $('#orderedProducts').load('/admin/orders/orders/renderOrderedProducts/order_id/' + order_id);
-        },
-        error: function(){
-            alert('error');
+            reloadOrderedProducts(order_id);
         }
     });
 
     return false;
+}
+
+/**
+ * Delete ordered product
+ * @param product_id
+ * @param order_id
+ * @param token
+ */
+function deleteOrderedProduct(product_id, order_id, token)
+{
+    if(confirm(deleteQuestion))
+    {
+        $.ajax({
+            url: "/admin/orders/orders/deleteProduct",
+            type: "POST",
+            data: {
+                YII_CSRF_TOKEN: token,
+                product_id: product_id
+            },
+            dataType: "html",
+            success: function(){
+                reloadOrderedProducts(order_id);
+            }
+        });
+    }
+}
+
+/**
+ * Update products list
+ */
+function reloadOrderedProducts(order_id)
+{
+    $('#orderedProducts').load('/admin/orders/orders/renderOrderedProducts/order_id/' + order_id);
 }

@@ -155,4 +155,11 @@ class OrdersController extends SAdminController {
 		}
 	}
 
+	public function actionDeleteProduct()
+	{
+		$model = OrderProduct::model()->findByPk($_POST['product_id']);
+		if($model)
+			$model->delete();
+	}
+
 }
