@@ -13,6 +13,7 @@ $dataProvider = $products->search();
 
 Yii::app()->clientScript->registerScript('qustioni18n', '
 	var deleteQuestion = "'.Yii::t('OrdersModule.admin', 'Вы действительно удалить запись?').'";
+	var productSuccessAddedToOrder = "'.Yii::t('OrdersModule.admin', 'Продукт успешно добавлен к заказу.').'";
 ', CClientScript::POS_BEGIN);
 
 $this->widget('zii.widgets.grid.CGridView', array(

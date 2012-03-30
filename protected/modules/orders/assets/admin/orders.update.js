@@ -32,6 +32,7 @@ function addProductToOrder(el, order_id, token)
         dataType: "html",
         success: function(){
             reloadOrderedProducts(order_id);
+            $.jGrowl(productSuccessAddedToOrder,{position:"bottom-right"});
         }
     });
 
