@@ -102,7 +102,8 @@ class OrdersController extends SAdminController {
 			$ordered_product->name            = $product->name;
 			$ordered_product->quantity        = $_POST['quantity'];
 			$ordered_product->sku             = $product->sku;
-			$ordered_product->price           = StoreProduct::calculatePrices($product, array(), 0);
+			$ordered_product->price           = $_POST['price'];
+			//$ordered_product->price           = StoreProduct::calculatePrices($product, array(), 0);
 			$ordered_product->save();
 		}
 	}

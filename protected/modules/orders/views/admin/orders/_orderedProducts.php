@@ -20,7 +20,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'               => 'orderedProducts',
 	'enableSorting'    => false,
 	'enablePagination' => false,
-	'dataProvider'     =>  $dataProvider,
+	'dataProvider'     => $dataProvider,
+	'selectableRows'   => 0,
 	'template'         => '{items}',
 	'columns'          => array(
 		array(

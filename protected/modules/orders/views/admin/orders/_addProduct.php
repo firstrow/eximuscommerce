@@ -30,8 +30,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'value'=>'$data->sku',
 		),
 		array(
+			'type'=>'raw',
 			'name'=>'price',
-			'value'=>'$data->price',
+			'value'=>'CHtml::textField("price_{$data->id}", $data->price, array("style"=>"width:80px;border:1px solid silver;padding:1px;"))',
 		),
 		array(
 			'type'=>'raw',

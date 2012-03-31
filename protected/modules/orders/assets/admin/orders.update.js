@@ -18,7 +18,8 @@ function openAddProductDialog(order_id)
 function addProductToOrder(el, order_id, token)
 {
     var product_id = $(el).children('a').attr('href');
-    var quantity = $('#count_' + product_id).val();
+    var quantity   = $('#count_' + product_id).val();
+    var price      = $('#price_' + product_id).val();
 
     $.ajax({
         url: "/admin/orders/orders/addProduct",
@@ -27,7 +28,8 @@ function addProductToOrder(el, order_id, token)
             YII_CSRF_TOKEN: token,
             order_id: order_id,
             product_id: product_id,
-            quantity: quantity
+            quantity: quantity,
+            price: price
         },
         dataType: "html",
         success: function(){
