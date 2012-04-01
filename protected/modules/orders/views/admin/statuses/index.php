@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Display orders list
+ * Display statuseslist
  **/
 
-$this->pageHeader = Yii::t('OrdersModule.admin', 'Заказы');
+$this->pageHeader = Yii::t('OrdersModule.admin', 'Статусы заказов');
 
 $this->breadcrumbs = array(
 	'Home'=>$this->createUrl('/admin'),
-	Yii::t('OrdersModule.admin', 'Заказы'),
+	Yii::t('OrdersModule.admin', 'Статусы заказов'),
 );
 
 $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
@@ -16,9 +16,9 @@ $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
 	'elements'=>array(
 		'create'=>array(
 			'link'=>$this->createUrl('create'),
-			'title'=>Yii::t('OrdersModule.admin', 'Создать заказ'),
+			'title'=>Yii::t('OrdersModule.admin', 'Новый статус'),
 			'options'=>array(
-				'icons'=>array('primary'=>'ui-icon-cart')
+				'icons'=>array('primary'=>'ui-icon-plus')
 			)
 		),
 	),
@@ -26,7 +26,7 @@ $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
 
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider'=>$dataProvider,
-	'id'=>'ordersListGrid',
+	'id'=>'orderStatusesListGrid',
 	'filter'=>$model,
 	'columns'=>array(
 		array(
@@ -37,19 +37,11 @@ $this->widget('ext.sgridview.SGridView', array(
 			'name'=>'id'
 		),
 		array(
-			'name'=>'user_name',
+			'name'=>'name',
 			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->user_name), array("/orders/admin/orders/update", "id"=>$data->id))',
+			'value'=>'CHtml::link(CHtml::encode($data->name), array("/orders/admin/statuses/update", "id"=>$data->id))',
 		),
-		'user_email',
-		'user_phone',
-		array(
-			'name'=>'status_id',
-			'filter'=>CHtml::listData(OrderStatus::model()->orderByPosition()->findAll(), 'id', 'name'),
-			'value'=>'$data->status_name'
-		),
-		'total_price',
-		'created',
+		'position',
 		// Buttons
 		array(
 			'class'=>'CButtonColumn',

@@ -8,7 +8,19 @@ Yii::import('orders.OrdersModule');
 return array(
 	'orders'=>array(
 		'label'=>Yii::t('OrdersModule.admin', 'Заказы'),
-		'position'=>2,
 		'url'=>array('/orders/admin/orders'),
+		'position'=>2,
+		'items'=>array(
+			array(
+				'label'=>Yii::t('OrdersModule.admin', 'Все заказы'),
+				'url'=>array('/orders/admin/orders'),
+				'position'=>1
+			),
+			array(
+				'label'=>Yii::t('OrdersModule.admin', 'Статусы'),
+				'url'=>array('/orders/admin/statuses'),
+				'position'=>2
+			)
+		),
 	),
 );

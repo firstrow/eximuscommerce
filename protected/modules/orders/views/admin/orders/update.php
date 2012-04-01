@@ -26,7 +26,7 @@ $this->breadcrumbs = array(
 $this->pageHeader = $title;
 
 $this->widget('admin.widgets.schosen.SChosen', array(
-	'elements'=>array('Order_delivery_id')
+	'elements'=>array('Order_delivery_id', 'Order_status_id')
 ));
 
 ?>
@@ -62,6 +62,11 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 					<!-- User data -->
 					<div class="userData">
 						<h4><?php echo Yii::t('OrdersModule.admin', 'Данные пользователя'); ?></h4>
+						<div class="row">
+							<?php echo CHtml::activeLabel($model,'status_id', array('required'=>true)); ?>
+							<?php echo CHtml::activeDropDownList($model, 'status_id', CHtml::listData($statuses, 'id', 'name')); ?>
+						</div>
+
 						<div class="row">
 							<?php echo CHtml::activeLabel($model,'delivery_id', array('required'=>true)); ?>
 							<?php echo CHtml::activeDropDownList($model, 'delivery_id', CHtml::listData($deliveryMethods, 'id', 'name')); ?>

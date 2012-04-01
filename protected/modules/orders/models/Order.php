@@ -53,7 +53,8 @@ class Order extends BaseModel
 			array('user_comment', 'length', 'max'=>500),
 			array('user_address', 'length', 'max'=>255),
 			array('delivery_id', 'validateDelivery'),
-			array('paid', 'boolean', 'on'=>'update'),
+			array('status_id', 'validateStatus'),
+			//array('paid', 'boolean', 'on'=>'update'),
 			// Search
 			array('id, user_id, delivery_id, delivery_price, total_price, status_id, paid, user_name, user_email, user_address, user_phone, user_comment, ip_address, created, updated', 'safe', 'on'=>'search'),
 		);
@@ -63,6 +64,7 @@ class Order extends BaseModel
 	{
 		return array(
 			'products'=>array(self::HAS_MANY, 'OrderProduct', 'order_id'),
+			'status'=>array(self::BELONGS_TO, 'OrderStatus', 'status_id'),
 		);
 	}
 
@@ -97,6 +99,16 @@ class Order extends BaseModel
 	{
 		if(StoreDeliveryMethod::model()->countByAttributes(array('id'=>$this->delivery_id)) == 0)
 			$this->addError('delivery_id', Yii::t('OrdersModule.core', 'Необходимо выбрать способ доставки.'));
+	}
+
+
+	/**
+	 * Check if status exists
+	 */
+	public function validateStatus()
+	{
+		if(OrderStatus::model()->countByAttributes(array('id'=>$this->status_id)) == 0)
+			$this->addError('status_id', Yii::t('OrdersModule.core', 'Ошибка проверки статуса.'));
 	}
 
 	/**
@@ -137,6 +149,12 @@ class Order extends BaseModel
 			$this->total_price += $p->price * $p->quantity;
 
 		$this->save(false);
+	}
+
+	public function getStatus_name()
+	{
+		if($this->status)
+			return $this->status->name;
 	}
 
 	/**

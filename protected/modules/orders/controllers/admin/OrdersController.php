@@ -49,8 +49,6 @@ class OrdersController extends SAdminController {
 		else
 			$model = $this->_loadModel($_GET['id']);
 
-		$deliveryMethods = StoreDeliveryMethod::model()->orderByName()->findAll();
-
 		if (Yii::app()->request->isPostRequest)
 		{
 			$model->attributes = $_POST['Order'];
@@ -68,7 +66,8 @@ class OrdersController extends SAdminController {
 		}
 
 		$this->render('update', array(
-			'deliveryMethods' => $deliveryMethods,
+			'deliveryMethods' => StoreDeliveryMethod::model()->orderByName()->findAll(),
+			'statuses'        => OrderStatus::model()->orderByPosition()->findAll(),
 			'model'           => $model,
 		));
 	}

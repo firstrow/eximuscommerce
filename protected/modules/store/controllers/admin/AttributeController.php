@@ -3,7 +3,8 @@
 /**
  * Admin attribute controller
  */
-class AttributeController extends SAdminController {
+class AttributeController extends SAdminController
+{
 
 	/**
 	 * Display attribute list
