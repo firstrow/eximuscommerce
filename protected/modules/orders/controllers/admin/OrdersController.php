@@ -58,12 +58,18 @@ class OrdersController extends SAdminController {
 			if($model->validate())
 			{
 				$model->save();
+				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
+
+				if(isset($_POST['REDIRECT']))
+					$this->smartRedirect($model);
+				else
+					$this->redirect(array('index'));
 			}
 		}
 
 		$this->render('update', array(
-			'model'=>$model,
-			'deliveryMethods'=>$deliveryMethods,
+			'deliveryMethods' => $deliveryMethods,
+			'model'           => $model,
 		));
 	}
 
@@ -86,6 +92,10 @@ class OrdersController extends SAdminController {
 		));
 	}
 
+	/**
+	 * Add product to order
+	 * @throws CHttpException
+	 */
 	public function actionAddProduct()
 	{
 		if(Yii::app()->request->isPostRequest)
@@ -156,6 +166,9 @@ class OrdersController extends SAdminController {
 		}
 	}
 
+	/**
+	 * Delete product from order
+	 */
 	public function actionDeleteProduct()
 	{
 		$model = OrderProduct::model()->findByPk($_POST['product_id']);

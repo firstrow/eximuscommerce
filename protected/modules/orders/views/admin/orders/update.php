@@ -50,14 +50,12 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 </style>
 
 <div class="form wide padding-all">
-	<?php
-		echo CHtml::form($this->createUrl('update', array('id'=>$model->id)), 'post', array('id'=>'orderUpdateForm'));
+		<?php
+			echo CHtml::form($this->createUrl('', array('id'=>$model->id)), 'post', array('id'=>'orderUpdateForm'));
 
-		if($model->hasErrors())
-		{
-			echo CHtml::errorSummary($model);
-		}
-	?>
+			if($model->hasErrors())
+				echo CHtml::errorSummary($model);
+		?>
 		<table width="100%">
 			<tr valign="top">
 				<td width="50%">
@@ -102,27 +100,28 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 				</td>
 				<td>
 					<!-- Right block -->
+					<?php if(!$model->isNewRecord): ?>
+						<div style="float: right;padding-right: 10px">
+							<a href="javascript:openAddProductDialog(<?php echo $model->id ?>);"><?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?></a>
+						</div>
+						<div id="dialog-modal" style="display: none;">
+							<?php
+							$this->renderPartial('_addProduct', array(
+								'model'=>$model,
+							));
+							?>
+						</div>
 
-					<div style="float: right;padding-right: 10px">
-						<a href="javascript:openAddProductDialog(<?php echo $model->id ?>);"><?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?></a>
-					</div>
-					<div id="dialog-modal" style="display: none;">
-						<?php
-						$this->renderPartial('_addProduct', array(
-							'model'=>$model,
-						));
-						?>
-					</div>
+						<h4><?php echo Yii::t('OrdersModule.admin','Продукты') ?></h4>
 
-					<h4><?php echo Yii::t('OrdersModule.admin','Продукты') ?></h4>
-
-					<div id="orderedProducts">
-					<?php
-						$this->renderPartial('_orderedProducts', array(
-							'model'=>$model,
-						));
-					?>
-					</div>
+						<div id="orderedProducts">
+							<?php
+							$this->renderPartial('_orderedProducts', array(
+								'model'=>$model,
+							));
+							?>
+						</div>
+					<?php endif;?>
 
 				</td>
 			</tr>
