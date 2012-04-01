@@ -80,7 +80,8 @@ class Order extends BaseModel
 			'user_id'        => Yii::t('OrdersModule.core','Пользователь'),
 			'delivery_id'    => Yii::t('OrdersModule.core','Способ доставки'),
 			'delivery_price' => Yii::t('OrdersModule.core','Цена доставки'),
-			'total_price'    => Yii::t('OrdersModule.core','Общая сумма'),
+			'total_price'    => Yii::t('OrdersModule.core','Cумма товаров'),
+			'full_price'     => Yii::t('OrdersModule.core','К оплате'),
 			'status_id'      => Yii::t('OrdersModule.core','Статус'),
 			'paid'           => Yii::t('OrdersModule.core','Оплачен'),
 			'user_name'      => Yii::t('OrdersModule.core','Имя'),
@@ -202,6 +203,15 @@ class Order extends BaseModel
 	}
 
 	/**
+	 * @return mixed
+	 */
+	public function getFull_price()
+	{
+		if(!$this->isNewRecord)
+			return $this->total_price + $this->delivery_price;
+	}
+
+	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
@@ -225,8 +235,12 @@ class Order extends BaseModel
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('updated',$this->updated,true);
 
+		$sort=new CSort;
+		$sort->defaultOrder = $this->getTableAlias().'.created ASC';
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort
 		));
 	}
 }

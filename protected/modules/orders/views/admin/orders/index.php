@@ -53,7 +53,11 @@ $this->widget('ext.sgridview.SGridView', array(
 			'filter'=>CHtml::listData(StoreDeliveryMethod::model()->orderByPosition()->findAll(), 'id', 'name'),
 			'value'=>'$data->delivery_name'
 		),
-		'total_price',
+		array(
+			'type'=>'raw',
+			'name'=>'total_price',
+			'value'=>'StoreProduct::formatPrice($data->total_price)',
+		),
 		'created',
 		// Buttons
 		array(
