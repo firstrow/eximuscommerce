@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('orders.OrdersModule');
+
 /**
  * This is the model class for table "Order".
  *
