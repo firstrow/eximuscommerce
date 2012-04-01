@@ -10,7 +10,8 @@ Yii::import('orders.OrdersModule');
  * @property integer $user_id
  * @property integer $delivery_id
  * @property float $delivery_price
- * @property float $total_price
+ * @property float $total_price Sum of ordered products
+ * @property float $full_price Total price + delivery price
  * @property integer $status_id
  * @property integer $paid
  * @property string $user_name
@@ -149,11 +150,12 @@ class Order extends BaseModel
 	 */
 	public function updateTotalPrice()
 	{
+		$this->total_price = 0;
 		$products = OrderProduct::model()->findAllByAttributes(array('order_id'=>$this->id));
 
-		$this->total_price = $this->delivery_price;
 		foreach($products as $p)
 			$this->total_price += $p->price * $p->quantity;
+
 		$this->save(false);
 	}
 
