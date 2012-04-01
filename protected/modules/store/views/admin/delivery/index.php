@@ -41,6 +41,8 @@ $this->widget('ext.sgridview.SGridView', array(
 			'type'=>'raw',
 			'value'=>'CHtml::link(CHtml::encode($data->name), array("/store/admin/delivery/update", "id"=>$data->id))',
 		),
+		'price',
+		'free_from',
 		'position',
 		array(
 			'name'=>'active',

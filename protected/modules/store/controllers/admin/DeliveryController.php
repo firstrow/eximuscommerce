@@ -11,6 +11,7 @@ class DeliveryController extends SAdminController {
 	public function actionIndex()
 	{
 		$model = new StoreDeliveryMethod('search');
+		$model->unsetAttributes();
 
 		if (!empty($_GET['StoreDeliveryMethod']))
 			$model->attributes = $_GET['StoreDeliveryMethod'];
