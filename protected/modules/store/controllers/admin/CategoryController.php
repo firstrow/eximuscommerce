@@ -110,9 +110,9 @@ class CategoryController extends SAdminController {
 			if(StoreProductCategoryRef::model()->countByAttributes(array('category'=>$model->id, 'is_main'=>'1')) > 0)
 				throw new CHttpException(424, Yii::t('StoreModule.admin','Ошибка удаления категории. Сперва нужно удалить все подкатегории.'));
 
-            //Delete if not root node
-            if ($model && $model->id != 1)
-                $model->deleteNode();
+			//Delete if not root node
+			if ($model && $model->id != 1)
+				$model->deleteNode();
 
 			if (!Yii::app()->request->isAjaxRequest)
 				$this->redirect('create');

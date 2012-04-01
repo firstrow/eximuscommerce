@@ -87,7 +87,12 @@ class StatusesController extends SAdminController
 			if (!empty($model))
 			{
 				foreach($model as $m)
-					$m->delete();
+				{
+					if($m->countOrders() == 0)
+						$m->delete();
+					else
+						throw new CHttpException(409, Yii::t('OrdersModule.admin','Ошибка удаления статуса. Он используется заказами.'));
+				}
 			}
 
 			if (!Yii::app()->request->isAjaxRequest)

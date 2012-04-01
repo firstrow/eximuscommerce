@@ -79,6 +79,14 @@ class OrderStatus extends BaseModel
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function countOrders()
+	{
+		return Order::model()->countByAttributes(array('status_id'=>$this->id));
+	}
+
+	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
