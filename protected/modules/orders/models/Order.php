@@ -159,6 +159,16 @@ class Order extends BaseModel
 			return $this->status->name;
 	}
 
+	public function getDelivery_name()
+	{
+		Yii::import('store.StoreModule');
+		Yii::import('store.models.StoreDeliveryMethod');
+
+		$model = StoreDeliveryMethod::model()->findByPk($this->delivery_id);
+		if($model)
+			return $model->name;
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

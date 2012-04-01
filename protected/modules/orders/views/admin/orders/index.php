@@ -48,6 +48,11 @@ $this->widget('ext.sgridview.SGridView', array(
 			'filter'=>CHtml::listData(OrderStatus::model()->orderByPosition()->findAll(), 'id', 'name'),
 			'value'=>'$data->status_name'
 		),
+		array(
+			'name'=>'delivery_id',
+			'filter'=>CHtml::listData(StoreDeliveryMethod::model()->orderByPosition()->findAll(), 'id', 'name'),
+			'value'=>'$data->delivery_name'
+		),
 		'total_price',
 		'created',
 		// Buttons
