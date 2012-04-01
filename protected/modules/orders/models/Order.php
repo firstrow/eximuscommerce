@@ -125,6 +125,10 @@ class Order extends BaseModel
 		}
 		$this->updated = date('Y-m-d H:i:s');
 
+		// Set `New` status
+		if(!$this->status_id)
+			$this->status_id = 1;
+
 		return parent::beforeSave();
 	}
 
@@ -149,16 +153,44 @@ class Order extends BaseModel
 		$this->total_price = $this->delivery_price;
 		foreach($products as $p)
 			$this->total_price += $p->price * $p->quantity;
-
 		$this->save(false);
 	}
 
+	/**
+	 * @return int
+	 */
+	public function updateDeliveryPrice()
+	{
+		$result = 0;
+		$deliveryMethod = StoreDeliveryMethod::model()->findByPk($this->delivery_id);
+
+		if($deliveryMethod)
+		{
+			if($deliveryMethod->price > 0)
+			{
+				if($deliveryMethod->free_from > 0 && $this->total_price > $deliveryMethod->free_from)
+					$result = 0;
+				else
+					$result = $deliveryMethod->price;
+			}
+		}
+
+		$this->delivery_price = $result;
+		$this->save(false);
+	}
+
+	/**
+	 * @return mixed
+	 */
 	public function getStatus_name()
 	{
 		if($this->status)
 			return $this->status->name;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getDelivery_name()
 	{
 		Yii::import('store.StoreModule');

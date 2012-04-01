@@ -43,7 +43,31 @@ $this->widget('zii.widgets.grid.CGridView', array(
 ));
 ?>
 
-<div class="row">
-	<b><?php echo Yii::t('OrdersModule.admin','Итог') ?>:</b>
-	<span><?php echo StoreProduct::formatPrice($model->total_price) .' '.Yii::app()->currency->main->symbol; ?></span>
+<script type="text/javascript">
+	var orderTotalPrice = '<?php echo $model->total_price ?>';
+</script>
+
+<div align="right">
+	<table id="orderSummaryTable">
+		<thead>
+			<tr>
+				<td ></td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr align="right">
+				<td><b><?php echo Yii::t('OrdersModule.admin','Цена доставки') ?>:</b></td>
+				<td><span id="orderDeliveryPrice"><?php echo StoreProduct::formatPrice($model->delivery_price); ?></span><?php echo Yii::app()->currency->main->symbol; ?></td>
+			</tr>
+			<tr align="right">
+				<td><b><?php echo Yii::t('OrdersModule.admin','Сумма товаров') ?>:</b></td>
+				<td><span id="orderTotalPrice"><?php echo StoreProduct::formatPrice($model->total_price) ?></span><?php echo Yii::app()->currency->main->symbol ?></td>
+			</tr>
+			<tr align="right">
+				<td><b><?php echo Yii::t('OrdersModule.admin','К оплате') ?>:</b></td>
+				<td><span id="orderSummary"><?php echo StoreProduct::formatPrice($model->total_price + $model->delivery_price) ?></span><?php echo Yii::app()->currency->main->symbol ?></td>
+			</tr>
+		</tbody>
+	</table>
 </div>

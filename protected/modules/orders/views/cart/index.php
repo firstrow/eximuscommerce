@@ -15,6 +15,33 @@
 
 ?>
 
+<script type="text/javascript">
+	var orderTotalPrice = '<?php echo Yii::app()->cart->getTotalPrice() ?>';
+
+	/**
+	 * Recount total price on change delivery method
+	 * @param el
+	 */
+	function recountOrderTotalPrice(el)
+	{
+		var total          = parseFloat(orderTotalPrice);
+		var delivery_price = parseFloat($(el).attr('data-price'));
+		var free_from      = parseFloat($(el).attr('data-free-from'));
+
+		if(delivery_price > 0)
+		{
+			if(free_from > 0 && total > free_from)
+			{
+				// free delivery
+			}else{
+				total = total + delivery_price;
+			}
+		}
+
+		$('#orderTotalPrice').html( total.toFixed(2) );
+	}
+</script>
+
 <?php echo CHtml::form() ?>
 	<table width="100%" class="table table-bordered table-striped">
 		<thead>
@@ -83,6 +110,12 @@
 		</tbody>
 	</table>
 
+	<div align="right" style="padding: 5px;">
+		Итог: <span id="orderTotalPrice">
+				<?php echo StoreProduct::formatPrice(Yii::app()->cart->getTotalPrice()) ?>
+			</span> <?php echo Yii::app()->currency->active->symbol ?>
+	</div>
+
 	<div align="right">
 		<input type="submit" value="Пересчитать" name="recount" class="btn btn-small">
 	</div>
@@ -101,9 +134,12 @@
 			<label class="radio">
 				<?php
 					echo CHtml::activeRadioButton($this->form, 'delivery_id', array(
-						'checked'      => ($this->form->delivery_id == $delivery->id),
-						'uncheckValue' => null,
-						'value'        => $delivery->id
+						'checked'        => ($this->form->delivery_id == $delivery->id),
+						'uncheckValue'   => null,
+						'value'          => $delivery->id,
+						'data-price'     => $delivery->price,
+						'data-free-from' => $delivery->free_from,
+						'onClick'        => 'recountOrderTotalPrice(this);',
 					));
 				?>
 				<h4><?=CHtml::encode($delivery->name)?></h4>

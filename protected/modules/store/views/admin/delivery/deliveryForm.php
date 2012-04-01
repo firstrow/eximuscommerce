@@ -20,6 +20,12 @@ return array(
 						0=>Yii::t('StoreModule.admin', 'Нет')
 					),
 				),
+				'price'=>array(
+					'type'=>'text',
+				),
+				'free_from'=>array(
+					'type'=>'text',
+				),
 				'description'=>array(
 					'type'=>'textarea',
 				),

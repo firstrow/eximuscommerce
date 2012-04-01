@@ -29,6 +29,13 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 	'elements'=>array('Order_delivery_id', 'Order_status_id')
 ));
 
+// register all delivery methods to recalculate prices
+Yii::app()->clientScript->registerScript('deliveryMetohds', strtr('
+	var deliveryMethods = {data};
+', array(
+	'{data}'=>CJavaScript::jsonEncode($deliveryMethods)
+)), CClientScript::POS_END);
+
 ?>
 
 <style type="text/css">
@@ -46,6 +53,9 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 	}
 	#dialog-modal .grid-view {
 		padding: 0;
+	}
+	#orderSummaryTable tr td {
+		padding: 3px;
 	}
 </style>
 
@@ -69,7 +79,9 @@ $this->widget('admin.widgets.schosen.SChosen', array(
 
 						<div class="row">
 							<?php echo CHtml::activeLabel($model,'delivery_id', array('required'=>true)); ?>
-							<?php echo CHtml::activeDropDownList($model, 'delivery_id', CHtml::listData($deliveryMethods, 'id', 'name')); ?>
+							<?php echo CHtml::activeDropDownList($model, 'delivery_id', CHtml::listData($deliveryMethods, 'id', 'name'), array(
+								'onChange'=>'recountOrderTotalPrice(this)',
+						)); ?>
 						</div>
 
 						<div class="row">

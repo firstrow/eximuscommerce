@@ -73,3 +73,52 @@ function reloadOrderedProducts(order_id)
 {
     $('#orderedProducts').load('/admin/orders/orders/renderOrderedProducts/order_id/' + order_id);
 }
+
+/**
+ * Recount total price on change delivery method
+ * @param el
+ */
+function recountOrderTotalPrice(el)
+{
+    var deliveryMethod = searchDeliveryMethodById($(el).val());
+
+    if(!deliveryMethod)
+    {
+        return;
+    }
+
+    var total          = parseFloat(orderTotalPrice);
+    var delivery_price = parseFloat(deliveryMethod.price);
+    var free_from      = parseFloat(deliveryMethod.free_from);
+
+    if(delivery_price > 0)
+    {
+        if(free_from > 0 && total > free_from)
+        {
+            $("#orderDeliveryPrice").html('0.00');
+        }else{
+            total = total + delivery_price;
+            $("#orderDeliveryPrice").html(delivery_price.toFixed(2));
+        }
+    }else{
+        $("#orderDeliveryPrice").html('0.00');
+    }
+
+    $('#orderSummary').html( total.toFixed(2) );
+}
+
+/**
+ * @param id
+ */
+function searchDeliveryMethodById(id)
+{
+    var result = false;
+    $(deliveryMethods).each(function(){
+        if(parseInt(this.id) == parseInt(id))
+        {
+            result = this;
+        }
+    });
+
+    return result;
+}

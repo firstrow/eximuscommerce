@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'StoreDeliveryMethods':
  * @property integer $id
  * @property string $name
+ * @property float $price
+ * @property float $free_from
  * @property boolean $active
  * @property string $description
  * @property integer $position
@@ -56,6 +58,7 @@ class StoreDeliveryMethod extends BaseModel
 		return array(
 			array('name', 'required'),
 			array('position', 'numerical', 'integerOnly'=>true),
+			array('price, free_from', 'numerical'),
 			array('active', 'boolean'),
 			array('payment_methods', 'validatePaymentMethods'),
 			array('name', 'length', 'max'=>255),
@@ -158,6 +161,8 @@ class StoreDeliveryMethod extends BaseModel
 		return array(
 			'id'              => 'ID',
 			'name'            => Yii::t('StoreModule.core', 'Название'),
+			'price'            => Yii::t('StoreModule.core', 'Цена'),
+			'free_from'            => Yii::t('StoreModule.core', 'Бесплатен от'),
 			'active'          => Yii::t('StoreModule.core', 'Активен'),
 			'description'     => Yii::t('StoreModule.core', 'Описание'),
 			'position'        => Yii::t('StoreModule.core', 'Позиция'),

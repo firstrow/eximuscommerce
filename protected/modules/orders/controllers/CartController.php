@@ -135,7 +135,10 @@ class CartController extends Controller
 		$order->user_comment = $this->form->comment;
 		$order->delivery_id  = $this->form->delivery_id;
 
-		$order->save();
+		if($order->validate())
+			$order->save();
+		else
+			exit;
 
 		// Process products
 		foreach(Yii::app()->cart->getDataWithModels() as $item)
@@ -168,6 +171,9 @@ class CartController extends Controller
 
 			$ordered_product->save();
 		}
+
+		// All products added. Update delivery price
+		$order->updateDeliveryPrice();
 
 		return $order;
 	}

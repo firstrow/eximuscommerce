@@ -56,6 +56,7 @@ class OrdersController extends SAdminController {
 			if($model->validate())
 			{
 				$model->save();
+				$model->updateDeliveryPrice();
 				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
 				if(isset($_POST['REDIRECT']))
