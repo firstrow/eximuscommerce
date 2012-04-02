@@ -28,9 +28,8 @@ function productToggleSidebar()
 	if($('#sidebar').css('display') == 'none')
 	{
 		$.cookie('productsSidebarStatus', 'visible', {expires: 31, path: '/'});
-        $("#sidebar").show('slide', {direction: 'right'}, 250);
-        $("#yui-main").children('.marright').addClass("yui-b");
-		//$("#sidebar").show();
+		$("#yui-main").children('.marright').addClass("yui-b");
+		$("#sidebar").show();
 	}
 	else
 		productsHideSidebar();
@@ -42,7 +41,6 @@ function productToggleSidebar()
 function productsHideSidebar()
 {
 	$.cookie('productsSidebarStatus', 'hidden', {expires: 31, path: '/'});
-    $("#sidebar").hide('slide', {direction: 'right'}, 250);
-    $("#yui-main .yui-b").removeClass("yui-b");
-	//$("#sidebar").hide();
+	$("#yui-main .yui-b").removeClass("yui-b");
+	$("#sidebar").hide();
 }
