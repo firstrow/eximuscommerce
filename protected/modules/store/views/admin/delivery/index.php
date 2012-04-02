@@ -26,7 +26,7 @@ $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
 
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider'=>$dataProvider,
-	'id'=>'productsListGrid',
+	'id'=>'deliveryMethodsListGrid',
 	'filter'=>$model,
 	'columns'=>array(
 		array(

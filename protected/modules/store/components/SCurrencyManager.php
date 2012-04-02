@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('store.models.StoreCurrency');
+
 /**
  * Class to work with currencies
  */

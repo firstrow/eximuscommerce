@@ -57,7 +57,7 @@ class Order extends BaseModel
 			array('user_address', 'length', 'max'=>255),
 			array('delivery_id', 'validateDelivery'),
 			array('status_id', 'validateStatus'),
-			//array('paid', 'boolean', 'on'=>'update'),
+			array('paid', 'boolean'),
 			// Search
 			array('id, user_id, delivery_id, delivery_price, total_price, status_id, paid, user_name, user_email, user_address, user_phone, user_comment, ip_address, created, updated', 'safe', 'on'=>'search'),
 		);
