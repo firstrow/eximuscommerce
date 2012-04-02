@@ -30,9 +30,9 @@ function productToggleSidebar()
 		$.cookie('productsSidebarStatus', 'visible', {expires: 31, path: '/'});
 		$("#yui-main").children('.marright').addClass("yui-b");
 		$("#sidebar").show();
-	}
-	else
+	}else{
 		productsHideSidebar();
+	}
 }
 
 /**
