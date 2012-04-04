@@ -19,9 +19,20 @@ $comments->object_pk  = $model->id;
 $dataProvider = $comments->search();
 $dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
 
+
+// Fix sort url
+Yii::app()->clientScript->registerScript('fixGridSorter', '
+	$("#productCommentsListGrid .items thead tr th a").each(function(){
+		var search    = "/admin/store/products/update";
+		var replace   = "/admin/store/products/applyCommentsFilter";
+		var url       = $(this).attr("href").replace(search, replace)+"&product_id='.$model->id.'";
+		$(this).attr("href", url);
+	});
+', CClientScript::POS_END);
+
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider' => $dataProvider,
-	'id'           => 'commentsListGrid',
+	'id'           => 'productCommentsListGrid',
 	'filter'       => $comments,
 	'ajaxUrl'      => Yii::app()->createUrl('/store/admin/products/applyCommentsFilter', array('product_id'=>$model->id)),
 	'columns' => array(
