@@ -35,6 +35,16 @@ if(!isset($model))
 	$model->exclude = $exclude;
 }
 
+// Fix sort url
+Yii::app()->clientScript->registerScript('fixGridSorter', '
+	$("#RelatedProductsGrid .items thead tr th a").each(function(){
+		var search    = "/admin/store/products/update";
+		var replace   = "/admin/store/products/applyProductsFilter";
+		var url       = $(this).attr("href").replace(search, replace)+"&exclude='.$exclude.'";
+		$(this).attr("href", url);
+	});
+', CClientScript::POS_END);
+
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider'=>$model->search(),
 	'ajaxUrl'=>Yii::app()->createUrl('/store/admin/products/applyProductsFilter', array('exclude'=>$exclude)),

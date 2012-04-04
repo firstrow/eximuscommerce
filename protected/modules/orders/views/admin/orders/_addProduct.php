@@ -8,13 +8,23 @@
 if(!isset($dataProvider))
 	$dataProvider = new StoreProduct('search');
 
+// Fix sort url
+Yii::app()->clientScript->registerScript('fixGridSorter', '
+	$("#OrderAddProductsGrid .items thead tr th a").each(function(){
+		var search    = "/admin/orders/orders/update";
+		var replace   = "/admin/orders/orders/addProductList";
+		var url       = $(this).attr("href").replace(search, replace)+"&order_id='.$model->id.'";
+		$(this).attr("href", url);
+	});
+', CClientScript::POS_END);
+
 $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider->search(),
-	'ajaxUrl'=>Yii::app()->createUrl('/orders/admin/orders/addProductList', array('order_id'=>$model->id)),
-	'id'=>'AddProductsGrid',
-	'template'=>'{items}{pager}',
-	'selectableRows'=>0,
-	'filter'=>$dataProvider,
+	'id'             => 'OrderAddProductsGrid',
+	'dataProvider'   => $dataProvider->search(),
+	'ajaxUrl'        => Yii::app()->createUrl('/orders/admin/orders/addProductList', array('order_id'=>$model->id)),
+	'template'       => '{items}{pager}',
+	'selectableRows' => 0,
+	'filter'         => $dataProvider,
 	'columns'=>array(
 		array(
 			'name'=>'id',
