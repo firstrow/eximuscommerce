@@ -128,7 +128,8 @@ class Comment extends BaseModel
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('class_name',$this->class_name,true);
+		$criteria->compare('class_name',$this->class_name);
+		$criteria->compare('object_pk',$this->object_pk);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('name',$this->name,true);

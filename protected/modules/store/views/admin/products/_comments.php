@@ -11,10 +11,10 @@ Yii::import('comments.models.Comment');
 $comments = new Comment('search');
 
 if(!empty($_GET['Comment']))
-{
 	$comments->attributes = $_GET['Comment'];
-	$comments->object_pk  = $model->id;
-}
+
+$comments->class_name = 'store.models.StoreProduct';
+$comments->object_pk  = $model->id;
 
 $dataProvider = $comments->search();
 $dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
