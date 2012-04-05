@@ -279,15 +279,21 @@ class SFilterRenderer extends CWidget
 			'filters'=>array()
 		);
 
-		foreach($manufacturers as $m)
+		if($manufacturers)
 		{
-			$m = $m->manufacturer;
-			$data['filters'][] = array(
-				'title'      => $m->name,
-				'count'      => $m->productsCount,
-				'queryKey'   => 'manufacturer',
-				'queryParam' => $m->id,
-			);
+			foreach($manufacturers as $m)
+			{
+				$m = $m->manufacturer;
+				if($m)
+				{
+					$data['filters'][] = array(
+						'title'      => $m->name,
+						'count'      => $m->productsCount,
+						'queryKey'   => 'manufacturer',
+						'queryParam' => $m->id,
+					);
+				}
+			}
 		}
 
 		return $data;
