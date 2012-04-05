@@ -9,6 +9,14 @@ class StoreModuleEvents
 {
 
 	/**
+	 * @var array
+	 */
+	public $classes = array(
+		'StoreProductTranslate',
+		'StoreManufacturerTranslate',
+	);
+
+	/**
 	 * @return array of events to subscribe module
 	 */
 	public function getEvents()
@@ -26,14 +34,30 @@ class StoreModuleEvents
 	 */
 	public function insertTranslations($event)
 	{
-		Yii::import('store.models.StoreProduct');
+		if($event->sender->isNewRecord)
+		{
+			foreach($this->classes as $class)
+				$this->_insert($class, $event);
+		}
+	}
 
-		if(!$event->sender->isNewRecord)
-			return;
+	/**
+	 * Delete product translations after deleting language
+	 * @param $event
+	 */
+	public function deleteTranslations($event)
+	{
+		foreach($this->classes as $class)
+			$this->_delete($class, $event);
+	}
 
-		// Find all products on default language and
-		// make copy on new lang.
-		$objects = StoreProduct::model()
+	/**
+	 * @param $class
+	 * @param $event
+	 */
+	public function _insert($class, $event)
+	{
+		$objects = $class::model()
 			->language(Yii::app()->languageManager->default->id)
 			->findAll();
 
@@ -45,20 +69,20 @@ class StoreModuleEvents
 	}
 
 	/**
-	 * Delete product translations after deleting language
+	 * @param $class
 	 * @param $event
 	 */
-	public function deleteTranslations($event)
+	private function _delete($class, $event)
 	{
-		$objects = StoreProductTranslate::model()->findAll(array(
+		$objects = $class::model()->findAll(array(
 			'condition'=>'language_id=:lang_id',
 			'params'=>array(':lang_id'=>$event->sender->getPrimaryKey())
 		));
 
 		if($objects)
 		{
-			foreach($objects as $p)
-				$p->delete();
+			foreach($objects as $obj)
+				$obj->delete();
 		}
 	}
 

@@ -16,7 +16,7 @@
  *
  * Usage:
  * 1. Create new relation
- *  'translate'=>array(self::HAS_ONE, 'Translate Storage Model', 'foreign_id'),
+ *  'translate'=>array(self::HAS_ONE, 'Translate Storage Model', 'object_id'),
  * 2. Attach behavior and enter translateable attributes
  *   'STranslateBehavior'=>array(
  *       'class'=>'ext.behaviors.STranslateBehavior',
@@ -32,6 +32,7 @@
  *    Basic structure: id, object_id, language_id + attributes.
  * 5. Create 'Translate Storage Model' class and set $tableName.
  * 6. Connect events onCreate and onDelete
+ * 7. Add language method to admin controller
  *
  * @todo: Dont load translations when system, has only one language
  */

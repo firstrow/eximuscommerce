@@ -43,6 +43,7 @@ class ManufacturerController extends SAdminController {
 		else
 		{
 			$model = StoreManufacturer::model()
+				->language($_GET)
 				->findByPk($_GET['id']);
 		}
 

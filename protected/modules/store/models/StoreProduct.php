@@ -47,11 +47,6 @@ class StoreProduct extends BaseModel
 	private $_related;
 
 	/**
-	 * @var string used in search() method to filter products by manufacturer name.
-	 */
-	public $manufacturer_search;
-
-	/**
 	 * @var array of attributes used to configure product
 	 */
 	private $_configurable_attributes;
@@ -121,7 +116,7 @@ class StoreProduct extends BaseModel
 			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
 			array('short_description, full_description, auto_decrease_quantity', 'type'),
 			// Search
-			array('id, name, url, price, short_description, full_description, created, updated, manufacturer_search', 'safe', 'on'=>'search'),
+			array('id, name, url, price, short_description, full_description, created, updated, manufacturer_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -243,7 +238,6 @@ class StoreProduct extends BaseModel
 		return array(
 			'id'                     => 'ID',
 			'manufacturer_id'        => Yii::t('StoreModule.core', 'Производитель'),
-			'manufacturer_search'    => Yii::t('StoreModule.core', 'Производитель'),
 			'type_id'                => Yii::t('StoreModule.core', 'Тип'),
 			'use_configurations'     => Yii::t('StoreModule.core', 'Использовать конфигурации'),
 			'name'                   => Yii::t('StoreModule.core', 'Название'),
@@ -277,23 +271,24 @@ class StoreProduct extends BaseModel
 		$criteria->with = array(
 			'categorization'=>array('together'=>true),
 			'manufacturer',
+			'translate',
 		);
 
 		if($additionalCriteria !== null)
 			$criteria->mergeWith($additionalCriteria);
 
 		$criteria->compare('t.id',$this->id);
-		$criteria->compare('t.name',$this->name,true);
+		$criteria->compare('translate.name',$this->name,true);
 		$criteria->compare('t.url',$this->url,true);
 		$criteria->compare('t.price',$this->price);
 		$criteria->compare('t.is_active',$this->is_active);
-		$criteria->compare('t.short_description',$this->short_description,true);
-		$criteria->compare('t.full_description',$this->full_description,true);
+		$criteria->compare('translate.short_description',$this->short_description,true);
+		$criteria->compare('translate.full_description',$this->full_description,true);
 		$criteria->compare('t.sku',$this->sku,true);
 		$criteria->compare('t.created',$this->created,true);
 		$criteria->compare('t.updated',$this->updated,true);
 		$criteria->compare('type_id', $this->type_id);
-		$criteria->compare('manufacturer.name', $this->manufacturer_search,true);
+		$criteria->compare('manufacturer.id', $this->manufacturer_id);
 
 		if (isset($params['category']) && $params['category'])
 			$criteria->compare('categorization.category', $params['category']);
@@ -724,10 +719,6 @@ class StoreProduct extends BaseModel
 				'asc'   => 'translate.name',
 				'desc'  => 'translate.name DESC',
 			),
-			'manufacturer_search' => array(
-				'asc'   => 'manufacturer.name',
-				'desc'  => 'manufacturer.name DESC',
-			)
 		);
 		return $sort;
 	}

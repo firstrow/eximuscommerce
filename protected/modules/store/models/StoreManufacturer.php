@@ -17,6 +17,18 @@
  */
 class StoreManufacturer extends BaseModel
 {
+
+	public $translateModelName = 'StoreManufacturerTranslate';
+
+	/**
+	 * Multilingual attrs
+	 */
+	public $name;
+	public $description;
+	public $meta_title;
+	public $meta_description;
+	public $meta_keywords;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -71,15 +83,17 @@ class StoreManufacturer extends BaseModel
 	public function relations()
 	{
 		return array(
+			'translate'=>array(self::HAS_ONE, $this->translateModelName, 'object_id'),
 			'productsCount'=>array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
 		);
 	}
 
 	public function scopes()
 	{
-		$alias = $this->getTableAlias(true);
 		return array(
-			'orderByName'=>array('order'=>$alias.'.name'),
+			'orderByName'=>array(
+				'order'=> 'translate.name'
+			),
 		);
 	}
 
@@ -98,6 +112,25 @@ class StoreManufacturer extends BaseModel
 			'meta_description' => Yii::t('StoreModule.admin','Meta Description'),
 			'layout'           => Yii::t('StoreModule.admin','Макет'),
 			'view'             => Yii::t('StoreModule.admin','Шаблон'),
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function behaviors()
+	{
+		return array(
+			'STranslateBehavior'=>array(
+				'class'=>'ext.behaviors.STranslateBehavior',
+				'translateAttributes'=>array(
+					'name',
+					'description',
+					'meta_title',
+					'meta_description',
+					'meta_keywords',
+				),
+			),
 		);
 	}
 
@@ -135,8 +168,10 @@ class StoreManufacturer extends BaseModel
 	{
 		// Clear product relations
 		StoreProduct::model()->updateAll(array(
-			'manufacturer_id'=>0, // TODO: Check result writed to DB. ust be `NULL`
+			'manufacturer_id' => 0, // TODO: Check result writed to DB. '0' or `NULL`?
 		), 'manufacturer_id = :id', array(':id'=>$this->id));
+
+		return parent::afterDelete();
 	}
 
 	/**
@@ -147,12 +182,14 @@ class StoreManufacturer extends BaseModel
 	{
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('url',$this->url,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('layout',$this->layout,true);
-		$criteria->compare('view',$this->view,true);
+		$criteria->with = array('translate');
+
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('translate.name',$this->name,true);
+		$criteria->compare('t.url',$this->url,true);
+		$criteria->compare('translate.description',$this->description,true);
+		$criteria->compare('t.layout',$this->layout,true);
+		$criteria->compare('t.view',$this->view,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

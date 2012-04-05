@@ -67,9 +67,10 @@ $this->widget('ext.sgridview.SGridView', array(
 		'sku',
 		'price',
 		array(
-			'name'=>'manufacturer_search',
-			'type'=>'raw',
-			'value'=>'$data->manufacturer ? CHtml::encode($data->manufacturer->name) : ""',
+			'name'   => 'manufacturer_id',
+			'type'   => 'raw',
+			'value'  => '$data->manufacturer ? CHtml::encode($data->manufacturer->name) : ""',
+			'filter' => CHtml::listData(StoreManufacturer::model()->orderByName()->findAll(),'id', 'name')
 		),
 		array(
 			'name'=>'type_id',
