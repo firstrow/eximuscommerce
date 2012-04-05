@@ -33,7 +33,7 @@
  * 5. Create 'Translate Storage Model' class and set $tableName.
  * 6. Connect events onCreate and onDelete
  *
- * @todo: Dont load translations when syste, has only  one language
+ * @todo: Dont load translations when system, has only one language
  */
 class STranslateBehavior extends CActiveRecordBehavior {
 
