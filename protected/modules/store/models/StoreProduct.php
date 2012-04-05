@@ -302,21 +302,10 @@ class StoreProduct extends BaseModel
 		if($this->exclude)
 			$criteria->compare('t.id !', array(':id'=>$this->exclude));
 
-		// Create sorting by translation title
-		$sort=new CSort;
-		$sort->defaultOrder = 't.created DESC';
-		$sort->attributes=array(
-			'*',
-			'manufacturer_search' => array(
-				'asc'   => 'manufacturer.name',
-				'desc'  => 'manufacturer.name DESC',
-			)
-		);
-
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-			'sort'=>$sort,
-			'pagination'=>array(
+			'criteria'   => $criteria,
+			'sort'       => StoreProduct::getCSort(),
+			'pagination' => array(
 				'pageSize'=>20,
 			)
 		));
@@ -720,6 +709,27 @@ class StoreProduct extends BaseModel
 	public function toCurrentCurrency()
 	{
 		return Yii::app()->currency->convert($this->price);
+	}
+
+	/**
+	 * @return CSort to use in gridview, listview, etc...
+	 */
+	public static function getCSort()
+	{
+		$sort = new CSort;
+		$sort->defaultOrder = 't.created DESC';
+		$sort->attributes=array(
+			'*',
+			'name' => array(
+				'asc'   => 'translate.name',
+				'desc'  => 'translate.name DESC',
+			),
+			'manufacturer_search' => array(
+				'asc'   => 'manufacturer.name',
+				'desc'  => 'manufacturer.name DESC',
+			)
+		);
+		return $sort;
 	}
 
 	public function __get($name)

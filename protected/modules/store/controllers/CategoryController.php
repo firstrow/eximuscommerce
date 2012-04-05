@@ -59,6 +59,8 @@ class CategoryController extends Controller
 			)
 		));
 
+		$provider->sort = StoreProduct::getCSort();
+
 		$view = $this->setDesign($this->model, 'view');
 		$this->render($view, array(
 			'provider'=>$provider,

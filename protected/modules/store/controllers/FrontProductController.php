@@ -29,7 +29,7 @@ class FrontProductController extends Controller
 		$view = $this->setDesign($this->model, 'view');
 
 		$this->render($view, array(
-			'model'    => $this->model,
+			'model'  => $this->model,
 		));
 	}
 
