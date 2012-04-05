@@ -48,7 +48,7 @@ class ProductsController extends SAdminController
 		if ($new === true)
 			$model = new StoreProduct;
 		else
-			$model = StoreProduct::model()->findByPk($_GET['id']);
+			$model = StoreProduct::model()->language($_GET)->findByPk($_GET['id']);
 
 		if (!$model)
 			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Продукт не найден.'));

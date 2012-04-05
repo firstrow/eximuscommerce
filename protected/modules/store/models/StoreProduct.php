@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('store.models.StoreProductTranslate');
+
 /**
  * This is the model class for table "StoreProduct".
  *
@@ -59,6 +61,21 @@ class StoreProduct extends BaseModel
 	 * @var array
 	 */
 	private $_configurations;
+
+	/**
+	 * @var string
+	 */
+	public $translateModelName = 'StoreProductTranslate';
+
+	/**
+	 * Multilingual attrs
+	 */
+	public $name;
+	public $short_description;
+	public $full_description;
+	public $meta_title;
+	public $meta_description;
+	public $meta_keywords;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -212,6 +229,7 @@ class StoreProduct extends BaseModel
 			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
 			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
 			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1'),
+			'translate'       => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
 			// Product variation
 			'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id'), 'with'=>array('attribute', 'option'), 'order'=>'option.position'),
 		);
@@ -315,7 +333,18 @@ class StoreProduct extends BaseModel
 				'class'       => 'comments.components.CommentBehavior',
 				'class_name'  => 'store.models.StoreProduct',
 				'owner_title' => 'name', // Attribute name to present comment owner in admin panel
-			)
+			),
+			'STranslateBehavior'=>array(
+				'class'=>'ext.behaviors.STranslateBehavior',
+				'translateAttributes'=>array(
+					'name',
+					'short_description',
+					'full_description',
+					'meta_title',
+					'meta_description',
+					'meta_keywords',
+				),
+			),
 		);
 	}
 
@@ -348,7 +377,7 @@ class StoreProduct extends BaseModel
 		{
 			$test = StoreProduct::model()
 				->withUrl($this->url)
-				->count('id!=:id', array(':id'=>$this->id));
+				->count('t.id!=:id', array(':id'=>$this->id));
 		}
 
 		// Create unique url

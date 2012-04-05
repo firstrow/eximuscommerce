@@ -15,7 +15,6 @@ class DefaultController extends SAdminController {
 		$dataProvider = $model->search();
 		$dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
 
-
 		$this->render('index', array(
 			'model'=>$model,
 			'dataProvider'=>$dataProvider

@@ -1,16 +1,13 @@
 <?php
 
 /**
- * Class to access page translations
+ * Class to access product translations
  *
  * @property int $id
  * @property int $object_id
  * @property int $language_id
- * @property string $title
- * @property string $short_description
- * @property string $full_description
  */
-class PageTranslate extends CActiveRecord {
+class StoreProductTranslate extends CActiveRecord {
 
 	public static function model($className=__CLASS__)
 	{
@@ -19,7 +16,7 @@ class PageTranslate extends CActiveRecord {
 
 	public function tableName()
 	{
-		return 'PageTranslate';
+		return 'StoreProductTranslate';
 	}
 
 }
