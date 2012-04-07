@@ -83,7 +83,7 @@ class StoreManufacturer extends BaseModel
 	public function relations()
 	{
 		return array(
-			'translate'=>array(self::HAS_ONE, $this->translateModelName, 'object_id'),
+			'man_translate'=>array(self::HAS_ONE, $this->translateModelName, 'object_id'),
 			'productsCount'=>array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
 		);
 	}
@@ -92,7 +92,7 @@ class StoreManufacturer extends BaseModel
 	{
 		return array(
 			'orderByName'=>array(
-				'order'=> 'translate.name'
+				'order'=> 'man_translate.name'
 			),
 		);
 	}
@@ -123,6 +123,7 @@ class StoreManufacturer extends BaseModel
 		return array(
 			'STranslateBehavior'=>array(
 				'class'=>'ext.behaviors.STranslateBehavior',
+				'relationName'=>'man_translate',
 				'translateAttributes'=>array(
 					'name',
 					'description',
@@ -182,12 +183,12 @@ class StoreManufacturer extends BaseModel
 	{
 		$criteria=new CDbCriteria;
 
-		$criteria->with = array('translate');
+		$criteria->with = array('man_translate');
 
 		$criteria->compare('t.id',$this->id);
-		$criteria->compare('translate.name',$this->name,true);
+		$criteria->compare('man_translate.name',$this->name,true);
 		$criteria->compare('t.url',$this->url,true);
-		$criteria->compare('translate.description',$this->description,true);
+		$criteria->compare('man_translate.description',$this->description,true);
 		$criteria->compare('t.layout',$this->layout,true);
 		$criteria->compare('t.view',$this->view,true);
 
