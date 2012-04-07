@@ -71,6 +71,9 @@ class STranslateBehavior extends CActiveRecordBehavior {
 		return true;
 	}
 
+	/**
+	 * @return BaseModel
+	 */
 	public function applyTranslateCriteria()
 	{
 		$cr = $this->owner->getDbCriteria();
