@@ -28,6 +28,7 @@ class CategoryController extends SAdminController {
 		else
 		{
 			$model = StoreCategory::model()
+				->language($_GET)
 				->findByPk($_GET['id']);
 		}
 
@@ -108,7 +109,7 @@ class CategoryController extends SAdminController {
 				throw new CHttpException(424, Yii::t('StoreModule.admin','Ошибка удаления категории. Сперва нужно удалить все подкатегории.'));
 
 			if(StoreProductCategoryRef::model()->countByAttributes(array('category'=>$model->id, 'is_main'=>'1')) > 0)
-				throw new CHttpException(424, Yii::t('StoreModule.admin','Ошибка удаления категории. Сперва нужно удалить все подкатегории.'));
+				throw new CHttpException(424, Yii::t('StoreModule.admin','Ошибка удаления категории. Сперва нужно удалить все товары из категории.'));
 
 			//Delete if not root node
 			if ($model && $model->id != 1)

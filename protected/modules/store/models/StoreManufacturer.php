@@ -65,7 +65,7 @@ class StoreManufacturer extends BaseModel
 	/**
 	 * Find manufacturer by url.
 	 * Scope.
-	 * @param string Product url
+	 * @param string $url
 	 * @return StoreProduct
 	 */
 	public function withUrl($url)

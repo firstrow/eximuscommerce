@@ -22,16 +22,7 @@ class SiteController extends Controller {
 
     public function actionContact()
     {
-        echo '
-        <html>
-            <head>
-                <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-            </head>
-            <body>
-            іваіваіва ok іваіваіваіваіваіва ok 123123 іваіваіва привет
-            </body>
-        </html>
-        ';
+
     }
 
     public function actionIndex()

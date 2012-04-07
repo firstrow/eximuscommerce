@@ -23,6 +23,16 @@ class StoreCategory extends BaseModel
 	 */
 	public $parent_id;
 
+	public $translateModelName = 'StoreCategoryTranslate';
+
+	/**
+	 * Multilingual attrs
+	 */
+	public $name;
+	public $meta_title;
+	public $meta_description;
+	public $meta_keywords;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return StoreCategory the static model class
@@ -49,7 +59,7 @@ class StoreCategory extends BaseModel
 			array('name', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_keywords, meta_title, meta_description, layout, view', 'length', 'max'=>255),
-
+			// Search
 			array('id, name, url', 'safe', 'on'=>'search'),
 		);
 	}
@@ -68,6 +78,16 @@ class StoreCategory extends BaseModel
 				'labelAttr'=>'name',
 				'urlExpression'=>'array("/store/category/view", "url"=>$model->url)',
 			),
+			'STranslateBehavior'=>array(
+				'class'=>'ext.behaviors.STranslateBehavior',
+				'relationName'=>'cat_translate',
+				'translateAttributes'=>array(
+					'name',
+					'meta_title',
+					'meta_description',
+					'meta_keywords',
+				),
+			),
 		);
 	}
 
@@ -77,11 +97,11 @@ class StoreCategory extends BaseModel
 	 * @param string $url
 	 * @return StoreProduct
 	 */
-	public function withUrl($url)
+	public function withUrl($url, $alias = 't')
 	{
 		$this->getDbCriteria()->mergeWith(array(
-			'condition'=>'url=:url',
-			'params'=>array(':url'=>$url)
+			'condition' => $alias.'.url=:url',
+			'params'    => array(':url'=>$url)
 		));
 		return $this;
 	}
@@ -89,10 +109,10 @@ class StoreCategory extends BaseModel
 	/**
 	 * @return StoreCategory
 	 */
-	public function excludeRoot()
+	public function excludeRoot($alias = 't')
 	{
 		$this->getDbCriteria()->mergeWith(array(
-			'condition'=>'id!=1',
+			'condition'=>$alias.'.id != 1',
 		));
 		return $this;
 	}
@@ -103,7 +123,8 @@ class StoreCategory extends BaseModel
 	public function relations()
 	{
 		return array(
-			'countProducts'=>array(self::STAT, 'StoreProductCategoryRef', 'category')
+			'countProducts' => array(self::STAT, 'StoreProductCategoryRef', 'category'),
+			'cat_translate' => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
 		);
 	}
 
@@ -176,9 +197,10 @@ class StoreCategory extends BaseModel
 	{
 		// Remove all category-product relations
 		StoreProductCategoryRef::model()->deleteAllByAttributes(array(
-			'category'=>$this,
+			'category'=>$this->id,
 			'is_main'=>'0'
 		));
+		return parent::afterDelete();
 	}
 
 	/**

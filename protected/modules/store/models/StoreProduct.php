@@ -216,14 +216,14 @@ class StoreProduct extends BaseModel
 			'images'          => array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
 			'mainImage'       => array(self::HAS_ONE, 'StoreProductImage', 'product_id', 'condition'=>'is_main=1'),
 			'imagesNoMain'    => array(self::HAS_MANY, 'StoreProductImage', 'product_id', 'condition'=>'is_main=0'),
-			'manufacturer'    => array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id'),
+			'manufacturer'    => array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id', 'scopes'=>'applyTranslateCriteria'),
 			'productsCount'   => array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
 			'type'            => array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
 			'related'         => array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
 			'relatedProducts' => array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
 			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
 			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
-			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1'),
+			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1','scopes'=>'applyTranslateCriteria'),
 			'translate'       => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
 			// Product variation
 			'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id'), 'with'=>array('attribute', 'option'), 'order'=>'option.position'),
@@ -723,6 +723,10 @@ class StoreProduct extends BaseModel
 		return $sort;
 	}
 
+	/**
+	 * @param $name
+	 * @return null
+	 */
 	public function __get($name)
 	{
 		if(substr($name,0,4) === 'eav_')
