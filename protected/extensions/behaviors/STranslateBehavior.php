@@ -44,6 +44,11 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	public $translateAttributes = array();
 
 	/**
+	 * @var string
+	 */
+	public $relationName = 'translate';
+
+	/**
 	 * @var integer Language id used to load model translation data.
 	 * If null active language id we'll be used.
 	 */
@@ -60,7 +65,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	public function beforeFind()
 	{
 		$this->owner->getDbCriteria()->mergeWith(array(
-			'with'=>array('translate'=>array(
+			'with'=>array($this->relationName=>array(
 				'condition'=>'translate.language_id=:language_id',
 				'params'=>array(
 					':language_id'=>$this->getTranslateLanguageId()
