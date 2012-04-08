@@ -19,13 +19,23 @@
 class StoreAttribute extends BaseModel
 {
 
-	const TYPE_TEXT=1;
-	const TYPE_TEXTAREA=2;
-	const TYPE_DROPDOWN=3;
-	const TYPE_SELECT_MANY=4;
-	const TYPE_RADIO_LIST=5;
-	const TYPE_CHECKBOX_LIST=6;
-	const TYPE_YESNO=7;
+	const TYPE_TEXT          = 1;
+	const TYPE_TEXTAREA      = 2;
+	const TYPE_DROPDOWN      = 3;
+	const TYPE_SELECT_MANY   = 4;
+	const TYPE_RADIO_LIST    = 5;
+	const TYPE_CHECKBOX_LIST = 6;
+	const TYPE_YESNO         = 7;
+
+	/**
+	 * @var string attr name
+	 */
+	public $title;
+
+	/**
+	 * @var string
+	 */
+	public $translateModelName = 'StoreAttributeTranslate';
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -65,6 +75,9 @@ class StoreAttribute extends BaseModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function defaultScope()
 	{
 		return array(
@@ -73,6 +86,9 @@ class StoreAttribute extends BaseModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function scopes()
 	{
 		$t=$this->getTableAlias();
@@ -83,15 +99,28 @@ class StoreAttribute extends BaseModel
 		);
 	}
 
+	public function behaviors()
+	{
+		return array(
+			'STranslateBehavior'=>array(
+				'class'=>'ext.behaviors.STranslateBehavior',
+				'relationName'=>'attr_translate',
+				'translateAttributes'=>array(
+					'title'
+				),
+			));
+	}
+
 	/**
 	 * @return array relational rules.
 	 */
 	public function relations()
 	{
 		return array(
-			'options'=>array(self::HAS_MANY, 'StoreAttributeOption', 'attribute_id', 'order'=>'options.position ASC'),
+			'attr_translate' => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
+			'options'        => array(self::HAS_MANY, 'StoreAttributeOption', 'attribute_id', 'order'=>'options.position ASC'),
 			// Used in types
-			'types'=>array(self::HAS_MANY, 'StoreTypeAttribute', 'attribute_id'),
+			'types'          => array(self::HAS_MANY, 'StoreTypeAttribute', 'attribute_id'),
 		);
 	}
 
@@ -124,9 +153,9 @@ class StoreAttribute extends BaseModel
 		return array(
 			self::TYPE_TEXT           => 'Text',
 			self::TYPE_TEXTAREA       => 'Textarea',
-			self::TYPE_DROPDOWN      => 'Dropdown',
+			self::TYPE_DROPDOWN       => 'Dropdown',
 			self::TYPE_SELECT_MANY    => 'Multiple Select',
-			self::TYPE_RADIO_LIST      => 'Radio List',
+			self::TYPE_RADIO_LIST     => 'Radio List',
 			self::TYPE_CHECKBOX_LIST  => 'Checkbox List',
 			self::TYPE_YESNO          => 'Yes/No',
 		);

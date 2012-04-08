@@ -22,7 +22,12 @@ class SiteController extends Controller {
 
     public function actionContact()
     {
-
+	    Yii::import('store.models.*');
+		$product = StoreProduct::model()->findByPk(56);
+	    var_dump($product->name);
+	    $category = $product->mainCategory;
+	    var_dump($category->name);
+	    var_dump($product->name);
     }
 
     public function actionIndex()

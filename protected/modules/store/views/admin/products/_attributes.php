@@ -24,7 +24,7 @@ if ($model->type)
 			$a->required ? $required = ' <span class="required">*</span>' : $required = null;
 
 			echo CHtml::openTag('div', array('class'=>'row'));
-			echo CHtml::label($a->title.$required, $a->name, array('class'=> $a->required ? 'required' : ''));
+			echo CHtml::label($a->attr_translate->title.$required, $a->name, array('class'=> $a->required ? 'required' : ''));
 			echo '<div class="rowInput">'.$a->renderField($value).'</div>';
 			echo CHtml::closeTag('div');
 		}

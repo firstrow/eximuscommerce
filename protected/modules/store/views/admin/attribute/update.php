@@ -6,7 +6,7 @@
 
 	$this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopButtons', array(
 		'form'=>$form,
-		//'langSwitcher'=>!$model->isNewRecord,
+		'langSwitcher'=>!$model->isNewRecord,
 		'deleteAction'=>$this->createUrl('/store/admin/attribute/delete', array('id'=>$model->id))
 	));
 

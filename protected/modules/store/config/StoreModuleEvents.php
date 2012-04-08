@@ -13,6 +13,8 @@ class StoreModuleEvents
 	 */
 	public $classes = array(
 		'StoreProductTranslate',
+		'StoreCategoryTranslate',
+		'StoreAttributeTranslate',
 		'StoreManufacturerTranslate',
 	);
 

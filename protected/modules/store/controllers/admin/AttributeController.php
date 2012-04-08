@@ -47,6 +47,7 @@ class AttributeController extends SAdminController
 		else
 		{
 			$model = StoreAttribute::model()
+				->language($_GET)
 				->findByPk($_GET['id']);
 		}
 

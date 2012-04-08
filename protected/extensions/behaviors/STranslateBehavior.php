@@ -91,10 +91,10 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	/**
 	 * Apply object translation
 	 */
-	public function afterFind()
+	public function afterFind($event)
 	{
 		$this->applyTranslation();
-		return true;
+		return parent::afterFind($event);
 	}
 
 	/**

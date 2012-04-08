@@ -17,7 +17,7 @@ foreach($ancestors as $c)
 
 // Do not add root category to breadcrumbs
 if ($model->mainCategory->id != 1)
-	$this->breadcrumbs[$model->mainCategory->cat_translate->name] = $model->mainCategory->getViewUrl();
+	$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
 
 $this->breadcrumbs[] = $model->name;
 

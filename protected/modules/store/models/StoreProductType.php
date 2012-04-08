@@ -57,7 +57,7 @@ class StoreProductType extends BaseModel
 	{
 		return array(
 			'attributeRelation'           => array(self::HAS_MANY, 'StoreTypeAttribute', 'type_id'),
-			'storeAttributes'             => array(self::HAS_MANY, 'StoreAttribute', array('attribute_id'=>'id'), 'through'=>'attributeRelation'),
+			'storeAttributes'             => array(self::HAS_MANY, 'StoreAttribute', array('attribute_id'=>'id'), 'through'=>'attributeRelation', 'scopes'=>'applyTranslateCriteria'),
 			'storeConfigurableAttributes' => array(self::HAS_MANY, 'StoreAttribute', array('attribute_id'=>'id'), 'through'=>'attributeRelation', 'condition'=>'use_in_variants=1'),
 			'productsCount'               => array(self::STAT, 'StoreProduct', 'type_id'),
 		);
