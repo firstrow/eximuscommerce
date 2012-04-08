@@ -12,6 +12,14 @@
  */
 class StoreAttributeOption extends BaseModel
 {
+
+	public $translateModelName = 'StoreAttributeOptionTranslate';
+
+	/**
+	 * @var string miltilingual attr
+	 */
+	public $value;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -28,6 +36,29 @@ class StoreAttributeOption extends BaseModel
 	public function tableName()
 	{
 		return 'StoreAttributeOption';
+	}
+
+	public function relations()
+	{
+		return array(
+			'option_translate' => array(self::HAS_ONE, $this->translateModelName, 'object_id')
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function behaviors()
+	{
+		return array(
+			'STranslateBehavior'=>array(
+				'class'=>'ext.behaviors.STranslateBehavior',
+				'relationName'=>'option_translate',
+				'translateAttributes'=>array(
+					'value',
+				),
+			)
+		);
 	}
 
 }

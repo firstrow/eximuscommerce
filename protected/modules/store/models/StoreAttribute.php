@@ -99,6 +99,9 @@ class StoreAttribute extends BaseModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function behaviors()
 	{
 		return array(
@@ -118,7 +121,7 @@ class StoreAttribute extends BaseModel
 	{
 		return array(
 			'attr_translate' => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
-			'options'        => array(self::HAS_MANY, 'StoreAttributeOption', 'attribute_id', 'order'=>'options.position ASC'),
+			'options'        => array(self::HAS_MANY, 'StoreAttributeOption', 'attribute_id', 'order'=>'options.position ASC', 'scopes'=>'applyTranslateCriteria'),
 			// Used in types
 			'types'          => array(self::HAS_MANY, 'StoreTypeAttribute', 'attribute_id'),
 		);
@@ -262,7 +265,11 @@ class StoreAttribute extends BaseModel
 	 */
 	public function search()
 	{
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
+
+		$criteria->with = array(
+			'attr_translate'
+		);
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);

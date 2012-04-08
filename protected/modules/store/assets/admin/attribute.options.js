@@ -1,11 +1,13 @@
 // Scripts for "Options" tab
 $(function() {
+
     // Add new row
     $(".optionsEditTable .plusOne").click(function(){
+        var option_name = Math.random();
         var row = $(".optionsEditTable .copyMe").clone().removeClass('copyMe');
         row.appendTo(".optionsEditTable tbody");
         row.find(".value").each(function(i, el){
-            $(el).attr('name', 'options['+Math.random()+'][]');
+            $(el).attr('name', 'options['+option_name+'][]');
         });
         return false;
     });

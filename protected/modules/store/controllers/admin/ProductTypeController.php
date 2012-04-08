@@ -73,7 +73,7 @@ class ProductTypeController extends SAdminController {
 
 		// Select available(not used) attributes
 		$cr = new CDbCriteria;
-		$cr->addNotInCondition('id', CHtml::listData($model->attributeRelation, 'attribute_id','attribute_id'));
+		$cr->addNotInCondition('StoreAttribute.id', CHtml::listData($model->attributeRelation, 'attribute_id','attribute_id'));
 		$allAttributes = StoreAttribute::model()->findAll($cr);
 
 		$this->render('update', array(

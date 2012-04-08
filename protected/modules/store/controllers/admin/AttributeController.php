@@ -90,6 +90,8 @@ class AttributeController extends SAdminController
 	 */
 	protected function saveOptions($model)
 	{
+//		var_dump($_POST);
+//		exit;
 		$dontDelete = array();
 		if(!empty($_POST['options']))
 		{
@@ -98,21 +100,37 @@ class AttributeController extends SAdminController
 			{
 				if(isset($val[0]) && $val[0] != '')
 				{
-					$attributeOption = StoreAttributeOption::model()->findByAttributes(array(
-						'id'=>$key,
-						'attribute_id'=>$model->id
-					));
+					$index = 0;
+
+					$attributeOption = StoreAttributeOption::model()
+						->findByAttributes(array(
+							'id'=>$key,
+							'attribute_id'=>$model->id
+						));
 
 					if(!$attributeOption)
 					{
 						$attributeOption = new StoreAttributeOption;
 						$attributeOption->attribute_id = $model->id;
 					}
-					$attributeOption->value = $val[0];
 					$attributeOption->position = $position;
 					$attributeOption->save(false);
 
+					foreach(Yii::app()->languageManager->languages as $lang)
+					{
+						$attributeOption = StoreAttributeOption::model()
+							->language($lang->id)
+							->findByAttributes(array(
+								'id'=>$attributeOption->id
+							));
+						$attributeOption->value = $val[$index];
+						$attributeOption->save(false);
+
+						$index++;
+					}
+					
 					array_push($dontDelete, $attributeOption->id);
+
 					$position++;
 				}
 			}
@@ -121,7 +139,7 @@ class AttributeController extends SAdminController
 		if(sizeof($dontDelete))
 		{
 			$cr = new CDbCriteria;
-			$cr->addNotInCondition('id', $dontDelete);
+			$cr->addNotInCondition('t.id', $dontDelete);
 			$optionsToDelete = StoreAttributeOption::model()->findAllByAttributes(array(
 				'attribute_id'=>$model->id
 			), $cr);
