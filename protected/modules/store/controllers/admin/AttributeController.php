@@ -128,7 +128,7 @@ class AttributeController extends SAdminController
 
 						$index++;
 					}
-					
+
 					array_push($dontDelete, $attributeOption->id);
 
 					$position++;

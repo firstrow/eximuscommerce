@@ -264,7 +264,7 @@ class SFilterRenderer extends CWidget
 		$manufacturers = StoreProduct::model()
 			->active()
 			->applyCategories($this->model, null)
-			->with(array('manufacturer'=>array(
+			->with(array('manufacturer.man_translate'=>array(
 			'with'=>array('productsCount'=>array('scopes'=>array(
 				'active',
 				'applyCategories'=>array($this->model, null),
