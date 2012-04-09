@@ -44,7 +44,7 @@ class PaymentMethodController extends SAdminController {
 			$model->unsetAttributes();
 		}
 		else
-			$model = StorePaymentMethod::model()->findByPk($_GET['id']);
+			$model = StorePaymentMethod::model()->language($_GET)->findByPk($_GET['id']);
 
 		if (!$model)
 			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Способ оплаты не найден.'));

@@ -12,6 +12,22 @@
  */
 class StorePaymentMethod extends BaseModel
 {
+
+	/**
+	 * @var string
+	 */
+	public $translateModelName = 'StorePaymentMethodTranslate';
+
+	/**
+	 * @var string
+	 */
+	public $name;
+
+	/**
+	 * @var string
+	 */
+	public $description;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -40,8 +56,32 @@ class StorePaymentMethod extends BaseModel
 			array('active, position', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			array('description', 'safe'),
-
+			// Search
 			array('id, name, description, active', 'safe', 'on'=>'search'),
+		);
+	}
+
+	public function relations()
+	{
+		return array(
+			'pm_translate' => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function behaviors()
+	{
+		return array(
+			'STranslateBehavior'=>array(
+				'class'=>'ext.behaviors.STranslateBehavior',
+				'relationName'=>'pm_translate',
+				'translateAttributes'=>array(
+					'name',
+					'description',
+				),
+			),
 		);
 	}
 
@@ -97,6 +137,8 @@ class StorePaymentMethod extends BaseModel
 	public function search()
 	{
 		$criteria=new CDbCriteria;
+
+		$criteria->with=array('pm_translate');
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
