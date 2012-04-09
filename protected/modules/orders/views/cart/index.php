@@ -112,7 +112,7 @@
 
 	<div align="right" style="padding: 5px;">
 		Итог: <span id="orderTotalPrice">
-				<?php echo StoreProduct::formatPrice(Yii::app()->cart->getTotalPrice()) ?>
+				<?php echo StoreProduct::formatPrice(Yii::app()->currency->convert(Yii::app()->cart->getTotalPrice())) ?>
 			</span> <?php echo Yii::app()->currency->active->symbol ?>
 	</div>
 
