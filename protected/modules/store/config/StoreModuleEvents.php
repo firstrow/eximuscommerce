@@ -16,6 +16,7 @@ class StoreModuleEvents
 		'StoreCategoryTranslate',
 		'StoreAttributeTranslate',
 		'StoreManufacturerTranslate',
+		'StoreDeliveryMethodTranslate',
 	);
 
 	/**

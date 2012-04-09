@@ -47,6 +47,7 @@ class DeliveryController extends SAdminController {
 		else
 		{
 			$model = StoreDeliveryMethod::model()
+				->language($_GET)
 				->findByPk($_GET['id']);
 		}
 

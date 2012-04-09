@@ -123,11 +123,6 @@
 	<div>
 		<h3>Способ доставки</h3>
 		<?php
-		$deliveryMethods = StoreDeliveryMethod::model()
-			->active()
-			->orderByName()
-			->findAll();
-
 		foreach($deliveryMethods as $delivery)
 		{
 			?>

@@ -83,7 +83,8 @@ class OrderProduct extends BaseModel
 
 	public function afterDelete()
 	{
-		$this->order->updateTotalPrice();
+		if($this->order)
+			$this->order->updateTotalPrice();
 		return parent::afterDelete();
 	}
 

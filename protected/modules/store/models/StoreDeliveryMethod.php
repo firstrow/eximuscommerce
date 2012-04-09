@@ -15,7 +15,25 @@
 class StoreDeliveryMethod extends BaseModel
 {
 
+	/**
+	 * @var array
+	 */
 	public $_payment_methods;
+
+	/**
+	 * @var string
+	 */
+	public $name;
+
+	/**
+	 * @var string
+	 */
+	public $description;
+
+	/**
+	 * @var string
+	 */
+	public $translateModelName = 'StoreDeliveryMethodTranslate';
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -45,8 +63,14 @@ class StoreDeliveryMethod extends BaseModel
 			'active'              => array('order'=>$alias.'.active=1'),
 			'orderByPosition'     => array('order'=>$alias.'.position ASC'),
 			'orderByPositionDesc' => array('order'=>$alias.'.position DESC'),
-			'orderByName'         => array('order'=>$alias.'.name ASC'),
-			'orderByNameDesc'     => array('order'=>$alias.'.name DESC'),
+			'orderByName'         => array(
+				'with'=>'dm_translate',
+				'order'=>'dm_translate.name ASC'
+			),
+			'orderByNameDesc'     => array(
+				'with'=>'dm_translate',
+				'order'=>'dm_translate.name DESC'
+			),
 		);
 	}
 
@@ -74,8 +98,26 @@ class StoreDeliveryMethod extends BaseModel
 	public function relations()
 	{
 		return array(
-			'categorization'  => array(self::HAS_MANY, 'StoreDeliveryPayment', 'delivery_id'),
-			'paymentMethods'  => array(self::HAS_MANY, 'StorePaymentMethod', array('payment_id'=>'id'), 'through'=>'categorization'),
+			'categorization' => array(self::HAS_MANY, 'StoreDeliveryPayment', 'delivery_id'),
+			'paymentMethods' => array(self::HAS_MANY, 'StorePaymentMethod', array('payment_id'=>'id'), 'through'=>'categorization'),
+			'dm_translate'   => array(self::HAS_ONE, 'StoreDeliveryMethodTranslate', 'object_id'),
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function behaviors()
+	{
+		return array(
+			'STranslateBehavior'=>array(
+				'class'=>'ext.behaviors.STranslateBehavior',
+				'relationName'=>'dm_translate',
+				'translateAttributes'=>array(
+					'name',
+					'description',
+				),
+			),
 		);
 	}
 
@@ -159,17 +201,20 @@ class StoreDeliveryMethod extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id'              => 'ID',
-			'name'            => Yii::t('StoreModule.core', 'Название'),
+			'id'               => 'ID',
+			'name'             => Yii::t('StoreModule.core', 'Название'),
 			'price'            => Yii::t('StoreModule.core', 'Цена'),
-			'free_from'            => Yii::t('StoreModule.core', 'Бесплатен от'),
-			'active'          => Yii::t('StoreModule.core', 'Активен'),
-			'description'     => Yii::t('StoreModule.core', 'Описание'),
-			'position'        => Yii::t('StoreModule.core', 'Позиция'),
-			'payment_methods' => Yii::t('StoreModule.core', 'Способы оплаты'),
+			'free_from'        => Yii::t('StoreModule.core', 'Бесплатен от'),
+			'active'           => Yii::t('StoreModule.core', 'Активен'),
+			'description'      => Yii::t('StoreModule.core', 'Описание'),
+			'position'         => Yii::t('StoreModule.core', 'Позиция'),
+			'payment_methods'  => Yii::t('StoreModule.core', 'Способы оплаты'),
 		);
 	}
 
+	/**
+	 * @return string order used delivery method
+	 */
 	public function countOrders()
 	{
 		Yii::import('orders.models.*');
@@ -184,11 +229,13 @@ class StoreDeliveryMethod extends BaseModel
 	{
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('position',$this->position);
-		$criteria->compare('active',$this->active);
+		$criteria->with=array('dm_translate');
+
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('dm_translate.name',$this->name,true);
+		$criteria->compare('dm_translate.description',$this->description,true);
+		$criteria->compare('t.position',$this->position);
+		$criteria->compare('t.active',$this->active);
 
 		$sort=new CSort;
 		$sort->defaultOrder = $this->getTableAlias().'.position ASC';

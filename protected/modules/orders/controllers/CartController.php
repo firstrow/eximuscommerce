@@ -40,7 +40,15 @@ class CartController extends Controller
 			}
 		}
 
-		$this->render('index');
+		$deliveryMethods = StoreDeliveryMethod::model()
+			->applyTranslateCriteria()
+			->active()
+			->orderByName()
+			->findAll();
+
+		$this->render('index', array(
+			'deliveryMethods'=>$deliveryMethods
+		));
 	}
 
 	/**
