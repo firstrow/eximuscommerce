@@ -67,8 +67,9 @@
 				?>
 			</div>
 			<div class="yui-u" id="topRightMenu">
-				<a href="#"><?php echo Yii::t('AdminModule.admin', 'Настройки') ?></a>
-				<a href="/admin/auth/logout"><?php echo Yii::t('AdminModule.admin', 'Выход') ?></a>
+				<?php echo CHtml::link(Yii::t('AdminModule.admin', 'Выход'), array('/admin/admin/logout'), array(
+					'confirm'=>Yii::t('StoreModule.admin','Завершить сеанс?')
+			)) ?>
 			</div>
 		</div>
 	</div> <!-- /hd -->
