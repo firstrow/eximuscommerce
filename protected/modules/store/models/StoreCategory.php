@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('store.models.StoreCategoryTranslate');
+
 /**
  * This is the model class for table "StoreCategory".
  *
