@@ -51,6 +51,15 @@ class FeedbackForm extends CFormModel
 	 */
 	public function sendMessage()
 	{
+		$mailer           = Yii::app()->mail;
+		$mailer->From     = 'noreply@'.Yii::app()->request->serverName;
+		$mailer->FromName = 'Feedback Form';
+		$mailer->Subject  = 'Message from '.CHtml::encode($this->name);
+		$mailer->Body     = CHtml::encode($this->message);
+		$mailer->AddAddress('qiang@example.com');
+		$mailer->AddReplyTo($this->email);
+		$mailer->Send();
+
 		Yii::app()->user->setFlash('feedback_send', true);
 	}
 

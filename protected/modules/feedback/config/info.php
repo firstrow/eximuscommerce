@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('application.modules.feeback.FeedbackModule');
+Yii::import('application.modules.feedback.FeedbackModule');
 
 /**
  * Module info
