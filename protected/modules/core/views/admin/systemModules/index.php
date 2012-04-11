@@ -38,7 +38,6 @@
 				'filter'=>false,
 			),
 			array(
-
 				'type'=>'raw',
 				'value'=>'$data->getInfo()->version'
 			),
@@ -53,7 +52,7 @@
 			// Buttons
 			array(
 				'class'=>'CButtonColumn',
-				'template'=>'{update}{delete}',
+				'template'=>'{delete}',
 			),
 		),
 	));

@@ -209,6 +209,10 @@ class SystemModules extends BaseModel
 		if ($this->info)
 			return $this->info;
 		$this->info = (object) self::loadInfoFile($this->name);
+
+		if(!isset($this->info->config_url))
+			$this->info->config_url = false;
+
 		return $this->info;
 	}
 
