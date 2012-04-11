@@ -67,7 +67,7 @@
 				?>
 			</div>
 			<div class="yui-u" id="topRightMenu">
-				<?php echo CHtml::link(Yii::t('AdminModule.admin', 'Выход'), array('/admin/admin/logout'), array(
+				<?php echo CHtml::link(Yii::t('AdminModule.admin', 'Выход'), array('/admin/auth/logout'), array(
 					'confirm'=>Yii::t('StoreModule.admin','Завершить сеанс?')
 			)) ?>
 			</div>
