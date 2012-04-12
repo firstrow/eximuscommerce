@@ -95,6 +95,7 @@ class SSystemSettings extends CComponent
 
 	/**
 	 * Remove category from DB
+	 * @param $category
 	 */
 	public function clear($category)
 	{

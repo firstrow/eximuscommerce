@@ -14,7 +14,7 @@ class FeedbackModule extends BaseModule
 	{
 		Yii::app()->settings->set('feedback', array(
 			'admin_email'        => 'admin@localhost.local',
-			'enable_captcha'     => false,
+			'enable_captcha'     => '0',
 			'max_message_length' => 1000
 		));
 	}

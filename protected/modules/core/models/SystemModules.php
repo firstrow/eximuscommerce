@@ -179,7 +179,7 @@ class SystemModules extends BaseModel
 		try {
 			Yii::trace('Module installed');
 			$model->save();
-			$this->loadModuleClass($name)->afterInstall();
+			self::loadModuleClass($name)->afterInstall();
 		} catch(Exception $e) {
 			Yii::trace('Error installing module');
 			return false;
@@ -190,11 +190,15 @@ class SystemModules extends BaseModel
 
 	public function afterDelete()
 	{
-		$this->loadModuleClass($this->name)->afterRemove();
+		self::loadModuleClass($this->name)->afterRemove();
 		return parent::afterDelete();
 	}
 
-	protected function loadModuleClass($name)
+	/**
+	 * @param $name
+	 * @return mixed
+	 */
+	protected static function loadModuleClass($name)
 	{
 		$class = ucfirst($name).'Module';
 		Yii::import('application.modules.'.$name.'.'.$class);
