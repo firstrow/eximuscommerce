@@ -93,4 +93,12 @@ class SSystemSettings extends CComponent
 			return $default;
 	}
 
+	/**
+	 * Remove category from DB
+	 */
+	public function clear($category)
+	{
+		Yii::app()->db->createCommand()->delete('SystemSettings', 'category=:category', array(':category'=>$category));
+	}
+
 }

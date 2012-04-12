@@ -53,4 +53,15 @@ class BaseModule extends CWebModule {
 		$this->_assetsUrl = $url;
 	}
 
+	/**
+	 * Method will be called after module installed
+	 */
+	public function afterInstall()
+	{}
+
+	/**
+	 * Method will be called after module removed
+	 */
+	public function afterRemove()
+	{}
 }

@@ -48,13 +48,10 @@ class SystemModules extends BaseModel
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
 		return array(
 			array('name, enabled', 'required'),
 			array('enabled', 'numerical', 'integerOnly'=>true),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
+			// The following rule is used by search()
 			array('name, enabled', 'safe', 'on'=>'search'),
 		);
 	}
@@ -170,7 +167,7 @@ class SystemModules extends BaseModel
 
 	/**
 	 * Install module
-	 * @param type $name module name
+	 * @param string $name module name
 	 * @return boolean
 	 */
 	public function install($name)
@@ -182,12 +179,26 @@ class SystemModules extends BaseModel
 		try {
 			Yii::trace('Module installed');
 			$model->save();
+			$this->loadModuleClass($name)->afterInstall();
 		} catch(Exception $e) {
 			Yii::trace('Error installing module');
 			return false;
 		}
 
 		return true;
+	}
+
+	public function afterDelete()
+	{
+		$this->loadModuleClass($this->name)->afterRemove();
+		return parent::afterDelete();
+	}
+
+	protected function loadModuleClass($name)
+	{
+		$class = ucfirst($name).'Module';
+		Yii::import('application.modules.'.$name.'.'.$class);
+		return new $class($name, null);
 	}
 
 	/**
