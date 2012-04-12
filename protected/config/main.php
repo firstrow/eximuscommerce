@@ -121,6 +121,9 @@ return array(
 			'class'=>'ext.mailer.EMailer',
 			'CharSet'=>'UTF-8',
 		),
+		'settings'=>array(
+			'class'=>'application.components.SSystemSettings'
+		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

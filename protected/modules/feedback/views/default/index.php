@@ -44,6 +44,16 @@ $this->pageTitle = Yii::t('FeedbackModule.core', 'Обратная связь');
 				<?php echo CHtml::activeTextArea($model,'message'); ?>
 			</div>
 		</div>
+
+		<?php if(Yii::app()->settings->get('feedback', 'enable_captcha')): ?>
+		<div class="control-group">
+			<label><? $this->widget('CCaptcha') ?></label>
+			<div class="controls">
+			<?php echo CHtml::activeTextField($model, 'code')?>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary"><?php echo Yii::t('FeedbackModule.core', 'Отправить') ?></button>
 		</div>

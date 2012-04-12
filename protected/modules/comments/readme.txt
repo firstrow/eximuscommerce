@@ -12,3 +12,13 @@ Usage:
         'model'=>$model, // Commentable model instance
     ));
     ...
+3. Add captcha action
+    ...
+    public function actions(){
+        return array(
+            'captcha'=>array(
+                'class'=>'CCaptchaAction',
+            ),
+        );
+    }
+    ...

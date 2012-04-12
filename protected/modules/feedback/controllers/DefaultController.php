@@ -4,6 +4,18 @@ class DefaultController extends Controller
 {
 
 	/**
+	 * @return array
+	 */
+	public function actions()
+	{
+		return array(
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+			),
+		);
+	}
+
+	/**
 	 * Display feedback form
 	 */
 	public function actionIndex()
