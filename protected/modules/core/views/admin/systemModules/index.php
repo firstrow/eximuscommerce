@@ -28,7 +28,8 @@
 		'columns'=>array(
 			array(
 				'name'=>'name',
-				'value'=>'CHtml::encode($data->getInfo()->name)',
+				'type'=>'raw',
+				'value'=>'($data->getInfo()->config_url) ? CHtml::link(CHtml::encode($data->getInfo()->name), $data->getInfo()->config_url) : CHtml::encode($data->getInfo()->name)',
 				'filter'=>false,
 			),
 			array(
