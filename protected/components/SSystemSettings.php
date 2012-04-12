@@ -51,13 +51,9 @@ class SSystemSettings extends CComponent
 	{
 		if(!empty($data))
 		{
-			if(!isset($this->data[$category]))
-				$this->data[$category]=array();
-			CMap::mergeArray($this->data[$category], $data);
-
 			foreach($data as $key=>$value)
 			{
-				if($this->get($category, $key))
+				if($this->get($category, $key)!==null)
 				{
 					Yii::app()->db->createCommand()->update('SystemSettings', array(
 						'value'=>$value,
@@ -66,12 +62,16 @@ class SSystemSettings extends CComponent
 				else
 				{
 					Yii::app()->db->createCommand()->insert('SystemSettings', array(
-						'category'=>$category,
-						'key'=>$key,
-						'value'=>$value
+						'category' => $category,
+						'key'      => $key,
+						'value'    => $value
 					));
 				}
 			}
+
+			if(!isset($this->data[$category]))
+				$this->data[$category]=array();
+			CMap::mergeArray($this->data[$category], $data);
 		}
 	}
 
