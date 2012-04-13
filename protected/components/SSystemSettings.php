@@ -12,6 +12,7 @@
  *      Yii::app()->settings->get('category'); //get all category settings as array
  *      Yii::app()->settings->get('category', 'per_page'); //get `per_page` value
  * </pre>
+ * @todo: Cache settings
  */
 class SSystemSettings extends CComponent
 {
