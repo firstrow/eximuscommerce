@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * SHttpRequest
+ */
 class SHttpRequest extends CHttpRequest {
 
 	private $_pathInfo;
@@ -19,23 +22,23 @@ class SHttpRequest extends CHttpRequest {
 		if($this->_pathInfo===null)
 		{
 			$pathInfo = parent::getPathInfo();
-	        $parts = explode('/', $pathInfo);
+			$parts = explode('/', $pathInfo);
 
-	        if (in_array($parts[0], Yii::app()->languageManager->getCodes()))
-	        {
-	        	// Valid language code detected.
-	        	// Remove it from url path to make route work and activate lang
-	    		$langCode = $parts[0];
+			if (in_array($parts[0], Yii::app()->languageManager->getCodes()))
+			{
+				// Valid language code detected.
+				// Remove it from url path to make route work and activate lang
+				$langCode = $parts[0];
 
-                // If language code are is equal default show 404 page
-                if($langCode === Yii::app()->languageManager->default->code)
-                    throw new CHttpException(404, Yii::t('core', 'Страница не найдена.'));
+				// If language code are is equal default show 404 page
+				if($langCode === Yii::app()->languageManager->default->code)
+					throw new CHttpException(404, Yii::t('core', 'Страница не найдена.'));
 
-	            unset($parts[0]);
-	            $pathInfo = implode($parts, '/');
-	        }
+				unset($parts[0]);
+				$pathInfo = implode($parts, '/');
+			}
 
-	        $this->_pathInfo = $pathInfo;
+			$this->_pathInfo = $pathInfo;
 		}
 
 		// Activate language by code
