@@ -83,13 +83,13 @@ class StoreCurrency extends BaseModel
 	{
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('iso',$this->iso,true);
-		$criteria->compare('symbol',$this->symbol,true);
-		$criteria->compare('rate',$this->rate);
-		$criteria->compare('main',$this->main);
-		$criteria->compare('default',$this->default);
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.name',$this->name,true);
+		$criteria->compare('t.iso',$this->iso,true);
+		$criteria->compare('t.symbol',$this->symbol,true);
+		$criteria->compare('t.rate',$this->rate);
+		$criteria->compare('t.main',$this->main);
+		$criteria->compare('t.default',$this->default);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
