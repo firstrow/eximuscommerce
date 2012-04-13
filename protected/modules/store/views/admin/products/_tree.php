@@ -52,7 +52,16 @@ if($model->type)
 		$presetCategories = array();
 }
 
-if($model->isNewRecord && empty($_POST['categories']) && isset($presetCategories))
+if(isset($_POST['categories']) && !empty($_POST['categories']))
+{
+	foreach($_POST['categories'] as $id)
+	{
+		Yii::app()->getClientScript()->registerScript("checkNode{$id}", "
+			$('#StoreCategoryTree').checkNode({$id});
+		");
+	}
+}
+elseif($model->isNewRecord && empty($_POST['categories']) && isset($presetCategories))
 {
 	foreach($presetCategories as $id)
 	{
