@@ -111,7 +111,7 @@ class Order extends BaseModel
 	 */
 	public function validateStatus()
 	{
-		if(OrderStatus::model()->countByAttributes(array('id'=>$this->status_id)) == 0)
+		if($this->status_id && OrderStatus::model()->countByAttributes(array('id'=>$this->status_id)) == 0)
 			$this->addError('status_id', Yii::t('OrdersModule.core', 'Ошибка проверки статуса.'));
 	}
 

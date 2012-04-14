@@ -261,6 +261,7 @@ class SFilterRenderer extends CWidget
 		$cr->group = 't.manufacturer_id';
 		$cr->addCondition('t.manufacturer_id IS NOT NULL');
 
+		//@todo: Fix manufacturer translation
 		$manufacturers = StoreProduct::model()
 			->active()
 			->applyCategories($this->model, null)

@@ -146,7 +146,10 @@ class CartController extends Controller
 		if($order->validate())
 			$order->save();
 		else
+		{
+			var_dump($order->getErrors());
 			exit;
+		}
 
 		// Process products
 		foreach(Yii::app()->cart->getDataWithModels() as $item)

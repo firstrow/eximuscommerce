@@ -67,7 +67,7 @@ class OrdersController extends SAdminController {
 		}
 
 		$this->render('update', array(
-			'deliveryMethods' => StoreDeliveryMethod::model()->orderByName()->findAll(),
+			'deliveryMethods' => StoreDeliveryMethod::model()->applyTranslateCriteria()->orderByName()->findAll(),
 			'statuses'        => OrderStatus::model()->orderByPosition()->findAll(),
 			'model'           => $model,
 		));
