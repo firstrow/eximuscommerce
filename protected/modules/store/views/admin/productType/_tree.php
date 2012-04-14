@@ -1,5 +1,5 @@
 <div class="form wide">
-	<?php echo Yii::t('StoreModule.admin', 'Поиск:') ?> <input type="text" onkeyup='$("#StoreCategoryTree").jstree("search", $(this).val());' />
+	<?php echo Yii::t('StoreModule.admin', 'Поиск:') ?> <input type="text" onkeyup='$("#StoreTypeCategoryTree").jstree("search", $(this).val());' />
 </div>
 
 <?php
