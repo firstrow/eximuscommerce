@@ -111,7 +111,7 @@ class StoreProduct extends BaseModel
 			array('is_active', 'boolean'),
 			array('use_configurations', 'boolean', 'on'=>'insert'),
 			array('quantity, availability, manufacturer_id', 'numerical', 'integerOnly'=>true),
-			array('name, price', 'required'),
+			array('name, price, manufacturer_id', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
 			array('short_description, full_description, auto_decrease_quantity', 'type'),
@@ -157,7 +157,7 @@ class StoreProduct extends BaseModel
 
 		if($select)
 			$criteria->select = $select;
-		$criteria->join = 'LEFT OUTER JOIN `StoreProductCategoryRef` `categorization` ON (`categorization`.`product`=`t`.`id`)';
+		$criteria->join = 'LEFT JOIN `StoreProductCategoryRef` `categorization` ON (`categorization`.`product`=`t`.`id`)';
 		$criteria->addInCondition('categorization.category', $categories);
 		$this->getDbCriteria()->mergeWith($criteria);
 
@@ -216,7 +216,7 @@ class StoreProduct extends BaseModel
 			'images'          => array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
 			'mainImage'       => array(self::HAS_ONE, 'StoreProductImage', 'product_id', 'condition'=>'is_main=1'),
 			'imagesNoMain'    => array(self::HAS_MANY, 'StoreProductImage', 'product_id', 'condition'=>'is_main=0'),
-			'manufacturer'    => array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id', 'scopes'=>'applyTranslateCriteria'),
+			'manufacturer'    => array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id'),
 			'productsCount'   => array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
 			'type'            => array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
 			'related'         => array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),

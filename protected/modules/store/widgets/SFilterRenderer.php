@@ -163,9 +163,9 @@ class SFilterRenderer extends CWidget
 			echo CHtml::closeTag($this->titleTag);
 
 			array_push($menuItems, array(
-				'label'=>Yii::t('StoreModule.core', 'Очистить фильтры'),
-				'url'=>$this->getOwner()->createUrl('view', array('url'=>$this->model->url)),
-				'linkOptions'=>$this->clearLinkOptions,
+				'label'       => Yii::t('StoreModule.core', 'Очистить фильтры'),
+				'linkOptions' => $this->clearLinkOptions,
+				'url'         => $this->getOwner()->createUrl('view', array('url'=>$this->model->url)),
 			));
 
 			$this->widget('zii.widgets.CMenu', array(
@@ -264,13 +264,17 @@ class SFilterRenderer extends CWidget
 		$manufacturers = StoreProduct::model()
 			->active()
 			->applyCategories($this->model, null)
-			->with(array('manufacturer.man_translate'=>array(
-			'with'=>array('productsCount'=>array('scopes'=>array(
-				'active',
-				'applyCategories'=>array($this->model, null),
-				'applyAttributes'=>array($this->getOwner()->activeAttributes)
-			))),
-			)))
+			->with(array(
+				'manufacturer'=>array(
+					'with'=>array(
+						'productsCount'=>array(
+							'scopes'=>array(
+								'active',
+								'applyCategories'=>array($this->model, null),
+								'applyAttributes'=>array($this->getOwner()->activeAttributes),
+							))
+					),
+				)))
 			->findAll($cr);
 
 		$data = array(

@@ -36,8 +36,8 @@ class SUrlManager extends CUrlManager {
 		}
 
 		// Add training slash to urls
-		if('/' !== $result{strlen($result) - 1})
-			$result .= '/';
+//		if('/' !== $result{strlen($result) - 1})
+//			$result .= '/';
 
 		return $result;
 	}
