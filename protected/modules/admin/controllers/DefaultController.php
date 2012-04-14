@@ -9,7 +9,7 @@ class DefaultController extends SAdminController
 	public function actionIndex()
 	{
 		Yii::app()->request->redirect($this->createUrl('/orders/admin/orders'));
-		$this->render('index');
+		//$this->render('index');
 	}
 
 }
