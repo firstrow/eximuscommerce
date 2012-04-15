@@ -41,7 +41,8 @@ $this->breadcrumbs = array(
 
 	<div class="row submit">
 		<label>&nbsp;</label>
-		<?php echo CHtml::submitButton(Yii::t('NewsletterModule.admin', 'Отправить')); ?>
+		<?php echo CHtml::submitButton(Yii::t('NewsletterModule.admin', 'Отправить всем пользователям')); ?>
+		<?php echo CHtml::submitButton(Yii::t('NewsletterModule.admin', 'Отправить только {email}',array('{email}'=>Yii::app()->user->email)), array('name'=>'NewsletterAdminForm[test]')); ?>
 	</div>
 
 	<?php $this->endWidget(); ?>

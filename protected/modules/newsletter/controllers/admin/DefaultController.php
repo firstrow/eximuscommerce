@@ -22,7 +22,8 @@ class DefaultController extends SAdminController
 		{
 			$model->send();
 			$this->setFlashMessage(Yii::t('NewsletterModule.admin', 'Сообщение успешно отправлено.'));
-			Yii::app()->request->redirect($this->createUrl('index'));
+			if(!$model->test)
+				Yii::app()->request->redirect($this->createUrl('index'));
 		}
 
 		$this->render('index', array(

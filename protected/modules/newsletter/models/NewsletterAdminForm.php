@@ -10,12 +10,14 @@ class NewsletterAdminForm extends CFormModel
 	public $sender_name;
 	public $sender_email;
 	public $body;
+	public $test;
 
 	public function rules()
 	{
 		return array(
 			array('subject, sender_name, sender_email, body', 'required'),
 			array('sender_email', 'email'),
+			array('test', 'type'),
 		);
 	}
 
@@ -36,7 +38,11 @@ class NewsletterAdminForm extends CFormModel
 	public function send()
 	{
 		Yii::import('application.modules.users.models.User');
-		$users = User::model()->findAll();
+
+		if($this->test)
+			$users = User::model()->findAllByPk(Yii::app()->user->id);
+		else
+			$users = User::model()->findAll();
 
 		$mailer           = Yii::app()->mail;
 		$mailer->From     = $this->sender_email;
