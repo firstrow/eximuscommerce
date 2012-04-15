@@ -41,6 +41,7 @@ $this->widget('ext.sgridview.SGridView', array(
 			'type'=>'raw',
 			'value'=>'CHtml::link(CHtml::encode($data->name), array("/discounts/admin/default/update", "id"=>$data->id))',
 		),
+		'sum',
 		array(
 			'name'=>'active',
 			'filter'=>array(1=>Yii::t('DiscountsModule.admin', 'Да'), 0=>Yii::t('DiscountsModule.admin', 'Нет')),

@@ -14,8 +14,8 @@ Yii::import('store.models.StoreProductTranslate');
  * @property integer $type_id
  * @property string $name
  * @property string $url
- * @property float $price
- * @property float $max_price for configurable products.
+ * @property float $price Product price. For configurbale product its min_price
+ * @property float $max_price for configurable products. Used in StoreProduct::priceRange to display prices on category view
  * @property boolean $is_active
  * @property string $short_description
  * @property string $full_description
@@ -107,11 +107,11 @@ class StoreProduct extends BaseModel
 	{
 		return array(
 			array('price', 'commaToDot'),
-			array('price, type_id', 'numerical'),
+			array('price, type_id, manufacturer_id', 'numerical'),
 			array('is_active', 'boolean'),
 			array('use_configurations', 'boolean', 'on'=>'insert'),
 			array('quantity, availability, manufacturer_id', 'numerical', 'integerOnly'=>true),
-			array('name, price, manufacturer_id', 'required'),
+			array('name, price', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
 			array('short_description, full_description, auto_decrease_quantity', 'type'),
@@ -196,15 +196,6 @@ class StoreProduct extends BaseModel
 		$criteria->addInCondition('manufacturer_id', $manufacturers);
 		$this->getDbCriteria()->mergeWith($criteria);
 		return $this;
-	}
-
-	/**
-	 * Replaces comma to dot
-	 * @param $attr
-	 */
-	public function commaToDot($attr)
-	{
-		$this->$attr = str_replace(',','.', $this->$attr);
 	}
 
 	/**
@@ -306,6 +297,9 @@ class StoreProduct extends BaseModel
 		));
 	}
 
+	/**
+	 * @return array
+	 */
 	public function behaviors()
 	{
 		return array(
@@ -329,6 +323,9 @@ class StoreProduct extends BaseModel
 					'meta_keywords',
 				),
 			),
+			'discounts'=>array(
+				'class'=>'application.modules.discounts.components.DiscountBehavior'
+			)
 		);
 	}
 
@@ -682,7 +679,8 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
-	 * Convert to active currency and format price
+	 * Convert to active currency and format price.
+	 * Display min and max price for configurable products.
 	 * Used in product listing.
 	 * @return string
 	 */
@@ -695,6 +693,15 @@ class StoreProduct extends BaseModel
 		if($this->use_configurations && $max_price > 0)
 			return self::formatPrice($price).' '.$symbol.' - '.self::formatPrice($max_price).' '.$symbol;
 		return self::formatPrice($price).' '.$symbol;
+	}
+
+	/**
+	 * Replaces comma to dot
+	 * @param $attr
+	 */
+	public function commaToDot($attr)
+	{
+		$this->$attr = str_replace(',','.', $this->$attr);
 	}
 
 	/**

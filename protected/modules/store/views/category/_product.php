@@ -3,6 +3,7 @@
  * @var StoreProduct $data
  */
 ?>
+
 <!-- Left column  -->
 <div class="span2">
 	<?php
@@ -14,10 +15,18 @@
 		echo CHtml::link(CHtml::image($imgSource), array('frontProduct/view', 'url'=>$data->url), array('class'=>'thumbnail'));
 	?>
 </div>
+
 <!-- Right column -->
 <div class="span5">
 	<?php echo CHtml::link(CHtml::encode($data->name), array('frontProduct/view', 'url'=>$data->url)) ?>
 	<br>
+	<?php
+		if($data->appliedDiscount)
+		{
+			echo '<span style="color:red; "><s>'.$data->originalPrice.'</s></span>';
+		}
+	?>
+
 	<?php echo $data->priceRange() ?>
 </div>
 

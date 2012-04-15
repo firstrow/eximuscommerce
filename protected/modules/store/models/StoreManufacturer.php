@@ -171,7 +171,7 @@ class StoreManufacturer extends BaseModel
 	{
 		// Clear product relations
 		StoreProduct::model()->updateAll(array(
-			'manufacturer_id' => 0, // TODO: Check result writed to DB. '0' or `NULL`?
+			'manufacturer_id' => new CDbExpression('NULL'),
 		), 'manufacturer_id = :id', array(':id'=>$this->id));
 
 		return parent::afterDelete();

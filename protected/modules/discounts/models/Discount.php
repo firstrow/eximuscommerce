@@ -49,7 +49,12 @@ class Discount extends BaseModel
 	{
 		$alias = $this->getTableAlias();
 		return array(
-			'orderByName'=>array('order'=>$alias.'.name ASC')
+			'orderByName'=>array('order'=>$alias.'.name ASC'),
+			'activeOnly'=>array('condition'=>$alias.'.active=1'),
+			'applyDate'=>array(
+				'condition'=>'start_date <= :now AND end_date >= :now',
+				'params'=>array(':now'=>date('Y-m-d H:i:s')),
+			),
 		);
 	}
 
@@ -87,6 +92,9 @@ class Discount extends BaseModel
 		return $this->_categories;
 	}
 
+	/**
+	 * @param array $data
+	 */
 	public function setCategories(array $data)
 	{
 		$this->_categories = $data;
@@ -109,11 +117,17 @@ class Discount extends BaseModel
 		return $this->_manufacturers;
 	}
 
+	/**
+	 * @param array $data
+	 */
 	public function setManufacturers(array $data)
 	{
 		$this->_manufacturers = $data;
 	}
 
+	/**
+	 * After save event
+	 */
 	public function afterSave()
 	{
 		$this->clearRelations();
