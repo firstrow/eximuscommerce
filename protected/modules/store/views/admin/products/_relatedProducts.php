@@ -36,7 +36,7 @@ if(!isset($model))
 }
 
 // Fix sort url
-Yii::app()->clientScript->registerScript('fixGridSorter', '
+Yii::app()->clientScript->registerScript('fixGridSorterRelated', '
 	$("#RelatedProductsGrid .items thead tr th a").each(function(){
 		var search    = "/admin/store/products/update";
 		var replace   = "/admin/store/products/applyProductsFilter";
