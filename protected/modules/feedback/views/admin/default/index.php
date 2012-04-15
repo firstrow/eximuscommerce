@@ -10,8 +10,8 @@ $this->pageHeader = Yii::t('FeedbackModule.core', 'Обратная связь')
 
 $this->breadcrumbs = array(
 	'Home'=>$this->createUrl('/admin'),
-	Yii::t('FeedbackModule.core', 'Модули')=>Yii::app()->createUrl('/core/admin/systemModules'),
-	Yii::t('FeedbackModule.core', 'Обратная связь')
+	Yii::t('FeedbackModule.admin', 'Модули')=>Yii::app()->createUrl('/core/admin/systemModules'),
+	Yii::t('FeedbackModule.admin', 'Обратная связь')
 );
 
 ?>
