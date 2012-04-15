@@ -7,6 +7,7 @@ Yii::import('application.modules.store.StoreModule');
  */
 return array(
 	'catalog'=>array(
+		'position'=>3,
 		'items'=>array(
 			array(
 				'label'=>Yii::t('StoreModule.admin', 'Продукты'),

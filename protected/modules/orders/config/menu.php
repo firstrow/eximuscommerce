@@ -17,9 +17,14 @@ return array(
 				'position'=>1
 			),
 			array(
+				'label'=>Yii::t('OrdersModule.admin', 'Создать заказ'),
+				'url'=>array('/orders/admin/orders/create'),
+				'position'=>2
+			),
+			array(
 				'label'=>Yii::t('OrdersModule.admin', 'Статусы'),
 				'url'=>array('/orders/admin/statuses'),
-				'position'=>2
+				'position'=>3
 			)
 		),
 	),
