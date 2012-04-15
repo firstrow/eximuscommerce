@@ -46,7 +46,9 @@ $columns = array(
 
 // Process attributes
 $eavAttributes = array();
-$attributeModels = StoreAttribute::model()->findAllByPk($product->configurable_attributes);
+$attributeModels = StoreAttribute::model();
+$attributeModels->setTableAlias('StoreAttribute');
+$attributeModels = $attributeModels->findAllByPk($product->configurable_attributes);
 
 foreach($attributeModels as $attribute)
 {

@@ -271,14 +271,25 @@ class StoreAttribute extends BaseModel
 			'attr_translate'
 		);
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('type',$this->type);
-		$criteria->compare('position',$this->position);
+		$criteria->compare('StoreAttribute.id',$this->id);
+		$criteria->compare('StoreAttribute.name',$this->name,true);
+		$criteria->compare('attr_translate.title',$this->title,true);
+		$criteria->compare('StoreAttribute.type',$this->type);
+		$criteria->compare('StoreAttribute.position',$this->position);
+
+		$sort = new CSort;
+		$sort->defaultOrder = 'StoreAttribute.position ASC';
+		$sort->attributes=array(
+			'*',
+			'title' => array(
+				'asc'   => 'attr_translate.title',
+				'desc'  => 'attr_translate.title DESC',
+			),
+		);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort
 		));
 	}
 

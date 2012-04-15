@@ -350,7 +350,17 @@ class ProductsController extends SAdminController
 		$cr = new CDbCriteria;
 		$cr->addInCondition('StoreAttribute.type', array(StoreAttribute::TYPE_DROPDOWN, StoreAttribute::TYPE_RADIO_LIST));
 		$type = StoreProductType::model()->with(array('storeAttributes'))->findByPk($_GET['type_id'], $cr);
-		echo CJSON::encode($type->storeAttributes);
+
+		$data = array();
+		foreach($type->storeAttributes as $attr)
+		{
+			$data[] = array(
+				'id'=>$attr->id,
+				'title'=>$attr->title,
+			);
+		}
+
+		echo json_encode($data);
 	}
 
 	/**
