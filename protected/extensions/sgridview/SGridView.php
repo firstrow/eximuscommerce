@@ -161,11 +161,11 @@ class SGridView extends CGridView {
 	 */
 	public function insertModelAttributes()
 	{
-		if ($this->filter->attributes)
+		if($this->getModelAttributes())
 		{
 			$attrs = array();
 
-			foreach ($this->filter->attributes as $key => $value)
+			foreach ($this->getModelAttributes() as $key => $value)
 			{
 				if($value !== null)
 					$attrs[get_class($this->filter).'['.$key.']'] = $value;
@@ -189,15 +189,33 @@ class SGridView extends CGridView {
 	 */
 	public function _checkAttributes()
 	{
-		if($this->filter->attributes)
+		$attributes = $this->getModelAttributes();
+
+		if($attributes)
 		{
-			foreach($this->filter->attributes as $name=>$val)
+			foreach($attributes as $name=>$val)
 			{
 				if(isset($_REQUEST[get_class($this->filter)][$name]) && $_REQUEST[get_class($this->filter)][$name] != '')
 					return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Add translate suuport.
+	 * Merge model attributes with translateable attributes.
+	 * @return array
+	 */
+	public function getModelAttributes()
+	{
+		$attributes = $this->filter->attributes;
+		if(isset($this->filter->translateAttributes))
+		{
+			foreach($this->filter->translateAttributes as $attrName)
+				$attributes[$attrName] = $this->filter->$attrName;
+		}
+		return $attributes;
 	}
 
 	/**

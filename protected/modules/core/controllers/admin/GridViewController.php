@@ -3,6 +3,9 @@
 class GridViewController extends SAdminController
 {
 
+	/**
+	 * @return array
+	 */
 	public function filters() {
 		return array(
 			'ajaxOnly + saveFilterData',
