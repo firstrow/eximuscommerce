@@ -59,11 +59,11 @@ $this->widget('ext.sgridview.SGridView', array(
 			'type'=>'raw',
 			'value'=>'CHtml::link(CHtml::encode($data->name), array("/store/admin/products/update", "id"=>$data->id))',
 		),
-		array(
-			'name'=>'url',
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->url), array("/store/frontProduct/view", "url"=>$data->url), array("target"=>"_blank"))',
-		),
+//		array(
+//			'name'=>'url',
+//			'type'=>'raw',
+//			'value'=>'CHtml::link(CHtml::encode($data->url), array("/store/frontProduct/view", "url"=>$data->url), array("target"=>"_blank"))',
+//		),
 		'sku',
 		'price',
 		array(

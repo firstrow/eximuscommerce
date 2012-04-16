@@ -213,9 +213,11 @@ class StoreCategory extends BaseModel
 	{
 		$criteria=new CDbCriteria;
 
+		$criteria->with = array('cat_translate');
+
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('level',$this->level);
-		$criteria->compare('name',$this->name,true);
+		$criteria->compare('cat_translate.name',$this->name,true);
 		$criteria->compare('url',$this->name,true);
 
 		return new CActiveDataProvider($this, array(

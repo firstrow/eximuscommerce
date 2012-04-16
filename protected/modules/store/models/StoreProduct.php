@@ -344,7 +344,7 @@ class StoreProduct extends BaseModel
 		{
 			// Create slug
 			Yii::import('ext.SlugHelper.SlugHelper');
-			$this->url = SlugHelper::run($this->name);
+			$this->url = SlugHelper::run(preg_replace('/\s{2,}/', ' ', $this->name));
 		}
 
 		// Check if url available
