@@ -55,16 +55,63 @@ class CsvImporter extends CComponent
 	protected $rootCategory = null;
 
 	/**
+	 * @var array
+	 */
+	protected $categoriesPathCache = array();
+
+	/**
+	 * @var array
+	 */
+	protected $productTypeCache = array();
+
+	/**
+	 * @var array
+	 */
+	protected $manufacturerCache = array();
+
+	/**
+	 * @var int
+	 */
+	protected $line = 1;
+
+	/**
+	 * @var array
+	 */
+	protected $errors = array();
+
+	/**
+	 * @var array
+	 */
+	public $stats = array(
+		'created'=>0,
+		'updated'=>0,
+	);
+
+	/**
 	 * @return bool validate csv file
 	 */
 	public function validate()
 	{
 		// Check file exists and readable
-		// Detect encoding
-		// Validate all required fields present
-		// Validate columns
-		// Check type present
-		return true;
+		if(!file_exists($this->file))
+		{
+			$this->errors[]= array('line'=>0,'error'=>Yii::t('CsvModule.admin', 'Файл недоступен.'));
+			return false;
+		}
+
+		$file = $this->getFileHandler();
+
+		// Read first line to get attributes
+		$line = fgets($file);
+		$this->csv_columns = str_getcsv($line, $this->delimiter, $this->enclosure);
+
+		foreach(array('category','name','type','price') as $column)
+		{
+			if(!in_array($column, $this->csv_columns))
+				$this->errors[]=array('line'=>0, 'error'=>Yii::t('CsvModule.admin', 'Укажите обязательную колонку {column}.',array('{column}'=>$column)));
+		}
+
+		return !$this->hasErrors();
 	}
 
 	/**
@@ -73,21 +120,19 @@ class CsvImporter extends CComponent
 	public function import()
 	{
 		$file = $this->getFileHandler();
-
-		// Read first line to get attributes
-		$line = fgets($file);
-		$this->csv_columns = str_getcsv($line, $this->delimiter, $this->enclosure);
-
+		$line = fgets($file); // Skip first
 		// Process lines
+		$this->line = 1;
 		while(($row = fgetcsv($file, $this->maxRowLength, $this->delimiter, $this->enclosure)) !== false)
 		{
 			$row = $this->prepareRow($row);
 			$this->importRow($row);
+			$this->line++;
 		}
 	}
 
 	/**
-	 * Create/update product from key/value array
+	 * Create/update product from key=>value array
 	 * @param $data array of product attributes
 	 */
 	protected function importRow($data)
@@ -105,13 +150,17 @@ class CsvImporter extends CComponent
 		else
 			$cr->compare('translate.name', $data['name']);
 
-		$cr->limit = 1;
 		$model = StoreProduct::model()
 			->applyCategories($category_id)
 			->find($cr);
 
 		if(!$model)
+		{
 			$model = new StoreProduct;
+			$this->stats['created']++;
+		}else{
+			$this->stats['updated']++;
+		}
 
 		// Update attributes
 		foreach($data as $key=>$val)
@@ -123,18 +172,78 @@ class CsvImporter extends CComponent
 			}
 		}
 
-		$model->type_id = 2;
+		// Process product type
+		$model->type_id = $this->getTypeIdByName($data['type']);
+		// Manufacturer
+		if(isset($data['manufacturer']) && !empty($data['manufacturer']))
+			$model->manufacturer_id = $this->getManufacturerIdByName($data['manufacturer']);
 
 		if($model->validate())
 		{
+			// Save
 			$model->save();
+			// Update categories
 			$model->setCategories(array($category_id), $category_id);
 		}
 		else
 		{
-			var_dump($model->errors);
-			var_dump($data);
+			$error = array_shift($model->getErrors());
+			$this->errors[] = array(
+				'line'=>$this->line,
+				'error'=>$error[0],
+			);
 		}
+	}
+
+	/**
+	 * Find or create manufacturer
+	 * @param $name
+	 */
+	public function getManufacturerIdByName($name)
+	{
+		if(isset($this->manufacturerCache[$name]))
+			return $this->manufacturerCache[$name];
+
+		$cr = new CDbCriteria;
+		$cr->with = array('man_translate');
+		$cr->compare('man_translate.name', $name);
+		$model = StoreManufacturer::model()->find($cr);
+
+		if(!$model)
+		{
+			$model = new StoreManufacturer;
+			$model->name = $name;
+			$model->save();
+		}
+
+		$this->manufacturerCache[$name] = $model->id;
+		return $model->id;
+	}
+
+	/**
+	 * Get product type by name. If type not exists - create new one.
+	 * @param $name
+	 * @return int
+	 */
+	public function getTypeIdByName($name)
+	{
+		if(isset($this->productTypeCache[$name]))
+			return $this->productTypeCache[$name];
+
+		$model = StoreProductType::model()->findByAttributes(array(
+			'name'=>$name,
+		));
+
+		if(!$model)
+		{
+			$model = new StoreProductType;
+			$model->name = $name;
+			$model->save();
+		}
+
+		$this->productTypeCache[$name] = $model->id;
+
+		return $model->id;
 	}
 
 	/**
@@ -143,11 +252,16 @@ class CsvImporter extends CComponent
 	 */
 	protected function getCategoryByPath($path)
 	{
+		if(isset($this->categoriesPathCache[$path]))
+			return $this->categoriesPathCache[$path];
+
 		if($this->rootCategory===null)
 			$this->rootCategory = StoreCategory::model()->findByPk(1);
 
 		$result = preg_split($this->subCategoryPattern, $path, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 		$result = array_map('stripcslashes',$result);
+
+		$parent = $this->rootCategory;
 
 		$level = 2; // Level 1 is only root
 		foreach($result as $name)
@@ -155,7 +269,6 @@ class CsvImporter extends CComponent
 			$cr = new CDbCriteria;
 			$cr->with = array('cat_translate');
 			$cr->compare('cat_translate.name', $name);
-			$cr->limit = 1;
 			$model = StoreCategory::model()->find($cr);
 
 			if(!$model)
@@ -168,6 +281,9 @@ class CsvImporter extends CComponent
 			$parent = $model;
 			$level++;
 		}
+
+		// Cache category id
+		$this->categoriesPathCache[$path] = $model->id;
 
 		if(isset($model))
 			return $model->id;
@@ -208,6 +324,52 @@ class CsvImporter extends CComponent
 		}else
 			$this->fileHandler = fopen($this->file, 'r');
 		return $this->fileHandler;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasErrors()
+	{
+		return !empty($this->errors);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getErrors()
+	{
+		return $this->errors;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getImportableAttributes()
+	{
+		return array(
+			'type'                   => Yii::t('StoreModule.core', 'Тип'),
+			'name'                   => Yii::t('StoreModule.core', 'Название'),
+			'category'               => Yii::t('StoreModule.core', 'Категория'),
+			'manufacturer'           => Yii::t('StoreModule.core', 'Производитель'),
+			'sku'                    => Yii::t('StoreModule.core', 'Артикул'),
+			'url'                    => Yii::t('StoreModule.core', 'URL'),
+			'price'                  => Yii::t('StoreModule.core', 'Цена'),
+			'is_active'              => Yii::t('StoreModule.core', 'Активен'),
+			'short_description'      => Yii::t('StoreModule.core', 'Краткое описание'),
+			'full_description'       => Yii::t('StoreModule.core', 'Полное описание'),
+			'meta_title'             => Yii::t('StoreModule.core', 'Meta Title'),
+			'meta_keywords'          => Yii::t('StoreModule.core', 'Meta Keywords'),
+			'meta_description'       => Yii::t('StoreModule.core', 'Meta Description'),
+			'layout'                 => Yii::t('StoreModule.core', 'Макет'),
+			'view'                   => Yii::t('StoreModule.core', 'Шаблон'),
+			'quantity'               => Yii::t('StoreModule.core', 'Количество'),
+			'availability'           => Yii::t('StoreModule.core', 'Доступность'),
+			'auto_decrease_quantity' => Yii::t('StoreModule.core', 'Автоматически уменьшать количество'),
+			'use_configurations'     => Yii::t('StoreModule.core', 'Использовать конфигурации'),
+			'created'                => Yii::t('StoreModule.core', 'Дата создания'),
+			'updated'                => Yii::t('StoreModule.core', 'Дата обновления'),
+		);
 	}
 
 	/**

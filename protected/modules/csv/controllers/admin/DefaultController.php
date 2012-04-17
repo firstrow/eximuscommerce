@@ -12,12 +12,15 @@ class DefaultController extends SAdminController
 	public function actionImport()
 	{
 		Yii::import('csv.components.CsvImporter');
+		$importer = new CsvImporter;
 
-		$importer = new CsvImporter();
-		$importer->file = '/var/www/cms/protected/data/testNoDesc.csv';
+		if(Yii::app()->request->isPostRequest && isset($_FILES['file']))
+		{
+			$importer->file = $_FILES['file']['tmp_name'];
 
-		if($importer->validate())
-			$importer->import();
+			if($importer->validate() && !$importer->hasErrors())
+				$importer->import();
+		}
 
 		$this->render('import', array(
 			'importer'=>$importer

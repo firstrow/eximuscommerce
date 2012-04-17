@@ -147,7 +147,7 @@ div.form div.success textarea,
 div.form div.success select,
 div.form input.success,
 div.form textarea.success,
-div.form select.success
+div.form select.success,
 {
     background: #E6EFC2;
     border-color: #C6D880;
@@ -168,6 +168,20 @@ div.form .errorSummary
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
+
+
+div.form .successSummary
+{
+    border: 2px solid #D6E9C6;
+    padding: 7px 7px 12px 7px;
+    margin: 0 0 20px 0;
+    background: #DFF0D8;
+    font-size: 0.9em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    color: #468847;
+}
+
 
 div.form .errorMessage
 {
