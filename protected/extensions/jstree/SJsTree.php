@@ -70,7 +70,7 @@ class SJsTree extends CWidget
             echo CHtml::openTag('li', array(
                 'id'=>$this->id.'Node_'.$node['id']
             ));
-            echo CHtml::link(CHtml::encode(CHtml::encode($node->name)));
+            echo CHtml::link(CHtml::encode($node->name));
             if ($node['hasChildren'] === true)
             {
                 echo CHtml::openTag('ul');

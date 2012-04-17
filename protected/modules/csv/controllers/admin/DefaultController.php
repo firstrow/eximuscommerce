@@ -1,5 +1,8 @@
 <?php
 
+Yii::import('csv.components.CsvImporter');
+Yii::import('csv.components.CsvExporter');
+
 /**
  * DefaultController
  */
@@ -11,7 +14,6 @@ class DefaultController extends SAdminController
 	 */
 	public function actionImport()
 	{
-		Yii::import('csv.components.CsvImporter');
 		$importer = new CsvImporter;
 
 		if(Yii::app()->request->isPostRequest && isset($_FILES['file']))
@@ -32,7 +34,16 @@ class DefaultController extends SAdminController
 	 */
 	public function actionExport()
 	{
-		$this->render('export');
+		$exporter = new CsvExporter;
+		if(Yii::app()->request->isPostRequest && isset($_POST['attributes']) && !empty($_POST['attributes']))
+		{
+			$exporter->export($_POST['attributes']);
+		}
+
+		$this->render('export', array(
+			'exporter'=>$exporter,
+			'importer'=>new CsvImporter,
+		));
 	}
 
 	public function actionSample()
