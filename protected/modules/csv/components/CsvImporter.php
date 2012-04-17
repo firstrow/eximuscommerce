@@ -137,6 +137,7 @@ class CsvImporter extends CComponent
 	 */
 	protected function importRow($data)
 	{
+		$newProduct = false;
 		$category_id = $this->getCategoryByPath($data['category']);
 
 		// Search product by name, category
@@ -156,6 +157,7 @@ class CsvImporter extends CComponent
 
 		if(!$model)
 		{
+			$newProduct=true;
 			$model = new StoreProduct;
 			$this->stats['created']++;
 		}else{
@@ -182,8 +184,9 @@ class CsvImporter extends CComponent
 		{
 			// Save
 			$model->save();
-			// Update categories
-			$model->setCategories(array($category_id), $category_id);
+			// Update categories only for new products
+			if($newProduct===true)
+				$model->setCategories(array($category_id), $category_id);
 		}
 		else
 		{
