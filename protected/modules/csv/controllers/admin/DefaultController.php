@@ -34,4 +34,13 @@ class DefaultController extends SAdminController
 	{
 		$this->render('export');
 	}
+
+	public function actionSample()
+	{
+		header("Content-type: application/octet-stream");
+		header("Content-Disposition: attachment; filename=\"sample.csv\"");
+		echo '"name";"category";"price";"type"'."\n";
+		echo '"Product Name";"Category/Subcategory";"10.99";"Base Product"'."\n";
+		exit;
+	}
 }
