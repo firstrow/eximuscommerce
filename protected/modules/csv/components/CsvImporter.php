@@ -368,8 +368,8 @@ class CsvImporter extends CComponent
 			'view'                   => Yii::t('StoreModule.core', 'Шаблон'),
 			'quantity'               => Yii::t('StoreModule.core', 'Количество'),
 			'availability'           => Yii::t('StoreModule.core', 'Доступность'),
-			'auto_decrease_quantity' => Yii::t('StoreModule.core', 'Автоматически уменьшать количество'),
-			'use_configurations'     => Yii::t('StoreModule.core', 'Использовать конфигурации'),
+			//'auto_decrease_quantity' => Yii::t('StoreModule.core', 'Автоматически уменьшать количество'),
+			//'use_configurations'     => Yii::t('StoreModule.core', 'Использовать конфигурации'),
 			'created'                => Yii::t('StoreModule.core', 'Дата создания'),
 			'updated'                => Yii::t('StoreModule.core', 'Дата обновления'),
 		);
