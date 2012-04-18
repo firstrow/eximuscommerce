@@ -20,6 +20,20 @@ class CsvExporter
 	 */
 	public $enclosure = '"';
 
+	/**
+	 * Cache category path
+	 * @var array
+	 */
+	public $categoryCache = array();
+
+	/**
+	 * @var array
+	 */
+	public $manufacturerCache = array();
+
+	/**
+	 * @param array $attributes
+	 */
 	public function export(array $attributes)
 	{
 		$products = StoreProduct::model()->findAll();
@@ -36,7 +50,7 @@ class CsvExporter
 				{
 					$value = $this->getCategory($p);
 				}elseif($attr==='manufacturer'){
-					$value = $p->manufacturer ? $p->manufacturer->name : '';
+					$value = $this->getManufacturer($p);
 				}else{
 					$value = $p->$attr;
 				}
@@ -53,6 +67,7 @@ class CsvExporter
 	/**
 	 * Get category path
 	 * @param StoreProduct $product
+	 * @return string
 	 */
 	public function getCategory(StoreProduct $product)
 	{
@@ -60,6 +75,9 @@ class CsvExporter
 
 		if($category && $category->id == 1)
 			return '';
+
+		if(isset($this->categoryCache[$category->id]))
+			$this->categoryCache[$category->id];
 
 		$ancestors = $category->excludeRoot()->ancestors()->findAll();
 		if(empty($ancestors))
@@ -69,7 +87,23 @@ class CsvExporter
 		foreach($ancestors as $c)
 			array_push($result, preg_replace('/\//','\/',$c->name));
 		array_push($result, preg_replace('/\//','\/',$category->name));
-		return implode('/', $result);
+
+		$this->categoryCache[$category->id] = implode('/', $result);
+
+		return $this->categoryCache[$category->id];
+	}
+
+	/**
+	 * Get manufacturer
+	 */
+	public function getManufacturer(StoreProduct $product)
+	{
+		if(isset($this->manufacturerCache[$product->manufacturer_id]))
+			return $this->manufacturerCache[$product->manufacturer_id];
+
+		$product->manufacturer ? $result = $product->manufacturer->name : $result = '';
+		$this->manufacturerCache[$product->manufacturer_id] = $result;
+		return $result;
 	}
 
 	/**
