@@ -46,6 +46,9 @@ class DefaultController extends SAdminController
 		));
 	}
 
+	/**
+	 * Sample csv file
+	 */
 	public function actionSample()
 	{
 		header("Content-type: application/octet-stream");

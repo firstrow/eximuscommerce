@@ -164,26 +164,32 @@ class CsvImporter extends CComponent
 			$this->stats['updated']++;
 		}
 
-		// Update attributes
-		foreach($data as $key=>$val)
-		{
-			try{
-				$model->$key = $val;
-			}catch(CException $e){
-
-			}
-		}
-
 		// Process product type
 		$model->type_id = $this->getTypeIdByName($data['type']);
 		// Manufacturer
 		if(isset($data['manufacturer']) && !empty($data['manufacturer']))
 			$model->manufacturer_id = $this->getManufacturerIdByName($data['manufacturer']);
 
+		// Update attributes
+		$eav = array();
+		foreach($data as $key=>$val)
+		{
+			try{
+				$model->$key = $val;
+			}catch(CException $e){
+				// Process eav
+				if(!in_array($key, array('category','type','manufacturer')) && !empty($val))
+					$eav[$key] = $this->processEavData($model->type_id, $key, $val);
+			}
+		}
+
 		if($model->validate())
 		{
-			// Save
+			// Save product
 			$model->save();
+			// Update EAV data
+			if(!empty($eav))
+				$model->setEavAttributes($eav, true);
 			// Update categories only for new products
 			if($newProduct===true)
 				$model->setCategories(array($category_id), $category_id);
@@ -196,6 +202,57 @@ class CsvImporter extends CComponent
 				'error'=>$error[0],
 			);
 		}
+	}
+
+	public function processEavData($type_id, $attribute_name, $attribute_value)
+	{
+		$attribute = StoreAttribute::model()->findByAttributes(array('name'=>$attribute_name));
+		if(!$attribute)
+		{
+			// Create new attribute
+			$attribute = new StoreAttribute;
+			$attribute->name = $attribute_name;
+			$attribute->title = ucfirst($attribute_name);
+			$attribute->type = StoreAttribute::TYPE_DROPDOWN;
+			$attribute->display_on_front = true;
+			$attribute->save();
+
+			// Add to type
+			$typeAttribute = new StoreTypeAttribute;
+			$typeAttribute->type_id = $type_id;
+			$typeAttribute->attribute_id = $attribute->id;
+			$typeAttribute->save();
+
+			// Create new option
+			$option = $this->addOptionToAttribute($attribute->id, $attribute_value);
+		}
+		else
+		{
+			$cr = new CDbCriteria;
+			$cr->with = 'option_translate';
+			$cr->compare('option_translate.value', $attribute_value);
+			$option = StoreAttributeOption::model()->find($cr);
+
+			if(!$option)
+				$option = $this->addOptionToAttribute($attribute->id, $attribute_value);
+		}
+
+		return $option->id;
+	}
+
+	/**
+	 * @param $attribute_id
+	 * @param $value
+	 * @return StoreAttributeOption
+	 */
+	public function addOptionToAttribute($attribute_id, $value)
+	{
+		// Add option
+		$option = new StoreAttributeOption;
+		$option->attribute_id = $attribute_id;
+		$option->value = $value;
+		$option->save();
+		return $option;
 	}
 
 	/**
@@ -348,9 +405,9 @@ class CsvImporter extends CComponent
 	/**
 	 * @return array
 	 */
-	public function getImportableAttributes()
+	public function getImportableAttributes($eav_prefix='')
 	{
-		return array(
+		$attributes = array(
 			'type'                   => Yii::t('StoreModule.core', 'Тип'),
 			'name'                   => Yii::t('StoreModule.core', 'Название'),
 			'category'               => Yii::t('StoreModule.core', 'Категория'),
@@ -368,11 +425,16 @@ class CsvImporter extends CComponent
 			'view'                   => Yii::t('StoreModule.core', 'Шаблон'),
 			'quantity'               => Yii::t('StoreModule.core', 'Количество'),
 			'availability'           => Yii::t('StoreModule.core', 'Доступность'),
-			//'auto_decrease_quantity' => Yii::t('StoreModule.core', 'Автоматически уменьшать количество'),
-			//'use_configurations'     => Yii::t('StoreModule.core', 'Использовать конфигурации'),
 			'created'                => Yii::t('StoreModule.core', 'Дата создания'),
 			'updated'                => Yii::t('StoreModule.core', 'Дата обновления'),
 		);
+
+		foreach(StoreAttribute::model()->findAll() as $attr)
+		{
+			$attributes[$eav_prefix.$attr->name] = $attr->title;
+		}
+
+		return $attributes;
 	}
 
 	/**

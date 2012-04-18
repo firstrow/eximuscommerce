@@ -140,15 +140,7 @@
 				<!--
 				<h3>Меню</h3>
 				<hr/>
-				<ul>
-					<li><a href="#">Страницы</a></li>
-					<li><a href="#">Категории</a></li>
-					<li><a href="#">Модули</a></li>
-					<li><a href="#">Меню</a></li>
-					<li><a href="#">Настройки</a></li>
-					<li><a href="#">Система</a></li>
-				</ul>
-
+				
 				<div class="sidebarBlock marright">
 					<h3>Block Header</h3>
 					<div class="blockContent">

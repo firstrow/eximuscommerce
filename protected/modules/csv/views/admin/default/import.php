@@ -103,7 +103,7 @@ $this->breadcrumbs = array(
 			foreach($importer->getImportableAttributes() as $k=>$v)
 			{
 				echo '<tr>';
-				echo '<td width="200px">'.$v.'</td>';
+				echo '<td width="200px">'.CHtml::encode($v).'</td>';
 				echo '<td>'.$k.'</td>';
 				echo '</tr>';
 			}

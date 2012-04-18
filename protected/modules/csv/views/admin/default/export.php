@@ -44,13 +44,13 @@ $this->breadcrumbs = array(
 	<b><?php echo Yii::t('CsvModule.core', 'Доступны следующие поля:') ?></b>
 	<table class="attributesTable">
 		<?php
-		foreach($importer->getImportableAttributes() as $k=>$v)
-		{
-			echo '<tr>';
-			echo '<td width="200px"><label><input type="checkbox" checked name="attributes[]" value="'.$k.'">'.$v.'</label></td>';
-			echo '<td>'.$k.'</td>';
-			echo '</tr>';
-		}
+			foreach($importer->getImportableAttributes('eav_') as $k=>$v)
+			{
+				echo '<tr>';
+				echo '<td width="200px"><label><input type="checkbox" checked name="attributes[]" value="'.$k.'">'.CHtml::encode($v).'</label></td>';
+				echo '<td>'.$k.'</td>';
+				echo '</tr>';
+			}
 		?>
 	</table>
 

@@ -16,7 +16,7 @@ class StoreAttributeOption extends BaseModel
 	public $translateModelName = 'StoreAttributeOptionTranslate';
 
 	/**
-	 * @var string miltilingual attr
+	 * @var string multilingual attr
 	 */
 	public $value;
 
