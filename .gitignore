@@ -1,5 +1,6 @@
 /assets/*
 /uploads/*
 protected/runtime/
+protected/backups/
 .idea
 /protected/tests/fixtures/*

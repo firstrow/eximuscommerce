@@ -21,7 +21,22 @@ class DefaultController extends SAdminController
 			$importer->file = $_FILES['file']['tmp_name'];
 
 			if($importer->validate() && !$importer->hasErrors())
+			{
+				// Create db backup
+				if(isset($_POST['create_dump']) && $_POST['create_dump'])
+				{
+					Yii::import('application.components.SDatabaseDumper');
+					$dumper = new SDatabaseDumper;
+
+					$file = Yii::getPathOfAlias('webroot.protected.backups').DIRECTORY_SEPARATOR.'dump_'.date('Y-m-d_H_i_s').'.sql';
+
+					if(function_exists('gzencode'))
+						file_put_contents($file.'.gz', gzencode($dumper->getDump()));
+					else
+						file_put_contents($file, $dumper->getDump());
+				}
 				$importer->import();
+			}
 		}
 
 		$this->render('import', array(

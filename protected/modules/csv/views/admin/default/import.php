@@ -76,11 +76,18 @@ $this->breadcrumbs = array(
 		)); ?>
 
 		<div class="row">
-			<input type="file" name="file">
+			<input type="file" name="file" class="file">
 			<input type="submit" value="<?php echo Yii::t('CsvModule.core', 'Начать импорт') ?>">
 		</div>
 
+		<div class="row" style="height: 25px;">
+			<label style="width: 300px"><input type="checkbox" name="create_dump" value="1" checked="checked"> Создать резервную копию БД.</label>
+		</div>
 		<?php $this->endWidget(); ?>
+
+		<div style="clear: both;">
+			<hr>
+		</div>
 
 		<div class="importDescription">
 			<ul>
