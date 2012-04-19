@@ -121,7 +121,7 @@ Yii::app()->clientScript->registerScript('deliveryMetohds', strtr('
 						<div style="float: right;padding-right: 10px">
 							<a href="javascript:openAddProductDialog(<?php echo $model->id ?>);"><?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?></a>
 						</div>
-						<div id="dialog-modal" style="display: none;">
+						<div id="dialog-modal" style="display: none;" title="<?php echo Yii::t('OrdersModule.admin','Добавить продукт') ?>">
 							<?php
 							$this->renderPartial('_addProduct', array(
 								'model'=>$model,

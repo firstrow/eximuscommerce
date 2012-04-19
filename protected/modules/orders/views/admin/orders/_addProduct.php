@@ -1,4 +1,5 @@
-<?php
+<div style="padding-bottom:15px;">
+	<?php
 
 /**
  * Add new product to order.
@@ -60,3 +61,5 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 	),
 ));
+?>
+</div>
