@@ -27,6 +27,7 @@ $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopBu
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider'=>$dataProvider,
 	'id'=>'discountsListGrid',
+	'afterAjaxUpdate'=>"function(){registerDatePickers()}",
 	'filter'=>$model,
 	'columns'=>array(
 		array(
@@ -56,3 +57,11 @@ $this->widget('ext.sgridview.SGridView', array(
 		),
 	),
 ));
+
+Yii::app()->clientScript->registerScript("discountDatepickers", "
+function registerDatePickers(){
+    jQuery('input[name=\"Discount[start_date]\"]').datepicker({'dateFormat':'yy-mm-dd',});
+    jQuery('input[name=\"Discount[end_date]\"]').datepicker({'dateFormat':'yy-mm-dd',});
+}
+registerDatePickers();
+");

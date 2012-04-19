@@ -104,54 +104,54 @@
 	</div>
 
 	<div id="bd" class="marleft">
-			<div id="yui-main">
-				<?php if (isset($this->pageHeader) && !empty($this->pageHeader)) echo '<h3>'.CHtml::encode($this->pageHeader).'</h3>'; ?>
+		<div id="yui-main">
+			<?php if (isset($this->pageHeader) && !empty($this->pageHeader)) echo '<h3>'.CHtml::encode($this->pageHeader).'</h3>'; ?>
 
-				<!-- Remove yui-b class for full wide -->
-				<?php if (!empty($this->sidebarContent)) { ?>
-					<div class="yui-b marright">
-				<?php }else{ ?>
-					<div class="marright">
-				<?php } ?>
-					<!-- Main content -->
-					<?php
-						if(($messages = Yii::app()->user->getFlash('messages')))
+			<!-- Remove yui-b class for full wide -->
+			<?php if (!empty($this->sidebarContent)) { ?>
+				<div class="yui-b marright">
+			<?php }else{ ?>
+				<div class="marright">
+			<?php } ?>
+				<!-- Main content -->
+				<?php
+					if(($messages = Yii::app()->user->getFlash('messages')))
+					{
+						echo '<script>';
+						foreach ($messages as $m)
 						{
-							echo '<script>';
-							foreach ($messages as $m)
-							{
-								echo '$.jGrowl("'.CHtml::encode($m).'",{position:"bottom-right"});';
-							}
-							echo '</script>';
+							echo '$.jGrowl("'.CHtml::encode($m).'",{position:"bottom-right"});';
 						}
+						echo '</script>';
+					}
+				?>
+				<div id="content" class="yui-g">
+				<!-- <hr /> -->
+					<?php
+						echo $content;
 					?>
-					<div id="content" class="yui-g">
-					<!-- <hr /> -->
-						<?php
-							echo $content;
-						?>
-					</div>
 				</div>
 			</div>
-			<!-- Sidebar content -->
-			<?php if (!empty($this->sidebarContent)) { ?>
-				<div id="sidebar" class="yui-b marleft">
-				<?php echo $this->sidebarContent; ?>
-				<!--
-				<h3>Меню</h3>
-				<hr/>
-				
-				<div class="sidebarBlock marright">
-					<h3>Block Header</h3>
-					<div class="blockContent">
-						<form>
-							<input type="text" />
-						</form>
-					</div>
+		</div>
+		<!-- Sidebar content -->
+		<?php if (!empty($this->sidebarContent)) { ?>
+			<div id="sidebar" class="yui-b marleft">
+			<?php echo $this->sidebarContent; ?>
+			<!--
+			<h3>Меню</h3>
+			<hr/>
+
+			<div class="sidebarBlock marright">
+				<h3>Block Header</h3>
+				<div class="blockContent">
+					<form>
+						<input type="text" />
+					</form>
 				</div>
-				-->
-				</div><!-- /sidebar -->
-			<?php } ?>
+			</div>
+			-->
+			</div><!-- /sidebar -->
+		<?php } ?>
 	</div>
 
 	<div id="ft" style="height:50px;">

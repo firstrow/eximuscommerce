@@ -201,8 +201,8 @@ class Discount extends BaseModel
 		$criteria->compare('t.name',$this->name,true);
 		$criteria->compare('t.active',$this->active);
 		$criteria->compare('t.sum',$this->sum,true);
-		$criteria->compare('t.start_date',$this->start_date);
-		$criteria->compare('t.end_date',$this->end_date);
+		$criteria->compare('t.start_date',$this->start_date, true);
+		$criteria->compare('t.end_date',$this->end_date, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
