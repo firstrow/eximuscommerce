@@ -21,7 +21,7 @@
 	));
 
 	$this->widget('ext.sgridview.SGridView', array(
-		'dataProvider'=>$model->search(),
+		'dataProvider'=>$dataProvider,
 		'id'=>'modulesListGrid',
 		'filter'=>$model,
 		'extended'=>false,
@@ -39,17 +39,18 @@
 				'filter'=>false,
 			),
 			array(
+				'header'=>Yii::t('CoreModule.core', 'Версия'),
 				'type'=>'raw',
 				'value'=>'$data->getInfo()->version'
 			),
-			array(
-				'name'=>'enabled',
-				'value'=>strtr('$data->enabled ? "{yes}":"{no}"', array(
-					'{yes}'=>Yii::t('CoreModule.core', 'Да'),
-					'{no}'=>Yii::t('CoreModule.core', 'Нет')
-				)),
-				'filter'=>array(1=>Yii::t('CoreModule.core', 'Да'),0=>Yii::t('CoreModule.core', 'Нет')),
-			),
+//			array(
+//				'name'=>'enabled',
+//				'value'=>strtr('$data->enabled ? "{yes}":"{no}"', array(
+//					'{yes}'=>Yii::t('CoreModule.core', 'Да'),
+//					'{no}'=>Yii::t('CoreModule.core', 'Нет')
+//				)),
+//				'filter'=>array(1=>Yii::t('CoreModule.core', 'Да'),0=>Yii::t('CoreModule.core', 'Нет')),
+//			),
 			// Buttons
 			array(
 				'class'=>'CButtonColumn',

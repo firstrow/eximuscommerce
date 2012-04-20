@@ -17,7 +17,8 @@ class SiteController extends Controller {
 
 	public function actionLogin()
 	{
-
+		$m = Yii::app()->getModule('action_logger');
+		var_dump($m->ok());
 	}
 
 	public function actionIndex()

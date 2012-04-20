@@ -9,8 +9,12 @@ class SystemModulesController extends SAdminController
 		if (!empty($_GET['SystemModules']))
 			$model->attributes = $_GET['SystemModules'];
 
+		$dataProvider = $model->search();
+		$dataProvider->pagination->pageSize = 100;
+
 		$this->render('index', array(
 			'model'=>$model,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 

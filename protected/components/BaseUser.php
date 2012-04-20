@@ -18,6 +18,15 @@ class BaseUser extends RWebUser
 	}
 
 	/**
+	 * @return string username
+	 */
+	public function getUsername()
+	{
+		$this->_loadModel();
+		return $this->_model->username;
+	}
+
+	/**
 	 * Load user model
 	 */
 	private function _loadModel()

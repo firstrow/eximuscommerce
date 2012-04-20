@@ -32,6 +32,7 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 		   'ipFilters'=>array('127.0.0.*'),
 		),
+		'action_logger',
 		'admin'=>array(),
 		'rights'=>array(
 			'layout'=>'application.modules.admin.views.layouts.main',
