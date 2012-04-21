@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.logger.LoggerModule');
+
 /**
  * Saves admin logs
  * This is the model class for table "ActionLog".
@@ -46,9 +48,6 @@ class ActionLog extends BaseModel
 	public function rules()
 	{
 		return array(
-//			array('username, event, model_name, model_title, datetime', 'required'),
-//			array('username, event', 'length', 'max'=>255),
-//			array('model_name', 'length', 'max'=>50),
 			array('id, username, event, model_name, model_title, datetime', 'safe', 'on'=>'search'),
 		);
 	}
@@ -68,6 +67,9 @@ class ActionLog extends BaseModel
 		);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getActionTitle()
 	{
 		if($this->event)
@@ -76,6 +78,9 @@ class ActionLog extends BaseModel
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getEventNames()
 	{
 		return array(
@@ -83,6 +88,93 @@ class ActionLog extends BaseModel
 			self::ACTION_UPDATE=>Yii::t('LoggerModule.admin', 'Обновление'),
 			self::ACTION_DELETE=>Yii::t('LoggerModule.admin', 'Удаление'),
 		);
+	}
+
+	public function getHumanModelName()
+	{
+		return $this->logClasses[$this->model_name]['human_name'];
+	}
+
+	/**
+	 * @static
+	 * @return array
+	 */
+	public static function getLogClasses()
+	{
+		return array(
+			'StoreProduct'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Продукт')
+			),
+			'StoreCategory'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Категория')
+			),
+			'StoreManufacturer'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Производитель')
+			),
+			'StoreAttribute'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Атрибут')
+			),
+			'StoreProductType'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Тип продукта')
+			),
+			'StoreDeliveryMethod'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Доставка')
+			),
+			'StorePaymentMethod'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Оплата')
+			),
+			'StoreCurrency'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Валюта')
+			),
+			'Discount'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Скидка')
+			),
+			'Order'=>array(
+				'title_attribute'=>'id',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Заказ')
+			),
+			'User'=>array(
+				'title_attribute'=>'username',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Пользователь')
+			),
+			'SSystemLanguage'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Язык')
+			),
+			'SystemModules'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Модуль')
+			),
+			'Page'=>array(
+				'title_attribute'=>'title',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Страница')
+			),
+			'PageCategory'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Категория страниц')
+			),
+			'Comment'=>array(
+				'title_attribute'=>'text',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Комментарий')
+			),
+		);
+	}
+
+	public function getModelNameFilter()
+	{
+		$result = array();
+		foreach($this->logClasses as $class=>$data)
+			$result[$class]=$data['human_name'];
+		return $result;
 	}
 
 	/**

@@ -29,19 +29,7 @@ class LoggerModuleEvents
 	public function __construct()
 	{
 		if($this->logClasses===null)
-		{
-			$this->logClasses = array(
-				'StoreProduct'=>array(
-					'title_attribute'=>'name'// Attribute name to get object human name.
-				),
-				'StoreCategory'=>array(
-					'title_attribute'=>'name'// Attribute name to get object human name.
-				),
-				'StoreManufacturer'=>array(
-					'title_attribute'=>'name'// Attribute name to get object human name.
-				),
-			);
-		}
+			$this->logClasses = ActionLog::getLogClasses();
 	}
 
 	/**

@@ -168,3 +168,8 @@ select {
 .variantsTable tr td input[type=text]{
     width: 90%;
 }
+.items .filters .hasDatepicker {
+    background-image: url(../images/player_time.png);
+    background-repeat: no-repeat;
+    background-position: 98% center;
+}

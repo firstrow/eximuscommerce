@@ -6,8 +6,6 @@
 
 $this->pageHeader = Yii::t('LoggerModule.admin', 'Журнал действий');
 
-$this->sidebarContent = $this->renderPartial('_sidebar', array(), true);
-
 $this->breadcrumbs = array(
 	'Home'=>$this->createUrl('/admin'),
 	Yii::t('LoggerModule.admin', 'Модули')=>Yii::app()->createUrl('/core/admin/systemModules'),
@@ -17,6 +15,7 @@ $this->breadcrumbs = array(
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider'=>$dataProvider,
 	'id'=>'loggerListGrid',
+	'afterAjaxUpdate'=>"function(){registerFilterDatePickers()}",
 	'filter'=>$model,
 	'columns'=>array(
 		array(
@@ -36,6 +35,9 @@ $this->widget('ext.sgridview.SGridView', array(
 		),
 		array(
 			'name'=>'model_name',
+			'type'=>'raw',
+			'value'=>'$data->getHumanModelName()',
+			'filter'=>$model->getModelNameFilter()
 		),
 		array(
 			'name'=>'model_title',
@@ -48,3 +50,13 @@ $this->widget('ext.sgridview.SGridView', array(
 		),
 	),
 ));
+
+Yii::app()->clientScript->registerScript("pageDatepickers", "
+	function registerFilterDatePickers(id, data){
+		jQuery('input[name=\"ActionLog[datetime]\"]').datepicker({
+			dateFormat:'yy-mm-dd',
+			constrainInput: false
+		});
+	}
+	registerFilterDatePickers();
+");
