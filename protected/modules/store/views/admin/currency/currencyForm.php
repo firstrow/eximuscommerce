@@ -19,6 +19,7 @@ return array(
 						0=>Yii::t('StoreModule.admin', 'Нет'),
 						1=>Yii::t('StoreModule.admin', 'Да')
 					),
+					'hint'=>Yii::t('StoreModule.admin', 'Все цены на сайте указаны в этой валюте.')
 				),
 				'default'=>array(
 					'type'=>'dropdownlist',
@@ -26,6 +27,7 @@ return array(
 						0=>Yii::t('StoreModule.admin', 'Нет'),
 						1=>Yii::t('StoreModule.admin', 'Да')
 					),
+					'hint'=>Yii::t('StoreModule.admin', 'Валюта будет назначена пользователю при первом посещении сайта.')
 				),
 				'iso'=>array(
 					'type'=>'text',
@@ -35,6 +37,7 @@ return array(
 				),
 				'rate'=>array(
 					'type'=>'text',
+					'hint'=>Yii::t('StoreModule.admin', 'Курс по отношению к главной валюте сайта.')
 				),
 			),
 		),
