@@ -194,8 +194,18 @@ class StoreManufacturer extends BaseModel
 		$criteria->compare('t.layout',$this->layout,true);
 		$criteria->compare('t.view',$this->view,true);
 
+		$sort = new CSort;
+		$sort->attributes=array(
+			'*',
+			'name' => array(
+				'asc'   => 'man_translate.name',
+				'desc'  => 'man_translate.name DESC',
+			),
+		);
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort,
 		));
 	}
 }
