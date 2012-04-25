@@ -86,7 +86,7 @@ return array(
 			'emulatePrepare' => true,
 			//'schemaCachingDuration'=>3600, // Enable in production
 			'username' => 'root',
-			'password' => 'mysqlpass',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		'request'=>array(

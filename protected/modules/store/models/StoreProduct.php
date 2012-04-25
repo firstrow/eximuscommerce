@@ -676,7 +676,7 @@ class StoreProduct extends BaseModel
 	 */
 	public static function formatPrice($price)
 	{
-		return money_format('%.2n', $price);
+		return number_format($price, 2);
 	}
 
 	/**
