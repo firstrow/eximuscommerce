@@ -142,6 +142,10 @@ class ActionLog extends BaseModel
 				'title_attribute'=>'id',
 				'human_name'=>Yii::t('LoggerModule.admin', 'Заказ')
 			),
+			'OrderStatus'=>array(
+				'title_attribute'=>'name',
+				'human_name'=>Yii::t('LoggerModule.admin', 'Статус заказа')
+			),
 			'User'=>array(
 				'title_attribute'=>'username',
 				'human_name'=>Yii::t('LoggerModule.admin', 'Пользователь')
