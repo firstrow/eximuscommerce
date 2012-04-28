@@ -39,18 +39,20 @@ class LoggerModuleEvents
 	{
 		$result = array();
 
-		foreach($this->logClasses as $class=>$data)
+		if(!Yii::app()->user->isGuest)
 		{
-			foreach($this->events as $event)
+			foreach($this->logClasses as $class=>$data)
 			{
-				$method = 'processEvent';
-				if($event==='onAfterDelete')
-					$method='processDeleteEvent';
+				foreach($this->events as $event)
+				{
+					$method = 'processEvent';
+					if($event==='onAfterDelete')
+						$method='processDeleteEvent';
 
-				array_push($result, array($class, $event, array($this, $method)));
+					array_push($result, array($class, $event, array($this, $method)));
+				}
 			}
 		}
-
 		return $result;
 	}
 
