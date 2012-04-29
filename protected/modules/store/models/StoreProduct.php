@@ -261,13 +261,19 @@ class StoreProduct extends BaseModel
 
 		$criteria->with = array(
 			'categorization'=>array('together'=>true),
-			'manufacturer',
 			'translate',
 			'type',
 		);
 
 		if($additionalCriteria !== null)
 			$criteria->mergeWith($additionalCriteria);
+
+		if($this->manufacturer_id)
+		{
+			$manufacturerCr = new CDbCriteria;
+			$manufacturerCr->with=array('manufacturer');
+			$criteria->mergeWith($manufacturerCr);
+		}
 
 		$criteria->compare('t.id',$this->id);
 		$criteria->compare('translate.name',$this->name,true);
