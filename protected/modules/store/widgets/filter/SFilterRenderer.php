@@ -28,16 +28,6 @@ class SFilterRenderer extends CWidget
 	public $model;
 
 	/**
-	 * @var string Tag to surround attribute set title.
-	 */
-	public $titleTag = 'h5';
-
-	/**
-	 * @var array of option to apply to filter html ul list
-	 */
-	public $htmlOptions = array();
-
-	/**
 	 * @var array html option to apply to `Clear attributes` link
 	 */
 	public $clearLinkOptions = array('class'=>'clearOptions');
@@ -45,75 +35,25 @@ class SFilterRenderer extends CWidget
 	/**
 	 * @var array of options to apply to 'active filters' menu
 	 */
-	public $activeFiltersHtmlOptions = array();
+	public $activeFiltersHtmlOptions = array('class'=>'filter_links current');
+
+	public $view = 'default';
 
 	/**
 	 * Render filters
 	 */
 	public function run()
 	{
-		// Render active filters
-		$this->renderActiveFilters();
-		// Render manufacturers
-		$this->renderData($this->getCategoryManufacturers());
-		// Render eav attributes
-		foreach($this->getCategoryAttributes() as $attrData)
-			$this->renderData($attrData);
+		$this->render($this->view, array(
+			'manufacturers'=>$this->getCategoryManufacturers(),
+			'attributes'=>$this->getCategoryAttributes(),
+		));
 	}
 
 	/**
-	 * Render filters based on the next array:
-	 * $data[attributeName] = array(
-	 *	    'title'=>'Filter Title',
-	 *	    'selectMany'=>true, // Can user select many filter options
-	 *	    'filters'=>array(array(
-	 *	        'title'      => 'Title',
-	 *	        'count'      => 'Products count',
-	 *	        'queryKey'   => '$_GET param',
-	 *	        'queryParam' => 'many',
-	 *	    ))
-	 *  );
-	 * @param $data
+	 * Get active/applied filters to make easier to cancel them.
 	 */
-	public function renderData($data)
-	{
-		// Render title
-		if(isset($data['title']))
-		{
-			echo CHtml::openTag($this->titleTag);
-			echo CHtml::encode($data['title']);
-			echo CHtml::closeTag($this->titleTag);
-		}
-
-		echo CHtml::openTag('ul', $this->htmlOptions);
-		foreach($data['filters'] as $filter)
-		{
-			$url = $this->addUrlParam(array($filter['queryKey'] => $filter['queryParam']), $data['selectMany']);
-			$queryData = explode(';', Yii::app()->request->getQuery($filter['queryKey']));
-			$filter = CHtml::encodeArray($filter);
-
-			echo CHtml::openTag('li');
-			// Filter link was selected.
-			if(in_array($filter['queryParam'], $queryData))
-			{
-				// Create link to clear current filter
-				$url = $this->removeUrlParam($filter['queryKey'], $filter['queryParam']);
-				echo CHtml::link($filter['title'], $url, array('style'=>'color:green'));
-			}
-			elseif($filter['count'] > 0)
-				echo CHtml::link($filter['title'], $url).' ('.$filter['count'].')';
-			else
-				echo Chtml::encode($filter['title']).' (0)';
-
-			echo CHtml::closeTag('li');
-		}
-		echo CHtml::closeTag('ul');
-	}
-
-	/**
-	 * Render active/applied filters to make easier to cancel them.
-	 */
-	public function renderActiveFilters()
+	public function getActiveFilters()
 	{
 		// Render links to cancel applied filters.
 		// Render link to cancel filter by manufacturer.
@@ -132,7 +72,7 @@ class SFilterRenderer extends CWidget
 			}
 		}
 
-		// Render eav attributes
+		// Process eav attributes
 		$activeAttributes = $this->getOwner()->activeAttributes;
 		if(!empty($activeAttributes))
 		{
@@ -155,24 +95,7 @@ class SFilterRenderer extends CWidget
 			}
 		}
 
-		// Render
-		if(!empty($menuItems))
-		{
-			echo CHtml::openTag($this->titleTag);
-			echo Yii::t('StoreModule.core', 'Текущие фильтры');
-			echo CHtml::closeTag($this->titleTag);
-
-			array_push($menuItems, array(
-				'label'       => Yii::t('StoreModule.core', 'Очистить фильтры'),
-				'linkOptions' => $this->clearLinkOptions,
-				'url'         => $this->getOwner()->createUrl('view', array('url'=>$this->model->url)),
-			));
-
-			$this->widget('zii.widgets.CMenu', array(
-				'htmlOptions'=>$this->activeFiltersHtmlOptions,
-				'items'=>$menuItems
-			));
-		}
+		return $menuItems;
 	}
 
 	/**

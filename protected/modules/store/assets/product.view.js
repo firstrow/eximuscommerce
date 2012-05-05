@@ -12,7 +12,7 @@ function processCartResponse(data, textStatus, jqXHR)
     }else{
         // Display "Successful message"
         productErrors.hide();
-        $("#cart").load('/cart/renderSmallCart');
-        alert(data.message);
+        reloadSmallCart();
+        $("#successAddedToCart").html(data.message).fadeIn();
     }
 }

@@ -19,8 +19,8 @@
 
 	// Register variant prices script
 	Yii::app()->clientScript->registerScript('jsVariantsData','
-						var jsVariantsData = '.CJavaScript::jsonEncode($jsVariantsData).';
-					', CClientScript::POS_END);
+			var jsVariantsData = '.CJavaScript::jsonEncode($jsVariantsData).';
+		', CClientScript::POS_END);
 
 	// Display product configurations
 	if($model->use_configurations)

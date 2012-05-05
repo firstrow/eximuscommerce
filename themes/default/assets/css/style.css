@@ -283,7 +283,13 @@ span.dots    { background:transparent url("../images/icons/dots.png") no-repeat 
     padding-right:10px;
 }
 
-.products_list {}
+.products_list {
+
+}
+
+.products_list .summary {
+    clear:both;
+}
 
 .products_list .product_block {
     width:233px;
@@ -339,6 +345,24 @@ span.dots    { background:transparent url("../images/icons/dots.png") no-repeat 
     position:relative;
     display:table-cell;
     padding-left:20px;
+}
+
+#successAddedToCart {
+    display: none;
+}
+
+#productErrors {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border-color: #EED3D7;
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 18px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    border: 1px solid #FBEED5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    display: none;
 }
 
 /** Wide products list **/
@@ -631,6 +655,7 @@ h1 span.light {
 
 .product .info {
     float:left;
+    width:560px;
     min-height:300px;
     padding:0 0 0 10px;
 }
@@ -852,7 +877,6 @@ table.configurations {
     width:400px;
     background-color: #E8E8E8;
     display: block;
-    padding:10px 0 10px 0;
     margin-bottom: 10px;
     border-radius: 5px;
     -moz-border-radius: 5px;

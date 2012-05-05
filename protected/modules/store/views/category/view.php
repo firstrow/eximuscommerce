@@ -26,21 +26,14 @@ $this->breadcrumbs[] = $this->model->name;
 <div class="catalog_with_sidebar">
 	<div id="filter">
 		<?php
-			$this->widget('application.modules.store.widgets.SFilterRenderer', array(
+			$this->widget('application.modules.store.widgets.filter.SFilterRenderer', array(
 				'model'=>$this->model,
 				'attributes'=>$this->eavAttributes,
-				'htmlOptions'=>array(
-					'class'=>'filters',
-				),
-				'activeFiltersHtmlOptions'=>array(
-					'class'=>'nav nav-list currentFilters',
-				),
 			));
 		?>
 	</div>
 
 	<div class="products_list">
-
 		<div class="breadcrumbs">
 			<?php
 			$this->widget('zii.widgets.CBreadcrumbs', array(
@@ -76,16 +69,15 @@ $this->breadcrumbs[] = $this->model->name;
 		</div>
 
 		<?php
-		$this->widget('zii.widgets.CListView', array(
-			'dataProvider'=>$provider,
-			'ajaxUpdate'=>false,
-			'template'=>'{sorter} {items} {pager} {summary}',
-			'itemView'=>'_product',
-			'sortableAttributes'=>array(
-				'name', 'price'
-			),
-		));
+			$this->widget('zii.widgets.CListView', array(
+				'dataProvider'=>$provider,
+				'ajaxUpdate'=>false,
+				'template'=>'{items} {pager} {summary}',
+				'itemView'=>'_product',
+				'sortableAttributes'=>array(
+					'name', 'price'
+				),
+			));
 		?>
 	</div>
-	</div><!-- products list end -->
-</div>
+</div><!-- catalog_with_sidebar end -->

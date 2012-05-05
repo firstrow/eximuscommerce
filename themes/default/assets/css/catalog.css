@@ -44,11 +44,12 @@
     margin-bottom:20px;
 }
 
-#filter ul.filter_links a  {
-    padding-left:20px;
-    margin-left:3px;
+#filter ul.filter_links a {
+
 }
 #filter ul.filter_links.current a {
+    margin-left: -18px;
+    padding-left: 20px;
     background:transparent url("../images/icons/close_sprite.png") no-repeat top left;
 }
 
@@ -68,5 +69,6 @@ a.cancel_filter {
 }
 
 #filter ul.filter_links li {
-    margin:5px 0 5px 0;
+    padding-left:20px;
+    margin:5px 0 5px 3px;;
 }

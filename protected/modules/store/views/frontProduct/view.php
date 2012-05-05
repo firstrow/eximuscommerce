@@ -78,15 +78,13 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 	</div>
 
 	<div class="info">
-		<?php
-			echo CHtml::form(array('/orders/cart/add'));
-		?>
+		<?php echo CHtml::form(array('/orders/cart/add')) ?>
 
 		<h1><?php echo CHtml::encode($model->name); ?></h1>
 
 		<?php $this->renderPartial('_configurations', array('model'=>$model)); ?>
 
-		<div class="alert alert-error" id="productErrors" style="display: none;"></div>
+		<div class="errors" id="productErrors"></div>
 
 		<div class="price">
 			<?php echo StoreProduct::formatPrice($model->toCurrentCurrency()); ?>
@@ -117,6 +115,8 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<div class="silver_clean silver_button">
 				<button><span class="icon heart"></span>Список желаний</button>
 			</div>
+
+			<div id="successAddedToCart"></div>
 		</div>
 		<div class="desc"><?php echo $model->short_description; ?></div>
 	</div>

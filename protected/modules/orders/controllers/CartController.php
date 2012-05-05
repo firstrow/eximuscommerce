@@ -245,7 +245,9 @@ class CartController extends Controller
 		$file = Yii::getPathOfAlias('application.modules.store.views.');
 		echo CJSON::encode(array(
 			'errors'=>$this->_errors,
-			'message'=>Yii::t('OrdersModule.core','Продукт успешно добавлен в корзину'),
+			'message'=>Yii::t('OrdersModule.core','Продукт успешно добавлен в {cart}', array(
+				'{cart}'=>CHtml::link(Yii::t('OrdersModule', 'корзину'), array('/orders/cart/index'))
+			)),
 		));
 		exit;
 	}
