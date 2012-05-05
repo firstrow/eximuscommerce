@@ -60,7 +60,6 @@ class CategoryController extends Controller
 			// sort and page params
 			'id'=>false,
 			'pagination'=>array(
-				// TODO: Apply from settings
 				'pageSize'=>$per_page,
 			)
 		));

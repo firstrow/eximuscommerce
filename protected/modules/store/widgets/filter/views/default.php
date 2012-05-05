@@ -37,7 +37,9 @@ if(!empty($active))
 	echo CHtml::closeTag('div');
 }
 
-echo CHtml::openTag('div', array('class'=>'rounded'));
+if(!empty($manufacturers['filters']) || !empty($attributes))
+	echo CHtml::openTag('div', array('class'=>'rounded'));
+
 	// Render manufacturers
 	if(!empty($manufacturers['filters']))
 	{
@@ -101,4 +103,6 @@ echo CHtml::openTag('div', array('class'=>'rounded'));
 		}
 		echo CHtml::closeTag('ul');
 	}
-echo CHtml::closeTag('div');
+
+if(!empty($manufacturers['filters']) || !empty($attributes))
+	echo CHtml::closeTag('div');

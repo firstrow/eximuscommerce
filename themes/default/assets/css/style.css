@@ -381,6 +381,10 @@ span.dots    { background:transparent url("../images/icons/dots.png") no-repeat 
     background:url("../images/wide_product_block_bg.png") no-repeat;
 }
 
+.products_list select {
+    margin-left: 5px;
+}
+
 .products_list.wide .product_block .table {
     display:table;
     float:left;
