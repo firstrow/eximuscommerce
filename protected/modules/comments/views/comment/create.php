@@ -33,42 +33,50 @@ if(!empty($comments))
 
 ?>
 
-<h3>Оставить отзыв</h3>
+<h3><?php echo Yii::t('CommentsModule.core', 'Оставить отзыв') ?></h3>
+<div class="form wide">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'comment-create-form',
 	'enableAjaxValidation'=>false,
 )); ?>
 
 <?php if(Yii::app()->user->isGuest): ?>
-	<div class="control-group">
+	<div class="row">
 		<?php echo $form->labelEx($comment,'name'); ?>
 		<?php echo $form->textField($comment,'name'); ?>
 		<?php echo $form->error($comment,'name'); ?>
 	</div>
 
-	<div class="control-group">
+	<div class="row">
 		<?php echo $form->labelEx($comment,'email'); ?>
 		<?php echo $form->textField($comment,'email'); ?>
 		<?php echo $form->error($comment,'email'); ?>
 	</div>
 <?php endif; ?>
 
-	<div class="control-group">
+	<div class="row">
 		<?php echo $form->labelEx($comment,'text'); ?>
 		<?php echo $form->textArea($comment,'text', array('class'=>'span5','rows'=>5)); ?>
 		<?php echo $form->error($comment,'text'); ?>
 	</div>
 
 	<?php if(Yii::app()->user->isGuest): ?>
+	<div class="row">
 		<?php echo CHtml::activeLabelEx($comment, 'verifyCode')?>
-		<? $this->widget('CCaptcha') ?>
+		<? $this->widget('CCaptcha', array(
+			'clickableImage'=>true,
+			'showRefreshButton'=>false,
+		)) ?>
 		<br/>
+		<label>&nbsp;</label>
 		<?php echo CHtml::activeTextField($comment, 'verifyCode')?>
 		<?php echo $form->error($comment,'verifyCode'); ?>
+	</div>
 	<?endif?>
 
-	<div class="control-group">
-		<?php echo CHtml::submitButton('Оставить отзыв', array('class'=>'btn')); ?>
+	<div class="row buttons">
+		<?php echo CHtml::submitButton(Yii::t('CommentsModule.core', 'Отправить')); ?>
 	</div>
 
 <?php $this->endWidget(); ?><!-- /form -->
+</div>

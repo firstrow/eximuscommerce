@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+*{
+    margin:0px;
+    padding:0px;
+    border:0px;
+    outline:none;
+    line-height: 18px;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+html{
+    width:100%;
+    height:100%;
+    font-size:12px;
+}
+body {
+    width:100%;
+    height: 100%;
+    min-height:100%;
+    position:relative;
+    line-height: 1;
+    background:#fff;
+    font:12px Arial, Helvetica, sans-serif;
+}
+select, textarea, .textbox{
+    font:11px Arial, Helvetica, sans-serif;
+}
+fieldset{
+    border:none;
+}
+legend{
+    display:none;
+}
+img{
+    border:none;
+}
+blockquote, q {
+    quotes: none;
+}
+:focus {
+    outline: 0;
+}
+ins {
+    text-decoration: none;
+}
+del {
+    text-decoration: line-through;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}

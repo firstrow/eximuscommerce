@@ -1,97 +1,126 @@
+<?php
+	$assetsManager = Yii::app()->clientScript;
+	$assetsManager->registerCoreScript('jquery');
+	$assetsManager->registerCoreScript('jquery.ui');
+
+	// Disable jquery-ui default theme
+	$assetsManager->scriptMap=array(
+		'jquery-ui.css'=>false,
+	);
+?>
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title><?php echo CHtml::encode($this->pageTitle) ?></title>
-		<meta name="description" content="<?php echo CHtml::encode($this->pageDescription) ?>">
-		<meta name="keywords" content="<?php echo CHtml::encode($this->pageKeywords) ?>">
+<html>
+<head>
+	<title><?php echo CHtml::encode($this->pageTitle) ?></title>
+	<meta name="description" content="<?php echo CHtml::encode($this->pageDescription) ?>">
+	<meta name="keywords" content="<?php echo CHtml::encode($this->pageKeywords) ?>">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/css/reset.css">
+	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/css/style.css">
+	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/css/catalog.css">
+	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/css/forms.css">
+	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/js/jqueryui/css/custom-theme/jquery-ui-1.8.19.custom.css">
 
-		<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl ?>/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl ?>/assets/js/menu.js"></script>
+</head>
+<body>
+<div id="header">
+	<!-- Small top menu -->
+	<div id="top_menu">
+		<div class="left">
+			<ul>
+				<li><a href="#">Помощь</a></li>
+				<li><a href="#">Как сделать заказ</a></li>
+				<li><a href="#">Гарантия</a></li>
+				<li><a href="#">Доставка и оплата</a></li>
+				<li><a href="#">Контакты</a></li>
+			</ul>
+		</div>
+		<div class="right">
+			<ul>
+				<li><a href=""><span class="icon compare"></span>Товары на сравнение</a></li>
+				<li><a href=""><span class="icon heart"></span>Список желаний</a></li>
+			</ul>
+		</div>
+	</div>
 
-		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-		<!--[if lt IE 9]>
-		  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+	<div class="blocks">
+		<div class="left">
+			<a href="/"><img id="logo" src="<?php echo Yii::app()->theme->baseUrl ?>/assets/images/logo.png"></a>
+		</div>
+		<div class="middle">
+			<span class="icon phone"></span>
+			(099) <span class="big_text">111-222-333</span>
+			<a href="" class="callback">Обратный звонок</a>
 
-		<!-- Le styles -->
-		<link href="/themes/development/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/themes/development/assets/style.css" rel="stylesheet">
-		<style type="text/css">
-		  body {
-			padding-top: 60px;
-		  }
-		</style>
-	</head>
+			<div class="currencies">
+				Валюта:
+				<a href="" class="active">$</a>
+				<a href="">€</a>
+				<a href="">Р</a>
+			</div>
 
-  <body>
-
-  <div class="navbar navbar-fixed-top">
-	  <div class="navbar-inner">
-		  <div class="container">
-			  <a class="brand" href="/">Eximius</a>
-			  <div class="nav-collapse">
-					<?php
-						Yii::import('application.modules.store.models.StoreCategory');
-						$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
-						$this->widget('application.extensions.mbmenu.MbMenu',array(
-							'cssFile'=>'/themes/development/assets/mbmenu.css',
-							'htmlOptions'=>array('class'=>'nav'),
-							'items'=>$items['items'])
-						);
-					?>
-				<div class="navbar-text pull-right" style="float: right;">
-					<?php
-						// Display currencies droppdown
-						$currencies = CHtml::listData(Yii::app()->currency->currencies, 'id', 'name');
-						echo CHtml::dropDownList('activateCurrency', Yii::app()->currency->active->id, $currencies, array(
-							'onChange'=>'$.get("/store/ajax/activateCurrency/"+$(this).val(), function(){window.location.reload(true);});',
-						));
-					?>
-					<a href="">Авторизация</a> /
-					<a href="">Регистрация</a> /
-					<?php echo CHtml::link('Корзина', array('/orders/cart/index')) ?>
-				</div>
-			  </div><!--/.nav-collapse -->
-		  </div>
-	  </div>
-  </div>
-
-<div class="container">
-	<div class="row">
-		<?php if(!empty($this->sidebarContent)): ?>
-		<div class="span3">
-			<div class="well sidebar-nav">
-				<?php
-					echo $this->sidebarContent;
-				?>
+			<div class="search_box">
+				<form action="">
+					<input type="text" value="Поиск товаров">
+					<button type="submit">Поиск</button>
+				</form>
 			</div>
 		</div>
-		<?php endif; ?>
-
-		<?php
-			if(!empty($this->sidebarContent))
-				echo '<div class="span9">';
-			else
-				echo '<div>';
-		?>
-			<div>
-				<?php
-				$this->widget('zii.widgets.CBreadcrumbs', array(
-					'links'=>$this->breadcrumbs,
-					'separator'=>'<span class="divider">/</span>',
-					'htmlOptions'=>array(
-						'class'=>'breadcrumb',
-					)
-				));
-				?>
+		<div class="right">
+			<div id="auth">
+				<a href="" class="light">Вход</a>
+				/
+				<a href="" class="light">Регистрация</a>
 			</div>
 
-			<div class="well">
-				<?php echo $content; ?>
+			<div id="cart">
+				<?php $this->renderFile(Yii::getPathOfAlias('orders.views.cart._small_cart').'.php'); ?>
 			</div>
 		</div>
 	</div>
+
+	<div class="mainm">
+		<?php
+			Yii::import('application.modules.store.models.StoreCategory');
+			$items = StoreCategory::model()->findByPk(1)->asCMenuArray();
+			$this->widget('application.extensions.mbmenu.MbMenu',array(
+					'cssFile'=>Yii::app()->theme->baseUrl.'/assets/css/menu.css',
+					'htmlOptions'=>array('class'=>'dropdown', 'id'=>'nav'),
+					'items'=>$items['items'])
+			);
+		?>
+	</div>
 </div>
 
-  </body>
+<div id="content">
+	<?php echo $content; ?>
+</div> <!-- content end -->
+
+<div style="clear:both;"></div>
+
+<div id="footer">
+	<div class="centered">
+		<div class="left">
+			© «Интернет магазин», 2012
+			<span class="light">Все права защищены</span>
+		</div>
+
+		<div class="middle">
+			<ul>
+				<li><a href="#">Помощь</a></li>
+				<li><a href="#">Как сделать заказ</a></li>
+				<li><a href="#">Гарантия</a></li>
+				<li><a href="#">Доставка и оплата</a></li>
+				<li><a href="#">Контакты</a></li>
+			</ul>
+		</div>
+		<div class="right">
+			Контактная информация
+			<br/>
+			(099) <span class="big_text">111-222-333</span>
+		</div>
+	</div>
+</div>
+</body>
 </html>

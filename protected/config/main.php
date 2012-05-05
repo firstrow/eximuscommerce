@@ -9,7 +9,7 @@ return array(
 	'name'=>'Shop',
 	'language'=>'ru',
 	//'sourceLanguage'=>'ru',
-	'theme'=>'development',
+	'theme'=>'default',
 	// preloading 'log' component
 	'preload'=>array('log'),
 
@@ -56,7 +56,7 @@ return array(
 			'showScriptName'=>false,
 			'useStrictParsing'=>true,
 			'rules'=>array(
-				'/'=>'site/index',
+				'/'=>'store/index/index',
 				'admin/auth'=>'admin/auth',
 				'admin/auth/logout'=>'admin/auth/logout',
 				'admin/<module:\w+>'=>'<module>/admin/default',

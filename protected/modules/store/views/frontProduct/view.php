@@ -2,12 +2,20 @@
 /**
  * Product view
  * @var StoreProduct $model
+ * @var $this Controller
  */
 
 // Set meta tags
 $this->pageTitle = ($model->meta_title) ? $model->meta_title : $model->name;
 $this->pageKeywords = $model->meta_keywords;
 $this->pageDescription = $model->meta_description;
+
+// Register main script
+Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
+
+// Apply category translation
+$model->mainCategory->applyTranslation();
 
 // Create breadcrumbs
 $ancestors = $model->mainCategory->excludeRoot()->ancestors()->findAll();
@@ -19,11 +27,7 @@ foreach($ancestors as $c)
 if ($model->mainCategory->id != 1)
 	$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
 
-$this->breadcrumbs[] = $model->name;
-
-// Register main script
-Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.js', CClientScript::POS_END);
-Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
+//$this->breadcrumbs[] = $model->name;
 
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
@@ -33,140 +37,101 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 
 ?>
 
-<h3><?php echo CHtml::encode($model->name); ?></h3>
-
-<div class="row">
-	<!-- Left column  -->
-	<div class="span4">
-		<ul class="thumbnails">
-			<li class="span4">
-				<?php
-					if($model->mainImage)
-						echo CHtml::link(CHtml::image($model->mainImage->getUrl('360x268', 'resize')), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
-					else
-						echo CHtml::link(CHtml::image('http://placehold.it/360x268'), '#', array('class'=>'thumbnail'));
-				?>
-			</li>
-			<?php
-				foreach($model->imagesNoMain as $image)
-				{
-					echo CHtml::openTag('li', array('class'=>'span2'));
-					echo CHtml::link(CHtml::image($image->getUrl('160x120')), $image->getUrl(), array('class'=>'thumbnail'));
-					echo CHtml::closeTag('li');
-				}
-			?>
-		</ul>
-	</div>
-
-	<!-- Right column -->
-	<div class="span7">
-		<p><?php echo $model->short_description; ?></p>
-		<p><?php echo $model->full_description; ?></p>
-
+<div class="product">
+	<div class="breadcrumbs">
 		<?php
-			echo CHtml::form(array('/orders/cart/add'));
-		?>
-		<div>
-			<table class="table table-striped table-bordered table-condensed">
-				<?php
-					$jsVariantsData = array();
-
-					foreach($model->processVariants() as $variant)
-					{
-						echo '<tr><td>';
-						echo $variant['attribute']->title;
-						echo '</td><td>';
-						$dropDownData = array('---');
-						foreach($variant['options'] as $v)
-						{
-							$jsVariantsData[$v->id] = $v;
-							$dropDownData[$v->id] = $v->option->value;
-						}
-						echo CHtml::dropDownList('eav['.$variant['attribute']->id.']', null, $dropDownData, array('class'=>'variantData'));
-						echo '</td></tr>';
-					}
-
-					// Register variant prices script
-					Yii::app()->clientScript->registerScript('jsVariantsData','
-						var jsVariantsData = '.CJavaScript::jsonEncode($jsVariantsData).';
-					', CClientScript::POS_END);
-
-					// Display product configurations
-					if($model->use_configurations)
-					{
-						// Get data
-						$confData = $this->getConfigurableData();
-
-						// Register configuration script
-						Yii::app()->clientScript->registerScript('productPrices', strtr('
-							var productPrices = {prices};
-						', array(
-							'{prices}'=>CJavaScript::encode($confData['prices'])
-						)), CClientScript::POS_END);
-
-						foreach($confData['attributes'] as $attr)
-						{
-							if(isset($confData['data'][$attr->name]))
-							{
-								echo '<tr><td>';
-								echo $attr->title;
-								echo '</td><td>';
-								echo CHtml::dropDownList('configurations['.$attr->name.']', null, array_flip($confData['data'][$attr->name]), array('class'=>'eavData'));
-								echo '</td></tr>';
-							}
-						}
-					}
-				?>
-			</table>
-		</div>
-
-		<!-- Display errors here -->
-		<div class="alert alert-error" id="productErrors" style="display: none;"></div>
-
-		<?php
-		if($model->appliedDiscount)
-		{
-			echo '<span style="color:red; "><s>'.$model->originalPrice.'</s></span>';
-		}
-		?>
-		<h4>
-			Цена: <span id="productPrice"><?php echo StoreProduct::formatPrice($model->toCurrentCurrency()); ?></span>
-			<?php echo Yii::app()->currency->active->symbol; ?>
-		</h4>
-		<br>
-		<?php
-			echo CHtml::hiddenField('product_id', $model->id);
-			echo CHtml::hiddenField('product_price', $model->price);
-			echo CHtml::hiddenField('use_configurations', $model->use_configurations);
-			echo CHtml::hiddenField('currency_rate', Yii::app()->currency->active->rate);
-			echo CHtml::hiddenField('configurable_id', 0);
-			echo CHtml::textField('quantity', 1, array('class'=>'span1'));
-
-			echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(
-				'dataType'=>'json',
-				'success'=>'js:function(data, textStatus, jqXHR){processCartResponse(data, textStatus, jqXHR)}',
-			), array('class'=>'btn-primary'));
-
-			echo CHtml::endForm();
-		?>
-
-		<div class="row">&nbsp;</div>
-
-		<?php
-			// Display product custom options table.
-			if($model->getEavAttributes())
-			{
-				$this->widget('application.modules.store.widgets.SAttributesTableRenderer', array(
-					'model'=>$model,
-					'htmlOptions'=>array('class'=>'table table-bordered table-striped'),
-				));
-			}
-
-			// Process comments
-			$this->renderPartial('comments.views.comment.create', array(
-				'model'=>$model,
+			$this->widget('zii.widgets.CBreadcrumbs', array(
+				'links'=>$this->breadcrumbs,
 			));
 		?>
 	</div>
 
+	<div class="images">
+		<div class="image_row">
+			<div class="main">
+				<?php
+					// Main product image
+					if($model->mainImage)
+						echo CHtml::link(CHtml::image($model->mainImage->getUrl('340x250', 'resize')), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
+					else
+						echo CHtml::link(CHtml::image('http://placehold.it/340x250'), '#', array('class'=>'thumbnail'));
+				?>
+			</div>
+			<div class="stars">
+				<?php $this->widget('CStarRating',array(
+					'name'=>'rating',
+					'allowEmpty'=>false,
+			)); ?>
+			</div>
+		</div>
+		<div class="additional">
+			<?php
+			// Display additional images
+			foreach($model->imagesNoMain as $image)
+			{
+				echo CHtml::openTag('li', array('class'=>'span2'));
+				echo CHtml::link(CHtml::image($image->getUrl('160x120')), $image->getUrl(), array('class'=>'thumbnail'));
+				echo CHtml::closeTag('li');
+			}
+			?>
+		</div>
+	</div>
+
+	<div class="info">
+		<?php
+			echo CHtml::form(array('/orders/cart/add'));
+		?>
+
+		<h1><?php echo CHtml::encode($model->name); ?></h1>
+
+		<?php $this->renderPartial('_configurations', array('model'=>$model)); ?>
+
+		<div class="alert alert-error" id="productErrors" style="display: none;"></div>
+
+		<div class="price">
+			<?php echo StoreProduct::formatPrice($model->toCurrentCurrency()); ?>
+			<?php echo Yii::app()->currency->active->symbol; ?>
+		</div>
+
+		<div class="actions">
+			<?php
+				echo CHtml::hiddenField('product_id', $model->id);
+				echo CHtml::hiddenField('product_price', $model->price);
+				echo CHtml::hiddenField('use_configurations', $model->use_configurations);
+				echo CHtml::hiddenField('currency_rate', Yii::app()->currency->active->rate);
+				echo CHtml::hiddenField('configurable_id', 0);
+				echo CHtml::hiddenField('quantity', 1);
+
+				echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(
+					'dataType'=>'json',
+					'success'=>'js:function(data, textStatus, jqXHR){processCartResponse(data, textStatus, jqXHR)}',
+				), array('class'=>'blue_button'));
+
+				echo CHtml::endForm();
+			?>
+
+			<div class="silver_clean silver_button">
+				<button><span class="icon compare"></span>Сравнить</button>
+			</div>
+
+			<div class="silver_clean silver_button">
+				<button><span class="icon heart"></span>Список желаний</button>
+			</div>
+		</div>
+		<div class="desc"><?php echo $model->short_description; ?></div>
+	</div>
+
+	<div style="clear:both;"></div>
+
+	<?php
+		$this->widget('zii.widgets.jui.CJuiTabs', array(
+			'id'=>'tabs',
+			'tabs'=>array(
+				'Haracteristics'=>array('content'=>$this->renderPartial('_attributes', array('model'=>$model), true)),
+				'Comments'=>array('content'=>$this->renderPartial('comments.views.comment.create', array(
+						'model'=>$model,
+					), true)
+				),
+		)));
+	?>
 </div>

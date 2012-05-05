@@ -17,6 +17,11 @@ class CartController extends Controller
 
 	protected $_errors = false;
 
+	public function actionRenderSmallCart()
+	{
+		$this->renderPartial('_small_cart');
+	}
+
 	/**
 	 * Display list of product added to cart
 	 */
@@ -237,6 +242,7 @@ class CartController extends Controller
 	 */
 	protected function _finish()
 	{
+		$file = Yii::getPathOfAlias('application.modules.store.views.');
 		echo CJSON::encode(array(
 			'errors'=>$this->_errors,
 			'message'=>Yii::t('OrdersModule.core','Продукт успешно добавлен в корзину'),
