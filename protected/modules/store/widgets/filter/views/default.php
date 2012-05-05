@@ -48,7 +48,7 @@ echo CHtml::openTag('div', array('class'=>'rounded'));
 		echo CHtml::openTag('ul', array('class'=>'filter_links'));
 		foreach($manufacturers['filters'] as $filter)
 		{
-			$url = $this->addUrlParam(array($filter['queryKey'] => $filter['queryParam']), $manufacturers['selectMany']);
+			$url = Yii::app()->request->addUrlParam('/store/category/view', array($filter['queryKey'] => $filter['queryParam']), $manufacturers['selectMany']);
 			$queryData = explode(';', Yii::app()->request->getQuery($filter['queryKey']));
 			$filter = CHtml::encodeArray($filter);
 
@@ -57,7 +57,7 @@ echo CHtml::openTag('div', array('class'=>'rounded'));
 			if(in_array($filter['queryParam'], $queryData))
 			{
 				// Create link to clear current filter
-				$url = $this->removeUrlParam($filter['queryKey'], $filter['queryParam']);
+				$url = Yii::app()->request->removeUrlParam('/store/category/view', $filter['queryKey'], $filter['queryParam']);
 				echo CHtml::link($filter['title'], $url, array('style'=>'color:green'));
 			}
 			elseif($filter['count'] > 0)
@@ -80,7 +80,7 @@ echo CHtml::openTag('div', array('class'=>'rounded'));
 		echo CHtml::openTag('ul', array('class'=>'filter_links'));
 		foreach($attrData['filters'] as $filter)
 		{
-			$url = $this->addUrlParam(array($filter['queryKey'] => $filter['queryParam']), $attrData['selectMany']);
+			$url = Yii::app()->request->addUrlParam('/store/category/view', array($filter['queryKey'] => $filter['queryParam']), $attrData['selectMany']);
 			$queryData = explode(';', Yii::app()->request->getQuery($filter['queryKey']));
 			$filter = CHtml::encodeArray($filter);
 
@@ -89,7 +89,7 @@ echo CHtml::openTag('div', array('class'=>'rounded'));
 			if(in_array($filter['queryParam'], $queryData))
 			{
 				// Create link to clear current filter
-				$url = $this->removeUrlParam($filter['queryKey'], $filter['queryParam']);
+				$url = Yii::app()->request->removeUrlParam('/store/category/view', $filter['queryKey'], $filter['queryParam']);
 				echo CHtml::link($filter['title'], $url, array('style'=>'color:green'));
 			}
 			elseif($filter['count'] > 0)

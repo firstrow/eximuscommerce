@@ -8,7 +8,7 @@ return array(
 	'product/captcha'=>array('store/frontProduct/captcha'),
 	'store/ajax/activateCurrency/<id>'=>array('store/ajax/activateCurrency'),
 	array('store/category/view', 'pattern'=>'category/<url>/*'),
-	//'category/<url>/*'=>array'store/category/view',
+	//	'category/<url>/*'=>array'store/category/view',
 	//'store/frontProduct/*'=>'site/error',
 	'store/index'=>'site/error',
 );

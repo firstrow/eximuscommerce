@@ -25,6 +25,8 @@ class CategoryController extends Controller
 	 */
 	private $_eavAttributes;
 
+	public $allowedPageLimit = array(12,18,24);
+
 	public function beforeAction()
 	{
 		$this->model = $this->_loadModel(Yii::app()->request->getQuery('url'));
@@ -49,13 +51,17 @@ class CategoryController extends Controller
 			$this->query->applyManufacturers($manufacturers);
 		}
 
+		$per_page = $this->allowedPageLimit[0];
+		if(isset($_GET['per_page']) && in_array((int)$_GET['per_page'], $this->allowedPageLimit))
+			$per_page = (int) $_GET['per_page'];
+
 		$provider = new CActiveDataProvider($this->query, array(
 			// Set id to false to not display model name in
 			// sort and page params
 			'id'=>false,
 			'pagination'=>array(
 				// TODO: Apply from settings
-				'pageSize'=>20,
+				'pageSize'=>$per_page,
 			)
 		));
 
@@ -65,6 +71,7 @@ class CategoryController extends Controller
 		$this->render($view, array(
 			'provider'=>$provider,
 			'criteria'=>clone $this->query->getDbCriteria(),
+			'itemView'=>(isset($_GET['view']) && $_GET['view']==='wide') ? '_product_wide' : '_product'
 		));
 	}
 

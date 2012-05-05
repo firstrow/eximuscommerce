@@ -47,4 +47,55 @@ class SHttpRequest extends CHttpRequest {
 		return $pathInfo;
 	}
 
+	/**
+	 * Add param to current url. Url is based on $data and $_GET arrays
+	 * @param $data array of the data to add to the url.
+	 * @param $selectMany
+	 * @return string
+	 */
+	public function addUrlParam($route, $data, $selectMany=false)
+	{
+		foreach($data as $key=>$val)
+		{
+			if(isset($_GET[$key]) && $key !== 'url' && $selectMany === true)
+			{
+				$tempData = explode(';', $_GET[$key]);
+				$data[$key] = implode(';', array_unique(array_merge((array)$data[$key], $tempData)));
+			}
+		}
+
+		return Yii::app()->createUrl($route, CMap::mergeArray($_GET, $data));
+	}
+
+	/**
+	 * Delete param/value from current
+	 * @param string $key to remove from query
+	 * @param null $value If not value - delete whole key
+	 * @return string new url
+	 */
+	public function removeUrlParam($route, $key, $value=null)
+	{
+		$get = $_GET;
+		if(isset($get[$key]))
+		{
+			if($value === null)
+				unset($get[$key]);
+			else
+			{
+				$get[$key] = explode(';', $get[$key]);
+				$pos = array_search($value, $get[$key]);
+				// Delete value
+				if(isset($get[$key][$pos]))
+					unset($get[$key][$pos]);
+				// Save changes
+				if(!empty($get[$key]))
+					$get[$key] = implode(';', $get[$key]);
+				// Delete key if empty
+				else
+					unset($get[$key]);
+			}
+		}
+		return Yii::app()->createUrl($route, $get);
+	}
+
 }

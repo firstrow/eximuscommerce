@@ -33,38 +33,43 @@ $this->breadcrumbs[] = $this->model->name;
 		?>
 	</div>
 
-	<div class="products_list">
+	<div class="products_list <?php if($itemView==='_product_wide') echo 'wide'; ?>">
 		<div class="breadcrumbs">
 			<?php
-			$this->widget('zii.widgets.CBreadcrumbs', array(
-				'links'=>$this->breadcrumbs,
-			));
+				$this->widget('zii.widgets.CBreadcrumbs', array(
+					'links'=>$this->breadcrumbs,
+				));
 			?>
 		</div>
 
 		<h1><?php echo CHtml::encode($this->model->name); ?></h1>
 
 		<div class="actions">
-			Сортировать:
-			<select>
-				<option value="">Сначала дешовые</option>
-				<option value="">Сначала догорие</option>
-				<option value="">По рейтингу</option>
-			</select>
+			<?php
+				echo Yii::t('StoreModule.core', 'Сортировать:');
+				echo CHtml::dropDownList('sorter', Yii::app()->request->url, array(
+					Yii::app()->request->removeUrlParam('/store/category/view', 'sort')  => '---',
+					Yii::app()->request->addUrlParam('/store/category/view', array('sort'=>'price.asc'))  => Yii::t('StoreModule.core', 'Сначала дешовые'),
+					Yii::app()->request->addUrlParam('/store/category/view', array('sort'=>'price.desc')) => Yii::t('StoreModule.core', 'Сначала догорие'),
+				), array('onchange'=>'applyCategorySorter(this)'));
+			?>
 
-			На странице:
-			<select>
-				<option value="">12</option>
-				<option value="">15</option>
-				<option value="">18</option>
-			</select>
+			<?php
+				echo Yii::t('StoreModule.core', 'На странице:');
+				echo CHtml::dropDownList('per_page', Yii::app()->request->url, array(
+					Yii::app()->request->removeUrlParam('/store/category/view', 'per_page')  => 12,
+					Yii::app()->request->addUrlParam('/store/category/view', array('per_page'=> 18)) => 18,
+					Yii::app()->request->addUrlParam('/store/category/view', array('per_page'=> 24)) => 24,
+				), array('onchange'=>'applyCategorySorter(this)'));
+			?>
 
-			<div class="silver_clean silver_button">
-				<button><span class="icon lines"></span>Списком</button>
-			</div>
-
-			<div class="silver_clean silver_button">
-				<button><span class="icon dots"></span>Картинками</button>
+			<div class="buttons">
+				<div class="silver_clean silver_button <?php if($itemView==='_product_wide') echo 'active'; ?>">
+					<a <?php if($itemView==='_product_wide') echo 'class="active"'; ?> href="<?php echo Yii::app()->request->addUrlParam('/store/category/view',  array('view'=>'wide')) ?>"><span class="icon lines"></span>Списком</a>
+				</div>
+				<div class="silver_clean silver_button <?php if($itemView==='_product') echo 'active'; ?>">
+					<a <?php if($itemView==='_product') echo 'class="active"'; ?> href="<?php echo Yii::app()->request->removeUrlParam('/store/category/view', 'view') ?>"><span class="icon dots"></span>Картинками</a>
+				</div>
 			</div>
 		</div>
 
@@ -73,7 +78,7 @@ $this->breadcrumbs[] = $this->model->name;
 				'dataProvider'=>$provider,
 				'ajaxUpdate'=>false,
 				'template'=>'{items} {pager} {summary}',
-				'itemView'=>'_product',
+				'itemView'=>$itemView,
 				'sortableAttributes'=>array(
 					'name', 'price'
 				),

@@ -287,8 +287,15 @@ span.dots    { background:transparent url("../images/icons/dots.png") no-repeat 
 
 }
 
-.products_list .summary {
+.products_list .summary,
+.products_list .pager
+{
     clear:both;
+    margin-right: 15px;
+}
+
+.products_list .sorter {
+    margin-right: 15px;
 }
 
 .products_list .product_block {
@@ -504,14 +511,14 @@ button.small_silver_button:active {
     background:transparent url("../images/silver_button_sprite.png") no-repeat;
     margin-left:20px;
 }
-.silver_clean button {
+.silver_clean button, .silver_clean a {
+    text-decoration: none;
     background:transparent url("../images/silver_button_sprite.png") no-repeat;
     background-position: 100% -30px;
     display:block;
     cursor:pointer;
-    height:28px;
     border:0;
-    padding:0 10px 0 5px;
+    padding:4px 10px 10px 5px;
     margin-right: -10px;
 }
 .silver_button button, .silver_button a {
@@ -524,14 +531,18 @@ button.small_silver_button:active {
 .silver_clean:hover {
     background-position: 0 -67px;
 }
-.silver_clean button:hover {
+.silver_clean button:hover, .silver_clean a:hover  {
     background-position: 100% -96px;
 }
 
 .silver_clean:active, .silver_clean.active {
     background-position: 0 -128px;
 }
-.silver_clean button:active, .silver_clean button.active {
+.silver_clean button:active,
+.silver_clean button.active,
+.silver_clean a.active,
+.silver_clean a:active
+{
     background-position: 100% -156px;
 }
 /** End wide silver button **/

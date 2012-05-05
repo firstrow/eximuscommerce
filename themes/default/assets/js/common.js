@@ -29,3 +29,8 @@ function processCartResponseFromList(data, textStatus, jqXHR, redirect)
         $("#cart").fadeOut().fadeIn().fadeOut().fadeIn();
     }
 }
+
+function applyCategorySorter(el)
+{
+    window.location = $(el).val();
+}

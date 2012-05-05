@@ -8,17 +8,21 @@
     margin-top:20px;
 }
 .catalog_with_sidebar .products_list {
-    margin-left:240px;
+    margin-left:245px;
 }
 
 .products_list .actions {
     margin-bottom:20px;
 }
 
+.products_list .actions .buttons {
+    float:right;
+    margin-right:15px;
+}
+
 #filter {
     float:left;
     width:230px;
-    margin-right:15px;
     margin-bottom: -5000px;
     padding-bottom: 5000px;
 }
@@ -70,5 +74,4 @@ a.cancel_filter {
 
 #filter ul.filter_links li {
     padding-left:20px;
-    margin:5px 0 5px 3px;;
 }
