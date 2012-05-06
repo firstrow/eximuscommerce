@@ -133,7 +133,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			));
 		}
 
-		$tabs[Yii::t('StoreModule.core', 'Отзывы')] = array(
+		$tabs[Yii::t('StoreModule.core', 'Отзывы').' ('.$model->commentsCount.')'] = array(
 			'id'=>'comments_tab',
 			'content'=>$this->renderPartial('comments.views.comment.create', array(
 				'model'=>$model,

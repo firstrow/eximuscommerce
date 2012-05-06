@@ -60,4 +60,18 @@ class CommentBehavior extends CActiveRecordBehavior
 		));
 		return parent::afterDelete($event);
 	}
+
+	/**
+	 * @return string comments count for object
+	 */
+	public function getCommentsCount()
+	{
+		Yii::import('comments.models.Comment');
+
+		$pk = $this->getObjectPkAttribute();
+		return Comment::model()->countByAttributes(array(
+			'class_name'=>$this->getClassName(),
+			'object_pk'=>$this->getOwner()->$pk
+		));
+	}
 }
