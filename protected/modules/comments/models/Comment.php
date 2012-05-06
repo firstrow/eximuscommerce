@@ -26,7 +26,15 @@ class Comment extends BaseModel
 	const STATUS_APPROVED = 1;
 	const STATUS_SPAM = 2;
 
+	/**
+	 * @var string
+	 */
 	public $verifyCode;
+
+	/**
+	 * @var int status for new comments
+	 */
+	public $defaultStatus;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -36,6 +44,15 @@ class Comment extends BaseModel
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	/**
+	 * Initialize
+	 */
+	public function init()
+	{
+		$this->defaultStatus = Comment::STATUS_WAITING;
+		return parent::init();
 	}
 
 	/**
@@ -106,12 +123,13 @@ class Comment extends BaseModel
 	}
 
 	/**
-	 * Before save!
+	 * Before save.
 	 */
 	public function beforeSave()
 	{
 		if($this->isNewRecord)
 		{
+			$this->status = $this->defaultStatus;
 			$this->ip_address = Yii::app()->request->userHostAddress;
 			$this->created = date('Y-m-d H:i:s');
 		}

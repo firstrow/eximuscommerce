@@ -95,6 +95,12 @@
 </div>
 
 <div id="content">
+	<?php if(($messages = Yii::app()->user->getFlash('messages'))): ?>
+		<div class="flash_messages">
+			<button class="close">×</button>
+			<?php echo implode('<br>', $messages) ?>
+		</div>
+	<?php endif; ?>
 	<?php echo $content; ?>
 </div> <!-- content end -->
 

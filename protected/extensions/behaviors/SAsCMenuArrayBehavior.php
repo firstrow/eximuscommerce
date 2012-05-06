@@ -41,6 +41,7 @@ class SAsCMenuArrayBehavior extends CActiveRecordBehavior
 			'url'=>$this->evaluateUrlExpression($this->urlExpression, array('model'=>$model))
 		);
 
+		// TODO: Cache result
 		$children = $model->children()->findAll();
 		if($children)
 		{

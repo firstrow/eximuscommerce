@@ -931,6 +931,65 @@ table.attributes tr:nth-child(odd) th {
     background-color: #F2F2F2;
 }
 
+div.comment div.message, div.leave_comment {
+    margin: 5px 10px 10px 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #F1F1F1;
+    padding: 15px;
+}
+
+div.leave_comment {
+    margin-top: 20px;
+}
+
+div.comment span.username {
+    margin-left: 12px;
+    font-weight: bold;
+}
+
+div.comment span.created {
+    font-size: 11px;
+    color:#A2A2A2;
+}
+
+div.flash_messages {
+    color: #468847;
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 18px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: -5px;
+}
+
+div.flash_messages ul {
+    list-style: none;
+}
+
+div.flash_messages button.close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    text-shadow: 0 1px 0 white;
+    opacity: 0.2;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+div.flash_messages button.close:hover {
+    color:#989898;
+}
+
 /** Footer styles **/
 #footer {
     margin-top:30px;

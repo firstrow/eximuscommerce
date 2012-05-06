@@ -124,14 +124,35 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 	<div style="clear:both;"></div>
 
 	<?php
+		$tabs = array();
+
+		if($model->getEavAttributes())
+		{
+			$tabs[Yii::t('StoreModule.core', 'Характеристики')] = array(
+				'content'=>$this->renderPartial('_attributes', array('model'=>$model), true
+			));
+		}
+
+		$tabs[Yii::t('StoreModule.core', 'Отзывы')] = array(
+			'id'=>'comments_tab',
+			'content'=>$this->renderPartial('comments.views.comment.create', array(
+				'model'=>$model,
+			), true));
+
 		$this->widget('zii.widgets.jui.CJuiTabs', array(
 			'id'=>'tabs',
-			'tabs'=>array(
-				'Haracteristics'=>array('content'=>$this->renderPartial('_attributes', array('model'=>$model), true)),
-				'Comments'=>array('content'=>$this->renderPartial('comments.views.comment.create', array(
-						'model'=>$model,
-					), true)
-				),
-		)));
+			'tabs'=>$tabs
+		));
+
+		Yii::app()->clientScript->registerScript('tabSelector', '
+			$(function() {
+				var anchor = $(document).attr("location").hash;
+				var result = $("#tabs").find(anchor).parents(".ui-tabs-panel");
+				if($(result).length)
+				{
+					$("#tabs").tabs("select", "#"+$(result).attr("id"));
+				}
+			});
+		');
 	?>
 </div>

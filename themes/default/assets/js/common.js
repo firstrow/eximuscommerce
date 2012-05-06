@@ -3,6 +3,15 @@
  */
 
 /**
+ * Hide flash messages block
+ */
+$(document).ready(function() {
+    $(".flash_messages .close").click(function(){
+        $(".flash_messages").fadeOut();
+    });
+});
+
+/**
  * Update cart data after product added.
  */
 function reloadSmallCart()
