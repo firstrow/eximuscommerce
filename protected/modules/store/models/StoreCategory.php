@@ -229,4 +229,5 @@ class StoreCategory extends BaseModel
 	{
 		return Yii::app()->createUrl('/store/category/view', array('url'=>$this->url));
 	}
+
 }

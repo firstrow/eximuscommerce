@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this FrontProductController
+ * @var $this Controller
  * @var $form CActiveForm
  */
 

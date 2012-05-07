@@ -126,6 +126,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 	<?php
 		$tabs = array();
 
+		// EAV tab
 		if($model->getEavAttributes())
 		{
 			$tabs[Yii::t('StoreModule.core', 'Характеристики')] = array(
@@ -133,17 +134,29 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			));
 		}
 
+		// Comments tab
 		$tabs[Yii::t('StoreModule.core', 'Отзывы').' ('.$model->commentsCount.')'] = array(
 			'id'=>'comments_tab',
 			'content'=>$this->renderPartial('comments.views.comment.create', array(
 				'model'=>$model,
 			), true));
 
+		if($model->relatedProductCount)
+		{
+			$tabs[Yii::t('StoreModule.core', 'Сопутствующие продукты').' ('.$model->relatedProductCount.')'] = array(
+				'id'=>'related_products_tab',
+				'content'=>$this->renderPartial('_related', array(
+					'model'=>$model,
+				), true));
+		}
+
+		// Render tabs
 		$this->widget('zii.widgets.jui.CJuiTabs', array(
 			'id'=>'tabs',
 			'tabs'=>$tabs
 		));
 
+		// Fix tabs
 		Yii::app()->clientScript->registerScript('tabSelector', '
 			$(function() {
 				var anchor = $(document).attr("location").hash;

@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('store.models.StoreProductTranslate');
+Yii::import('store.models.StoreProductCategoryRef');
 
 /**
  * This is the model class for table "StoreProduct".
@@ -212,6 +213,7 @@ class StoreProduct extends BaseModel
 			'type'            => array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
 			'related'         => array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
 			'relatedProducts' => array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
+			'relatedProductCount' => array(self::STAT, 'StoreRelatedProduct', 'product_id'),
 			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
 			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
 			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1','scopes'=>'applyTranslateCriteria'),

@@ -876,6 +876,9 @@ div.payment ul span:hover, div.delivery ul span:hover {
     border-width: 0px;
     font-size:12px;
 }
+#tabs a {
+    font-size:12px;
+}
 #tabs .ui-tabs-nav {
     padding-left: 0px;
     background: transparent;
@@ -988,6 +991,12 @@ div.flash_messages button.close {
 
 div.flash_messages button.close:hover {
     color:#989898;
+}
+
+#related_products_tab .products_list {
+    margin: 0 auto;
+    position: relative;
+    width: 750px;
 }
 
 /** Footer styles **/

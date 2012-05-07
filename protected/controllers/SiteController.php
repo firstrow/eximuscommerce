@@ -14,10 +14,9 @@ class SiteController extends Controller {
 		return 'login, index, error, contact';
 	}
 
-
 	public function actionLogin()
 	{
-		
+
 	}
 
 	public function actionIndex()
