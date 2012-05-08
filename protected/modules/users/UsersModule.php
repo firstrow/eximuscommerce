@@ -3,27 +3,29 @@
 class UsersModule extends BaseModule
 {
 
-    public $moduleName = 'users';
+	/**
+	 * @var string
+	 */
+	public $moduleName = 'users';
 
-    public function init()
-    {
-        Yii::trace('Loaded "users" module.'); 
+	public function init()
+	{
+		Yii::trace('Loaded "users" module.');
 
-        $this->setImport(array(
-            'users.models.*',
-        ));
+		$this->setImport(array(
+			'users.models.*',
+		));
 
-        parent::init();
-    }
+		parent::init();
+	}
 
-    /**
-     * Init admin-level models, componentes, etc...
-     * @return type
-     */
-    public function initAdmin()
-    {
-        Yii::trace('Init users module admin resources.'); 
-        parent::initAdmin();
-    }
+	/**
+	 * Init admin-level models, componentes, etc...
+	 */
+	public function initAdmin()
+	{
+		Yii::trace('Init users module admin resources.');
+		parent::initAdmin();
+	}
 
 }

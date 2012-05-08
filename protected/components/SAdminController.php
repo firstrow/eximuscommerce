@@ -3,29 +3,53 @@
 /**
  * Base class for all admin controllers.
  */
-class SAdminController extends RController {
+class SAdminController extends RController
+{
 
 	public $layout='application.modules.admin.views.layouts.main';
+
+	/**
+	 * Top menu
+	 * @var array
+	 */
 	public $menu=array();
+
+	/**
+	 * @var array
+	 */
 	public $breadcrumbs=array();
+
+	/**
+	 * @var string
+	 */
 	public $pageHeader = '';
 
 	/**
 	 * Buttons to display
-	 * @var type array
+	 * @var null array
 	 */
 	public $topButtons = null;
 
+	/**
+	 * Initialize component
+	 */
 	public function init()
 	{
+		Yii::app()->user->loginUrl = '/admin/auth';
 		$this->module->initAdmin();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function filters()
 	{
 		return array('rights');
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function beforeAction()
 	{
 		// Allow only authorized users access
