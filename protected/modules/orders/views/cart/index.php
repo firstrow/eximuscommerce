@@ -14,9 +14,9 @@ $this->pageTitle = Yii::t('OrdersModule.core', 'Оформление заказ�
 
 if(empty($items))
 {
-	echo CHtml::openTag('h4');
+	echo CHtml::openTag('h2');
 	echo Yii::t('OrdersModule.core', 'Корзина пуста');
-	echo CHtml::closeTag('h4');
+	echo CHtml::closeTag('h2');
 	return;
 }
 ?>

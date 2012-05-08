@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Admin login form
+ */
 class LoginForm extends CFormModel
 {
 	public $username;
@@ -39,6 +42,9 @@ class LoginForm extends CFormModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function rules()
 	{
 		return array(
@@ -48,13 +54,19 @@ class LoginForm extends CFormModel
 		);
 	}
 
-	public function authenticate($attribute, $params)
+	/**
+	 * Authenticate user
+	 */
+	public function authenticate()
 	{
 		$this->_identity=new UserIdentity($this->username,$this->password);
 		if(!$this->_identity->authenticate())
 			$this->addError('password',Yii::t('AdminModule.admin', 'Неправильное имя пользователя или пароль.'));
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getIdentity()
 	{
 		return $this->_identity;

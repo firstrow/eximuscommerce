@@ -69,7 +69,9 @@ class CommentBehavior extends CActiveRecordBehavior
 		Yii::import('comments.models.Comment');
 
 		$pk = $this->getObjectPkAttribute();
-		return Comment::model()->countByAttributes(array(
+		return Comment::model()
+			->approved()
+			->countByAttributes(array(
 			'class_name'=>$this->getClassName(),
 			'object_pk'=>$this->getOwner()->$pk
 		));
