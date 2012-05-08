@@ -62,7 +62,7 @@ class CommentBehavior extends CActiveRecordBehavior
 	}
 
 	/**
-	 * @return string comments count for object
+	 * @return string approved comments count for object
 	 */
 	public function getCommentsCount()
 	{

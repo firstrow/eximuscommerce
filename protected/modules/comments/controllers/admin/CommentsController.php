@@ -61,6 +61,27 @@ class CommentsController extends SAdminController
 		));
 	}
 
+	public function actionUpdateStatus()
+	{
+		$ids       = Yii::app()->request->getPost('ids');
+		$status    = Yii::app()->request->getPost('status');
+		$models    = Comment::model()->findAllByPk($ids);
+
+		if(!array_key_exists($status, Comment::getStatuses()))
+			throw new CHttpException(404, Yii::t('CommentsModule.admin', 'Ошибка проверки статуса.'));
+
+		if(!empty($models))
+		{
+			foreach ($models as $comment)
+			{
+				$comment->status = $status;
+				$comment->save();
+			}
+		}
+
+		echo Yii::t('CommentsModule', 'Статус успешно изменен');
+	}
+
 	/**
 	 * Delete comments
 	 * @param array $id

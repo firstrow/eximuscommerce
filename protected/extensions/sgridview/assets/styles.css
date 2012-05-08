@@ -214,10 +214,11 @@
     float: left;
     visibility: hidden;
 }
+
 .gridFooterActions li {
     padding: 3px 0 3px 0;
     float: left;
-    margin-right: 1px;
+    margin-right: 10px;
     margin-left: 5px;
 }
 .gridFooterActions a.actionDelete {

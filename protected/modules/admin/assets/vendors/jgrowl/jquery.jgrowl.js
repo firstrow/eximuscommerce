@@ -147,7 +147,7 @@
 			header: 		'',
 			group: 			'',
 			sticky: 		false,
-			position: 		'top-right',
+			position: 		'bottom-right',
 			glue: 			'after',
 			theme: 			'default',
 			themeState: 	'highlight',

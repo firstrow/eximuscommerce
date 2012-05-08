@@ -42,7 +42,7 @@ class CommentsModule extends BaseModule
 
 				if($comment->status==Comment::STATUS_WAITING)
 				{
-					$url.='#top';
+					$url.='#';
 					$this->setFlash(Yii::t('CommentsModule.core', 'Ваш комментарий успешно добавлен. Он будет опубликован после проверки администратором.'));
 				}
 				elseif($comment->status==Comment::STATUS_APPROVED)
