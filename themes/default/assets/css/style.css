@@ -525,6 +525,9 @@ button.small_silver_button:active {
     padding:4px 10px 10px 5px;
     margin-right: -10px;
 }
+.silver_button button {
+    height: 30px;
+}
 .silver_button button, .silver_button a {
     color:#146ac0;
     font-size:12px;
@@ -758,7 +761,7 @@ button.recount {
     font-weight:bold;
 }
 
-div.order_products #total {
+div.order_products #total, .current_currency {
     font-size:24px;
     font-weight:bold;
     color:#000;
@@ -876,9 +879,7 @@ div.payment ul span:hover, div.delivery ul span:hover {
     border-width: 0px;
     font-size:12px;
 }
-#tabs a {
-    font-size:12px;
-}
+
 #tabs .ui-tabs-nav {
     padding-left: 0px;
     background: transparent;

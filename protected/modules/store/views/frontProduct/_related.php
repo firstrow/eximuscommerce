@@ -5,7 +5,7 @@
  * @var StoreProduct $model
  */
 ?>
-<div class="products_list wish_list">
+<div class="products_list">
 	<?php foreach($model->relatedProducts as $data):  ?>
 		<div class="product_block">
 			<div class="image">

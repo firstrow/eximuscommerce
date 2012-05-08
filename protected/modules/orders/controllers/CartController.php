@@ -5,7 +5,7 @@ Yii::import('store.models.*');
 
 /**
  * Cart controller
- *
+ * Display user cart and create new orders
  */
 class CartController extends Controller
 {
@@ -15,6 +15,9 @@ class CartController extends Controller
 	 */
 	public $form;
 
+	/**
+	 * @var bool
+	 */
 	protected $_errors = false;
 
 	public function actionRenderSmallCart()
@@ -52,7 +55,8 @@ class CartController extends Controller
 			->findAll();
 
 		$this->render('index', array(
-			'deliveryMethods'=>$deliveryMethods
+			'deliveryMethods'=>$deliveryMethods,
+			'totalPrice'=>Yii::app()->cart->getTotalPrice(),
 		));
 	}
 
