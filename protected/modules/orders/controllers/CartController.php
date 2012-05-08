@@ -55,8 +55,9 @@ class CartController extends Controller
 			->findAll();
 
 		$this->render('index', array(
-			'deliveryMethods'=>$deliveryMethods,
+			'items'=>Yii::app()->cart->getDataWithModels(),
 			'totalPrice'=>Yii::app()->cart->getTotalPrice(),
+			'deliveryMethods'=>$deliveryMethods,
 		));
 	}
 

@@ -9,22 +9,16 @@
 
 Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/cart.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScript('cartScript', "var orderTotalPrice = '$totalPrice';", CClientScript::POS_HEAD);
-?>
 
-<?php
-	$this->pageTitle = Yii::t('OrdersModule.core', 'Оформление заказа');
+$this->pageTitle = Yii::t('OrdersModule.core', 'Оформление заказа');
 
-	$cart = Yii::app()->cart;
-	$items = $cart->getDataWithModels();
-
-	if(empty($items))
-	{
-		echo CHtml::openTag('h4');
-		echo Yii::t('OrdersModule.core', 'Корзина пуста');
-		echo CHtml::closeTag('h4');
-		return;
-	}
-
+if(empty($items))
+{
+	echo CHtml::openTag('h4');
+	echo Yii::t('OrdersModule.core', 'Корзина пуста');
+	echo CHtml::closeTag('h4');
+	return;
+}
 ?>
 
 <h1 class="has_background"><?php echo Yii::t('OrdersModule.core', 'Оформление заказа') ?></h1>
