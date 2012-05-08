@@ -1,5 +1,22 @@
 
 /**
+ * Activate +/- buttons
+ */
+
+$(document).ready(function(){
+    $('button.plus').click(function(){
+        var count = $(this).next('.count');
+        $(count).val(parseInt($(count).val())+1);
+        return false;
+    });
+    $('button.minus').click(function(){
+        var count = $(this).prev('.count');
+        $(count).val(parseInt($(count).val())-1);
+        return false;
+    });
+});
+
+/**
  * Recount total price on change delivery method
  * @param el
  */
