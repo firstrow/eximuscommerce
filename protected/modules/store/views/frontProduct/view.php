@@ -14,9 +14,6 @@ $this->pageDescription = $model->meta_description;
 Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
 
-// Apply category translation
-$model->mainCategory->applyTranslation();
-
 // Create breadcrumbs
 $ancestors = $model->mainCategory->excludeRoot()->ancestors()->findAll();
 
@@ -27,12 +24,9 @@ foreach($ancestors as $c)
 if ($model->mainCategory->id != 1)
 	$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
 
-//$this->breadcrumbs[] = $model->name;
-
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(
 	'target'=>'a.thumbnail',
-	'config'=>array(),
 ));
 
 ?>
