@@ -4,6 +4,11 @@ class BaseUser extends RWebUser
 {
 
 	/**
+	 * @var int
+	 */
+	public $rememberTime = 2622600;
+
+	/**
 	 * @var User model
 	 */
 	private $_model;

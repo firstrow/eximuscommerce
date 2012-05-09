@@ -70,9 +70,15 @@
 		</div>
 		<div class="right">
 			<div id="auth">
-				<a href="" class="light">Вход</a>
-				/
-				<a href="" class="light">Регистрация</a>
+				<?php if(Yii::app()->user->isGuest): ?>
+					<?php echo CHtml::link(Yii::t('core','Вход'), array('/users/login/login'), array('class'=>'light')) ?>
+					/
+					<?php echo CHtml::link(Yii::t('core','Регистрация'), array('/users/register'), array('class'=>'light')) ?>
+				<?php else: ?>
+					<?php echo CHtml::link(Yii::t('core','Личный кабинет'), array('/users/profile/index'), array('class'=>'light')) ?>
+					/
+				<?php echo CHtml::link(Yii::t('core','Выход'), array('/users/login/logout'), array('class'=>'light')) ?>
+				<?php endif; ?>
 			</div>
 
 			<div id="cart">
