@@ -35,7 +35,7 @@ class LoginController extends Controller
 					$duration = 0;
 
 				Yii::app()->user->login($model->getIdentity(), $duration);
-				Yii::app()->request->redirect(Yii::app()->user->returnUrl);
+				Yii::app()->request->redirect('/');
 			}
 		}
 
