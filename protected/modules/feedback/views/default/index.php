@@ -8,54 +8,40 @@ $this->pageTitle = Yii::t('FeedbackModule.core', 'Обратная связь');
 
 ?>
 
-<?php $form=$this->beginWidget('CActiveForm', array('htmlOptions'=>array('class'=>'form-horizontal'))); ?>
-	<fieldset>
-		<legend><?php echo Yii::t('FeedbackModule.core', 'Обратная связь') ?></legend>
+<h1 class="has_background"><?php echo Yii::t('FeedbackModule.core', 'Обратная связь') ?></h1>
+
+
+<div class="form wide">
+<?php $form=$this->beginWidget('CActiveForm'); ?>
 
 		<!-- Display errors  -->
-		<?php if($model->hasErrors()): ?>
-		<div class="alert alert-error">
-			<?php echo $form->errorSummary($model); ?>
-		</div>
-		<?php endif; ?>
+		<?php echo $form->errorSummary($model); ?>
 
-		<!-- Display succes message-->
-		<?php if(Yii::app()->user->getFlash('feedback_send')): ?>
-		<div class="alert alert-success">
-				<?php echo Yii::t('FeedbackModule', 'Спасибо. Ваше сообщение отправлено.'); ?>
+		<div class="row">
+			<?php echo CHtml::activeLabel($model,'name', array('required'=>true)); ?>
+			<?php echo CHtml::activeTextField($model,'name'); ?>
 		</div>
-		<?php endif ?>
 
-		<div class="control-group">
-			<?php echo CHtml::activeLabel($model,'name'); ?>
-			<div class="controls">
-				<?php echo CHtml::activeTextField($model,'name'); ?>
-			</div>
+		<div class="row">
+			<?php echo CHtml::activeLabel($model,'email', array('required'=>true)); ?>
+			<?php echo CHtml::activeTextField($model,'email'); ?>
 		</div>
-		<div class="control-group">
-			<?php echo CHtml::activeLabel($model,'email'); ?>
-			<div class="controls">
-				<?php echo CHtml::activeTextField($model,'email'); ?>
-			</div>
-		</div>
-		<div class="control-group">
-			<?php echo CHtml::activeLabel($model,'message'); ?>
-			<div class="controls">
-				<?php echo CHtml::activeTextArea($model,'message'); ?>
-			</div>
+
+		<div class="row">
+			<?php echo CHtml::activeLabel($model,'message', array('required'=>true)); ?>
+			<?php echo CHtml::activeTextArea($model,'message'); ?>
 		</div>
 
 		<?php if(Yii::app()->settings->get('feedback', 'enable_captcha')): ?>
-		<div class="control-group">
-			<label><? $this->widget('CCaptcha') ?></label>
-			<div class="controls">
+		<div class="row">
+			<label><?php $this->widget('CCaptcha', array('clickableImage'=>true,'showRefreshButton'=>false)) ?></label>
 			<?php echo CHtml::activeTextField($model, 'code')?>
-			</div>
 		</div>
 		<?php endif; ?>
 
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary"><?php echo Yii::t('FeedbackModule.core', 'Отправить') ?></button>
+		<div class="row buttons">
+			<button type="submit" class="blue_button"><?php echo Yii::t('FeedbackModule.core', 'Отправить') ?></button>
 		</div>
 	</fieldset>
 <?php $this->endWidget(); ?>
+</div>

@@ -66,7 +66,7 @@ class FeedbackForm extends CFormModel
 		$mailer->AddReplyTo($this->email);
 		$mailer->Send();
 
-		Yii::app()->user->setFlash('feedback_send', true);
+		Yii::app()->user->setFlash('messages', Yii::t('FeedbackModule', 'Спасибо. Ваше сообщение отправлено.'));
 	}
 
 }

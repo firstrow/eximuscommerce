@@ -17,6 +17,10 @@ class CommentsModule extends BaseModule
 		));
 	}
 
+	/**
+	 * @param $model
+	 * @return Comment
+	 */
 	public function processRequest($model)
 	{
 		$comment = new Comment;
@@ -43,7 +47,7 @@ class CommentsModule extends BaseModule
 				if($comment->status==Comment::STATUS_WAITING)
 				{
 					$url.='#';
-					$this->setFlash(Yii::t('CommentsModule.core', 'Ваш комментарий успешно добавлен. Он будет опубликован после проверки администратором.'));
+					Yii::app()->user->setFlash('messages', Yii::t('CommentsModule.core', 'Ваш комментарий успешно добавлен. Он будет опубликован после проверки администратором.'));
 				}
 				elseif($comment->status==Comment::STATUS_APPROVED)
 					$url.='#comment_'.$comment->id;
@@ -53,16 +57,6 @@ class CommentsModule extends BaseModule
 			}
 		}
 		return $comment;
-	}
-
-	private function setFlash($message)
-	{
-		$currentMessages = Yii::app()->user->getFlash('messages');
-
-		if (!is_array($currentMessages))
-			$currentMessages = array();
-
-		Yii::app()->user->setFlash('messages', CMap::mergeArray($currentMessages, array($message)));
 	}
 
 }

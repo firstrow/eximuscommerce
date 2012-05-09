@@ -104,7 +104,12 @@
 	<?php if(($messages = Yii::app()->user->getFlash('messages'))): ?>
 		<div class="flash_messages">
 			<button class="close">×</button>
-			<?php echo implode('<br>', $messages) ?>
+			<?php
+				if(is_array($messages))
+					echo implode('<br>', $messages);
+				else
+					echo $messages;
+			?>
 		</div>
 	<?php endif; ?>
 	<?php echo $content; ?>
