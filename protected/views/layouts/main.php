@@ -52,7 +52,6 @@
 		<div class="middle">
 			<span class="icon phone"></span>
 			(099) <span class="big_text">111-222-333</span>
-			<a href="" class="callback">Обратный звонок</a>
 
 			<div class="currencies">
 				Валюта:
