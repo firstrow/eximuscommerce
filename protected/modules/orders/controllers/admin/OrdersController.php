@@ -57,7 +57,7 @@ class OrdersController extends SAdminController {
 			{
 				$model->save();
 				$model->updateDeliveryPrice();
-				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
+				$this->setFlashMessage(Yii::t('OrdersModule.admin', 'Изменения успешно сохранены'));
 
 				if(isset($_POST['REDIRECT']))
 					$this->smartRedirect($model);

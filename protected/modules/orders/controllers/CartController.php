@@ -20,11 +20,6 @@ class CartController extends Controller
 	 */
 	protected $_errors = false;
 
-	public function actionRenderSmallCart()
-	{
-		$this->renderPartial('_small_cart');
-	}
-
 	/**
 	 * Display list of product added to cart
 	 */
@@ -44,7 +39,12 @@ class CartController extends Controller
 				$this->form->attributes = $_POST['OrderCreateForm'];
 
 				if($this->form->validate())
-					$this->createOrder();
+				{
+					$order = $this->createOrder();
+					Yii::app()->cart->clear();
+					$this->addFlashMessage(Yii::t('OrdersModule.core', 'Списибо. Ваш заказ принят.'));
+					Yii::app()->request->redirect($this->createUrl('view', array('secret_key'=>$order->secret_key)));
+				}
 			}
 		}
 
@@ -55,9 +55,25 @@ class CartController extends Controller
 			->findAll();
 
 		$this->render('index', array(
-			'items'=>Yii::app()->cart->getDataWithModels(),
-			'totalPrice'=>Yii::app()->cart->getTotalPrice(),
-			'deliveryMethods'=>$deliveryMethods,
+			'items'           => Yii::app()->cart->getDataWithModels(),
+			'totalPrice'      => Yii::app()->cart->getTotalPrice(),
+			'deliveryMethods' => $deliveryMethods,
+		));
+	}
+
+	/**
+	 * Find order by secret_key and display.
+	 */
+	public function actionView()
+	{
+		$secret_key = Yii::app()->request->getParam('secret_key');
+		$model = Order::model()->find('secret_key=:secret_key', array(':secret_key'=>$secret_key));
+
+		if(!$model)
+			throw new CHttpException(404, Yii::t('OrdersModule.core', 'Ошибка. Заказ не найден.'));
+
+		$this->render('view', array(
+			'model'=>$model,
 		));
 	}
 
@@ -135,6 +151,14 @@ class CartController extends Controller
 	}
 
 	/**
+	 * Render data to display in theme header.
+	 */
+	public function actionRenderSmallCart()
+	{
+		$this->renderPartial('_small_cart');
+	}
+
+	/**
 	 * Create new order
 	 * @return Order
 	 */
@@ -156,10 +180,7 @@ class CartController extends Controller
 		if($order->validate())
 			$order->save();
 		else
-		{
-			var_dump($order->getErrors());
-			exit;
-		}
+			throw new CHttpException(503, Yii::t('OrdersModule.core', 'Ошибка создания заказа'));
 
 		// Process products
 		foreach(Yii::app()->cart->getDataWithModels() as $item)
@@ -247,7 +268,6 @@ class CartController extends Controller
 	 */
 	protected function _finish()
 	{
-		$file = Yii::getPathOfAlias('application.modules.store.views.');
 		echo CJSON::encode(array(
 			'errors'=>$this->_errors,
 			'message'=>Yii::t('OrdersModule.core','Продукт успешно добавлен в {cart}', array(

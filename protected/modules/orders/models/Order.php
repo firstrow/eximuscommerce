@@ -8,6 +8,7 @@ Yii::import('orders.OrdersModule');
  * The followings are the available columns in table 'Order':
  * @property integer $id
  * @property integer $user_id
+ * @property string $secret_key
  * @property integer $delivery_id
  * @property float $delivery_price
  * @property float $total_price Sum of ordered products
@@ -122,8 +123,9 @@ class Order extends BaseModel
 	{
 		if($this->isNewRecord)
 		{
+			$this->secret_key = $this->createSecretKey();
 			$this->ip_address = Yii::app()->request->userHostAddress;
-			$this->created = date('Y-m-d H:i:s');
+			$this->created    = date('Y-m-d H:i:s');
 		}
 		$this->updated = date('Y-m-d H:i:s');
 
@@ -143,6 +145,26 @@ class Order extends BaseModel
 			$ordered_product->delete();
 
 		return parent::afterDelete();
+	}
+
+	/**
+	 * Create unique key to view orders
+	 * @param int $size
+	 * @return string
+	 */
+	public function createSecretKey($size=10)
+	{
+		$result = '';
+		$chars = '1234567890qweasdzxcrtyfghvbnuioplkjnm';
+		while(mb_strlen($result,'utf8') < $size)
+		{
+			$result .= mb_substr($chars, rand(0, mb_strlen($chars,'utf8')), 1);
+		}
+
+		if(Order::model()->countByAttributes(array('secret_key'=>$result))>0)
+			$this->createSecretKey($size);
+
+		return $result;
 	}
 
 	/**
@@ -211,6 +233,16 @@ class Order extends BaseModel
 	{
 		if(!$this->isNewRecord)
 			return $this->total_price + $this->delivery_price;
+	}
+
+	/**
+	 * @return CActiveDataProvider
+	 */
+	public function getOrderedProducts()
+	{
+		$products = new OrderProduct;
+		$products->order_id = $this->id;
+		return $products->search();
 	}
 
 	/**

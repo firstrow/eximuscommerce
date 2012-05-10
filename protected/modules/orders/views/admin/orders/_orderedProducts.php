@@ -7,10 +7,6 @@
  * @var $this OrdersController
  */
 
-$products = new OrderProduct;
-$products->order_id = $model->id;
-$dataProvider = $products->search();
-
 Yii::app()->clientScript->registerScript('qustioni18n', '
 	var deleteQuestion = "'.Yii::t('OrdersModule.admin', 'Вы действительно удалить запись?').'";
 	var productSuccessAddedToOrder = "'.Yii::t('OrdersModule.admin', 'Продукт успешно добавлен к заказу.').'";
@@ -20,7 +16,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'               => 'orderedProducts',
 	'enableSorting'    => false,
 	'enablePagination' => false,
-	'dataProvider'     => $dataProvider,
+	'dataProvider'     => $model->getOrderedProducts(),
 	'selectableRows'   => 0,
 	'template'         => '{items}',
 	'columns'          => array(

@@ -873,6 +873,10 @@ div.payment ul span:hover, div.delivery ul span:hover {
     float:left;
 }
 
+.mt10 {
+    margin-top: 10px;
+}
+
 #tabs {
     padding: 0px;
     background: none;
