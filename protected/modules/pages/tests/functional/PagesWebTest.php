@@ -13,6 +13,12 @@ class PagesWebTest extends WebTestCase
 		'PageCategoryTranslate'=>'PageCategoryTranslate'
 	);
 
+	public function setUp()
+	{
+		$this->getFixtureManager()->basePath = Yii::getPathOfAlias('application.modules.pages.tests.fixtures');
+		parent::setUp();
+	}
+
 	public function testViewPage()
 	{
 		$this->open('page/page-1');
