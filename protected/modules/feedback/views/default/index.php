@@ -29,7 +29,7 @@ $this->pageTitle = Yii::t('FeedbackModule.core', 'Обратная связь');
 
 		<div class="row">
 			<?php echo CHtml::activeLabel($model,'message', array('required'=>true)); ?>
-			<?php echo CHtml::activeTextArea($model,'message'); ?>
+			<?php echo CHtml::activeTextArea($model,'message', array('rows'=>6)); ?>
 		</div>
 
 		<?php if(Yii::app()->settings->get('feedback', 'enable_captcha')): ?>
