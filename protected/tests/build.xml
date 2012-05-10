@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 
-<!-- To run only one test use command: phing -DtestsPattern=*/tests/unit/TestNameName.php -->
-
 <project name="ProjectTesting" basedir="." default="test">
 <target name="test" description="Launch the unit-tests">
     <!-- Copy module fixtures to main fixture directory -->

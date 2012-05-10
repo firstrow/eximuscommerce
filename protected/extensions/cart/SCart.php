@@ -151,7 +151,7 @@ class SCart extends CComponent
 	}
 
 	/**
-	 * @return int nuber of items in cart
+	 * @return int number of items in cart
 	 */
 	public function countItems()
 	{

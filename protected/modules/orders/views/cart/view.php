@@ -26,7 +26,7 @@ $this->pageTitle = $title;
 		<tr>
 			<td>
 				<?php echo CHtml::openTag('h3') ?>
-				<?php echo CHtml::encode($product->renderFullName); ?>
+				<?php echo $product->renderFullName; ?>
 				<?php echo CHtml::closeTag('h3') ?>
 
 				<?php echo CHtml::openTag('span', array('class'=>'price')) ?>

@@ -7,13 +7,13 @@
 		echo '<tr><td class="attr_name">';
 		echo $variant['attribute']->title.':';
 		echo '</td><td>';
-		$dropDownData = array('---');
+
 		foreach($variant['options'] as $v)
 		{
 			$jsVariantsData[$v->id] = $v;
 			$dropDownData[$v->id] = $v->option->value;
 		}
-		echo CHtml::dropDownList('eav['.$variant['attribute']->id.']', null, $dropDownData, array('class'=>'variantData'));
+		echo CHtml::dropDownList('eav['.$variant['attribute']->id.']', null, $dropDownData, array('class'=>'variantData','empty'=>'---'));
 		echo '</td></tr>';
 	}
 

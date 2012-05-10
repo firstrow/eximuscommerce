@@ -93,20 +93,23 @@ class CartController extends Controller
 		if(!isset($model))
 			$this->_addError(Yii::t('OrdersModule.core', 'Ошибка. Продукт не найден'), true);
 
-		// Proccess variants
+		// Process variants
 		if(!empty($_POST['eav']))
 		{
 			foreach($_POST['eav'] as $attribute_id=>$variant_id)
 			{
-				// Check if attribute/option exists
-				if(!$this->_checkVariantExists($_POST['product_id'], $attribute_id, $variant_id) && $variant_id != '0')
-					$this->_addError(Yii::t('OrdersModule.core', 'Ошибка. Вариант продукта не найден.'));
-				else
-					array_push($variants, $variant_id);
+				if(!empty($variant_id))
+				{
+					// Check if attribute/option exists
+					if(!$this->_checkVariantExists($_POST['product_id'], $attribute_id, $variant_id))
+						$this->_addError(Yii::t('OrdersModule.core', 'Ошибка. Вариант продукта не найден.'));
+					else
+						array_push($variants, $variant_id);
+				}
 			}
 		}
 
-		// Process configurables
+		// Process configurable products
 		if($model->use_configurations)
 		{
 			// Get last conf item
