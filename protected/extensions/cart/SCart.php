@@ -34,6 +34,15 @@ class SCart extends CComponent
 
 	/**
 	 * Add product to cart
+	 * <pre>
+	 *      Yii::app()->cart->add(array(
+	 *         'product_id'      => $model->id,
+	 *         'variants'        => $variants,// e.g: array(1,2,3,...)
+	 *         'configurable_id' => $configurable_id,
+	 *         'quantity'        => (int) Yii::app()->request->getPost('quantity', 1),
+	 *         'price'           => $model->price,
+	 *      ));
+	 * </pre>
 	 * @param array $data
 	 */
 	public function add(array $data)
