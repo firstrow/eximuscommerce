@@ -23,12 +23,17 @@ input, button {
     font-family:Arial;
 }
 
+p {
+    padding:3px 5px 3px 5px;
+}
+
 h1.has_background {
     display:block;
     background:url("../images/h1_background.png") no-repeat;
     width:980px;
     padding:10px;
     height:25px;
+    text-transform: capitalize;
 }
 
 div.has_background {
@@ -261,6 +266,9 @@ span.dots    { background:transparent url("../images/icons/dots.png") no-repeat 
 }
 
 /** Content styles **/
+#content {
+    min-height: 300px;
+}
 #content, .centered {
     width:980px;
     margin:0 auto;
