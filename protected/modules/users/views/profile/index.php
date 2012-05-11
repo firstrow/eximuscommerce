@@ -1,0 +1,1 @@
+<h1 class="has_background"><?php echo Yii::t('UsersModule.core', 'Личный кабинет'); ?></h1>

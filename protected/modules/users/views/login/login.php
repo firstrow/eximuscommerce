@@ -33,11 +33,11 @@ $this->pageTitle = Yii::t('UsersModule.core','Авторизация');
 		</div>
 
 			<div class="row buttons">
-				<input type="submit" class="blue_button" value="Вход">
+				<input type="submit" class="blue_button" value="<?php echo Yii::t('UsersModule.core','Вход'); ?>">
 			</div>
 
 			<div class="row buttons">
-				<a href="#">Зарегистрироваться</a><br>
+				<?php echo CHtml::link(Yii::t('UsersModule', 'Регистрация'), array('register/register')) ?><br>
 				<a href="#">Напомнить пароль</a>
 			</div>
 		<?php echo CHtml::endForm(); ?>

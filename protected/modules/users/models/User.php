@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.users.models.UserProfile');
+
 /**
  * This is the model class for table "user".
  *
@@ -40,16 +42,32 @@ class User extends BaseModel
 	public function rules()
 	{
 		return array(
-			array('username, email, created_at, last_login', 'required'),
-			array('created_at, last_login', 'date','format'=>'yyyy-M-d H:m:s'),
-			array('username, password, email, login_ip', 'length', 'max'=>255),
+			array('username, email', 'required'),
+			array('username, email', 'checkIfAvailable'),
+			array('password', 'required', 'on'=>'register'),
 			array('email', 'email'),
-			array('new_password', 'length', 'min'=>4, 'max'=>40),
-			array('password', 'length', 'min'=>4, 'max'=>40),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
+			array('created_at', 'required', 'on'=>'update'),
+			array('created_at, last_login', 'date','format'=>array('yyyy-M-d H:m:s', '0000-00-00 00:00:00')),
+			array('username, password, email', 'length', 'max'=>255),
+			array('new_password', 'length', 'min'=>4, 'max'=>40, 'on'=>'update'),
+			array('password', 'length', 'min'=>4, 'max'=>40, 'allowEmpty'=>false),
+			// Search
 			array('id, username, email, created_at, last_login', 'safe', 'on'=>'search'),
 		);
+	}
+
+	/**
+	 * Check if username/email is available
+	 */
+	public function checkIfAvailable($attr)
+	{
+		$labels = $this->attributeLabels();
+		$check = User::model()->countByAttributes(array(
+			$attr=>$this->$attr,
+		), 't.id != :id', array(':id'=>(int)$this->id));
+
+		if($check>0)
+			$this->addError($attr, Yii::t('UsersModule.core', '{attr} уже занят другим пользователем.', array('{attr}'=>$labels[$attr])));
 	}
 
 	/**
@@ -58,6 +76,7 @@ class User extends BaseModel
 	public function relations()
 	{
 		return array(
+			'profile'=>array(self::HAS_ONE, 'UserProfile', 'user_id')
 		);
 	}
 
@@ -108,17 +127,40 @@ class User extends BaseModel
 		return sha1($string);
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function beforeSave()
 	{
 		// Set new password
 		if ($this->new_password)
 			$this->password = User::encodePassword($this->new_password);
+		if($this->isNewRecord)
+		{
+			if(!$this->created_at)
+				$this->created_at = date('Y-m-d H:i:s');
+			$this->login_ip = Yii::app()->request->userHostAddress;
+
+			if(!$this->hasErrors())
+				$this->password=$this->encodePassword($this->password);
+		}
 		return parent::beforeSave();
 	}
 
 	/**
+	 * After delete event
+	 */
+	public function afterDelete()
+	{
+		$profile = $this->profile;
+		if($profile)
+			$profile->delete();
+		parent::afterDelete();
+	}
+
+	/**
 	 * Generate admin link to edit user.
-	 * @return type
+	 * @return string
 	 */
 	public function getUpdateLink()
 	{

@@ -79,7 +79,7 @@ class DefaultController extends SAdminController
 		{
 			$model = User::model()->findByPk($_GET['id']);
 
-			if ($model)
+			if ($model && ($model->id != Yii::app()->user->id))
 				$model->delete();
 
 			if (!Yii::app()->request->isAjaxRequest)
