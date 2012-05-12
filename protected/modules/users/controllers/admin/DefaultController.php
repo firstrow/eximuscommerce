@@ -61,7 +61,7 @@ class DefaultController extends SAdminController
 			{
 				$model->save();
 				$model->profile->save();
-				
+
 				$this->setFlashMessage(Yii::t('UsersModule.core', 'Изменения успешно сохранены'));
 
 				if (isset($_POST['REDIRECT']))

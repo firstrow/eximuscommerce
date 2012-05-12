@@ -1,12 +1,12 @@
 .grid-view-loading
 {
-	background:url(loading.gif) no-repeat;
+    background:url(loading.gif) no-repeat;
 }
 
 
 .grid-view
 {
-	padding: 0px;
+    padding: 0px;
     position: relative;
 }
 
@@ -17,16 +17,16 @@
 
 .grid-view table.items
 {
-	/*background: white;*/
-	border-collapse: collapse;
-	width: 100%;
-	border: 0px #D0E3EF solid;
+    /*background: white;*/
+    border-collapse: collapse;
+    width: 100%;
+    border: 0px #D0E3EF solid;
 }
 
 .grid-view table.items th, .grid-view table.items td
 {
-	font-size: 0.9em;
-	padding: 0.3em;
+    font-size: 0.9em;
+    padding: 0.3em;
 }
 
 .grid-view table.items th:first-child {
@@ -103,38 +103,38 @@
 
 .grid-view .button-column img
 {
-	border: 0;
+    border: 0;
 }
 
 .grid-view .checkbox-column
 {
-	width: 15px;
+    width: 15px;
 }
 
 .grid-view .summary
 {
-	margin: 0 0 5px 0;
-	text-align: right;
+    margin: 0 0 5px 0;
+    text-align: right;
     font-size:11px;
     padding:2px;
 }
 
 .grid-view .pager
 {
-	margin: 5px 0 0 0;
-	text-align: right;
+    margin: 5px 0 0 0;
+    text-align: right;
 }
 
 .grid-view .empty
 {
-	font-style: italic;
+    font-style: italic;
 }
 
 .grid-view .filters input,
 .grid-view .filters select
 {
-	width: 100%;
-	border: 1px solid #ccc;
+    width: 100%;
+    border: 1px solid #ccc;
 }
 
 .gridViewOptions {
@@ -240,6 +240,14 @@
 }
 
 .form .grid-view .filters input {
+    height: 18px;
+    padding: 1px;
+}
+.grid-view select, .grid-view input {
+    height: 16px;
+}
+
+.grid-view select {
     height: 18px;
     padding: 1px;
 }
