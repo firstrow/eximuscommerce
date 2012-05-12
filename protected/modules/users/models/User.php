@@ -13,6 +13,7 @@ Yii::import('application.modules.users.models.UserProfile');
  * @property integer $created_at
  * @property integer $last_login
  * @property string $login_ip
+ * @property UserProfile $profile
  */
 class User extends BaseModel
 {

@@ -47,14 +47,21 @@ class DefaultController extends SAdminController
 			throw new CHttpException(400, 'Bad request.');
 
 		$form = new SAdminForm('application.modules.users.views.admin.default.userForm', $model);
+		$form['user']->model = $model;
+		$form['profile']->model = $model->profile;
 
 		if (Yii::app()->request->isPostRequest)
 		{
 			$model->attributes = $_POST['User'];
+			$model->profile->attributes = $_POST['UserProfile'];
 
-			if($model->validate())
+			$valid = $model->validate() && $model->profile->validate();
+
+			if($valid)
 			{
 				$model->save();
+				$model->profile->save();
+				
 				$this->setFlashMessage(Yii::t('UsersModule.core', 'Изменения успешно сохранены'));
 
 				if (isset($_POST['REDIRECT']))

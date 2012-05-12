@@ -375,3 +375,8 @@ div.form span input[type=checkbox] {
     float: left;
     margin-left: 190px;
 }
+div.form legend {
+    margin-left: 190px;
+    font-weight: bold;
+    color:#333;
+}

@@ -9,7 +9,7 @@ return array(
 	'id'=>'userUpdateForm',
 	//'showErrorSummary'=>true,
 	'elements'=>array(
-		'tab1'=>array(
+		'user'=>array(
 			'type'=>'form',
 			'title'=>'',
 			'elements'=>array(
@@ -32,6 +32,21 @@ return array(
 				'login_ip'=>array('type'=>'text',),
 				'new_password'=>array(
 					'type'=>'password',
+				),
+			),
+		),
+		'profile'=>array(
+			'type'=>'form',
+			'title'=>'Данные профиля',
+			'elements'=>array(
+				'full_name'=>array(
+					'type'=>'text',
+				),
+				'phone'=>array(
+					'type'=>'text',
+				),
+				'delivery_address'=>array(
+					'type'=>'textarea',
 				),
 			),
 		),
