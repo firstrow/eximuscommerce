@@ -32,6 +32,7 @@ $this->widget('ext.sgridview.SGridView', array(
 			'name'=>'event',
 			'type'=>'raw',
 			'value'=>'$data->actionTitle',
+			'filter'=>ActionLog::getEventNames()
 		),
 		array(
 			'name'=>'model_name',
