@@ -322,7 +322,7 @@ class ProductsController extends SAdminController
 	public function actionApplyCommentsFilter()
 	{
 		$this->renderPartial('_comments', array(
-			'model'=>StoreProduct::model()->findByPk($_GET['product_id'])
+			'model'=>StoreProduct::model()->findByPk($_GET['id'])
 		));
 	}
 

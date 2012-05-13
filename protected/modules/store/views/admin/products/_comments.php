@@ -16,25 +16,17 @@ if(!empty($_GET['Comment']))
 $comments->class_name = 'store.models.StoreProduct';
 $comments->object_pk  = $model->id;
 
+// Fix sort url
 $dataProvider = $comments->search();
 $dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
-
-
-// Fix sort url
-Yii::app()->clientScript->registerScript('fixGridSorterComments', '
-	$("#productCommentsListGrid .items thead tr th a").each(function(){
-		var search    = "/admin/store/products/update";
-		var replace   = "/admin/store/products/applyCommentsFilter";
-		var url       = $(this).attr("href").replace(search, replace)+"&product_id='.$model->id.'";
-		$(this).attr("href", url);
-	});
-', CClientScript::POS_END);
+$dataProvider->sort->route = 'applyCommentsFilter';
+$dataProvider->pagination->route = 'applyCommentsFilter';
 
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider' => $dataProvider,
 	'id'           => 'productCommentsListGrid',
 	'filter'       => $comments,
-	'ajaxUrl'      => Yii::app()->createUrl('/store/admin/products/applyCommentsFilter', array('product_id'=>$model->id)),
+	'ajaxUrl'      => Yii::app()->createUrl('/store/admin/products/applyCommentsFilter', array('id'=>$model->id)),
 	'columns' => array(
 		array(
 			'class'=>'CCheckBoxColumn',

@@ -1,5 +1,5 @@
 <div style="padding-bottom:15px;">
-	<?php
+<?php
 
 /**
  * Add new product to order.
@@ -10,22 +10,17 @@ if(!isset($dataProvider))
 	$dataProvider = new StoreProduct('search');
 
 // Fix sort url
-Yii::app()->clientScript->registerScript('fixGridSorter', '
-	$("#OrderAddProductsGrid .items thead tr th a").each(function(){
-		var search    = "/admin/orders/orders/update";
-		var replace   = "/admin/orders/orders/addProductList";
-		var url       = $(this).attr("href").replace(search, replace)+"&order_id='.$model->id.'";
-		$(this).attr("href", url);
-	});
-', CClientScript::POS_END);
+$dataProvider = $dataProvider->search();
+$dataProvider->sort->route = 'addProductList';
+$dataProvider->pagination->route = 'addProductList';
 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'             => 'OrderAddProductsGrid',
-	'dataProvider'   => $dataProvider->search(),
+	'filter'         => $dataProvider->model,
+	'dataProvider'   => $dataProvider,
 	'ajaxUrl'        => Yii::app()->createUrl('/orders/admin/orders/addProductList', array('order_id'=>$model->id)),
 	'template'       => '{items}{pager}',
 	'selectableRows' => 0,
-	'filter'         => $dataProvider,
 	'columns'=>array(
 		array(
 			'name'=>'id',

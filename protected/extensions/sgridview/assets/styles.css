@@ -243,11 +243,13 @@
     height: 18px;
     padding: 1px;
 }
+
 .grid-view select, .grid-view input {
     height: 16px;
 }
 
-.grid-view select {
-    height: 18px;
+div.form .grid-view select {
+    height: 21px;
     padding: 1px;
+    font-size: 12px;
 }

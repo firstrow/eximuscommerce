@@ -35,23 +35,18 @@ if(!isset($model))
 	$model->exclude = $exclude;
 }
 
-// Fix sort url
-Yii::app()->clientScript->registerScript('fixGridSorterRelated', '
-	$("#RelatedProductsGrid .items thead tr th a").each(function(){
-		var search    = "/admin/store/products/update";
-		var replace   = "/admin/store/products/applyProductsFilter";
-		var url       = $(this).attr("href").replace(search, replace)+"&exclude='.$exclude.'";
-		$(this).attr("href", url);
-	});
-', CClientScript::POS_END);
+// Fix sort and pagination urls
+$dataProvider = $model->search();
+$dataProvider->sort->route = 'applyProductsFilter';
+$dataProvider->pagination->route = 'applyProductsFilter';
 
 $this->widget('ext.sgridview.SGridView', array(
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$dataProvider,
 	'ajaxUrl'=>Yii::app()->createUrl('/store/admin/products/applyProductsFilter', array('exclude'=>$exclude)),
 	'id'=>'RelatedProductsGrid',
 	'template'=>'{items}{summary}{pager}',
 	'enableCustomActions'=>false,
-	'extended'=>false,
+	'extended'=>true,
 	'selectableRows'=>0,
 	'filter'=>$model,
 	'columns'=>array(
