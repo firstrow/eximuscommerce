@@ -263,7 +263,8 @@ class EEavBehavior extends CActiveRecordBehavior {
 	public function afterFind($event) {
 		// Load attributes for model.
 		if ($this->preload) {
-			$this->loadEavAttributes($this->getSafeAttributesArray());
+			if($this->owner->getPrimaryKey()) // Added by firstrow@gmail.com
+				$this->loadEavAttributes($this->getSafeAttributesArray());
 		}
 		// Call parent method for convenience.
 		parent::afterFind($event);

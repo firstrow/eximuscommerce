@@ -1011,6 +1011,19 @@ div.flash_messages button.close:hover {
     width: 750px;
 }
 
+.price_slider button {
+    margin-left: 20px;
+    padding-left: 10px;
+    font-weight: bold;
+    color:#146ac0;
+}
+
+.price_slider input {
+    width: 40px;
+    border: 1px solid silver;
+    margin: 1px;
+}
+
 /** Footer styles **/
 #footer {
     margin-top:30px;

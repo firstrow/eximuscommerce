@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * @var $this SFilterRenderer
  */
 
@@ -36,7 +35,38 @@ if(!empty($active))
 		echo CHtml::link(Yii::t('StoreModule.core','Сбросить фильтр'), $this->getOwner()->createUrl('view', array('url'=>$this->model->url)), array('class'=>'cancel_filter'));
 	echo CHtml::closeTag('div');
 }
+?>
 
+<div class="rounded price_slider">
+	<div class="filter_header">
+		<?php echo Yii::t('StoreModule.core', 'Цена') ?>
+	</div>
+<?php
+	echo $this->widget('zii.widgets.jui.CJuiSlider', array(
+		'options'=>array(
+			'range'=>true,
+			'min'=>(int)$this->controller->getMinPrice(),
+			'max'=>(int)$this->controller->getMaxPrice(),
+			'values'=>array($this->getCurrentMinPrice(),$this->getCurrentMaxPrice()),
+			'slide'=>'js: function( event, ui ) {
+				$("#min_price").val(ui.values[0]);
+				$("#max_price").val(ui.values[1]);
+			}',
+		),
+		'htmlOptions'=>array(
+			'style'=>'margin:5px 0 5px 0',
+		),
+	), true);
+?>
+<?php echo CHtml::form() ?>
+	от <?php echo CHtml::textField('min_price', (isset($_GET['min_price'])) ? (int)$this->getCurrentMinPrice():null ) ?>
+	до <?php echo CHtml::textField('max_price', (isset($_GET['max_price'])) ? (int)$this->getCurrentMaxPrice():null ) ?>
+	<?php echo Yii::app()->currency->active->symbol ?>
+	<button class="small_silver_button" type="submit">OK</button>
+<?php echo CHtml::endForm() ?>
+</div>
+
+<?php
 if(!empty($manufacturers['filters']) || !empty($attributes))
 	echo CHtml::openTag('div', array('class'=>'rounded'));
 

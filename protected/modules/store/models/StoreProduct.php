@@ -74,6 +74,11 @@ class StoreProduct extends BaseModel
 	public $meta_keywords;
 
 	/**
+	 * @var float min/max price
+	 */
+	public $aggregation_price;
+
+	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className
 	 * @return StoreProduct the static model class
@@ -196,6 +201,37 @@ class StoreProduct extends BaseModel
 		$criteria = new CDbCriteria;
 		$criteria->addInCondition('manufacturer_id', $manufacturers);
 		$this->getDbCriteria()->mergeWith($criteria);
+		return $this;
+	}
+
+	/**
+	 * Filter products by min_price
+	 * @param $value
+	 */
+	public function applyMinPrice($value)
+	{
+		if($value!==null)
+		{
+			$criteria = new CDbCriteria;
+			$criteria->addCondition('t.price >= '.(int)$value);
+			$this->getDbCriteria()->mergeWith($criteria);
+		}
+		return $this;
+	}
+
+
+	/**
+	 * Filter products by man_price
+	 * @param $value
+	 */
+	public function applyMaxPrice($value)
+	{
+		if($value!==null)
+		{
+			$criteria = new CDbCriteria;
+			$criteria->addCondition('t.price <= '.(int)$value);
+			$this->getDbCriteria()->mergeWith($criteria);
+		}
 		return $this;
 	}
 

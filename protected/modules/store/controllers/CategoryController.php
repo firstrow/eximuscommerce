@@ -25,11 +25,50 @@ class CategoryController extends Controller
 	 */
 	private $_eavAttributes;
 
+	/**
+	 * @var array
+	 */
 	public $allowedPageLimit = array(12,18,24);
 
+	/**
+	 * Current query clone to use in min/max price queries
+	 * @var CDbCriteria
+	 */
+	public $currentQuery;
+
+	/**
+	 * @var CActiveDataProvider
+	 */
+	public $provider;
+
+	/**
+	 * @var string
+	 */
+	private $_minPrice;
+
+	/**
+	 * @var string
+	 */
+	private $_maxPrice;
+
+	/**
+	 * Load category model by url
+	 * @return bool
+	 */
 	public function beforeAction()
 	{
 		$this->model = $this->_loadModel(Yii::app()->request->getQuery('url'));
+
+		if(Yii::app()->request->getPost('min_price') || Yii::app()->request->getPost('max_price'))
+		{
+			$data=array();
+			if(Yii::app()->request->getPost('min_price'))
+				$data['min_price']=(int)Yii::app()->request->getPost('min_price');
+			if(Yii::app()->request->getPost('max_price'))
+				$data['max_price']=(int)Yii::app()->request->getPost('max_price');
+			$this->redirect(Yii::app()->request->addUrlParam('/store/category/view', $data));
+		}
+
 		return true;
 	}
 
@@ -51,11 +90,18 @@ class CategoryController extends Controller
 			$this->query->applyManufacturers($manufacturers);
 		}
 
+		// Create clone of the current query to use later to get min and max prices.
+		$this->currentQuery = clone $this->query->getDbCriteria();
+
+		// Filter products by price range if we have min_price or max_price in request
+		$this->query->applyMinPrice(Yii::app()->request->getQuery('min_price'));
+		$this->query->applyMaxPrice(Yii::app()->request->getQuery('max_price'));
+
 		$per_page = $this->allowedPageLimit[0];
 		if(isset($_GET['per_page']) && in_array((int)$_GET['per_page'], $this->allowedPageLimit))
 			$per_page = (int) $_GET['per_page'];
 
-		$provider = new CActiveDataProvider($this->query, array(
+		$this->provider = new CActiveDataProvider($this->query, array(
 			// Set id to false to not display model name in
 			// sort and page params
 			'id'=>false,
@@ -64,12 +110,11 @@ class CategoryController extends Controller
 			)
 		));
 
-		$provider->sort = StoreProduct::getCSort();
+		$this->provider->sort = StoreProduct::getCSort();
 
 		$view = $this->setDesign($this->model, 'view');
 		$this->render($view, array(
-			'provider'=>$provider,
-			'criteria'=>clone $this->query->getDbCriteria(),
+			'provider'=>$this->provider,
 			'itemView'=>(isset($_GET['view']) && $_GET['view']==='wide') ? '_product_wide' : '_product'
 		));
 	}
@@ -131,6 +176,46 @@ class CategoryController extends Controller
 		foreach($query as $attr)
 			$this->_eavAttributes[$attr->name] = $attr;
 		return $this->_eavAttributes;
+	}
+
+	/**
+	 * @return string min price
+	 */
+	public function getMinPrice()
+	{
+		if($this->_minPrice!==null)
+			return $this->_minPrice;
+		$this->_minPrice=$this->aggregatePrice();
+		return $this->_minPrice;
+	}
+
+	/**
+	 * @return string max price
+	 */
+	public function getMaxPrice()
+	{
+		if($this->_maxPrice!==null)
+			return $this->_maxPrice;
+		$this->_maxPrice=$this->aggregatePrice('MAX');
+		return $this->_maxPrice;
+	}
+
+	/**
+	 * @param string $function
+	 * @return mixed
+	 */
+	public function aggregatePrice($function = 'MIN')
+	{
+		$criteria = new CDbCriteria;
+		$criteria->select = $function.'(t.price) as aggregation_price';
+
+		$current_query = clone $this->currentQuery;
+		$query = new StoreProduct(null);
+		$query->getDbCriteria()->mergeWith($current_query);
+		$query = $query->find($criteria);
+		if($query)
+			return $query->aggregation_price;
+		return null;
 	}
 
 	/**
