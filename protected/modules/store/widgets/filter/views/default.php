@@ -45,8 +45,9 @@ if(!empty($active))
 	echo $this->widget('zii.widgets.jui.CJuiSlider', array(
 		'options'=>array(
 			'range'=>true,
-			'min'=>(int)$this->controller->getMinPrice(),
-			'max'=>(int)$this->controller->getMaxPrice(),
+			'min'=>(int)floor($this->controller->getMinPrice()),
+			'max'=>(int)ceil($this->controller->getMaxPrice()),
+			'disabled'=>(int)$this->controller->getMinPrice()===(int)$this->controller->getMaxPrice(),
 			'values'=>array($this->getCurrentMinPrice(),$this->getCurrentMaxPrice()),
 			'slide'=>'js: function( event, ui ) {
 				$("#min_price").val(ui.values[0]);
@@ -54,7 +55,7 @@ if(!empty($active))
 			}',
 		),
 		'htmlOptions'=>array(
-			'style'=>'margin:5px 0 5px 0',
+			'style'=>'margin:5px',
 		),
 	), true);
 ?>

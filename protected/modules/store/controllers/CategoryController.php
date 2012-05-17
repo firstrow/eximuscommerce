@@ -194,8 +194,7 @@ class CategoryController extends Controller
 	 */
 	public function getMaxPrice()
 	{
-		if($this->_maxPrice!==null)
-			return $this->_maxPrice;
+
 		$this->_maxPrice=$this->aggregatePrice('MAX');
 		return $this->_maxPrice;
 	}
@@ -206,15 +205,22 @@ class CategoryController extends Controller
 	 */
 	public function aggregatePrice($function = 'MIN')
 	{
-		$criteria = new CDbCriteria;
-		$criteria->select = $function.'(t.price) as aggregation_price';
-
 		$current_query = clone $this->currentQuery;
-		$query = new StoreProduct(null);
+		$current_query->select =  $function.'(t.price) as aggregation_price';
+		$current_query->limit = 1;
+
+		if($function==='MIN')
+			$current_query->order = 't.price';
+		else
+			$current_query->order = 't.price DESC';
+
+		$query = StoreProduct::model();
 		$query->getDbCriteria()->mergeWith($current_query);
-		$query = $query->find($criteria);
+		$query = $query->find();
 		if($query)
+		{
 			return $query->aggregation_price;
+		}
 		return null;
 	}
 
