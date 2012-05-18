@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('orders.components.SProductsPreviewColumn');
+
 /**
  * Display orders list
  **/
@@ -52,6 +54,9 @@ $this->widget('ext.sgridview.SGridView', array(
 			'name'=>'delivery_id',
 			'filter'=>CHtml::listData(StoreDeliveryMethod::model()->orderByPosition()->findAll(), 'id', 'name'),
 			'value'=>'$data->delivery_name'
+		),
+		array(
+			'class'=>'SProductsPreviewColumn'
 		),
 		array(
 			'type'=>'raw',

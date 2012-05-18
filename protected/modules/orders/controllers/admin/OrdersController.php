@@ -130,9 +130,28 @@ class OrdersController extends SAdminController {
 	}
 
 	/**
+	 * Get ordered products in json format.
+	 * Result is displayed in the orders list.
+	 */
+	public function actionJsonOrderedProducts()
+	{
+		$model=$this->_loadModel(Yii::app()->request->getQuery('id'));
+		$data=array();
+		foreach($model->getOrderedProducts()->getData() as $product)
+		{
+			$data[]=array(
+				'name'     => $product->renderFullName,
+				'quantity' => $product->quantity,
+				'price'    => StoreProduct::formatPrice($product->price),
+			);
+		}
+		echo CJSON::encode($data);
+	}
+
+	/**
 	 * Load order model
 	 * @param $id
-	 * @return CActiveRecord
+	 * @return Order
 	 * @throws CHttpException
 	 */
 	protected function _loadModel($id)

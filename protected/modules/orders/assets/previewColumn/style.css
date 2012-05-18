@@ -1,0 +1,19 @@
+
+#orderPreviewBox {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #a7abaf;
+    padding: 3px;
+    color: #333;
+    -moz-box-shadow: 2px 2px 2px #d1d0d0;
+    -webkit-box-shadow: 2px 2px 2px #d1d0d0;
+    box-shadow: 2px 2px 2px #d1d0d0;
+}
+#orderPreviewBox span.name {
+    color: #2f96b4;
+}
+
+.productPreview {
+    cursor: pointer;
+}
