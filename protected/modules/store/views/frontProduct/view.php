@@ -97,7 +97,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(
 					'dataType'=>'json',
 					'success'=>'js:function(data, textStatus, jqXHR){processCartResponse(data, textStatus, jqXHR)}',
-				), array('class'=>'blue_button'));
+				), array('id'=>'buyButton','class'=>'blue_button'));
 
 				echo CHtml::endForm();
 			?>

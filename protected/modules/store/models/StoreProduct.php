@@ -1,7 +1,7 @@
 <?php
 
-Yii::import('store.models.StoreProductTranslate');
-Yii::import('store.models.StoreProductCategoryRef');
+Yii::import('application.modules.store.models.StoreProductTranslate');
+Yii::import('application.modules.store.models.StoreProductCategoryRef');
 
 /**
  * This is the model class for table "StoreProduct".
@@ -353,8 +353,8 @@ class StoreProduct extends BaseModel
 				'tableName' => 'StoreProductAttributeEAV',
 			),
 			'comments' => array(
-				'class'       => 'comments.components.CommentBehavior',
-				'class_name'  => 'store.models.StoreProduct',
+				'class'       => 'application.modules.comments.components.CommentBehavior',
+				'class_name'  => 'application.modules.store.models.StoreProduct',
 				'owner_title' => 'name', // Attribute name to present comment owner in admin panel
 			),
 			'STranslateBehavior'=>array(

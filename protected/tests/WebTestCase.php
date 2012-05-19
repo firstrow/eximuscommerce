@@ -22,5 +22,6 @@ class WebTestCase extends CWebTestCase
 		parent::setUp();
 		$this->setBrowser('*googlechrome');
 		$this->setBrowserUrl(TEST_BASE_URL);
+		Yii::app()->request->setBaseUrl(TEST_BASE_URL);
 	}
 }

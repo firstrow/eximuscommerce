@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('discounts.models.Discount');
+Yii::import('application.modules.discounts.models.Discount');
 
 /**
  * Product discount behavior
