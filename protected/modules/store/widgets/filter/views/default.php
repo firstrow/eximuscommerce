@@ -49,7 +49,7 @@ if(!empty($active))
 			'min'=>(int)floor($cm->convert($this->controller->getMinPrice())),
 			'max'=>(int)ceil($cm->convert($this->controller->getMaxPrice())),
 			'disabled'=>(int)$this->controller->getMinPrice()===(int)$this->controller->getMaxPrice(),
-			'values'=>array($cm->convert($this->currentMinPrice), $cm->convert($this->currentMaxPrice)),
+			'values'=>array($this->currentMinPrice, $this->currentMaxPrice),
 			'slide'=>'js: function( event, ui ) {
 				$("#min_price").val(ui.values[0]);
 				$("#max_price").val(ui.values[1]);

@@ -59,8 +59,8 @@
 					foreach(Yii::app()->currency->currencies as $currency)
 					{
 						echo CHtml::ajaxLink($currency->symbol, '/store/ajax/activateCurrency/'.$currency->id, array(
-							'success'=>'window.location.reload(true)',
-						),array('class'=>Yii::app()->currency->active->id===$currency->id?'active':''));
+							'success'=>'js:function(){window.location.reload(true)}',
+						),array('id'=>'sw'.$currency->id,'class'=>Yii::app()->currency->active->id===$currency->id?'active':''));
 					}
 				?>
 			</div>

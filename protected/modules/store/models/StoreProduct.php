@@ -210,7 +210,7 @@ class StoreProduct extends BaseModel
 	 */
 	public function applyMinPrice($value)
 	{
-		if($value!==null)
+		if($value)
 		{
 			$criteria = new CDbCriteria;
 			$criteria->addCondition('t.price >= '.(int)$value);
@@ -226,7 +226,7 @@ class StoreProduct extends BaseModel
 	 */
 	public function applyMaxPrice($value)
 	{
-		if($value!==null)
+		if($value)
 		{
 			$criteria = new CDbCriteria;
 			$criteria->addCondition('t.price <= '.(int)$value);

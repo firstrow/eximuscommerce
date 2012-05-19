@@ -112,4 +112,13 @@ class SCurrencyManager extends CComponent
 		return $currency->rate * $sum;
 	}
 
+	/**
+	 * Convert from active currency to main
+	 * @param $sum
+	 * @return float
+	 */
+	public function activeToMain($sum)
+	{
+		return $sum / $this->getActive()->rate;
+	}
 }

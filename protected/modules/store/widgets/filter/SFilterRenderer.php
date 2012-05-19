@@ -166,8 +166,8 @@ class SFilterRenderer extends CWidget
 		$model->attachBehaviors($model->behaviors());
 		$model->active()
 			->applyCategories($this->model)
-			->applyMinPrice(Yii::app()->request->getQuery('min_price'))
-			->applyMaxPrice(Yii::app()->request->getQuery('max_price'));
+			->applyMinPrice($this->convertCurrency(Yii::app()->request->getQuery('min_price')))
+			->applyMaxPrice($this->convertCurrency(Yii::app()->request->getQuery('max_price')));
 
 		if(Yii::app()->request->getParam('manufacturer'))
 			$model->applyManufacturers(explode(';', Yii::app()->request->getParam('manufacturer')));
@@ -227,8 +227,8 @@ class SFilterRenderer extends CWidget
 								'active',
 								'applyCategories'=>array($this->model, null),
 								'applyAttributes'=>array($this->getOwner()->activeAttributes),
-								'applyMinPrice'=>array(Yii::app()->request->getQuery('min_price')),
-								'applyMaxPrice'=>array(Yii::app()->request->getQuery('max_price')),
+								'applyMinPrice'=>array($this->convertCurrency(Yii::app()->request->getQuery('min_price'))),
+								'applyMaxPrice'=>array($this->convertCurrency(Yii::app()->request->getQuery('max_price'))),
 							))
 					),
 				)))
@@ -271,7 +271,7 @@ class SFilterRenderer extends CWidget
 		if(Yii::app()->request->getQuery('min_price'))
 			$this->_currentMinPrice=Yii::app()->request->getQuery('min_price');
 		else
-			$this->_currentMinPrice=$this->controller->getMinPrice();
+			$this->_currentMinPrice=$this->convertCurrency($this->controller->getMinPrice());
 
 		return $this->_currentMinPrice;
 	}
@@ -287,9 +287,20 @@ class SFilterRenderer extends CWidget
 		if(Yii::app()->request->getQuery('max_price'))
 			$this->_currentMaxPrice=Yii::app()->request->getQuery('max_price');
 		else
-			$this->_currentMaxPrice=$this->controller->getMaxPrice();
+			$this->_currentMaxPrice=$this->convertCurrency($this->controller->getMaxPrice());
 
 		return $this->_currentMaxPrice;
 	}
 
+	/**
+	 * Proxy to SCurrencyManager::activeToMain
+	 * @param $sum
+	 */
+	public function convertCurrency($sum)
+	{
+		$cm=Yii::app()->currency;
+		if($cm->active->id!=$cm->main->id)
+			return $cm->activeToMain($sum);
+		return $sum;
+	}
 }

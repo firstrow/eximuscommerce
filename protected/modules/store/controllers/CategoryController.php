@@ -94,8 +94,7 @@ class CategoryController extends Controller
 		$this->currentQuery = clone $this->query->getDbCriteria();
 
 		// Filter products by price range if we have min_price or max_price in request
-		$this->query->applyMinPrice(Yii::app()->request->getQuery('min_price'));
-		$this->query->applyMaxPrice(Yii::app()->request->getQuery('max_price'));
+		$this->applyPricesFilter();
 
 		$per_page = $this->allowedPageLimit[0];
 		if(isset($_GET['per_page']) && in_array((int)$_GET['per_page'], $this->allowedPageLimit))
@@ -222,6 +221,24 @@ class CategoryController extends Controller
 			return $query->aggregation_price;
 		}
 		return null;
+	}
+
+	public function applyPricesFilter()
+	{
+		$minPrice=Yii::app()->request->getQuery('min_price');
+		$maxPrice=Yii::app()->request->getQuery('max_price');
+
+		$cm=Yii::app()->currency;
+		if($cm->active->id!==$cm->main->id && ($minPrice>0||$maxPrice>0))
+		{
+			$minPrice=$cm->activeToMain($minPrice);
+			$maxPrice=$cm->activeToMain($maxPrice);
+		}
+
+		if($minPrice>0)
+			$this->query->applyMinPrice($minPrice);
+		if($maxPrice>0)
+			$this->query->applyMaxPrice($maxPrice);
 	}
 
 	/**
