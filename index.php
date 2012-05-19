@@ -1,8 +1,14 @@
 <?php
 
+
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/../yii-1.1.10.r3566/yii.php';
-$config=dirname(__FILE__).'/protected/config/main.php';
+if($_SERVER['SERVER_NAME']==='cms-test') // Remove in production mode
+{
+	$config=dirname(__FILE__).'/protected/config/test.php';
+}
+else
+	$config=dirname(__FILE__).'/protected/config/main.php';
 
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG', true);

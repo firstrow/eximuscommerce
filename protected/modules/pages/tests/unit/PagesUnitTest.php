@@ -118,10 +118,10 @@ class PagesUnitTest extends CDbTestCase
 		// Create new category with existing url
 		$category = new PageCategory;
 		$category->setAttributes(array(
-			'name' => 'Тест тест 2',
+			'name'        => 'Тест тест 2',
 			'description' => 'Category test desc',
-			'parent_id' => $this->PageCategory['PageCategory_2']['parent_id'],
-			'url' => $this->PageCategory['PageCategory_2']['url'],
+			'parent_id'   => $this->PageCategory['PageCategory_2']['parent_id'],
+			'url'         => $this->PageCategory['PageCategory_2']['url'],
 		));
 
 		$this->assertTrue($category->save(false));

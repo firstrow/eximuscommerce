@@ -51,6 +51,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'label'=>Yii::t('OrdersModule.admin','Добавить'),
 			'urlExpression'=>'$data->id',
 			'htmlOptions'=>array(
+				'class'=>'addProductToOrder',
 				'onClick'=>'return addProductToOrder(this, '.$model->id.', "'.Yii::app()->request->csrfToken.'");'
 			),
 		),

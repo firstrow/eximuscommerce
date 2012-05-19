@@ -9,9 +9,15 @@
 
 Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/admin/orders.update.js', CClientScript::POS_END);
 
+$template= array('history_back','save','dropDown');
+if($model->isNewRecord===false)
+	$template[]='delete';
+
 $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
 	'formId'=>'orderUpdateForm',
-	'deleteAction'=>$this->createUrl('/orders/admin/orders/delete', array('id'=>$model->id))
+	'template'=>$template,
+	'deleteAction'=>$this->createUrl('/orders/admin/orders/delete', array('id'=>$model->id)),
+	'updateAction'=>'update'
 ));
 
 $title = ($model->isNewRecord) ? Yii::t('OrdersModule.admin', 'Создание заказа') :
@@ -61,7 +67,11 @@ Yii::app()->clientScript->registerScript('deliveryMetohds', strtr('
 
 <div class="form wide padding-all">
 		<?php
-			echo CHtml::form($this->createUrl('', array('id'=>$model->id)), 'post', array('id'=>'orderUpdateForm'));
+			if($model->isNewRecord)
+				$action='create';
+			else
+				$action='update';
+			echo CHtml::form($this->createUrl($action, array('id'=>$model->id)), 'post', array('id'=>'orderUpdateForm'));
 
 			if($model->hasErrors())
 				echo CHtml::errorSummary($model);
