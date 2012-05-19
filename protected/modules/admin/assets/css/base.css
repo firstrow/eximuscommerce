@@ -173,3 +173,33 @@ select {
     background-repeat: no-repeat;
     background-position: 98% center;
 }
+
+#topSearchBox {
+    border: 1px solid #5D5D5D;
+    background-color: #848484;
+    outline: 0;
+    font-size: 12px;
+    padding: 1px 1px 1px 18px;
+    background-image: url("../images/search.png");
+    background-repeat: no-repeat;
+    background-position: 2px 50%;
+    width: 70px;
+    margin-right: 10px;
+    opacity: 0.5;
+    -o-transition:width 0.3s ease-in-out;
+    -ms-transition:width 0.3s ease-in-out;
+    -moz-transition:width 0.3s ease-in-out;
+    -webkit-transition:width 0.3s ease-in-out;
+}
+#topSearchBox:focus {
+    background-color: #dddddd;
+    color: #535353;
+    width: 160px;
+    opacity: 1;
+}
+
+#topSearchForm {
+    width: 200px;
+    float: none;
+    display: inline-block;
+}

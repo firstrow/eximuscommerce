@@ -61,9 +61,13 @@
 				?>
 			</div>
 			<div class="yui-u" id="topRightMenu">
+				<form action="/admin/store/products/" method="get" id="topSearchForm">
+					<input type="text" name="StoreProduct[name]" id="topSearchBox">
+				</form>
+
 				<?php echo CHtml::link(Yii::t('AdminModule.admin', 'Выход'), array('/admin/auth/logout'), array(
 					'confirm'=>Yii::t('StoreModule.admin','Завершить сеанс?')
-			)) ?>
+				)) ?>
 			</div>
 		</div>
 	</div> <!-- /hd -->
@@ -111,7 +115,7 @@
 				<?php
 					if(($messages = Yii::app()->user->getFlash('messages')))
 					{
-						echo '<script>';
+						echo '<script type="text/javascript">';
 						foreach ($messages as $m)
 						{
 							echo '$.jGrowl("'.CHtml::encode($m).'",{position:"bottom-right"});';
@@ -148,9 +152,9 @@
 		<?php } ?>
 	</div>
 
+	<!-- footer -->
 	<div id="ft" style="height:50px;">
-			<!-- footer -->
-			&nbsp;
+		&nbsp;
 	</div>
 </div>
 </body>
