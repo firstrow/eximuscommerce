@@ -271,7 +271,7 @@ class SFilterRenderer extends CWidget
 		if(Yii::app()->request->getQuery('min_price'))
 			$this->_currentMinPrice=Yii::app()->request->getQuery('min_price');
 		else
-			$this->_currentMinPrice=$this->convertCurrency($this->controller->getMinPrice());
+			$this->_currentMinPrice=Yii::app()->currency->convert($this->controller->getMinPrice());
 
 		return $this->_currentMinPrice;
 	}
@@ -287,7 +287,7 @@ class SFilterRenderer extends CWidget
 		if(Yii::app()->request->getQuery('max_price'))
 			$this->_currentMaxPrice=Yii::app()->request->getQuery('max_price');
 		else
-			$this->_currentMaxPrice=$this->convertCurrency($this->controller->getMaxPrice());
+			$this->_currentMaxPrice=Yii::app()->currency->convert($this->controller->getMaxPrice());
 
 		return $this->_currentMaxPrice;
 	}
