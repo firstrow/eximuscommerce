@@ -54,10 +54,15 @@
 			(099) <span class="big_text">111-222-333</span>
 
 			<div class="currencies">
-				Валюта:
-				<a href="" class="active">$</a>
-				<a href="">€</a>
-				<a href="">Р</a>
+				<?php echo Yii::t('core','Валюта:') ?>
+				<?
+					foreach(Yii::app()->currency->currencies as $currency)
+					{
+						echo CHtml::ajaxLink($currency->symbol, '/store/ajax/activateCurrency/'.$currency->id, array(
+							'success'=>'window.location.reload(true)',
+						),array('class'=>Yii::app()->currency->active->id===$currency->id?'active':''));
+					}
+				?>
 			</div>
 
 			<div class="search_box">

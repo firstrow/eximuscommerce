@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * Handle ajax requests
+ */
 class AjaxController extends Controller
 {
 
 	
 	/**
 	 * Set currency for user session.
-	 * Used by currency selector on the.
 	 */
 	public function actionActivateCurrency()
 	{

@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('store.models.StoreCurrency');
+Yii::import('application.modules.store.models.StoreCurrency');
 
 /**
  * Class to work with currencies
@@ -99,7 +99,7 @@ class SCurrencyManager extends CComponent
 	/**
 	 * Convert cum from main currency to selected currency
 	 * @param mixed $sum
-	 * @param mixed $id StoreCurrnecy. If not set, sum will be convetred to active currency
+	 * @param mixed $id StoreCurrency. If not set, sum will be converted to active currency
 	 * @return float converted sum
 	 */
 	public function convert($sum, $id=null)

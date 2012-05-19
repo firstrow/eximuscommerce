@@ -6,6 +6,7 @@ $(document).ready(function(){
         // Load products
         $.ajax({
             url: '/admin/orders/orders/jsonOrderedProducts/id/'+$(this).attr('id'),
+            async: false,
             dataType: 'json',
             success: function(data){
                 var box = $("#orderPreviewBox");
