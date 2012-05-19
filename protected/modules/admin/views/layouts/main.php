@@ -1,5 +1,4 @@
 <?php
-	// TODO: Remove jquery-ui default theme
 	// Register jquery and jquery ui.
 	$adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
 
@@ -18,11 +17,6 @@
 	$assetsManager->registerCssFile($adminAssetsUrl.'/css/breadcrumbs/style.css');
 	$assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery_ui/css/custom-theme/jquery-ui-1.8.14.custom.css');
 	$assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
-
-	// ToTop
-	$assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jquery.ui.totop/ui.totop.css');
-	$assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ui.totop/jquery.ui.totop.js');
-	$assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ui.totop/jquery.ui.totop.js');
 
 	// jGrowl
 	$assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
