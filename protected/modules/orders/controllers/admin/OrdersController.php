@@ -77,8 +77,9 @@ class OrdersController extends SAdminController {
 	 * Display gridview with list of products to add to order
 	 * @param $order_id
 	 */
-	public function actionAddProductList($order_id)
+	public function actionAddProductList()
 	{
+		$order_id=Yii::app()->request->getQuery('id');
 		$model = $this->_loadModel($order_id);
 		$dataProvider = new StoreProduct('search');
 
