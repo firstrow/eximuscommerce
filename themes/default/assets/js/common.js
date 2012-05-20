@@ -2,12 +2,21 @@
  * Common functions
  */
 
-/**
- * Hide flash messages block
- */
 $(document).ready(function() {
+    // Hide flash messages block
     $(".flash_messages .close").click(function(){
         $(".flash_messages").fadeOut();
+    });
+
+    var searchQuery = $("#searchQuery");
+    var defText = searchQuery.val();
+    searchQuery.focus(function(){
+        if($(this).val()==defText)
+            $(this).val('');
+    });
+    searchQuery.blur(function(){
+        if($(this).val()=='')
+            $(this).val(defText);
     });
 });
 

@@ -8,6 +8,9 @@ Yii::import('application.modules.pages.models.Page');
 class IndexController extends Controller
 {
 
+	/**
+	 * Display start page
+	 */
 	public function actionIndex()
 	{
 		$this->render('index', array(

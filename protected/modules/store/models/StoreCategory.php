@@ -16,6 +16,8 @@ Yii::import('store.models.StoreCategoryTranslate');
  * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_keywords
+ * @property string $layout
+ * @property string $view
  */
 class StoreCategory extends BaseModel
 {

@@ -57,8 +57,6 @@ class CategoryController extends Controller
 	 */
 	public function beforeAction()
 	{
-		$this->model = $this->_loadModel(Yii::app()->request->getQuery('url'));
-
 		if(Yii::app()->request->getPost('min_price') || Yii::app()->request->getPost('max_price'))
 		{
 			$data=array();
@@ -66,24 +64,63 @@ class CategoryController extends Controller
 				$data['min_price']=(int)Yii::app()->request->getPost('min_price');
 			if(Yii::app()->request->getPost('max_price'))
 				$data['max_price']=(int)Yii::app()->request->getPost('max_price');
-			$this->redirect(Yii::app()->request->addUrlParam('/store/category/view', $data));
+
+			if($this->action->id==='search')
+				$this->redirect(Yii::app()->request->addUrlParam('/store/category/search', $data));
+			else
+				$this->redirect(Yii::app()->request->addUrlParam('/store/category/view', $data));
 		}
 
 		return true;
 	}
 
 	/**
-	 * Display products list
+	 * Display category products
 	 */
 	public function actionView()
 	{
+		$this->model = $this->_loadModel(Yii::app()->request->getQuery('url'));
+		$view = $this->setDesign($this->model, 'view');
+		$this->doSearch($this->model, $view);
+	}
+
+	/**
+	 * Search products
+	 */
+	public function actionSearch()
+	{
+		if(Yii::app()->request->isPostRequest)
+			$this->redirect(Yii::app()->request->addUrlParam('/store/category/search', array('q'=>Yii::app()->request->getPost('q'))));
+		$q=Yii::app()->request->getQuery('q');
+		if(!$q)
+			$this->render('search');
+		$this->doSearch($q, 'search');
+	}
+
+	/**
+	 * Search products
+	 * @param $data StoreCategory|string
+	 */
+	public function doSearch($data, $view)
+	{
 		$this->query = new StoreProduct(null);
 		$this->query->attachBehaviors($this->query->behaviors());
-		$this->query->applyCategories($this->model)
-			->applyAttributes($this->activeAttributes)
+		$this->query->applyAttributes($this->activeAttributes)
 			->active();
 
-		 // Filter by manufacturer
+		if($data instanceof StoreCategory)
+			$this->query->applyCategories($this->model);
+		else
+		{
+			$cr=new CDbCriteria;
+			$cr->with = array(
+				'translate'=>array('together'=>true),
+			);
+			$cr->addSearchCondition('translate.name', $data);
+			$this->query->getDbCriteria()->mergeWith($cr);
+		}
+
+		// Filter by manufacturer
 		if(Yii::app()->request->getQuery('manufacturer'))
 		{
 			$manufacturers = explode(';', Yii::app()->request->getParam('manufacturer', ''));
@@ -111,7 +148,6 @@ class CategoryController extends Controller
 
 		$this->provider->sort = StoreProduct::getCSort();
 
-		$view = $this->setDesign($this->model, 'view');
 		$this->render($view, array(
 			'provider'=>$this->provider,
 			'itemView'=>(isset($_GET['view']) && $_GET['view']==='wide') ? '_product_wide' : '_product'
@@ -251,6 +287,7 @@ class CategoryController extends Controller
 	{
 		// Find category
 		$model = StoreCategory::model()
+			->excludeRoot()
 			->withUrl($url)
 			->find();
 

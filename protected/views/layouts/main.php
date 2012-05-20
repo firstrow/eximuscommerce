@@ -66,10 +66,10 @@
 			</div>
 
 			<div class="search_box">
-				<form action="">
-					<input type="text" value="Поиск товаров">
+				<?php echo CHtml::form($this->createUrl('/store/category/search')) ?>
+					<input type="text" value="Поиск товаров" name="q" id="searchQuery">
 					<button type="submit">Поиск</button>
-				</form>
+				<?php echo CHtml::endForm() ?>
 			</div>
 		</div>
 		<div class="right">

@@ -164,8 +164,6 @@ class StoreProduct extends BaseModel
 				$categories = array($categories);
 		}
 
-		$alias = $this->getTableAlias(true);
-
 		$criteria = new CDbCriteria;
 
 		if($select)
