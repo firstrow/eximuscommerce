@@ -29,9 +29,13 @@ Yii::import('application.modules.store.models.StoreProductCategoryRef');
  * @property string $quantity
  * @property string $auto_decrease_quantity
  * @property string $availability
+ * @property integer $views_count
+ * @property integer $added_to_cart_count
  * @property string $created
  * @property string $updated
  * @method StoreProduct active() Find Only active products
+ * @method StoreProduct byViews() Order by views count
+ * @method StoreProduct byAddedToCart() Order by views count
  * @method StoreProduct withEavAttributes
  */
 class StoreProduct extends BaseModel
@@ -103,6 +107,9 @@ class StoreProduct extends BaseModel
 			'active'=>array(
 				'condition'=>$alias.'.is_active=1',
 			),
+			'newest'=>array('order'=>$alias.'.created DESC'),
+			'byViews'=>array('order'=>$alias.'.views_count DESC'),
+			'byAddedToCart'=>array('order'=>$alias.'.added_to_cart_count DESC'),
 		);
 	}
 

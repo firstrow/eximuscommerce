@@ -116,10 +116,13 @@
 			?>
 		</div>
 	<?php endif; ?>
+
 	<?php echo $content; ?>
-</div> <!-- content end -->
+</div><!-- content end -->
 
 <div style="clear:both;"></div>
+
+<?php if (isset($this->clips['underFooter'])) echo $this->clips['underFooter']; ?>
 
 <div id="footer">
 	<div class="centered">

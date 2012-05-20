@@ -48,6 +48,8 @@ class FrontProductController extends Controller
 
 		if (!$this->model) throw new CHttpException(404, Yii::t('StoreModule.core', 'Продукт не найден.'));
 
+		$this->model->saveCounters(array('views_count'=>1));
+
 		return $this->model;
 	}
 

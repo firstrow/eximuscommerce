@@ -63,6 +63,7 @@ class CartController extends Controller
 
 	/**
 	 * Find order by secret_key and display.
+	 * @throws CHttpException
 	 */
 	public function actionView()
 	{
@@ -92,6 +93,9 @@ class CartController extends Controller
 		// Check product
 		if(!isset($model))
 			$this->_addError(Yii::t('OrdersModule.core', 'Ошибка. Продукт не найден'), true);
+
+		// Update counter
+		$model->saveCounters(array('added_to_cart_count'=>1));
 
 		// Process variants
 		if(!empty($_POST['eav']))
