@@ -90,12 +90,15 @@ class Comment extends BaseModel
 	 */
 	public function rules()
 	{
+		$codeEmpty=!Yii::app()->user->isGuest;
+		if(YII_DEBUG) // For tests
+			$codeEmpty=true;
 		return array(
 			array('email, name, text', 'required'),
 			array('email', 'email'),
 			array('status, created, updated', 'required', 'on'=>'update'),
 			array('name', 'length', 'max'=>50),
-			array('verifyCode','captcha','allowEmpty'=>!Yii::app()->user->isGuest),
+			array('verifyCode','captcha','allowEmpty'=>$codeEmpty),
 			// Search
 			array('id, user_id, class_name, status, email, name, text, created, updated', 'safe', 'on'=>'search'),
 		);

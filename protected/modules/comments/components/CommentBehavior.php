@@ -17,7 +17,7 @@ class CommentBehavior extends CActiveRecordBehavior
 	public $class_name;
 
 	/**
-	 * @var string attribute name to present comment owner in admin panel. e.g: name - refernces to Page->name
+	 * @var string attribute name to present comment owner in admin panel. e.g: name - references to Page->name
 	 */
 	public $owner_title;
 
@@ -51,7 +51,7 @@ class CommentBehavior extends CActiveRecordBehavior
 	 */
 	public function afterDelete($event)
 	{
-		Yii::import('comments.models.Comment');
+		Yii::import('application.modules.comments.models.Comment');
 
 		$pk = $this->getObjectPkAttribute();
 		Comment::model()->deleteAllByAttributes(array(
@@ -66,7 +66,7 @@ class CommentBehavior extends CActiveRecordBehavior
 	 */
 	public function getCommentsCount()
 	{
-		Yii::import('comments.models.Comment');
+		Yii::import('application.modules.comments.models.Comment');
 
 		$pk = $this->getObjectPkAttribute();
 		return Comment::model()
