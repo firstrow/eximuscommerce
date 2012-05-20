@@ -46,6 +46,22 @@ $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider'=>$dataProvider,
 	'id'=>'productsListGrid',
 	'filter'=>$model,
+	'customActions'=>array(
+		array(
+			'label'=>Yii::t('StoreModule.admin', 'Активен'),
+			'url'=>'#',
+			'linkOptions'=>array(
+				'onClick'=>'return setProductsStatus(1, this);',
+			),
+		),
+		array(
+			'label'=>Yii::t('StoreModule.admin', 'Не активен'),
+			'url'=>'#',
+			'linkOptions'=>array(
+				'onClick'=>'return setProductsStatus(0, this);',
+			),
+		)
+	 ),
 	'columns'=>array(
 		array(
 			'class'=>'CCheckBoxColumn',

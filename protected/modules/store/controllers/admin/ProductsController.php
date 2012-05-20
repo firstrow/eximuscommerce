@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Manage products
+ * Manage
+ * products
  */
 class ProductsController extends SAdminController
 {
@@ -374,6 +375,25 @@ class ProductsController extends SAdminController
 			if ($model)
 				$model->delete();
 		}
+	}
+
+	/**
+	 * Mass product update is_active
+	 */
+	public function actionUpdateIsActive()
+	{
+		$ids       = Yii::app()->request->getPost('ids');
+		$status    = (int)Yii::app()->request->getPost('status');
+		$models    = StoreProduct::model()->findAllByPk($ids);
+		foreach($models as $product)
+		{
+			if(in_array($status, array(0,1)))
+			{
+				$product->is_active=$status;
+				$product->save();
+			}
+		}
+		echo Yii::t('StoreModule.admin', 'Изменения успешно сохранены.');
 	}
 
 	/**
