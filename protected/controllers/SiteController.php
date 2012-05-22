@@ -1,13 +1,14 @@
 <?php
 
+// If caching need include behavior classes manual
+Yii::import('application.modules.comments.components.CommentBehavior');
+Yii::import('ext.behaviors.eav.EEavBehavior');
+Yii::import('ext.behaviors.eav.ext.behaviors.STranslateBehavior');
+Yii::import('application.modules.discounts.components.DiscountBehavior');
+
+
 class SiteController extends Controller {
 
-	public function filters()
-	{
-		return array(
-			'rights',
-		);
-	}
 
 	public function allowedActions()
 	{
@@ -16,7 +17,21 @@ class SiteController extends Controller {
 
 	public function actionLogin()
 	{
+		$products=Yii::app()->cache->get('t1');
+		if($products===false)
+		{
 
+			$products = StoreProduct::model()
+				->active()
+				->byViews()
+				->findAll(array('limit'=>20));
+			Yii::app()->cache->set('t1',$products);
+		}
+
+		foreach($products as $p)
+		{
+			echo $p->name.'<br/>';
+		}
 	}
 
 	public function actionIndex()
