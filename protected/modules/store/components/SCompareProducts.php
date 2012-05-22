@@ -1,8 +1,18 @@
 <?php
 
+Yii::import('application.modules.store.models.StoreProduct');
+Yii::import('application.modules.store.models.StoreAttribute');
 
+/**
+ * Handler compare lists
+ */
 class SCompareProducts extends CComponent
 {
+
+	/**
+	 * Max products to compare
+	 */
+	const MAX_PRODUCTS=20;
 
 	/**
 	 * @var string
@@ -41,12 +51,14 @@ class SCompareProducts extends CComponent
 	 */
 	public function add($id)
 	{
-		if(StoreProduct::model()->active()->countByAttributes(array('id'=>$id))>0)
+		if($this->count() <= self::MAX_PRODUCTS && StoreProduct::model()->active()->countByAttributes(array('id'=>$id))>0)
 		{
 			$current=$this->getIds();
 			$current[(int)$id]=(int)$id;
 			$this->setIds($current);
+			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -96,6 +108,15 @@ class SCompareProducts extends CComponent
 	}
 
 	/**
+	 * Count products to compare
+	 * @return int
+	 */
+	public function count()
+	{
+		return sizeof($this->getIds());
+	}
+
+	/**
 	 * Load StoreAttribute models by names
 	 * @return array of StoreAttribute models
 	 */
@@ -103,6 +124,7 @@ class SCompareProducts extends CComponent
 	{
 		if($this->_attributes===null)
 		{
+			$this->_attributes=array();
 			$names=array();
 			foreach($this->getProducts() as $p)
 				$names=array_merge($names,array_keys($p->getEavAttributes()));

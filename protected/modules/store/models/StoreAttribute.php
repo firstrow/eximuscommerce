@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.store.models.StoreAttributeTranslate');
+
 /**
  * This is the model class for table "StoreAttribute".
  *

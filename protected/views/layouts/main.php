@@ -39,7 +39,11 @@
 		</div>
 		<div class="right">
 			<ul>
-				<li><a href=""><span class="icon compare"></span>Товары на сравнение</a></li>
+				<li>
+					<a href="<?php echo Yii::app()->createUrl('/store/compare/index') ?>">
+						<span class="icon compare"></span><?php echo Yii::t('core', 'Товары на сравнение') ?>
+					</a>
+				</li>
 				<li><a href=""><span class="icon heart"></span>Список желаний</a></li>
 			</ul>
 		</div>

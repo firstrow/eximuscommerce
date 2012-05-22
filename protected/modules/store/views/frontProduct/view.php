@@ -103,7 +103,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			?>
 
 			<div class="silver_clean silver_button">
-				<button><span class="icon compare"></span>Сравнить</button>
+				<button onclick="return addProductToCompare(<?php echo $model->id ?>);"><span class="icon compare"></span>Сравнить</button>
 			</div>
 
 			<div class="silver_clean silver_button">
@@ -150,7 +150,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			'tabs'=>$tabs
 		));
 
-		// Fix tabs
+		// Fix tabs opening by anchor
 		Yii::app()->clientScript->registerScript('tabSelector', '
 			$(function() {
 				var anchor = $(document).attr("location").hash;
