@@ -8,6 +8,7 @@ $(document).ready(function() {
         $(".flash_messages").fadeOut();
     });
 
+    // Search box
     var searchQuery = $("#searchQuery");
     var defText = searchQuery.val();
     searchQuery.focus(function(){
@@ -18,7 +19,21 @@ $(document).ready(function() {
         if($(this).val()=='')
             $(this).val(defText);
     });
+
 });
+
+/**
+ * Add product to compare list and reload page
+ * @param id
+ * @return {Boolean}
+ */
+function addProductToCompare(id)
+{
+    $.get('/products/compare/add/'+id, function(){
+        window.location=window.location;
+    });
+    return false;
+}
 
 /**
  * Update cart data after product added.

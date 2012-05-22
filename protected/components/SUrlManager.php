@@ -60,7 +60,7 @@ class SUrlManager extends CUrlManager {
 			':enabledModules'=>implode(',', $moduleDirs),
 		));
 
-		foreach (glob($pattern, GLOB_BRACE) as $route)
+		foreach(glob($pattern, GLOB_BRACE) as $route)
 			$this->rules = array_merge(require($route), $this->rules);
 	}
 

@@ -52,6 +52,13 @@ return array(
 						1=>Yii::t('StoreModule.admin', 'Да'),
 					),
 				),
+				'use_in_compare'=>array(
+					'type'=>'dropdownlist',
+					'items'=>array(
+						1=>Yii::t('StoreModule.admin', 'Да'),
+						0=>Yii::t('StoreModule.admin', 'Нет'),
+					),
+				),
 				'position'=>array(
 					'type'=>'text',
 				),

@@ -43,7 +43,7 @@ class SAsCMenuArrayBehavior extends CActiveRecordBehavior
 
 		// TODO: Cache result
 		$children = $model->children()->findAll();
-		if($children)
+		if(!empty($children))
 		{
 			foreach($children as $c)
 				$data['items'][] = $this->walkArray($c);

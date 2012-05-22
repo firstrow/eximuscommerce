@@ -781,6 +781,7 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
+	 * @todo Optimize
 	 * @param $name
 	 * @return null
 	 */

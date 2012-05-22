@@ -7,11 +7,6 @@ class SHttpRequest extends CHttpRequest {
 
 	private $_pathInfo;
 
-	public function init()
-	{
-		return parent::init();
-	}
-
 	/**
 	 * @return string Parsed path info without lang prefix.
 	 */

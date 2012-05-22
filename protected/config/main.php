@@ -105,6 +105,7 @@ return array(
 		),
 		'cache'=>array(
 			'class'=>'CFileCache',
+			//'class'=>'CApcCache',
 		),
 		'languageManager'=>array(
 			'class'=>'SLanguageManager'

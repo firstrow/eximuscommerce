@@ -1024,6 +1024,18 @@ div.flash_messages button.close:hover {
     margin: 1px;
 }
 
+table.compareTable tr td {
+    padding: 3px;
+}
+
+table.compareTable tbody tr:nth-child(odd) {
+    background-color: #F2F2F2;
+}
+
+table.compareTable .attr {
+    font-weight: bold;
+    width: 200px;
+}
 /** Footer styles **/
 #footer {
     margin-top:30px;
