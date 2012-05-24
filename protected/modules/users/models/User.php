@@ -13,6 +13,8 @@ Yii::import('application.modules.users.models.UserProfile');
  * @property integer $created_at
  * @property integer $last_login
  * @property string $login_ip
+ * @property string $recovery_key // Password recovery key
+ * @property string $recovery_password
  * @property UserProfile $profile
  */
 class User extends BaseModel
@@ -166,5 +168,25 @@ class User extends BaseModel
 	public function getUpdateLink()
 	{
 		return CHtml::link(CHtml::encode($this->username), array('/users/admin/default/update', 'id'=>$this->id));
+	}
+
+	/**
+	 * Activate new user password
+	 * @static
+	 * @param $key
+	 * @return bool
+	 */
+	public static function activeNewPassword($key)
+	{
+		$user = User::model()->findByAttributes(array('recovery_key'=>$key));
+
+		if(!$user)
+			return false;
+
+		$user->password=self::encodePassword($user->recovery_password);
+		$user->recovery_key='';
+		$user->recovery_password='';
+		$user->save(false);
+		return true;
 	}
 }

@@ -38,7 +38,7 @@ $this->pageTitle = Yii::t('UsersModule.core','Авторизация');
 
 			<div class="row buttons">
 				<?php echo CHtml::link(Yii::t('UsersModule', 'Регистрация'), array('register/register')) ?><br>
-				<a href="#">Напомнить пароль</a>
+				<?php echo CHtml::link(Yii::t('UsersModule.core', 'Напомнить пароль'), array('/users/remind')) ?>
 			</div>
 		<?php echo CHtml::endForm(); ?>
 	</div>

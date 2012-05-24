@@ -6,7 +6,6 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Shop',
 	'language'=>'ru',
 	//'sourceLanguage'=>'ru',
 	'theme'=>'default',
@@ -145,7 +144,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		//'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'webmaster@example.com',
 		'adminPageSize'=>30,
 		'storeImages'=>array(
 			'path'=>'webroot.uploads.product',
