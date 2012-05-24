@@ -867,6 +867,10 @@ div.payment ul span:hover, div.delivery ul span:hover {
     text-decoration:underline;
 }
 
+.send_wishlist {
+    font-size: 13px;float: right;margin-right: 20px;font-weight: normal;
+}
+
 .login_box h2{
     margin-bottom:15px;
 }
@@ -1036,6 +1040,9 @@ table.compareTable .attr {
     font-weight: bold;
     width: 200px;
 }
+
+
+
 /** Footer styles **/
 #footer {
     margin-top:30px;

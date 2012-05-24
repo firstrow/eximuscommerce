@@ -29,8 +29,30 @@ $(document).ready(function() {
  */
 function addProductToCompare(id)
 {
-    $.get('/products/compare/add/'+id, function(){
+    $.get('/products/compare/add/'+id, function(response){
         window.location=window.location;
+    });
+    return false;
+}
+
+/**
+ * Add product to wish list and reload page
+ * @param id
+ * @return {Boolean}
+ */
+function addProductToWishList(id)
+{
+    $.ajax({
+        url: '/wishlist/add/'+id,
+        statusCode: {
+            302: function (data) {
+                window.location='/users/login';
+            },
+            200: function()
+            {
+                window.location=window.location;
+            }
+        }
     });
     return false;
 }

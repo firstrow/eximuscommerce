@@ -42,7 +42,7 @@
 				), array('class'=>'blue_button'));
 			?>
 			<button class="small_silver_button" onclick="return addProductToCompare(<?php echo $data->id ?>);"><span class="compare">&nbsp</span></button>
-			<button class="small_silver_button"><span class="heart">&nbsp;</span></button>
+			<button class="small_silver_button" onclick="return addProductToWishList(<?php echo $data->id ?>);"><span class="heart">&nbsp;</span></button>
 			<?php echo CHtml::endForm() ?>
 	</div>
 </div>

@@ -49,6 +49,7 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 			'class'=>'BaseUser',
+			'loginUrl'=>'/users/login'
 		),
 		'urlManager'=>array(
 			'urlFormat'=>'path',

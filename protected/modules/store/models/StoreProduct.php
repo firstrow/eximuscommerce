@@ -534,6 +534,12 @@ class StoreProduct extends BaseModel
 		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'product_id=:id', array(':id'=>$this->id));
 		Yii::app()->db->createCommand()->delete('StoreProductConfigurations', 'configurable_id=:id', array(':id'=>$this->id));
 
+		// Delete from wish lists
+		Yii::import('application.modules.store.models.wishlist.StoreWishlistProducts');
+		$wishlistProduct=StoreWishlistProducts::model()->findByAttributes(array('product_id'=>$this->id));
+		if($wishlistProduct)
+			$wishlistProduct->delete();
+
 		return parent::afterDelete();
 	}
 

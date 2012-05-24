@@ -4,7 +4,7 @@ Yii::import('application.modules.store.models.StoreProduct');
 Yii::import('application.modules.store.models.StoreAttribute');
 
 /**
- * Handler compare lists
+ * Handle compare lists
  */
 class SCompareProducts extends CComponent
 {

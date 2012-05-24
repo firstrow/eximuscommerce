@@ -5,6 +5,7 @@ Yii::import('application.modules.comments.components.CommentBehavior');
 Yii::import('ext.behaviors.eav.EEavBehavior');
 Yii::import('ext.behaviors.eav.ext.behaviors.STranslateBehavior');
 Yii::import('application.modules.discounts.components.DiscountBehavior');
+Yii::import('application.modules.store.models.wishlist.*');
 
 
 class SiteController extends Controller {
@@ -20,7 +21,6 @@ class SiteController extends Controller {
 		$products=Yii::app()->cache->get('t1');
 		if($products===false)
 		{
-
 			$products = StoreProduct::model()
 				->active()
 				->byViews()

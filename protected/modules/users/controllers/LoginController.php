@@ -34,8 +34,14 @@ class LoginController extends Controller
 				else
 					$duration = 0;
 
+
+				if(Yii::app()->user->returnUrl && Yii::app()->user->returnUrl!=='/index.php')
+					$url=Yii::app()->user->returnUrl;
+				else
+					$url='/';
+
 				Yii::app()->user->login($model->getIdentity(), $duration);
-				Yii::app()->request->redirect('/');
+				Yii::app()->request->redirect($url);
 			}
 		}
 

@@ -1,4 +1,7 @@
 <?php
+
+	Yii::import('application.modules.store.models.wishlist.StoreWishlist');
+
 	$assetsManager = Yii::app()->clientScript;
 	$assetsManager->registerCoreScript('jquery');
 	$assetsManager->registerCoreScript('jquery.ui');
@@ -44,7 +47,11 @@
 						<span class="icon compare"></span><?php echo Yii::t('core', 'Товары на сравнение') ?>
 					</a>
 				</li>
-				<li><a href=""><span class="icon heart"></span>Список желаний</a></li>
+				<li>
+					<a href="<?php echo Yii::app()->createUrl('/store/wishlist/index') ?>">
+						<span class="icon heart"></span><?php echo Yii::t('core', 'Список желаний ({c})', array('{c}'=>StoreWishlist::countByUser())) ?>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</div>

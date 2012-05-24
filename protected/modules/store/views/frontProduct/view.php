@@ -94,7 +94,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				echo CHtml::hiddenField('configurable_id', 0);
 				echo CHtml::hiddenField('quantity', 1);
 
-				echo CHtml::ajaxSubmitButton('Купить', array('/orders/cart/add'), array(
+				echo CHtml::ajaxSubmitButton(Yii::t('StoreModule.core','Купить'), array('/orders/cart/add'), array(
 					'dataType'=>'json',
 					'success'=>'js:function(data, textStatus, jqXHR){processCartResponse(data, textStatus, jqXHR)}',
 				), array('id'=>'buyButton','class'=>'blue_button'));
@@ -107,7 +107,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			</div>
 
 			<div class="silver_clean silver_button">
-				<button><span class="icon heart"></span>Список желаний</button>
+				<button onclick="return addProductToWishList(<?php echo $model->id ?>);"><span class="icon heart"></span>Список желаний</button>
 			</div>
 
 			<div id="successAddedToCart"></div>
