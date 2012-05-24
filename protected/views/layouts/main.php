@@ -1,5 +1,6 @@
 <?php
 
+	Yii::import('application.modules.store.components.SCompareProducts');
 	Yii::import('application.modules.store.models.wishlist.StoreWishlist');
 
 	$assetsManager = Yii::app()->clientScript;
@@ -44,7 +45,7 @@
 			<ul>
 				<li>
 					<a href="<?php echo Yii::app()->createUrl('/store/compare/index') ?>">
-						<span class="icon compare"></span><?php echo Yii::t('core', 'Товары на сравнение') ?>
+						<span class="icon compare"></span><?php echo Yii::t('core', 'Товары на сравнение ({c})', array('{c}'=>SCompareProducts::countSession())) ?>
 					</a>
 				</li>
 				<li>

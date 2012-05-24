@@ -117,6 +117,16 @@ class SCompareProducts extends CComponent
 	}
 
 	/**
+	 * Count user compare items without creating new instance
+	 * @static
+	 * @return int
+	 */
+	public static function countSession()
+	{
+		return sizeof(Yii::app()->session['SCompareProducts']);
+	}
+
+	/**
 	 * Load StoreAttribute models by names
 	 * @return array of StoreAttribute models
 	 */

@@ -8,6 +8,8 @@ class WishlistControllerWebTest extends WebTestCase
 
 	public function testWishlist()
 	{
+		Yii::import('application.modules.store.models.wishlist.*');
+		$wishlist = StoreWishlist::model()->find();
 		$product = StoreProduct::model()->active()->find();
 		$this->assertTrue($product instanceof StoreProduct);
 
@@ -22,7 +24,6 @@ class WishlistControllerWebTest extends WebTestCase
 		$this->assertTrue($this->isTextPresent('Продукт успешно добавлен в список желаний'));
 		$this->assertTrue($this->isTextPresent($product->name));
 		// View wishlist view
-		$wishlist = StoreWishlist::model()->find();
 		$this->open(Yii::app()->createAbsoluteUrl('/store/wishlist/view', array('key'=>$wishlist->key)));
 		$this->assertTrue($this->isTextPresent('Список желаний'));
 	}
