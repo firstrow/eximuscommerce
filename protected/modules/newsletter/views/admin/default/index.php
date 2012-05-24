@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var CActiveForm $form
+ */
+
 $this->pageHeader = 'Рассылка писем';
 
 $this->breadcrumbs = array(
@@ -39,9 +43,16 @@ $this->breadcrumbs = array(
 		<span class="required"> *</span>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'useHtml'); ?>
+		<?php echo $form->checkBox($model,'useHtml') ?>
+	</div>
+
 	<div class="row submit">
 		<label>&nbsp;</label>
-		<?php echo CHtml::submitButton(Yii::t('NewsletterModule.admin', 'Отправить всем пользователям')); ?>
+		<?php echo CHtml::submitButton(Yii::t('NewsletterModule.admin', 'Отправить всем пользователям'), array(
+		'confirm'=>Yii::t('NewsletterModule.admin', 'Вы уверены?'),
+	)); ?>
 		<?php echo CHtml::submitButton(Yii::t('NewsletterModule.admin', 'Отправить только {email}',array('{email}'=>Yii::app()->user->email)), array('name'=>'NewsletterAdminForm[test]')); ?>
 	</div>
 

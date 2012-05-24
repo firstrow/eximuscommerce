@@ -11,12 +11,14 @@ class NewsletterAdminForm extends CFormModel
 	public $sender_email;
 	public $body;
 	public $test;
+	public $useHtml;
 
 	public function rules()
 	{
 		return array(
 			array('subject, sender_name, sender_email, body', 'required'),
 			array('sender_email', 'email'),
+			array('useHtml', 'boolean'),
 			array('test', 'type'),
 		);
 	}
@@ -28,6 +30,7 @@ class NewsletterAdminForm extends CFormModel
 			'sender_name'  => Yii::t('NewsletterModule.admin', 'Имя отправителя'),
 			'sender_email' => Yii::t('NewsletterModule.admin', 'Email отправителя'),
 			'body'         => Yii::t('NewsletterModule.admin', 'Сообщение'),
+			'useHtml'      => Yii::t('NewsletterModule.admin', 'HTML формат'),
 		);
 	}
 
@@ -50,7 +53,7 @@ class NewsletterAdminForm extends CFormModel
 		$mailer->Subject  = $this->subject;
 		$mailer->Body     = $this->body;
 		$mailer->AddReplyTo($this->sender_email);
-		$mailer->isHtml(true);
+		$mailer->isHtml((boolean)$this->useHtml);
 
 		foreach($users as $user)
 		{
