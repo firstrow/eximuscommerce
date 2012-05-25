@@ -489,6 +489,8 @@ button.small_silver_button {
     border:0;
     cursor:pointer;
     text-align:left;
+    padding: 0;
+    margin: 0;
 }
 
 button.small_silver_button span {

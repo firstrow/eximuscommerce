@@ -10,7 +10,8 @@
  * @property integer $configurable_id
  * @property string $name
  * @property string $configurable_name Name of configurable product
- * @property string $vairants Key/value array of selected vvariants. E.g: Color/Green, Size/Large
+ * @property string $configurable_data same as $variants but store attr=>value for configurable product
+ * @property string $variants Key/value array of selected variants. E.g: Color/Green, Size/Large
  * @property integer $quantity
  * @property string $sku
  * @property float $price
@@ -115,14 +116,23 @@ class OrderProduct extends BaseModel
 	 * Render full name to present product on order view
 	 * @return string
 	 */
-	public function getRenderFullName()
+	public function getRenderFullName($appendConfigurableName=true)
 	{
 		$result = $this->name;
 
-		if(!empty($this->configurable_name))
+		if(!empty($this->configurable_name) && $appendConfigurableName)
 			$result .= '<br/>'.$this->configurable_name;
 
 		$variants = unserialize($this->variants);
+
+		if($this->configurable_data!=='')
+			$this->configurable_data=unserialize($this->configurable_data);
+
+		if(!is_array($variants))
+			$variants=array();
+
+		$variants=array_merge($variants,$this->configurable_data);
+
 		if(!empty($variants))
 		{
 			foreach($variants as $key=>$value)

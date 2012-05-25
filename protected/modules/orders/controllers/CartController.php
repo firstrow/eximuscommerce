@@ -116,10 +116,10 @@ class CartController extends Controller
 		// Process configurable products
 		if($model->use_configurations)
 		{
-			// Get last conf item
-			$configurable_id  = Yii::app()->request->getPost('configurable_id', 0);
+			// Get last configurable item
+			$configurable_id = Yii::app()->request->getPost('configurable_id', 0);
 
-			if($configurable_id && !in_array($configurable_id , $model->configurations))
+			if(!$configurable_id || !in_array($configurable_id , $model->configurations))
 				$this->_addError(Yii::t('OrdersModule.core', 'Ошибка. Выберите вариант продукта.'), true);
 		}else
 			$configurable_id  = 0;
@@ -204,9 +204,20 @@ class CartController extends Controller
 			// Process configurable product
 			if(isset($item['configurable_model']) && $item['configurable_model'] instanceof StoreProduct)
 			{
+				$configurable_data=array();
+
 				$ordered_product->configurable_name = $item['configurable_model']->name;
 				// Use configurable product sku
 				$ordered_product->sku = $item['configurable_model']->sku;
+				// Save configurable data
+
+				$attributeModels = StoreAttribute::model()->findAllByPk($item['model']->configurable_attributes);
+				foreach($attributeModels as $attribute)
+				{
+					$method = 'eav_'.$attribute->name;
+					$configurable_data[$attribute->title]=$item['configurable_model']->$method;
+				}
+				$ordered_product->configurable_data=serialize($configurable_data);
 			}
 
 			// Save selected variants as key/value array

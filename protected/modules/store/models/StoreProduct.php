@@ -15,7 +15,7 @@ Yii::import('application.modules.store.models.StoreProductCategoryRef');
  * @property integer $type_id
  * @property string $name
  * @property string $url
- * @property float $price Product price. For configurbale product its min_price
+ * @property float $price Product price. For configurable product its min_price
  * @property float $max_price for configurable products. Used in StoreProduct::priceRange to display prices on category view
  * @property boolean $is_active
  * @property string $short_description
@@ -134,6 +134,30 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		return array(
+			'images'          => array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
+			'mainImage'       => array(self::HAS_ONE, 'StoreProductImage', 'product_id', 'condition'=>'is_main=1'),
+			'imagesNoMain'    => array(self::HAS_MANY, 'StoreProductImage', 'product_id', 'condition'=>'is_main=0'),
+			'manufacturer'    => array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id', 'scopes'=>'applyTranslateCriteria'),
+			//'productsCount'   => array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
+			'type'            => array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
+			'related'         => array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
+			'relatedProducts' => array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
+			'relatedProductCount' => array(self::STAT, 'StoreRelatedProduct', 'product_id'),
+			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
+			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
+			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1','scopes'=>'applyTranslateCriteria'),
+			'translate'       => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
+			// Product variation
+			'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id'), 'with'=>array('attribute', 'option'), 'order'=>'option.position'),
+		);
+	}
+
+	/**
 	 * Find product by url.
 	 * Scope.
 	 * @param string StoreProduct url
@@ -238,30 +262,6 @@ class StoreProduct extends BaseModel
 			$this->getDbCriteria()->mergeWith($criteria);
 		}
 		return $this;
-	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		return array(
-			'images'          => array(self::HAS_MANY, 'StoreProductImage', 'product_id'),
-			'mainImage'       => array(self::HAS_ONE, 'StoreProductImage', 'product_id', 'condition'=>'is_main=1'),
-			'imagesNoMain'    => array(self::HAS_MANY, 'StoreProductImage', 'product_id', 'condition'=>'is_main=0'),
-			'manufacturer'    => array(self::BELONGS_TO, 'StoreManufacturer', 'manufacturer_id', 'scopes'=>'applyTranslateCriteria'),
-			//'productsCount'   => array(self::STAT, 'StoreProduct', 'manufacturer_id', 'select'=>'count(t.id)'),
-			'type'            => array(self::BELONGS_TO, 'StoreProductType', 'type_id'),
-			'related'         => array(self::HAS_MANY, 'StoreRelatedProduct', 'product_id'),
-			'relatedProducts' => array(self::HAS_MANY, 'StoreProduct', array('related_id'=>'id'), 'through'=>'related'),
-			'relatedProductCount' => array(self::STAT, 'StoreRelatedProduct', 'product_id'),
-			'categorization'  => array(self::HAS_MANY, 'StoreProductCategoryRef', 'product'),
-			'categories'      => array(self::HAS_MANY, 'StoreCategory',array('category'=>'id'), 'through'=>'categorization'),
-			'mainCategory'    => array(self::HAS_ONE, 'StoreCategory', array('category'=>'id'), 'through'=>'categorization', 'condition'=>'categorization.is_main = 1','scopes'=>'applyTranslateCriteria'),
-			'translate'       => array(self::HAS_ONE, $this->translateModelName, 'object_id'),
-			// Product variation
-			'variants'        => array(self::HAS_MANY, 'StoreProductVariant', array('product_id'), 'with'=>array('attribute', 'option'), 'order'=>'option.position'),
-		);
 	}
 
 	/**
@@ -481,7 +481,7 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
-	 * Update price and max_price for configurbale product
+	 * Update price and max_price for configurable product
 	 */
 	public function updatePrices(StoreProduct $model)
 	{
@@ -688,7 +688,7 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
-	 * Calculate product price by its variants, confirugation and self price
+	 * Calculate product price by its variants, configuration and self price
 	 * @static
 	 * @param $product
 	 * @param array $variants
@@ -707,7 +707,7 @@ class StoreProduct extends BaseModel
 		else
 			$result = $product->price;
 
-		// if $variants containts not models
+		// if $variants contains not models
 		if(!empty($variants) && ($variants[0] instanceof StoreProductVariant) === false)
 			$variants = StoreProductVariant::model()->findAllByPk($variants);
 

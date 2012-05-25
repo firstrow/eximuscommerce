@@ -73,7 +73,7 @@ if(empty($items))
 						echo CHtml::closeTag('span');
 					}
 
-					// Display congigurable options
+					// Display configurable options
 					if(isset($product['configurable_model']))
 					{
 						$attributeModels = StoreAttribute::model()->findAllByPk($product['model']->configurable_attributes);
