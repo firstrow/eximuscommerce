@@ -559,6 +559,20 @@ button.small_silver_button:active {
 {
     background-position: 100% -156px;
 }
+
+/* OPERA */
+
+noindex:-o-prefocus,.silver_clean:active, .silver_clean.active {
+    background-position: 0 -67px;
+}
+noindex:-o-prefocus,.silver_clean button:active,
+noindex:-o-prefocus,.silver_clean button.active,
+noindex:-o-prefocus,.silver_clean a.active,
+noindex:-o-prefocus,.silver_clean a:active
+{
+    background-position: 100% -96px;
+}
+
 /** End wide silver button **/
 
 #shares {

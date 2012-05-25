@@ -20,3 +20,5 @@
 
 Ваш новый пароль:
 <?php echo $this->user->recovery_password ?>
+
+
