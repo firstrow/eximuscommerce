@@ -53,8 +53,14 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			</div>
 			<div class="stars">
 				<?php $this->widget('CStarRating',array(
-					'name'=>'rating',
+					'name'=>'rating_'.$model->id,
+					'id'=>'rating_'.$model->id,
 					'allowEmpty'=>false,
+					'readOnly'=>isset(Yii::app()->request->cookies['rating_'.$model->id]),
+					'minRating'=>1,
+					'maxRating'=>5,
+					'value'=>round($model->rating / $model->votes),
+					'callback'=>'js:function(){rateProduct('.$model->id.')}',
 			)); ?>
 			</div>
 		</div>

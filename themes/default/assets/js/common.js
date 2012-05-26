@@ -85,6 +85,22 @@ function processCartResponseFromList(data, textStatus, jqXHR, redirect)
     }
 }
 
+/**
+ * Rate product
+ * @param id product id
+ */
+function rateProduct(id)
+{
+    var url = '/store/ajax/rateProduct/'+id;
+    var rating = $('input[name=rating_'+id+']:checked').val();
+    $('input[name=rating_'+id+']').rating('disable');
+    $.ajax({
+        url: url,
+        data:{rating:rating}
+    });
+
+}
+
 function applyCategorySorter(el)
 {
     window.location = $(el).val();

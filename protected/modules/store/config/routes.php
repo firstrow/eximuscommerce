@@ -7,6 +7,7 @@ return array(
 	'product/<url>'=>array('store/frontProduct/view', 'urlSuffix'=>'.html'),
 	'product/captcha'=>array('store/frontProduct/captcha'),
 	'store/ajax/activateCurrency/<id>'=>array('store/ajax/activateCurrency'),
+	'store/ajax/rateProduct/<id>'=>array('store/ajax/rateProduct'),
 	'store/index/renderProductsBlock/<scope>'=>array('store/index/renderProductsBlock'),
 	array('store/category/view', 'pattern'=>'category/<url>/*'),
 	'products/search/*'=>array('store/category/search'),

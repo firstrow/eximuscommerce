@@ -33,6 +33,8 @@ Yii::import('application.modules.store.models.StoreProductCategoryRef');
  * @property integer $added_to_cart_count
  * @property string $created
  * @property string $updated
+ * @property integer $votes // Star rating votes
+ * @property integer $rating
  * @method StoreProduct active() Find Only active products
  * @method StoreProduct byViews() Order by views count
  * @method StoreProduct byAddedToCart() Order by views count
