@@ -32,10 +32,10 @@ return array(
 					'empty'=>Yii::t('StoreModule.admin', 'Выберите производителя'),
 				),
 				'short_description'=>array(
-					'type'=>'textarea',
+					'type'=>'SRichTextarea',
 				),
 				'full_description'=>array(
-					'type'=>'textarea',
+					'type'=>'SRichTextarea',
 				),
 			),
 		),
