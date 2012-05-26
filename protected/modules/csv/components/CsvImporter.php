@@ -1,10 +1,12 @@
 <?php
 
+Yii::import('application.modules.csv.components.CsvImage');
 Yii::import('application.modules.store.StoreModule');
 Yii::import('application.modules.store.models.*');
 
 /**
  * Import products from csv format
+ * Images must be located at ./uploads/importImages
  */
 class CsvImporter extends CComponent
 {
@@ -193,6 +195,13 @@ class CsvImporter extends CComponent
 			// Update categories only for new products
 			if($newProduct===true)
 				$model->setCategories(array($category_id), $category_id);
+			// Process product main image if product doesn't have one
+			if(isset($data['image']) && !empty($data['image']))
+			{
+				$image=CsvImage::create($data['image']);
+				if($image && $model->mainImage===null)
+					$model->addImage($image);
+			}
 		}
 		else
 		{
@@ -416,6 +425,7 @@ class CsvImporter extends CComponent
 			'url'                    => Yii::t('StoreModule.core', 'URL'),
 			'price'                  => Yii::t('StoreModule.core', 'Цена'),
 			'is_active'              => Yii::t('StoreModule.core', 'Активен'),
+			'image    '              => Yii::t('StoreModule.core', 'Главное изображение'),
 			'short_description'      => Yii::t('StoreModule.core', 'Краткое описание'),
 			'full_description'       => Yii::t('StoreModule.core', 'Полное описание'),
 			'meta_title'             => Yii::t('StoreModule.core', 'Meta Title'),

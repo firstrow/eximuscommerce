@@ -21,7 +21,7 @@ return array(
 					),
 				),
 				'description'=>array(
-					'type'=>'textarea',
+					'type'=>'SRichTextarea',
 				),
 				'position'=>array(
 					'type'=>'text',

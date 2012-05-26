@@ -11,22 +11,22 @@ return array(
 			'title'=>Yii::t('PagesModule.core', 'Параметры'),
 			'elements'=>array(
 				'name'=>array(
-		            'type'=>'text',
-		        ),
+					'type'=>'text',
+				),
 				'url'=>array(
-		            'type'=>'text',
-		        ),
+					'type'=>'text',
+				),
 				'parent_id'=>array(
-		            'type'=>'dropdownlist',
-		            'items'=>PageCategory::keyValueList(),
-		            'empty'=>'---',
-		            'options'=>array(
-		            	$this->model->id=>array('disabled'=>true),
-			        )
-		        ),
+					'type'=>'dropdownlist',
+					'items'=>PageCategory::keyValueList(),
+					'empty'=>'---',
+					'options'=>array(
+						$this->model->id=>array('disabled'=>true),
+					)
+				),
 				'description'=>array(
-		            'type'=>'textarea',
-		        ),
+					'type'=>'SRichTextarea',
+				),
 			),
 		),
 		'seo'=>array(
@@ -34,14 +34,14 @@ return array(
 			'title'=>Yii::t('PagesModule.core', 'Мета данные'),
 			'elements'=>array(
 				'meta_title'=>array(
-		            'type'=>'text',
-		        ),
+					'type'=>'text',
+				),
 				'meta_keywords'=>array(
-		            'type'=>'textarea',
-		        ),
-		        'meta_description'=>array(
-		            'type'=>'textarea',
-		        ),
+					'type'=>'textarea',
+				),
+				'meta_description'=>array(
+					'type'=>'textarea',
+				),
 			),
 		),
 		'design'=>array(
@@ -49,14 +49,14 @@ return array(
 			'title'=>Yii::t('PagesModule.core', 'Внешний вид'),
 			'elements'=>array(
 				'page_size'=>array(
-		            'type'=>'text',
-		        ),
+					'type'=>'text',
+				),
 				'layout'=>array(
-		            'type'=>'text',
-		        ),
+					'type'=>'text',
+				),
 				'view'=>array(
-		            'type'=>'text',
-		        ),
+					'type'=>'text',
+				),
 			),
 		),
 	),

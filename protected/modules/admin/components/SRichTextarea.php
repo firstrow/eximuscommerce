@@ -7,5 +7,8 @@ Yii::import('ext.tinymce.STinyMceArea');
  */
 class SRichTextarea extends STinyMceArea
 {
-
+	public function setModel($model)
+	{
+		$this->model=$model;
+	}
 }

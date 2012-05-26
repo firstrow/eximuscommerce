@@ -25,6 +25,7 @@ class STinyMceArea extends CInputWidget
 			$cs->registerScript(__CLASS__, 'var tinyMceUrl="'.$assetsUrl.'/tiny_mce/tiny_mce.js'.'";', CClientScript::POS_HEAD);
 			$cs->registerScriptFile($assetsUrl.'/functions.js');
 		}
+		parent::init();
 	}
 
 	public function run()
@@ -35,6 +36,6 @@ class STinyMceArea extends CInputWidget
 			echo CHtml::activeTextArea($this->model, $this->attribute, $this->htmlOptions);
 		else
 			echo CHtml::textArea($name, $this->value, $this->htmlOptions);
-		echo '<p class="hint"><a onclick="return setupTinyMce(\'#'.$id.'\', this);">WYSIWYG</a></p>';
+		echo '<p class="hint" style="float:left;"><a onclick="return setupTinyMce(\'#'.$id.'\', this);">WYSIWYG</a></p>';
 	}
 }

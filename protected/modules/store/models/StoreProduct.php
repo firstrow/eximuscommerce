@@ -772,6 +772,41 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
+	 * Add new image to product.
+	 * First image image will be marked as main
+	 * @param CUploadedFile $image
+	 */
+	public function addImage(CUploadedFile $image)
+	{
+		Yii::import('application.modules.store.components.StoreUploadedImage');
+		Yii::import('ext.phpthumb.PhpThumbFactory');
+
+		$name = StoreUploadedImage::createName($this, $image);
+		$fullPath = StoreUploadedImage::getSavePath().'/'.$name;
+		$image->saveAs($fullPath);
+
+		// Check if product has main image
+		$is_main = (int) StoreProductImage::model()->countByAttributes(array(
+			'product_id' => $this->id,
+			'is_main'    => 1
+		));
+
+		$imageModel = new StoreProductImage;
+		$imageModel->product_id = $this->id;
+		$imageModel->name = $name;
+		$imageModel->is_main = ($is_main == 0) ? true : false;
+		$imageModel->uploaded_by = Yii::app()->user->getId();
+		$imageModel->date_uploaded = date('Y-m-d H:i:s');
+		$imageModel->save();
+
+		// Resize if needed
+		$thumb  = PhpThumbFactory::create($fullPath);
+		$sizes  = Yii::app()->params['storeImages']['sizes'];
+		$method = $sizes['resizeMethod'];
+		$thumb->$method($sizes['maximum'][0],$sizes['maximum'][1])->save($fullPath);
+	}
+
+	/**
 	 * @return CSort to use in gridview, listview, etc...
 	 */
 	public static function getCSort()

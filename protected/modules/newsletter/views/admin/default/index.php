@@ -39,7 +39,14 @@ $this->breadcrumbs = array(
 
 	<div class="row">
 		<?php echo $form->label($model,'body'); ?>
-		<?php echo $form->textArea($model,'body') ?>
+		<?php
+			//echo $form->textArea($model,'body')
+			$editor=new SRichTextarea();
+			$editor->init();
+			$editor->name='NewsletterAdminForm[body]';
+			$editor->value=$model->body;
+			$editor->run();
+		?>
 		<span class="required"> *</span>
 	</div>
 

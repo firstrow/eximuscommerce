@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Manage
- * products
+ * Manage products
  */
 class ProductsController extends SAdminController
 {
@@ -65,7 +64,7 @@ class ProductsController extends SAdminController
 				throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка. Тип продукта указан неправильно.'));
 		}
 
-		// Set configurabe attributes on new record
+		// Set configurable attributes on new record
 		if($model->isNewRecord)
 		{
 			if($model->use_configurations && isset($_GET['StoreProduct']['configurable_attributes']))
@@ -124,32 +123,7 @@ class ProductsController extends SAdminController
 					foreach($images as $image)
 					{
 						if(!StoreUploadedImage::hasErrors($image))
-						{
-							$name = StoreUploadedImage::createName($model, $image);
-							$fullPath = StoreUploadedImage::getSavePath().'/'.$name;
-							$image->saveAs($fullPath);
-
-							// Check if product has main image
-							$is_main = (int) StoreProductImage::model()->countByAttributes(array(
-								'product_id'=>$model->id,
-								'is_main'=>1
-							));
-
-							$imageModel = new StoreProductImage;
-							$imageModel->product_id = $model->id;
-							$imageModel->name = $name;
-							$imageModel->is_main = ($is_main == 0) ? true : false;
-							$imageModel->uploaded_by = Yii::app()->user->getId();
-							$imageModel->date_uploaded = date('Y-m-d H:i:s');
-							$imageModel->save();
-
-							// Resize if needed
-							Yii::import('ext.phpthumb.PhpThumbFactory');
-							$thumb = PhpThumbFactory::create($fullPath);
-							$sizes = Yii::app()->params['storeImages']['sizes'];
-							$method = $sizes['resizeMethod'];
-							$thumb->$method($sizes['maximum'][0],$sizes['maximum'][1])->save($fullPath);
-						}
+							$model->addImage($image);
 						else
 							$this->setFlashMessage(Yii::t('StoreModule.admin', 'Ошибка загрузки изображения'));
 					}
@@ -398,6 +372,7 @@ class ProductsController extends SAdminController
 
 	/**
 	 * Delete products
+	 * @param array $id
 	 */
 	public function actionDelete($id = array())
 	{
@@ -417,7 +392,7 @@ class ProductsController extends SAdminController
 	}
 
 	/**
-	 * Validate required store attrbiutes
+	 * Validate required store attributes
 	 * @param StoreProduct $model
 	 * @return bool
 	 */
