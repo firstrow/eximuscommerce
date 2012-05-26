@@ -59,7 +59,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					'readOnly'=>isset(Yii::app()->request->cookies['rating_'.$model->id]),
 					'minRating'=>1,
 					'maxRating'=>5,
-					'value'=>round($model->rating / $model->votes),
+					'value'=>($model->rating+$model->votes) ? round($model->rating / $model->votes) : 0,
 					'callback'=>'js:function(){rateProduct('.$model->id.')}',
 			)); ?>
 			</div>

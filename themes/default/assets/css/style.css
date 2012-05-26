@@ -1000,7 +1000,7 @@ div.flash_messages {
     -moz-border-radius: 4px;
     border-radius: 4px;
     margin-top: 10px;
-    margin-bottom: -5px;
+    margin-bottom: 5px;
 }
 
 div.flash_messages ul {

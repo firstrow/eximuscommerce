@@ -22,7 +22,7 @@ class WishlistControllerWebTest extends WebTestCase
 		$this->clickAndWait('css=input.blue_button');
 		$this->assertTrue($this->isTextPresent('Список желаний'));
 		$this->assertTrue($this->isTextPresent('Продукт успешно добавлен в список желаний'));
-		$this->assertTrue($this->isTextPresent($product->name));
+		$this->assertTrue($this->isTextPresent(str_replace('  ',' ',$product->name)));
 		// View wishlist view
 		$this->open(Yii::app()->createAbsoluteUrl('/store/wishlist/view', array('key'=>$wishlist->key)));
 		$this->assertTrue($this->isTextPresent('Список желаний'));

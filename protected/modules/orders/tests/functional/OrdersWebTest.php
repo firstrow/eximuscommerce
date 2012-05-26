@@ -18,7 +18,9 @@ class OrdersWebTest extends WebTestCase
 		$comment='test comment '.$microTime;
 
 		// Find any active product
-		$product = StoreProduct::model()->active()->find();
+		$product = StoreProduct::model()->active()->findByAttributes(array(
+			'use_configurations'=>0
+		));
 		$this->assertTrue($product instanceof StoreProduct);
 
 		// Open product page and add to cart

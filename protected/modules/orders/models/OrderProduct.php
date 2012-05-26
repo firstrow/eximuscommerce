@@ -130,6 +130,8 @@ class OrderProduct extends BaseModel
 
 		if(!is_array($variants))
 			$variants=array();
+		if(!is_array($this->configurable_data))
+			$this->configurable_data=array();
 
 		$variants=array_merge($variants,$this->configurable_data);
 
