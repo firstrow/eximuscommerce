@@ -30,7 +30,7 @@ $this->pageTitle = $title;
 				<?php echo CHtml::closeTag('h3') ?>
 
 				<?php echo CHtml::openTag('span', array('class'=>'price')) ?>
-				<?php echo StoreProduct::formatPrice($product->price) ?>
+				<?php echo StoreProduct::formatPrice(Yii::app()->currency->convert($product->price)) ?>
 				<?php echo Yii::app()->currency->active->symbol; ?>
 				<?php echo CHtml::closeTag('span') ?>
 			</td>

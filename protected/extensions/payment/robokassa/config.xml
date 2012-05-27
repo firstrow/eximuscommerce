@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <system>
     <id>robokassa</id>
-    <name>WebMoney</name>
-    <class>WebMoneyPaymentSystem</class>
+    <name>Robokassa</name>
+    <class>RobokassaPaymentSystem</class>
     <version>1.0</version>
 </system>

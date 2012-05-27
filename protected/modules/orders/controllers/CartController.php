@@ -56,7 +56,7 @@ class CartController extends Controller
 
 		$this->render('index', array(
 			'items'           => Yii::app()->cart->getDataWithModels(),
-			'totalPrice'      => Yii::app()->cart->getTotalPrice(),
+			'totalPrice'      => Yii::app()->currency->convert(Yii::app()->cart->getTotalPrice()),
 			'deliveryMethods' => $deliveryMethods,
 		));
 	}

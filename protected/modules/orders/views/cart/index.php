@@ -4,7 +4,7 @@
  * Display cart
  * @var Controller $this
  * @var SCart $cart
- * @var $totaPrice integer
+ * @var $totalPrice integer
  */
 
 Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/cart.js', CClientScript::POS_END);
@@ -111,7 +111,7 @@ if(empty($items))
 		</div>
 		<span class="total">Всего:</span>
 		<span id="total">
-			<?php echo StoreProduct::formatPrice(Yii::app()->currency->convert(Yii::app()->cart->getTotalPrice())) ?>
+			<?php echo StoreProduct::formatPrice($totalPrice) ?>
 			<?php echo Yii::app()->currency->active->symbol ?>
 		</span>
 	</div>
@@ -131,8 +131,8 @@ if(empty($items))
 							'checked'        => ($this->form->delivery_id == $delivery->id),
 							'uncheckValue'   => null,
 							'value'          => $delivery->id,
-							'data-price'     => $delivery->price,
-							'data-free-from' => $delivery->free_from,
+							'data-price'     => Yii::app()->currency->convert($delivery->price),
+							'data-free-from' => Yii::app()->currency->convert($delivery->free_from),
 							'onClick'        => 'recountOrderTotalPrice(this);',
 						));
 						?>
@@ -183,7 +183,7 @@ if(empty($items))
 
 <div class="has_background confirm_order">
 	<h1>Всего к оплате:</h1>
-	<span id="orderTotalPrice" class="total"><?php echo StoreProduct::formatPrice(Yii::app()->currency->convert($totalPrice)) ?></span>
+	<span id="orderTotalPrice" class="total"><?php echo StoreProduct::formatPrice($totalPrice) ?></span>
 	<span class="current_currency">
 		<?php echo Yii::app()->currency->active->symbol; ?>
 	</span>

@@ -58,6 +58,5 @@ class SiteController extends Controller {
 		}else{
 			echo 'Some error hapenned!';
 		}
-
 	}
 }

@@ -125,7 +125,7 @@ class WebMoneyPaymentSystem extends BasePaymentSystem
 		$html= strtr($html,array(
 			'{PAYMENT_AMOUNT}' => $order->full_price,
 			'{PAYMENT_NO}'     => $order->id,
-			'{PAYMENT_DESC}'   => 'Оплата заказа #'.$order->id,
+			'{PAYMENT_DESC}'   => Yii::t('core', "Оплата заказа #").$order->id,
 			'{PAYEE_PURSE}'    => $settings['LMI_PAYEE_PURSE'],
 			'{SIM_MODE}'       => '0',
 			'{SUCCESS_URL}'    => Yii::app()->createAbsoluteUrl('/orders/payment/process', array('payment_id'=>$method->id)),
