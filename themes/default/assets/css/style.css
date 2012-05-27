@@ -19,6 +19,13 @@ h2 {
     text-shadow:0px 1px 0px #d4d4d4;
 }
 
+h3 {
+    color:#000;
+    font-size:16px;
+    margin:5px 0 5px 0;
+    text-shadow:0px 1px 0px #d4d4d4;
+}
+
 input, button {
     font-family:Arial;
 }
@@ -830,6 +837,9 @@ div.payment ul li, div.delivery ul li {
     list-style:none;
 }
 
+.activeHover:hover {
+    background-color: #e8e8e8;
+}
 
 div.payment ul p, div.delivery ul p {
     margin-left:18px;

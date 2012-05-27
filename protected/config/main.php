@@ -16,6 +16,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.components.payment.*',
 		'application.components.validators.*',
 		'application.modules.core.models.*',
 		'application.modules.users.models.User',

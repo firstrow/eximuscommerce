@@ -69,6 +69,7 @@ class Order extends BaseModel
 		return array(
 			'products'=>array(self::HAS_MANY, 'OrderProduct', 'order_id'),
 			'status'=>array(self::BELONGS_TO, 'OrderStatus', 'status_id'),
+			'deliveryMethod'=>array(self::BELONGS_TO, 'StoreDeliveryMethod', 'delivery_id'),
 		);
 	}
 

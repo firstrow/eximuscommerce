@@ -6,6 +6,7 @@
 class SHttpRequest extends CHttpRequest {
 
 	private $_pathInfo;
+	public $noCsrfValidationRoutes=array('orders/payment/process');
 
 	/**
 	 * @return string Parsed path info without lang prefix.
@@ -13,6 +14,7 @@ class SHttpRequest extends CHttpRequest {
 	public function getPathInfo()
 	{
 		$langCode = null;
+		$pathInfo = parent::getPathInfo();
 
 		if($this->_pathInfo===null)
 		{
@@ -92,5 +94,20 @@ class SHttpRequest extends CHttpRequest {
 		}
 		return Yii::app()->createUrl($route, $get);
 	}
+
+	protected function normalizeRequest()
+	{
+		parent::normalizeRequest();
+		if($this->enableCsrfValidation)
+		{
+			$url=Yii::app()->getUrlManager()->parseUrl($this);
+			foreach($this->noCsrfValidationRoutes as $route)
+			{
+				if(strpos($url,$route)===0)
+					Yii::app()->detachEventHandler('onBeginRequest', array($this,'validateCsrfToken'));
+			}
+		}
+	}
+
 
 }

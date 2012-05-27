@@ -56,6 +56,11 @@ $this->pageTitle = $title;
 					<?php echo CHtml::encode($model->delivery_name); ?>
 				</div>
 				<div class="row">
+					<?php echo Yii::t('OrdersModule.core', 'Стоимость') ?>:
+					<?php echo StoreProduct::formatPrice(Yii::app()->currency->convert($model->delivery_price)) ?>
+					<?php echo Yii::app()->currency->active->symbol ?>
+				</div>
+				<div class="row">
 					<?php echo CHtml::encode($model->user_name); ?>
 				</div>
 				<div class="row">
@@ -74,8 +79,20 @@ $this->pageTitle = $title;
 		</div>
 	</div>
 
+
+	<?php foreach($model->deliveryMethod->paymentMethods as $payment): ?>
+	<div class="order_data mt10 ">
+		<div class="user_data rc5 activeHover">
+			<h3><?php echo $payment->name ?></h3>
+			<p><?php echo $payment->description ?></p>
+			<p><?php echo $payment->renderPaymentForm($model) ?></p>
+		</div>
+	</div>
+	<?php endforeach ?>
+
+
 	<div class="recount">
-		<span class="total">Всего:</span>
+		<span class="total">Всего к оплате:</span>
 		<span id="total">
 			<?php echo StoreProduct::formatPrice(Yii::app()->currency->convert($model->full_price)) ?>
 			<?php echo Yii::app()->currency->active->symbol ?>
@@ -85,5 +102,3 @@ $this->pageTitle = $title;
 	<div style="clear: both;"></div>
 
 </div>
-
-

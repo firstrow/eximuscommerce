@@ -55,9 +55,17 @@ class PaymentMethodController extends SAdminController {
 		{
 			$model->attributes = $_POST['StorePaymentMethod'];
 
-			if ($model->validate())
+			if($model->validate())
 			{
 				$model->save();
+
+				if($model->payment_system)
+				{
+					$manager=new SPaymentSystemManager;
+					$system = $manager->getSystemClass($model->payment_system);
+					$system->saveAdminSettings($model->id, $_POST);
+				}
+
 				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
 
 				if (isset($_POST['REDIRECT']))
@@ -71,6 +79,20 @@ class PaymentMethodController extends SAdminController {
 			'model'=>$model,
 			'form'=>$form,
 		));
+	}
+
+	/**
+	 * Renders payment system configuration form
+	 */
+	public function actionRenderConfigurationForm()
+	{
+		$systemId=Yii::app()->request->getQuery('system');
+		$paymentMethodId=Yii::app()->request->getQuery('payment_method_id');
+		if(empty($systemId))
+			exit;
+		$manager=new SPaymentSystemManager;
+		$system = $manager->getSystemClass($systemId);
+		echo $system->getConfigurationFormHtml($paymentMethodId);
 	}
 
 	/**

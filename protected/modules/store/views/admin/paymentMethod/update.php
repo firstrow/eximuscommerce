@@ -4,6 +4,8 @@
  * Create/update payment methods
  */
 
+Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/admin/paymentMethod.update.js');
+
 $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
 	'form'=>$form,
 	'langSwitcher'=>!$model->isNewRecord,

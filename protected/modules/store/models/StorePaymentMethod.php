@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.store.models.StorePaymentMethodTranslate');
+
 /**
  * This is the model class for table "StorePaymentMethod".
  *
@@ -7,6 +9,7 @@
  * @property integer $id
  * @property string $name
  * @property string $description
+ * @property string $payment_system
  * @property integer $active
  * @property integer $position
  */
@@ -56,6 +59,7 @@ class StorePaymentMethod extends BaseModel
 			array('active, position', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			array('description', 'safe'),
+			array('payment_system', 'safe'),
 			// Search
 			array('id, name, description, active', 'safe', 'on'=>'search'),
 		);
@@ -122,12 +126,50 @@ class StorePaymentMethod extends BaseModel
 	public function attributeLabels()
 	{
 		return array(
-			'id'          => 'ID',
-			'name'        => Yii::t('StoreModule.admin', 'Название'),
-			'description' => Yii::t('StoreModule.admin', 'Описание'),
-			'active'      => Yii::t('StoreModule.admin', 'Активен'),
-			'position'    => Yii::t('StoreModule.admin', 'Позиция'),
+			'id'             => 'ID',
+			'name'           => Yii::t('StoreModule.admin', 'Название'),
+			'description'    => Yii::t('StoreModule.admin', 'Описание'),
+			'active'         => Yii::t('StoreModule.admin', 'Активен'),
+			'position'       => Yii::t('StoreModule.admin', 'Позиция'),
+			'payment_system' => Yii::t('StoreModule.admin', 'Система оплаты'),
 		);
+	}
+
+	/**
+	 * @return array of available payment systems. e.g array(id=>name)
+	 */
+	public function getPaymentSystemsArray()
+	{
+		$result=array();
+		$systems=new SPaymentSystemManager;
+		foreach($systems->getSystems() as $system)
+			$result[(string)$system->id]=$system->name;
+		return $result;
+	}
+
+	/**
+	 * Renders form display on the order view page
+	 */
+	public function renderPaymentForm(Order $order)
+	{
+		if($this->payment_system)
+		{
+			$manager=new SPaymentSystemManager;
+			$system = $manager->getSystemClass($this->payment_system);
+			return $system->renderPaymentForm($this, $order);
+		}
+	}
+
+	/**
+	 * @return null|BasePaymentSystem
+	 */
+	public function getPaymentSystemClass()
+	{
+		if($this->payment_system)
+		{
+			$manager=new SPaymentSystemManager;
+			return $manager->getSystemClass($this->payment_system);
+		}
 	}
 
 	/**

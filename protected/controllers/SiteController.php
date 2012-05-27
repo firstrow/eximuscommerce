@@ -18,6 +18,10 @@ class SiteController extends Controller {
 
 	public function actionLogin()
 	{
+		$systems = new SPaymentSystemManager;
+		var_dump($systems->getSystems());
+
+		exit;
 		$products=Yii::app()->cache->get('t1');
 		if($products===false)
 		{

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Delivery method sform
+ * Delivery method form
  */
 return array(
 	'id'=>'deliveryUpdateForm',
@@ -23,6 +23,13 @@ return array(
 				'description'=>array(
 					'type'=>'SRichTextarea',
 				),
+				'payment_system'=>array(
+					'type'=>'dropdownlist',
+					'empty'=>'---',
+					'items'=>$this->model->getPaymentSystemsArray(),
+					'rel'=>$this->model->id,
+				),
+				'<div id="payment_configuration"></div>',
 				'position'=>array(
 					'type'=>'text',
 					'hint'=>Yii::t('StoreModule.admin', 'Оставьте пустым для установки максимального значения')

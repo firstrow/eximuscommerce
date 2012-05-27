@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+    <!-- Current directory name -->
+    <id>webmoney</id>
+    <!-- Name to display in admin panel-->
+    <name>WebMoney</name>
+    <!-- Main class -->
+    <class>WebMoneyPaymentSystem</class>
+    <version>1.0</version>
+</system>
