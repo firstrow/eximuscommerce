@@ -95,10 +95,15 @@ class SHttpRequest extends CHttpRequest {
 		return Yii::app()->createUrl($route, $get);
 	}
 
+	/**
+	 * Normalize request.
+	 * Disable CSRF for payment controller
+	 */
 	protected function normalizeRequest()
 	{
 		parent::normalizeRequest();
-		if($this->enableCsrfValidation)
+
+		if($this->enableCsrfValidation && $this->isCLI()===false)
 		{
 			$url=Yii::app()->getUrlManager()->parseUrl($this);
 			foreach($this->noCsrfValidationRoutes as $route)
@@ -109,5 +114,16 @@ class SHttpRequest extends CHttpRequest {
 		}
 	}
 
+	/**
+	 * Check if script launched from command line
+	 * @return bool
+	 */
+	protected function isCLI()
+	{
+		if (substr(php_sapi_name(), 0, 3) === 'cli')
+			return true;
+		else
+			return false;
+	}
 
 }

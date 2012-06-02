@@ -7,6 +7,7 @@ Yii::import('application.modules.store.models.StorePaymentMethodTranslate');
  *
  * The followings are the available columns in table 'StorePaymentMethod':
  * @property integer $id
+ * @property integer $currency_id
  * @property string $name
  * @property string $description
  * @property string $payment_system
@@ -55,7 +56,7 @@ class StorePaymentMethod extends BaseModel
 	public function rules()
 	{
 		return array(
-			array('name', 'required'),
+			array('name, currency_id', 'required'),
 			array('active, position', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			array('description', 'safe'),
@@ -132,6 +133,7 @@ class StorePaymentMethod extends BaseModel
 			'active'         => Yii::t('StoreModule.admin', 'Активен'),
 			'position'       => Yii::t('StoreModule.admin', 'Позиция'),
 			'payment_system' => Yii::t('StoreModule.admin', 'Система оплаты'),
+			'currency_id'    => Yii::t('StoreModule.admin', 'Валюта'),
 		);
 	}
 

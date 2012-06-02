@@ -75,7 +75,7 @@ class WebMoneyPaymentSystem extends BasePaymentSystem
 			return false;
 
 		// Check amount.
-		if ($order->full_price != $forHash['LMI_PAYMENT_AMOUNT'])
+		if (Yii::app()->currency->convert($order->full_price, $method->currency_id) != $forHash['LMI_PAYMENT_AMOUNT'])
 			return false;
 
 		// Check payer and shop WM accounts first letter.
@@ -123,7 +123,7 @@ class WebMoneyPaymentSystem extends BasePaymentSystem
 		$settings=$this->getSettings($method->id);
 
 		$html= strtr($html,array(
-			'{PAYMENT_AMOUNT}' => $order->full_price,
+			'{PAYMENT_AMOUNT}' => Yii::app()->currency->convert($order->full_price, $method->currency_id),
 			'{PAYMENT_NO}'     => $order->id,
 			'{PAYMENT_DESC}'   => Yii::t('core', "Оплата заказа #").$order->id,
 			'{PAYEE_PURSE}'    => $settings['LMI_PAYEE_PURSE'],

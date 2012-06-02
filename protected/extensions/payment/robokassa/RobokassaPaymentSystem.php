@@ -38,7 +38,7 @@ class RobokassaPaymentSystem extends BasePaymentSystem
 		$my_crc   = strtoupper(md5("$out_sum:$inv_id:$mrh_pass2:Shp_orderKey=$shp_order_key:Shp_pmId=$shp_payment_id"));
 
 		// Check sum
-		if ($out_sum != $order->full_price)
+		if ($out_sum != Yii::app()->currency->convert($order->full_price, $method->currency_id))
 			return ERROR_SUM;
 
 		// Check sign
@@ -77,7 +77,7 @@ class RobokassaPaymentSystem extends BasePaymentSystem
 		// Order description
 		$inv_desc = Yii::t('core', "Оплата заказа #") . $order->id;
 		// Order sum
-		$out_sum = $order->full_price;
+		$out_sum = Yii::app()->currency->convert($order->full_price, $method->currency_id);
 		// currency
 		$in_curr = "PCR";
 		// Language

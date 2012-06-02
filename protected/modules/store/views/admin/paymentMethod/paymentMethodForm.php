@@ -23,6 +23,10 @@ return array(
 				'description'=>array(
 					'type'=>'SRichTextarea',
 				),
+				'currency_id'=>array(
+					'type'=>'dropdownlist',
+					'items'=>CHtml::listData(StoreCurrency::model()->findAll(),'id','name'),
+				),
 				'payment_system'=>array(
 					'type'=>'dropdownlist',
 					'empty'=>'---',
