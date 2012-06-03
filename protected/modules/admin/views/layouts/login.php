@@ -16,7 +16,7 @@
 	            <!-- Remove yui-b class for full wide -->
 				<div class="yui-b marright">
 					<!-- Main content -->
-					<h3><span style="background-color:#1e90ff;padding:3px;color:#fff;">E</span>ximius</h3>
+					<h3>Eximus <span style="color:#1193cd">Commerce</span></h3>
 					<div id="content" class="yui-g">
 	                <!-- <hr />-->
 						<?php 

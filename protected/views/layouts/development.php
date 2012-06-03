@@ -28,7 +28,7 @@
   <div class="navbar navbar-fixed-top">
 	  <div class="navbar-inner">
 		  <div class="container">
-			  <a class="brand" href="/">Eximius</a>
+			  <a class="brand" href="/">Eximus</a>
 			  <div class="nav-collapse">
 					<?php
 						Yii::import('application.modules.store.models.StoreCategory');
