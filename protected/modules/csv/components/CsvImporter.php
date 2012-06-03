@@ -213,6 +213,12 @@ class CsvImporter extends CComponent
 		}
 	}
 
+	/**
+	 * @param $type_id
+	 * @param $attribute_name
+	 * @param $attribute_value
+	 * @return mixed
+	 */
 	public function processEavData($type_id, $attribute_name, $attribute_value)
 	{
 		$attribute = StoreAttribute::model()->findByAttributes(array('name'=>$attribute_name));
@@ -220,9 +226,9 @@ class CsvImporter extends CComponent
 		{
 			// Create new attribute
 			$attribute = new StoreAttribute;
-			$attribute->name = $attribute_name;
+			$attribute->name  = $attribute_name;
 			$attribute->title = ucfirst($attribute_name);
-			$attribute->type = StoreAttribute::TYPE_DROPDOWN;
+			$attribute->type  = StoreAttribute::TYPE_DROPDOWN;
 			$attribute->display_on_front = true;
 			$attribute->save();
 
