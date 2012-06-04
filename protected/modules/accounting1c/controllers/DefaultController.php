@@ -9,9 +9,9 @@ class DefaultController extends Controller
 	public function actionIndex()
 	{
 		$request=Yii::app()->request;
-//
-//		if($request->getQuery('password') != Yii::app()->settings->get('accounting1c', 'password'))
-//			exit('ERR_WRONG_PASS');
+
+		if($request->getQuery('password') != Yii::app()->settings->get('accounting1c', 'password'))
+			exit('ERR_WRONG_PASS');
 
 		if($request->userHostAddress != Yii::app()->settings->get('accounting1c', 'ip'))
 			exit('ERR_WRING_IP');

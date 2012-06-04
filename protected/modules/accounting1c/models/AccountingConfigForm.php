@@ -1,11 +1,14 @@
 <?php
 
-
+/**
+ * Configure 1C import access settings
+ */
 class AccountingConfigForm extends CFormModel
 {
 
 	public $ip;
 	public $password;
+	public $tempdir;
 
 	public function init()
 	{
@@ -19,7 +22,7 @@ class AccountingConfigForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('ip, password', 'required'),
+			array('ip, password, tempdir', 'required'),
 		);
 	}
 
@@ -30,7 +33,8 @@ class AccountingConfigForm extends CFormModel
 	{
 		return array(
 			'ip'=>'IP',
-			'password'=>Yii::t('Accounting1cModule.admin','Пароль')
+			'password'=>Yii::t('Accounting1cModule.admin','Пароль'),
+			'tempdir'=>Yii::t('Accounting1cModule.admin','Директория')
 		);
 	}
 

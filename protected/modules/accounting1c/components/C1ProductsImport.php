@@ -44,6 +44,7 @@ class C1ProductsImport extends CComponent
 	{
 		$method='command'.ucfirst($type).ucfirst($mode);
 		$import=new self;
+		$import->tempDirectory=Yii::app()->settings->get('accounting1c','tempdir');
 		if(method_exists($import, $method))
 			$import->$method();
 	}

@@ -27,7 +27,14 @@ $this->breadcrumbs = array(
 		<?php echo $form->textField($model,'password') ?>
 		<span class="required"> *</span>
 		<div class="hint"><?php echo Yii::t('Accounting1cModule.admin', 'Пароль доступа'); ?></div>
-		<div class="hint">Сcылка импорта: /accounting1c/default/$password</div>
+		<div class="hint"><?php echo Yii::t('Accounting1cModule.admin', 'Сcылка импорта:') ?> /accounting1c/default/$password</div>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'tempdir'); ?>
+		<?php echo $form->textField($model,'tempdir') ?>
+		<span class="required"> *</span>
+		<div class="hint"><?php echo Yii::t('Accounting1cModule.admin', 'Путь к временной директории для загрузки xml файлов и изображений'); ?></div>
 	</div>
 
 	<div class="row submit">

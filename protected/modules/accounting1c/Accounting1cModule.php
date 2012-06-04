@@ -12,6 +12,7 @@ class Accounting1cModule extends BaseModule
 		Yii::app()->settings->set('accounting1c', array(
 			'ip'       => '127.0.0.1',
 			'password' => sha1(microtime()),
+			'tempdir'  => 'application.runtime',
 		));
 
 		$db=Yii::app()->db;

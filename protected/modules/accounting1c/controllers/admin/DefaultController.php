@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * Configure admin panel
+ */
 class DefaultController extends SAdminController
 {
 	/**
