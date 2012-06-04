@@ -11,9 +11,6 @@ Yii::import('ext.SlugHelper.SlugHelper');
 
 /**
  * Imports products from XML file
- * @todo:
- * Place table name `accountung1c` into variable
- * Create events for StoreCategory, StoreProduct on delete - delete external id
  */
 class C1ProductsImport extends CComponent
 {
@@ -106,6 +103,8 @@ class C1ProductsImport extends CComponent
 
 		if(isset($this->xml->{"ПакетПредложений"}->{"Предложения"}))
 			$this->importPrices();
+
+		echo "success\n";
 	}
 
 	/**

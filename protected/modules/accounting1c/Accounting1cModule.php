@@ -9,6 +9,11 @@ class Accounting1cModule extends BaseModule
 
 	public function afterInstall()
 	{
+		Yii::app()->settings->set('accounting1c', array(
+			'ip'       => '127.0.0.1',
+			'password' => sha1(microtime()),
+		));
+
 		$db=Yii::app()->db;
 		$db->createCommand()->createTable('accounting1c', array(
 			'id'         =>'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT',
@@ -24,5 +29,7 @@ class Accounting1cModule extends BaseModule
 	{
 		$db=Yii::app()->db;
 		$db->createCommand()->dropTable('accounting1c');
+		Yii::app()->settings->clear('accounting1c');
 	}
+
 }
