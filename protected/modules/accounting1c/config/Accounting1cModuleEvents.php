@@ -11,6 +11,7 @@ class Accounting1cModuleEvents
 		return array(
 			array('StoreCategory', 'onAfterDelete', array($this, 'deleteExternalCategory')),
 			array('StoreAttribute', 'onAfterDelete', array($this, 'deleteExternalAttribute')),
+			array('StoreProduct', 'onAfterDelete', array($this, 'deleteExternalProduct')),
 		);
 	}
 

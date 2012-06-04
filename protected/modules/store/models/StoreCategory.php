@@ -1,7 +1,7 @@
 <?php
 
 Yii::import('application.modules.store.StoreModule');
-Yii::import('store.models.StoreCategoryTranslate');
+Yii::import('application.modules.store.models.StoreCategoryTranslate');
 
 /**
  * This is the model class for table "StoreCategory".

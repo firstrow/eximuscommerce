@@ -44,9 +44,13 @@ class C1ProductsImport extends CComponent
 	{
 		$method='command'.ucfirst($type).ucfirst($mode);
 		$import=new self;
-		$import->tempDirectory=Yii::app()->settings->get('accounting1c','tempdir');
 		if(method_exists($import, $method))
 			$import->$method();
+	}
+
+	public function __construct()
+	{
+		$this->tempDirectory=Yii::app()->settings->get('accounting1c','tempdir');
 	}
 
 	/**
@@ -137,7 +141,7 @@ class C1ProductsImport extends CComponent
 
 			// Set category
 			$categoryId=C1ExternalFinder::getObject(C1ExternalFinder::OBJECT_TYPE_CATEGORY,$product->{"Группы"}->{"Ид"}, false);
-			$model->setCategories(array($categoryId), $createExId);
+			$model->setCategories(array($categoryId), $categoryId);
 
 			// Set image
 			$image=C1ProductImage::create(Yii::getPathOfAlias($this->tempDirectory).DIRECTORY_SEPARATOR.$product->{"Картинка"});
@@ -147,6 +151,7 @@ class C1ProductsImport extends CComponent
 			// Process properties
 			if(isset($product->{"ЗначенияСвойств"}->{"ЗначенияСвойства"}))
 			{
+				$attrsdata=array();
 				foreach($product->{"ЗначенияСвойств"}->{"ЗначенияСвойства"} as $attribute)
 				{
 					$attributeModel=C1ExternalFinder::getObject(C1ExternalFinder::OBJECT_TYPE_ATTRIBUTE, $attribute->{"Ид"});
@@ -159,8 +164,13 @@ class C1ProductsImport extends CComponent
 
 						if(!$option)
 							$option = $this->addOptionToAttribute($attributeModel->id, $attribute->{"Значение"});
-						$model->setEavAttribute($attributeModel->name, $option->id, true);
+						$attrsdata[$attributeModel->name]=$option->id;
 					}
+				}
+
+				if(!empty($attrsdata))
+				{
+					$model->setEavAttributes($attrsdata, true);
 				}
 			}
 		}
@@ -173,7 +183,8 @@ class C1ProductsImport extends CComponent
 	{
 		foreach($this->xml->{"ПакетПредложений"}->{"Предложения"}->{"Предложение"} as $offer)
 		{
-			$product=C1ExternalFinder::getObject(C1ExternalFinder::OBJECT_TYPE_PRODUCT,$offer->{"Ид"});
+			$product=C1ExternalFinder::getObject(C1ExternalFinder::OBJECT_TYPE_PRODUCT, $offer->{"Ид"});
+
 			if($product)
 			{
 				$product->price=$offer->{"Цены"}->{"Цена"}->{"ЦенаЗаЕдиницу"};
@@ -217,6 +228,7 @@ class C1ProductsImport extends CComponent
 				// Create new attribute
 				$model = new StoreAttribute;
 				$model->name  = SlugHelper::run($attribute->{"Наименование"});
+				$model->name  = str_replace('-','_',$model->name);
 				$model->title = $attribute->{"Наименование"};
 				$model->type  = StoreAttribute::TYPE_DROPDOWN;
 				$model->use_in_filter    = $useInFilter;
