@@ -11,6 +11,7 @@ class ProductCommentsWebTest extends WebTestCase
 
 	/**
 	 * Check creating new comment
+	 * This test is passing only whe YII_DEBUG=True
 	 */
 	public function testCreateComment()
 	{

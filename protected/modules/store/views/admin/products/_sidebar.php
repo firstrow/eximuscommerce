@@ -67,6 +67,8 @@ $("#StoreCategoryTreeFilter").bind("loaded.jstree", function (event, data) {
 });
 ');
 
-Yii::app()->getClientScript()->registerCss("StoreCategoryTreeStyles","#StoreCategoryTree { width:90% }");
+Yii::app()->getClientScript()->registerCss("StoreCategoryTreeStyles","
+	#StoreCategoryTree { width:90% }
+	#StoreCategoryTreeFilter {width: 255px}
+");
 
-?>

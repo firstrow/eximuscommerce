@@ -2,6 +2,7 @@
 
 Yii::import('application.modules.store.models.StoreProductTranslate');
 Yii::import('application.modules.store.models.StoreProductCategoryRef');
+Yii::import('application.modules.store.models.StoreProductImage');
 
 /**
  * This is the model class for table "StoreProduct".
@@ -305,7 +306,7 @@ class StoreProduct extends BaseModel
 		$criteria=new CDbCriteria;
 
 		$criteria->with = array(
-			'categorization'=>array('together'=>true),
+			'categorization',
 			'translate',
 			'type',
 		);
@@ -334,7 +335,10 @@ class StoreProduct extends BaseModel
 		$criteria->compare('manufacturer.id', $this->manufacturer_id);
 
 		if (isset($params['category']) && $params['category'])
+		{
+			$criteria->with=array('categorization'=>array('together'=>true));
 			$criteria->compare('categorization.category', $params['category']);
+		}
 
 		// Id of product to exclude from search
 		if($this->exclude)
@@ -343,9 +347,6 @@ class StoreProduct extends BaseModel
 		return new CActiveDataProvider($this, array(
 			'criteria'   => $criteria,
 			'sort'       => StoreProduct::getCSort(),
-			'pagination' => array(
-				'pageSize'=>20,
-			)
 		));
 	}
 
@@ -405,6 +406,7 @@ class StoreProduct extends BaseModel
 			$test = StoreProduct::model()
 				->withUrl($this->url)
 				->count();
+			$this->created = date('Y-m-d H:i:s');
 		}
 		else
 		{
@@ -478,6 +480,8 @@ class StoreProduct extends BaseModel
 					$this->updatePrices($model);
 			}
 		}
+
+		$this->updated = date('Y-m-d H:i:s');
 
 		return parent::afterSave();
 	}

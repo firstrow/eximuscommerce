@@ -6,7 +6,7 @@
 class SHttpRequest extends CHttpRequest {
 
 	private $_pathInfo;
-	public $noCsrfValidationRoutes=array('orders/payment/process');
+	public $noCsrfValidationRoutes;
 
 	/**
 	 * @return string Parsed path info without lang prefix.

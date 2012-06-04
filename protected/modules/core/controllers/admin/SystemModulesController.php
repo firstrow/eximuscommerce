@@ -19,19 +19,18 @@ class SystemModulesController extends SAdminController
 	}
 
 	/**
-	 * Display list of modules aviable to install.
-	 * @return type
+	 * Display list of modules available to install.
+	 * @param string $name
 	 */
 	public function actionInstall($name=null)
 	{
-		if ($name)
+		if($name)
 		{
 			$result = SystemModules::install($name);
-			if ($result)
+			if($result)
 				$this->setFlashMessage(Yii::t('CoreModule.core', 'Модуль успешно установлен.'));
 			else
 				$this->setFlashMessage(Yii::t('CoreModule.core', 'Возникла ошибка при установке модуля.'));
-
 			$this->redirect('index');
 		}
 

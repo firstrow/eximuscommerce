@@ -94,6 +94,10 @@ return array(
 			'class'=>'SHttpRequest',
 			'enableCsrfValidation'=>true,
 			'enableCookieValidation'=>true,
+			'noCsrfValidationRoutes'=>array(
+				'orders/payment/process',
+				'accounting1c/default',
+			)
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors

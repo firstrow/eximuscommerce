@@ -180,7 +180,7 @@ class SystemModules extends BaseModel
 			Yii::trace('Module installed');
 			$model->save();
 			self::loadModuleClass($name)->afterInstall();
-		} catch(Exception $e) {
+		}catch(Exception $e){
 			Yii::trace('Error installing module');
 			return false;
 		}

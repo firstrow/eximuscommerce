@@ -40,7 +40,7 @@ class SiteController extends Controller {
 
 	public function actionIndex()
 	{
-		echo $this->createUrl('site/index', array('name'=>'sdsd'));
+
 	}
 
 	/**

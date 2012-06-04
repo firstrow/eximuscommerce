@@ -1,5 +1,6 @@
 <?php
 
+Yii::import('application.modules.store.StoreModule');
 Yii::import('store.models.StoreCategoryTranslate');
 
 /**

@@ -15,14 +15,17 @@ Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.
 Yii::app()->clientScript->registerScriptFile($this->module->assetsUrl.'/product.view.configurations.js', CClientScript::POS_END);
 
 // Create breadcrumbs
-$ancestors = $model->mainCategory->excludeRoot()->ancestors()->findAll();
+if($model->mainCategory)
+{
+	$ancestors = $model->mainCategory->excludeRoot()->ancestors()->findAll();
 
-foreach($ancestors as $c)
-	$this->breadcrumbs[$c->name] = $c->getViewUrl();
+	foreach($ancestors as $c)
+		$this->breadcrumbs[$c->name] = $c->getViewUrl();
 
-// Do not add root category to breadcrumbs
-if ($model->mainCategory->id != 1)
-	$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
+	// Do not add root category to breadcrumbs
+	if ($model->mainCategory->id != 1)
+		$this->breadcrumbs[$model->mainCategory->name] = $model->mainCategory->getViewUrl();
+}
 
 // Fancybox ext
 $this->widget('application.extensions.fancybox.EFancyBox', array(

@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.store.models.StoreAttributeOptionTranslate');
+
 /**
  * Store options for dropdown and multiple select
  * This is the model class for table "StoreAttributeOptions".

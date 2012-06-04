@@ -93,10 +93,6 @@ class ProductsController extends SAdminController
 		{
 			$model->attributes = $_POST['StoreProduct'];
 
-			if ($model->isNewRecord)
-				$model->created = date('Y-m-d H:i:s');
-			$model->updated = date('Y-m-d H:i:s');
-
 			// Handle related products
 			$model->setRelatedProducts(Yii::app()->getRequest()->getPost('RelatedProductId', array()));
 

@@ -273,6 +273,7 @@ class CsvImporter extends CComponent
 	/**
 	 * Find or create manufacturer
 	 * @param $name
+	 * @return integer
 	 */
 	public function getManufacturerIdByName($name)
 	{
@@ -324,6 +325,7 @@ class CsvImporter extends CComponent
 	/**
 	 * Get category id by path. If category not exits it will new one.
 	 * @param $path string Main/Music/Rock
+	 * @return integer category id
 	 */
 	protected function getCategoryByPath($path)
 	{
@@ -376,7 +378,7 @@ class CsvImporter extends CComponent
 		$row = array_combine($this->csv_columns, $row);
 		$row['created'] = date('Y-m-d H:i:s');
 		$row['updated'] = date('Y-m-d H:i:s');
-		return array_filter($row); // Remove empty keys and retund result
+		return array_filter($row); // Remove empty keys and return result
 	}
 
 	/**
@@ -418,6 +420,7 @@ class CsvImporter extends CComponent
 	}
 
 	/**
+	 * @param string $eav_prefix
 	 * @return array
 	 */
 	public function getImportableAttributes($eav_prefix='')
