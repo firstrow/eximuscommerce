@@ -177,6 +177,7 @@ class CartController extends Controller
 		$order = new Order;
 
 		// Set main data
+		$order->user_id      = Yii::app()->user->isGuest ? null : Yii::app()->user->id;
 		$order->user_name    = $this->form->name;
 		$order->user_email   = $this->form->email;
 		$order->user_phone   = $this->form->phone;

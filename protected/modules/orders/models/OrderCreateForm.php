@@ -3,7 +3,7 @@
 Yii::import('store.models.StoreDeliveryMethod');
 
 /**
- * Used data form. Used in cart to create new order.
+ * Used in cart to create new order.
  */
 class OrderCreateForm extends CFormModel
 {
@@ -13,6 +13,18 @@ class OrderCreateForm extends CFormModel
 	public $address;
 	public $comment;
 	public $delivery_id;
+
+	public function init()
+	{
+		if(!Yii::app()->user->isGuest)
+		{
+			$profile=Yii::app()->user->getModel()->profile;
+			$this->name=$profile->full_name;
+			$this->phone=$profile->phone;
+			$this->address=$profile->delivery_address;
+			$this->email=Yii::app()->user->email;
+		}
+	}
 
 	/**
 	 * Validation
