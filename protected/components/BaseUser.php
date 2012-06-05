@@ -40,4 +40,9 @@ class BaseUser extends RWebUser
 			$this->_model = User::model()->findByPk($this->id);
 	}
 
+	public function getModel()
+	{
+		$this->_loadModel();
+		return $this->_model;
+	}
 }

@@ -98,4 +98,5 @@ class UserProfile extends BaseModel
 			'criteria'=>$criteria,
 		));
 	}
+
 }

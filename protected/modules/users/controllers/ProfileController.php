@@ -23,7 +23,51 @@ class ProfileController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->render('index');
+		Yii::import('application.modules.users.forms.ChangePasswordForm');
+		$request=Yii::app()->request;
+
+		$user=Yii::app()->user->getModel();
+		$profile=$user->profile;
+		$changePasswordForm=new ChangePasswordForm();
+		$changePasswordForm->user=$user;
+
+		if(Yii::app()->request->isPostRequest)
+		{
+			if($request->getPost('UserProfile') || $request->getPost('User'))
+			{
+				$profile->attributes=$request->getPost('UserProfile');
+				$user->email=isset($_POST['User']['email']) ? $_POST['User']['email'] : null;
+
+				$valid=$profile->validate();
+				$valid=$user->validate() && $valid;
+
+				if($valid)
+				{
+					$user->save();
+					$profile->save();
+
+					$this->addFlashMessage(Yii::t('UsersModule.core', 'Изменения успешно сохранены.'));
+					$this->refresh();
+				}
+			}
+
+			if($request->getPost('ChangePasswordForm'))
+			{
+				$changePasswordForm->attributes=$request->getPost('ChangePasswordForm');
+				if($changePasswordForm->validate())
+				{
+					$user->password=User::encodePassword($changePasswordForm->new_password);
+					$user->save(false);
+					$this->addFlashMessage(Yii::t('UsersModule.core', 'Пароль успешно изменен.'));
+				}
+			}
+		}
+
+		$this->render('index', array(
+			'user'=>$user,
+			'profile'=>$profile,
+			'changePasswordForm'=>$changePasswordForm
+		));
 	}
 
 }
