@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Display products
+ * Display product view page.
  */
 class FrontProductController extends Controller
 {
@@ -11,7 +11,11 @@ class FrontProductController extends Controller
 	 */
 	public $model;
 
-	public function actions(){
+	/**
+	 * @return array
+	 */
+	public function actions()
+	{
 		return array(
 			'captcha'=>array(
 				'class'=>'CCaptchaAction',
@@ -29,12 +33,12 @@ class FrontProductController extends Controller
 		$view = $this->setDesign($this->model, 'view');
 
 		$this->render($view, array(
-			'model'  => $this->model,
+			'model' => $this->model,
 		));
 	}
 
 	/**
-	 * Load StoreProduct by url
+	 * Load StoreProduct model by url
 	 * @param $url
 	 * @return StoreProduct
 	 * @throws CHttpException
@@ -46,10 +50,10 @@ class FrontProductController extends Controller
 			->withUrl($url)
 			->find();
 
-		if (!$this->model) throw new CHttpException(404, Yii::t('StoreModule.core', 'Продукт не найден.'));
+		if (!$this->model)
+			throw new CHttpException(404, Yii::t('StoreModule.core', 'Продукт не найден.'));
 
 		$this->model->saveCounters(array('views_count'=>1));
-
 		return $this->model;
 	}
 
@@ -58,7 +62,7 @@ class FrontProductController extends Controller
 	 * Get data to render dropdowns for configurable product.
 	 * Used on product view.
 	 * array(
-	 *      'attributes' // Array for StoreAttribute models used for configurations
+	 *      'attributes' // Array of StoreAttribute models used for configurations
 	 *      'prices'     // Key/value array with configurations prices array(product_id=>price)
 	 *      'data'       // Array to render dropdowns. array(color=>array('Green'=>'1/3/5/', 'Silver'=>'7/'))
 	 * )

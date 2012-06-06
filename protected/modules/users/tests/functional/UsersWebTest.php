@@ -75,4 +75,41 @@ class UsersWebTest extends WebTestCase
 		$user->save(false);
 	}
 
+	public function testProfileChange()
+	{
+		Yii::import('application.modules.users.models.*');
+		$this->adminLogin();
+		// Set empty profile data
+		$this->open('users/profile');
+		$this->type('UserProfile[full_name]', '');
+		$this->type('User[email]', '');
+		$this->clickAtAndWait("//input[@type='submit' and @value='Сохранить']");
+		$this->assertTrue($this->isTextPresent('Необходимо заполнить поле Полное Имя.'));
+		$this->assertTrue($this->isTextPresent('Необходимо заполнить поле Email.'));
+
+		// Set normal random data
+		$time=time();
+		$this->type('UserProfile[full_name]', 'fullname'.$time);
+		$this->type('User[email]', 'admin.'.$time.'@localhost.loc');
+		$this->clickAtAndWait("//input[@type='submit' and @value='Сохранить']");
+		$this->assertTrue($this->isTextPresent('Изменения успешно сохранены.'));
+
+		// Check if data really saved
+		$profile=UserProfile::model()->findByAttributes(array('user_id'=>1));
+		$user=User::model()->findByAttributes(array('id'=>1));
+		$this->assertTrue($profile->full_name=='fullname'.$time);
+		$this->assertTrue($user->email=='admin.'.$time.'@localhost.loc');
+
+		// Change password
+		$this->type('ChangePasswordForm[current_password]', 'admin');
+		$this->type('ChangePasswordForm[new_password]', 'admin');
+		$this->clickAtAndWait("//input[@type='submit' and @value='Изменить']");
+		$this->assertTrue($this->isTextPresent('Пароль успешно изменен.'));
+
+		// Try to set wrong password
+		$this->type('ChangePasswordForm[current_password]', mt_rand(1,10));
+		$this->clickAtAndWait("//input[@type='submit' and @value='Изменить']");
+		$this->assertTrue($this->isTextPresent('Ошибка проверки текущего пароля'));
+	}
+
 }

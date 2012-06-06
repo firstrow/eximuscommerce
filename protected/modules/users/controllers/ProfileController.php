@@ -26,6 +26,7 @@ class ProfileController extends Controller
 		Yii::import('application.modules.users.forms.ChangePasswordForm');
 		$request=Yii::app()->request;
 
+
 		$user=Yii::app()->user->getModel();
 		$profile=$user->profile;
 		$changePasswordForm=new ChangePasswordForm();
@@ -59,6 +60,7 @@ class ProfileController extends Controller
 					$user->password=User::encodePassword($changePasswordForm->new_password);
 					$user->save(false);
 					$this->addFlashMessage(Yii::t('UsersModule.core', 'Пароль успешно изменен.'));
+					$this->refresh();
 				}
 			}
 		}
@@ -67,6 +69,22 @@ class ProfileController extends Controller
 			'user'=>$user,
 			'profile'=>$profile,
 			'changePasswordForm'=>$changePasswordForm
+		));
+	}
+
+	/**
+	 * Display user orders
+	 */
+	public function actionOrders()
+	{
+		Yii::import('application.modules.orders.models.*');
+		Yii::import('application.modules.store.models.*');
+
+		$orders=new Order('search');
+		$orders->user_id=Yii::app()->user->getId();
+
+		$this->render('orders', array(
+			'orders'=>$orders,
 		));
 	}
 

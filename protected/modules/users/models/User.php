@@ -79,7 +79,8 @@ class User extends BaseModel
 	public function relations()
 	{
 		return array(
-			'profile'=>array(self::HAS_ONE, 'UserProfile', 'user_id')
+			'profile'=>array(self::HAS_ONE, 'UserProfile', 'user_id'),
+			'orders' =>array(self::HAS_MANY, 'Order', 'user_id')
 		);
 	}
 

@@ -144,6 +144,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				'model'=>$model,
 			), true));
 
+		// Related products tab
 		if($model->relatedProductCount)
 		{
 			$tabs[Yii::t('StoreModule.core', 'Сопутствующие продукты').' ('.$model->relatedProductCount.')'] = array(

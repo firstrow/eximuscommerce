@@ -1109,3 +1109,7 @@ table.compareTable .attr {
     padding:30px 0 30px 0;
     width:220px;
 }
+
+#ordersListGrid {
+    padding: 0 0 0 0;
+}
