@@ -38,6 +38,19 @@ class YandexMarketXML
 	private $fileHandler;
 
 	/**
+	 * @var integer
+	 */
+	private $_config;
+
+	/**
+	 * Initialize component
+	 */
+	public function __construct()
+	{
+		$this->_config=Yii::app()->settings->get('yandexMarket');
+	}
+
+	/**
 	 * Display xml file
 	 */
 	public function processRequest()
@@ -82,10 +95,9 @@ class YandexMarketXML
 	 */
 	public function renderShopData()
 	{
-		$config=Yii::app()->settings->get('yandexMarket');
-		$this->write('<name>'.$config['name'].'</name>');
-		$this->write('<company>'.$config['company'].'</company>');
-		$this->write('<url>'.$config['url'].'</url>');
+		$this->write('<name>'.$this->_config['name'].'</name>');
+		$this->write('<company>'.$this->_config['company'].'</company>');
+		$this->write('<url>'.$this->_config['url'].'</url>');
 	}
 
 	/**
@@ -140,13 +152,12 @@ class YandexMarketXML
 	 */
 	public function renderProducts(array $products)
 	{
-		$products=StoreProduct::model()->active()->findAll();
 		$this->write('<offers>');
 		foreach($products as $p)
 		{
 			$this->renderOffer($p, array(
 				'url'         => Yii::app()->createAbsoluteUrl('/store/frontProduct/view', array('url'=>$p->url)),
-				'price'       => $p->price,
+				'price'       => Yii::app()->currency->convert($p->price, $this->_config['currency_id']),
 				'currencyId'  => $this->currencyIso,
 				'categoryId'  => $p->mainCategory->id,
 				'picture'     => $p->mainImage ? $p->mainImage->getUrl() : null,

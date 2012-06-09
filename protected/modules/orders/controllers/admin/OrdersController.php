@@ -77,11 +77,10 @@ class OrdersController extends SAdminController {
 
 	/**
 	 * Display gridview with list of products to add to order
-	 * @param $order_id
 	 */
 	public function actionAddProductList()
 	{
-		$order_id=Yii::app()->request->getQuery('id');
+		$order_id=Yii::app()->request->getQuery('order_id');
 		$model = $this->_loadModel($order_id);
 		$dataProvider = new StoreProduct('search');
 
@@ -89,9 +88,9 @@ class OrdersController extends SAdminController {
 			$dataProvider->attributes = $_GET['StoreProduct'];
 
 		$this->renderPartial('_addProduct', array(
-			'order_id'=>$order_id,
-			'model'=>$model,
-			'dataProvider'=>$dataProvider,
+			'dataProvider' => $dataProvider,
+			'order_id'     => $order_id,
+			'model'        => $model,
 		));
 	}
 
