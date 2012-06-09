@@ -18,7 +18,7 @@ class C1ProductsImport extends CComponent
 	/**
 	 * ID of the StoreType model to apply to new attributes and products
 	 */
-	const DEFAULT_TYPE=29;
+	const DEFAULT_TYPE=1;
 
 	/**
 	 * @var string alias where to save uploaded files

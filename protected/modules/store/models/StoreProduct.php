@@ -332,7 +332,7 @@ class StoreProduct extends BaseModel
 		$criteria->compare('t.created',$this->created,true);
 		$criteria->compare('t.updated',$this->updated,true);
 		$criteria->compare('type_id', $this->type_id);
-		$criteria->compare('manufacturer.id', $this->manufacturer_id);
+		$criteria->compare('manufacturer_id', $this->manufacturer_id);
 
 		if (isset($params['category']) && $params['category'])
 		{

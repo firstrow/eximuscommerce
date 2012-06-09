@@ -180,7 +180,7 @@ class CsvImporter extends CComponent
 				$model->$key = $val;
 			}catch(CException $e){
 				// Process eav
-				if(!in_array($key, array('category','type','manufacturer')) && !empty($val))
+				if(!in_array($key, array('category','type','manufacturer', 'image')) && !empty($val))
 					$eav[$key] = $this->processEavData($model->type_id, $key, $val);
 			}
 		}
@@ -227,7 +227,7 @@ class CsvImporter extends CComponent
 			// Create new attribute
 			$attribute = new StoreAttribute;
 			$attribute->name  = $attribute_name;
-			$attribute->title = ucfirst($attribute_name);
+			$attribute->title = ucfirst(str_replace('_',' ',$attribute_name));
 			$attribute->type  = StoreAttribute::TYPE_DROPDOWN;
 			$attribute->display_on_front = true;
 			$attribute->save();

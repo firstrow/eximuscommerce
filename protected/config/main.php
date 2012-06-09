@@ -161,7 +161,7 @@ return array(
 			'thumbUrl'=>'/assets/productThumbs/', // With ending slash
 			'sizes'=>array(
 				'resizeMethod'=>'resize', // resize/adaptiveResize
-				'resizeThumbMethod'=>'adaptiveResize', // resize/adaptiveResize
+				'resizeThumbMethod'=>'resize', // resize/adaptiveResize
 				'maximum'=>array(800, 600), // All uploaded images
 			)
 		)
