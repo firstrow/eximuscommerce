@@ -62,6 +62,7 @@ class YandexMarketXML
 	{
 		$filePath=$this->getXmlFileFullPath();
 		$this->fileHandler=fopen($filePath, 'w');
+
 		$this->write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 		$this->write("<!DOCTYPE yml_catalog SYSTEM \"shops.dtd\">\n");
 		$this->write('<yml_catalog date="'.date('Y-m-d H:i').'">');
@@ -72,6 +73,7 @@ class YandexMarketXML
 		$this->loadProducts();
 		$this->write('</shop>');
 		$this->write('</yml_catalog>');
+
 		fclose($this->fileHandler);
 	}
 
