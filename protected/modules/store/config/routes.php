@@ -11,7 +11,7 @@ return array(
 	'store/index/renderProductsBlock/<scope>'=>array('store/index/renderProductsBlock'),
 	array('store/category/view', 'pattern'=>'category/<url>/*'),
 	'products/search/*'=>array('store/category/search'),
-	// Comapre
+	// Compare
 	'products/compare'=>array('store/compare/index'),
 	'products/compare/add/<id>'=>array('store/compare/add'),
 	'products/compare/remove/<id>'=>array('store/compare/remove'),
