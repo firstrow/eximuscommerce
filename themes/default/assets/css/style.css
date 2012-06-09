@@ -143,9 +143,10 @@ select {
 }
 
 #header .currencies a:hover, #header .currencies a.active {
-    color:#000;
+    color:#fff;
+    font-weight: bold;
     text-decoration:none;
-    background:transparent url("../images/small_white_circle.png") no-repeat center;
+    /*background:transparent url("../images/small_white_circle.png") no-repeat center;*/
 }
 
 #header .search_box {
