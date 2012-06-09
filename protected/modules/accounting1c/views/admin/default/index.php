@@ -5,7 +5,7 @@ $this->pageHeader = Yii::t('Accounting1cModule.admin', '1С бухгалтери
 $this->breadcrumbs = array(
 	'Home'=>$this->createUrl('/admin'),
 	Yii::t('Accounting1cModule.admin', 'Модули')=>Yii::app()->createUrl('/core/admin/systemModules'),
-	Yii::t('Accounting1cModule.admin', 'Обратная связь')
+	Yii::t('Accounting1cModule.admin', '1С бухгалтерия')
 );
 
 ?>

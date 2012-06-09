@@ -82,10 +82,10 @@ class YandexMarketXML
 	 */
 	public function renderShopData()
 	{
-		$url=Yii::app()->request->getBaseUrl(true);
-		$this->write("<name>Demo</name>");
-		$this->write("<company>Demo Company</company>");
-		$this->write("<url>{$url}</url>");
+		$config=Yii::app()->settings->get('yandexMarket');
+		$this->write('<name>'.$config['name'].'</name>');
+		$this->write('<company>'.$config['company'].'</company>');
+		$this->write('<url>'.$config['url'].'</url>');
 	}
 
 	/**
