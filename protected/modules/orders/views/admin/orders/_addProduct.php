@@ -18,7 +18,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'             => 'OrderAddProductsGrid',
 	'filter'         => $dataProvider->model,
 	'dataProvider'   => $dataProvider,
-	'ajaxUrl'        => Yii::app()->createUrl('/orders/admin/orders/addProductList', array('order_id'=>$model->id)),
+	'ajaxUrl'        => Yii::app()->createUrl('/orders/admin/orders/addProductList', array('id'=>$model->id)),
 	'template'       => '{items}{pager}',
 	'selectableRows' => 0,
 	'columns'=>array(

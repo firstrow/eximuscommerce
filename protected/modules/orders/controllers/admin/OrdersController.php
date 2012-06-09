@@ -80,7 +80,7 @@ class OrdersController extends SAdminController {
 	 */
 	public function actionAddProductList()
 	{
-		$order_id=Yii::app()->request->getQuery('order_id');
+		$order_id=Yii::app()->request->getQuery('id');
 		$model = $this->_loadModel($order_id);
 		$dataProvider = new StoreProduct('search');
 

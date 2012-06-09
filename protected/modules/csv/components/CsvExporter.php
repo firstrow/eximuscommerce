@@ -38,7 +38,13 @@ class CsvExporter
 	{
 		$products = StoreProduct::model()->findAll();
 
-		array_push($this->rows, $attributes);
+		$this->rows[0]= $attributes;
+
+		foreach($this->rows[0] as &$v)
+		{
+			if(substr($v,0,4)==='eav_')
+				$v=substr($v,4);
+		}
 
 		foreach($products as $p)
 		{
@@ -51,6 +57,8 @@ class CsvExporter
 					$value = $this->getCategory($p);
 				}elseif($attr==='manufacturer'){
 					$value = $this->getManufacturer($p);
+				}elseif($attr==='image'){
+					$value = $p->mainImage ? $p->mainImage->name : '';
 				}else{
 					$value = $p->$attr;
 				}

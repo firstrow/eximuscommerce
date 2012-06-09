@@ -434,7 +434,7 @@ class CsvImporter extends CComponent
 			'url'                    => Yii::t('StoreModule.core', 'URL'),
 			'price'                  => Yii::t('StoreModule.core', 'Цена'),
 			'is_active'              => Yii::t('StoreModule.core', 'Активен'),
-			'image    '              => Yii::t('StoreModule.core', 'Главное изображение'),
+			'image'                  => Yii::t('StoreModule.core', 'Главное изображение'),
 			'short_description'      => Yii::t('StoreModule.core', 'Краткое описание'),
 			'full_description'       => Yii::t('StoreModule.core', 'Полное описание'),
 			'meta_title'             => Yii::t('StoreModule.core', 'Meta Title'),

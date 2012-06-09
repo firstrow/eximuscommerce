@@ -82,12 +82,12 @@ return array(
 		),
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=my_db',
-			'enableProfiling' => YII_DEBUG, // Disable in production
-			'enableParamLogging' => TRUE, // Disable in production
-			'emulatePrepare' => true,
-			//'schemaCachingDuration'=>3600, // Enable in production
 			'username' => 'root',
 			'password' => 'mysqlpass',
+			'enableProfiling'  => YII_DEBUG, // Disable in production
+			'enableParamLogging' => TRUE, // Disable in production
+			'emulatePrepare' => true,
+			'schemaCachingDuration'=>YII_DEBUG ? 0 : 3600,
 			'charset' => 'utf8',
 		),
 		'request'=>array(

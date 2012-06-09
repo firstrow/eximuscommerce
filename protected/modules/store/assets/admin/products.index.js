@@ -16,7 +16,7 @@ $('#StoreCategoryTreeFilter').bind('loaded.jstree', function (event, data) {
 		var id = 0;
 	}
 	var obj = $('#productsListGrid .filters td')[0];
-	$(obj).append('<input name="category" type="text" value="'+id+'">');
+	$(obj).append('<input name="category" type="hidden" value="'+id+'">');
 	$('#productsListGrid .filters :input').first().trigger('change');
 });
 
