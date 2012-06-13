@@ -106,6 +106,7 @@ class C1ProductsImport extends CComponent
 		if(isset($this->xml->{"Каталог"}->{"Товары"}))
 			$this->importProducts();
 
+		// Import prices
 		if(isset($this->xml->{"ПакетПредложений"}->{"Предложения"}))
 			$this->importPrices();
 

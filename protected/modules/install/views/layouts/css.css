@@ -1,0 +1,365 @@
+
+html, body {
+	font-size: small;
+	margin: 0;
+    padding: 0;
+	width: 100%;
+	min-height: 100%;
+	font-family: "Lucida Grande", verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+	background-color: whiteSmoke;
+    color:#4c4c4c;
+}
+
+h1 {
+    font-size: 18px;
+    display: block;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.green {
+    color: #72c442;
+}
+
+.red {
+    color: #D84743;
+}
+
+#header {
+    margin: 0 0 20px 0;
+    padding: 10px;
+    height: 25px;
+    background-color: #17262D;
+    border-bottom: 1px solid #146ac0;
+}
+
+#header .left {
+    font-size: 22px;
+    float:left;
+    color: #fff;
+}
+
+#header .left span {
+    color: #94C1D7;
+}
+
+#header .right {
+    float: right;
+}
+
+#header a {
+    color: #d3d1d6;
+}
+
+#content {
+    margin: 0 auto;
+    width: 700px;
+}
+
+div.form
+{
+	margin-left: 0px;
+}
+
+div.form input,
+div.form textarea,
+div.form select
+{
+	margin: 0.2em 0 0.5em 0;
+}
+
+div.form select
+{
+	display: inline-block;
+	width: 260px;
+	padding: 2px;
+	font-size: 13px;
+	line-height: 18px;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+div.form .text_input {
+	padding-top:3px;
+}
+
+div.form label
+{
+	font-weight: normal;
+	font-size: 1em;
+	display: block;
+	padding-top:3px;
+}
+
+
+div.form .row
+{
+	padding: 5px 0;
+}
+
+div.form .hint
+{
+	margin: 0 0 0 0px;
+	padding: 0;
+	color: #999;
+	font-size:11px;
+}
+
+.stripy tr:nth-child(2n){;
+    background-color: #e9e9e9;
+}
+
+.m20 {
+    margin:20px 0 20px 0;
+}
+
+div.wide .hint
+{
+	margin: 0 0 0 190px;
+	padding: 0;
+	color: #999;
+	font-size:11px;
+}
+
+div.form .note
+{
+	font-style: italic;
+}
+
+div.form label.required {
+	font-weight:bold;
+}
+
+div.form span.required
+{
+	color: red;
+}
+
+div.form div.error label,
+div.form label.error,
+div.form span.error
+{
+	color: #C00;
+}
+
+div.form div.success input,
+div.form div.success textarea,
+div.form div.success select,
+div.form input.success,
+div.form textarea.success,
+div.form select.success,
+{
+	background: #E6EFC2;
+	border-color: #C6D880;
+}
+
+div.form .errorSummary
+{
+	border: 2px solid #C00;
+	padding: 7px 7px 12px 7px;
+	margin: 0 0 20px 0;
+	background: #FEE;
+	font-size: 0.9em;
+	border: 1px solid #fbb;
+	background-color: #fdd;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+
+div.form .successSummary
+{
+	border: 2px solid #D6E9C6;
+	padding: 7px 7px 12px 7px;
+	margin: 0 0 20px 0;
+	background: #DFF0D8;
+	font-size: 0.9em;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	color: #468847;
+}
+
+
+div.form .errorMessage
+{
+	color: red;
+	font-size: 0.9em;
+	clear: both;
+}
+
+div.form .errorSummary p
+{
+	margin: 0;
+	padding: 5px;
+}
+
+div.form .errorSummary ul
+{
+	margin: 0;
+	padding: 0 0 0 20px;
+}
+
+div.wide form label
+{
+	float: left;
+	margin-right: 10px;
+	position: relative;
+	text-align: left;
+	width: 180px;
+	font-size:12px;
+	color:#4C4C4C;
+}
+
+div.wide form .row
+{
+	clear: left;
+}
+
+
+div.wide form .buttons
+{
+	clear: left;
+	padding-left: 190px;
+}
+
+div.wide form .errorMessage
+{
+	margin: 0 0 0 190px;
+}
+
+div.form input[type=text], div.form input[type=password]
+{
+	font-size: 12px;
+	width:50%;
+	vertical-align: middle;
+	padding: 5px;
+	color: #666;
+	border: 1px solid #BBB;
+	border-color: #CCC #CCC #CCC #CCC;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	outline: 0;
+
+}
+
+div.form input[type=text]:focus, div.form input[type=password]:focus, div.form textarea:focus  {
+	border-color: rgba(82, 168, 236, 0.8);
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+	-webkit-transition: 0.2s linear all;
+	-moz-transition: 0.2s linear all;
+	-ms-transition: 0.2s linear all;
+	-o-transition: 0.2s linear all;
+	transition: 0.2s linear all;
+}
+
+div.form textarea {
+	margin-bottom:0px;
+	padding:3px;
+	font-size:12px;
+	width:70%;
+	height:70px;
+	color: #666;
+	border: 1px solid #BBB;
+	border-color: #CCC #DDD #DDD #CCC;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	outline: 0;
+}
+
+div.form form .row_inline
+{
+	float: left;
+	clear:none;
+}
+
+div.form form .clear
+{
+	clear:left;
+}
+
+div.form input[type=submit], div.form input[type=button] {
+    cursor: pointer;
+    display: inline-block;
+    background-color: #0064cd;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+    background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+    background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+    background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+    background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+    background-image: linear-gradient(top, #049cdb, #0064cd);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#049cdb', endColorstr='#0064cd', GradientType=0);
+    padding: 6px 8px 6px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    line-height: normal;
+    border: 1px solid #ccc;
+    border-bottom-color: #bbb;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -webkit-transition: 0.1s linear all;
+    -moz-transition: 0.1s linear all;
+    -ms-transition: 0.1s linear all;
+    -o-transition: 0.1s linear all;
+    transition: 0.1s linear all;
+    color: #ffffff;
+    border-color: #0064cd #0064cd #003f81;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    font-size: 12px;
+}
+
+div.form input[type=submit]:hover, div.form input[type=button]:hover {
+	-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+div.form div.error input,
+div.form div.error textarea,
+div.form div.error select,
+div.form input.error,
+div.form textarea.error,
+div.form select.error
+{
+	border: 1px solid #D84743;
+}
+
+.ui-datepicker-trigger {
+	margin-left:5px;
+}
+
+div.hint
+{
+	color: #999;
+	font-size:11px;
+}
+
+/** Fir for checkboxlist **/
+div.form span br {
+	clear: both;
+	display: block;
+}
+
+div.form span label {
+	float: left;
+	clear: right;
+	display: block;
+	margin-left: 3px;
+}
+div.form span input[type=checkbox]:first-child {
+	margin: 0;
+}
+div.form span input[type=checkbox] {
+	float: left;
+	margin-left: 190px;
+}
