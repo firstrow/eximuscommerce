@@ -37,7 +37,7 @@ $config=array(
 );
 
 // change the following paths if necessary
-$yii=dirname(__FILE__).'/../yii-1.1.10.r3566/yii.php';
+$yii=dirname(__FILE__).'/framework/yii.php';
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 
