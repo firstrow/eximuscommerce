@@ -81,14 +81,14 @@ return array(
 			),
 		),
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=my_db',
-			'username' => 'root',
-			'password' => 'mysqlpass',
-			'enableProfiling'  => YII_DEBUG, // Disable in production
-			'enableParamLogging' => TRUE, // Disable in production
-			'emulatePrepare' => true,
-			'schemaCachingDuration'=>YII_DEBUG ? 0 : 3600,
-			'charset' => 'utf8',
+			'connectionString'      => 'mysql:host=localhost;dbname=my_db',
+			'username'              => 'root',
+			'password'              => 'mysqlpass',
+			'enableProfiling'       => YII_DEBUG, // Disable in production
+			'enableParamLogging'    => YII_DEBUG, // Disable in production
+			'emulatePrepare'        => true,
+			'schemaCachingDuration' => YII_DEBUG ? 0 : 3600,
+			'charset'               => 'utf8',
 		),
 		'request'=>array(
 			'class'=>'SHttpRequest',
@@ -131,19 +131,7 @@ return array(
 		'settings'=>array(
 			'class'=>'application.components.SSystemSettings'
 		),
-		'log'=>array(
-			'class'=>'CLogRouter',
-			'routes'=>array(
-					array(
-						'class'=>'CFileLogRoute',
-						'levels'=>'error, warning, trace',
-					),
-					array(
-						'class'=>'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-						'ipFilters'=>array('127.0.0.1'),
-					),
-			),
-		),
+		'log'=>YII_DEBUG===true ? require('logging.php') : null,
 	),
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']

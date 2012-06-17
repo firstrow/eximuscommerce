@@ -40,7 +40,7 @@ class CsvImage extends CUploadedFile
 	 * @param string $file
 	 * @param bool $deleteTempFile
 	 */
-	public function saveAs($file,$deleteTempFile=false)
+	public function saveAs($file, $deleteTempFile=false)
 	{
 		return copy($this->_tempName, $file);
 	}

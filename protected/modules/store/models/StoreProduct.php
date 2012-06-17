@@ -788,6 +788,7 @@ class StoreProduct extends BaseModel
 		$name = StoreUploadedImage::createName($this, $image);
 		$fullPath = StoreUploadedImage::getSavePath().'/'.$name;
 		$image->saveAs($fullPath);
+		@chmod($fullPath, 0666);
 
 		// Check if product has main image
 		$is_main = (int) StoreProductImage::model()->countByAttributes(array(

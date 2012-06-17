@@ -1,5 +1,10 @@
 <?php
 
+Yii::import('application.components.validators.*');
+Yii::import('application.modules.core.models.*');
+Yii::import('application.modules.csv.components.CsvImporter');
+
+
 class InstallConfigureForm extends CFormModel
 {
 	public $siteName;
@@ -28,13 +33,16 @@ class InstallConfigureForm extends CFormModel
 		{
 			$connection=new CDbConnection($this->getDsn(),$this->dbUserName,$this->dbPassword);
 			try{
-				var_dump($connection->connectionStatus);
+				$connection->connectionStatus;
 			}catch (CDbException $e){
 				$this->addError('dbPassword', Yii::t('InstallModule.core','Ошибка подключения к БД'));
 			}
 		}
 	}
 
+	/**
+	 * @return string DSN connection
+	 */
 	public function getDsn()
 	{
 		return strtr('mysql:host={host};dbname={db_name}', array(
@@ -43,19 +51,90 @@ class InstallConfigureForm extends CFormModel
 		));
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function install()
 	{
 		if($this->hasErrors())
 			return false;
 
-		// Read db from dev project;
-		// Connect to Db
-		// Execute queries
 		// Copy images to /uploads/importImages
 		// Import CSV files
 		// Translate attributes
 		// Set attributes filters
 		// Set attributes compareable
+		$this->importSqlDump();
+		$this->writeConnectionSettings();
+
+		$conn=new CDbConnection($this->getDsn(), $this->dbUserName, $this->dbPassword);
+		$conn->charset='utf8';
+		Yii::app()->setComponent('db', $conn);
+
+		// Activate languages
+		Yii::app()->languageManager->setActive();
+
+		if($this->installDemoData)
+		{
+			$this->importCsvFiles();
+		}
+	}
+
+	/**
+	 * Import default demo data
+	 */
+	private function importCsvFiles()
+	{
+		$files = array(
+			'computer_sound',
+			'laptops',
+			'monitors',
+			'phones',
+			'tablets',
+		);
+
+		foreach ($files as $file)
+		{
+			$importer=new CsvImporter();
+			$importer->file=Yii::getPathOfAlias('application.modules.install.data').DIRECTORY_SEPARATOR.$file.'.csv';
+			if($importer->validate() && !$importer->hasErrors())
+				$importer->import();
+		}
+	}
+
+	/**
+	 * Write connection settings to the main.php
+	 */
+	private function writeConnectionSettings()
+	{
+		$configFile=Yii::getPathOfAlias('application.config').DIRECTORY_SEPARATOR.'main.php';
+		$content=file_get_contents($configFile);
+		$content=preg_replace("/\'connectionString\'\s*\=\>\s*\'.*\'/","'connectionString'=>'{$this->getDsn()}'", $content);
+		$content=preg_replace("/\'username\'\s*\=\>\s*\'.*\'/","'username'=>'{$this->dbUserName}'", $content);
+		$content=preg_replace("/\'password\'\s*\=\>\s*\'.*\'/","'password'=>'{$this->dbPassword}'", $content);
+		file_put_contents($configFile, $content);
+	}
+
+	/**
+	 * Imports data from sql file
+	 */
+	private function importSqlDump()
+	{
+		$sqlDumpPath = Yii::getPathOfAlias('application.modules.install.data').DIRECTORY_SEPARATOR.'dump.sql';
+		$sqlRows=preg_split("/--\s*?--.*?\s*--\s*/", file_get_contents($sqlDumpPath));
+
+		$connection=new CDbConnection($this->getDsn(), $this->dbUserName, $this->dbPassword);
+		$connection->charset='utf8';
+		$connection->active=true;
+
+		$connection->createCommand("SET NAMES 'utf8';");
+
+		foreach($sqlRows as $q)
+		{
+			$q=trim($q);
+			if(!empty($q))
+				$connection->createCommand($q)->execute();
+		}
 	}
 
 	public function attributeLabels()

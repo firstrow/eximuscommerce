@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<project name="releaseBuilder" basedir="." default="build">
+    <property file="./build.properties" />
+
+    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall, clearDbConnSettings" />
+
+    <!-- Clean build dir -->
+    <target name="clean">
+        <delete dir="${eximus.build_dir}" includeemptydirs="true" />
+        <mkdir dir="${eximus.build_dir}" />
+    </target>
+
+    <!-- Write db conn settings to build_db -->
+    <target name="writeDbSettings">
+        <reflexive>
+            <fileset dir="${eximus.build_dir}/protected/config/">
+                <include name="main.php" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="dbname=my_db" replace="dbname=build_test"/>
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
+    </target>
+
+    <!-- Copy work db to build-->
+    <target name="copyDb">
+        <exec command="mysqldump -uroot -pmysqlpass --add-drop-table my_db | mysql -uroot -pmysqlpass build_test" />
+    </target>
+
+    <!-- Clear all work/test development data. Products, attributes, logs, etc... -->
+    <target name="clearTablesData">
+        <exec command="php ClearDataTask.php" dir="${eximus.build_dir}/protected/build/tasks" passthru="true"/>
+    </target>
+
+    <!-- Copy cleared db to install directory -->
+    <target name="copyDbToInstall">
+        <exec command="php DbDumpTask.php" dir="${eximus.build_dir}/protected/build/tasks" passthru="true"/>
+    </target>
+
+    <target name="clearDbConnSettings" description="Clear db connection settings in main.php file">
+        <reflexive>
+            <fileset dir="${eximus.build_dir}/protected/config/">
+                <include name="main.php" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="dbname=build_test" replace="dbname="/>
+                    <regexp pattern="\'username\'\s*\=\>\s*\'.*\'" replace="'username'=>''"/>
+                    <regexp pattern="\'password\'\s*\=\>\s*\'.*\'" replace="'password'=>''"/>
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
+    </target>
+
+    <!-- Copy source to build dir -->
+    <target name="copy">
+        <copy todir="${eximus.build_dir}">
+            <fileset dir="${eximus.source_dir}">
+                <patternset>
+                    <exclude name="**/protected/runtime/**"/>
+                    <exclude name="**/protected/backups/**"/>
+                    <exclude name="assets/**"/>
+                    <exclude name="**.git/**"/>
+                    <exclude name="**.idea/**"/>
+                    <exclude name="**.gitignore**"/>
+                </patternset>
+            </fileset>
+        </copy>
+
+        <delete file="${eximus.build_dir}/index-test.php" />
+
+        <mkdir dir="${eximus.build_dir}/assets" mode="0777" />
+        <mkdir dir="${eximus.build_dir}/assets/productThumbs" mode="0777" />
+        <mkdir dir="${eximus.build_dir}/protected/runtime" mode="0777" />
+        <mkdir dir="${eximus.build_dir}/protected/backups" mode="0777" />
+
+        <chmod file="${eximus.build_dir}/uploads" mode="0777" />
+        <chmod file="${eximus.build_dir}/uploads/importImages" mode="0777" />
+        <chmod file="${eximus.build_dir}/uploads/product" mode="0777" />
+    </target>
+</project>
