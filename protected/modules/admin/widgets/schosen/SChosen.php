@@ -35,7 +35,7 @@ class SChosen extends CWidget {
 	{
 		$assetsUrl=Yii::app()->getAssetManager()->publish(
 			Yii::getPathOfAlias('application.modules.admin.widgets.schosen.assets'),
-			true,
+			false,
 			-1,
 			YII_DEBUG
 		);

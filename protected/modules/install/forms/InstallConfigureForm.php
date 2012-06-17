@@ -7,23 +7,17 @@ Yii::import('application.modules.csv.components.CsvImporter');
 
 class InstallConfigureForm extends CFormModel
 {
-	public $siteName;
 	public $installDemoData=true;
 	public $dbHost='localhost';
 	public $dbName;
 	public $dbUserName;
 	public $dbPassword;
-	public $adminLogin;
-	public $adminEmail;
-	public $adminPassword;
 
 	public function rules()
 	{
 		return array(
-			array('siteName, installDemoData, dbHost, dbName, dbUserName, dbPassword, adminLogin, adminEmail, adminPassword','required'),
+			array('installDemoData, dbHost, dbName, dbUserName, dbPassword','required'),
 			array('dbPassword', 'checkDbConnection'),
-			array('adminEmail', 'email'),
-			array('adminPassword', 'length', 'min'=>4, 'max'=>40),
 		);
 	}
 
@@ -59,11 +53,6 @@ class InstallConfigureForm extends CFormModel
 		if($this->hasErrors())
 			return false;
 
-		// Copy images to /uploads/importImages
-		// Import CSV files
-		// Translate attributes
-		// Set attributes filters
-		// Set attributes compareable
 		$this->importSqlDump();
 		$this->writeConnectionSettings();
 
@@ -141,6 +130,9 @@ class InstallConfigureForm extends CFormModel
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	public function attributeLabels()
 	{
 		return array(
@@ -150,9 +142,6 @@ class InstallConfigureForm extends CFormModel
 			'dbName'          => Yii::t('InstallModule.core', 'Название'),
 			'dbUserName'      => Yii::t('InstallModule.core', 'Имя пользователя'),
 			'dbPassword'      => Yii::t('InstallModule.core', 'Пароль'),
-			'adminLogin'      => Yii::t('InstallModule.core', 'Логин'),
-			'adminEmail'      => Yii::t('InstallModule.core', 'Email'),
-			'adminPassword'   => Yii::t('InstallModule.core', 'Пароль'),
 		);
 	}
 

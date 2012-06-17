@@ -1,5 +1,15 @@
+<?php
 
-<h1><?php echo Yii::t('InstallModule.core','Шаг 2. Настройка.') ?></h1>
+/**
+ * @var $form CActiveForm
+ */
+?>
+
+<div class="progress">
+	1→<span class="active">2</span>→3→4
+</div>
+
+<h1><?php echo Yii::t('InstallModule.core','Шаг 2. Подключение к БД.') ?></h1>
 
 <div class="line"></div>
 
@@ -7,14 +17,6 @@
 	<?php $form=$this->beginWidget('CActiveForm'); ?>
 
 	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->label($model,'siteName'); ?>
-		<?php echo $form->textField($model,'siteName') ?>
-		<span class="required"> *</span>
-	</div>
-
-	<h3><?php echo Yii::t('InstallModule.core','Подключение к БД') ?></h3>
 
 	<div class="row">
 		<?php echo $form->label($model,'dbHost'); ?>
@@ -40,24 +42,8 @@
 		<span class="required"> *</span>
 	</div>
 
-	<h3><?php echo Yii::t('InstallModule.core','Учётная запись администратора') ?></h3>
-
-	<div class="row">
-		<?php echo $form->label($model,'adminLogin'); ?>
-		<?php echo $form->textField($model,'adminLogin') ?>
-		<span class="required"> *</span>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'adminEmail'); ?>
-		<?php echo $form->textField($model,'adminEmail') ?>
-		<span class="required"> *</span>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'adminPassword'); ?>
-		<?php echo $form->textField($model,'adminPassword') ?>
-		<span class="required"> *</span>
+	<div class="row buttons">
+		<label style="width:300px;"><?php echo $form->checkBox($model,'installDemoData') ?> <?php echo $model->getAttributeLabel('installDemoData') ?></label>
 	</div>
 
 	<div class="row buttons">

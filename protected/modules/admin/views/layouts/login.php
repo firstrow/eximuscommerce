@@ -18,8 +18,12 @@
 					<!-- Main content -->
 					<h3>Eximus <span style="color:#1193cd">Commerce</span></h3>
 					<div id="content" class="yui-g">
-	                <!-- <hr />-->
-						<?php 
+						<?php if(file_exists(Yii::getPathOfAlias('webroot').DIRECTORY_SEPARATOR.'install.php')): ?>
+						<div style="color: red;padding: 10px;">
+							<?php echo Yii::t('AdminModule.core', 'Нужно удалить файл install.php'); ?>
+						</div>
+						<?php endif ?>
+						<?php
 							echo $content;;
 						?>
 					</div>

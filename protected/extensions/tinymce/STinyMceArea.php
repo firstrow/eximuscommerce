@@ -15,7 +15,7 @@ class STinyMceArea extends CInputWidget
 			self::$initialized=true;
 			$assetsUrl = Yii::app()->getAssetManager()->publish(
 				Yii::getPathOfAlias('ext.tinymce.assets'),
-				true,
+				false,
 				-1,
 				YII_DEBUG
 			);

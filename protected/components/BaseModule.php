@@ -32,9 +32,8 @@ class BaseModule extends CWebModule {
 		{
 			$this->_assetsUrl=Yii::app()->getAssetManager()->publish(
 					Yii::getPathOfAlias('application.modules.'.$this->moduleName.'.assets'),
-					true,
-					-1,
-					YII_DEBUG
+					false, -1,
+				YII_DEBUG
 			);
 		}
 

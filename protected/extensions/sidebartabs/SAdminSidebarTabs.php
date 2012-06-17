@@ -37,7 +37,7 @@ class SAdminSidebarTabs extends CWidget {
 	public function registerScripts()
 	{
 		$assetsUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.sidebartabs.assets'),
-			true,
+			false,
 			-1,
 			YII_DEBUG
 		);

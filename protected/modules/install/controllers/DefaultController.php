@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.install.forms.*');
+
 /**
  * Installation controller
  */
@@ -18,7 +20,9 @@ class DefaultController extends CController
 		'protected/config/main.php',
 		'protected/runtime',
 		'assets',
+		'assets/productThumbs',
 		'uploads',
+		'uploads/product',
 	);
 
 	/**
@@ -36,7 +40,6 @@ class DefaultController extends CController
 	 */
 	public function actionConfigure()
 	{
-		Yii::import('application.modules.install.forms.InstallConfigureForm');
 		$model=new InstallConfigureForm;
 
 		if(Yii::app()->request->isPostRequest && isset($_POST['InstallConfigureForm']))
@@ -45,12 +48,37 @@ class DefaultController extends CController
 			if($model->validate())
 			{
 				$model->install();
+				$this->redirect($this->createUrl('finish'));
 			}
 		}
 
 		$this->render('configure', array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionFinish()
+	{
+		$model=new InstallFinishForm;
+
+		if(Yii::app()->request->isPostRequest && isset($_POST['InstallFinishForm']))
+		{
+			$model->attributes=$_POST['InstallFinishForm'];
+			if($model->validate())
+			{
+				$model->install();
+				$this->redirect($this->createUrl('completed'));
+			}
+		}
+
+		$this->render('finish', array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionCompleted()
+	{
+		$this->render('completed');
 	}
 
 	/**

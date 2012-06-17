@@ -62,7 +62,6 @@
                 <patternset>
                     <exclude name="**/protected/runtime/**"/>
                     <exclude name="**/protected/backups/**"/>
-                    <exclude name="assets/**"/>
                     <exclude name="**.git/**"/>
                     <exclude name="**.idea/**"/>
                     <exclude name="**.gitignore**"/>
@@ -71,7 +70,11 @@
         </copy>
 
         <delete file="${eximus.build_dir}/index-test.php" />
+        <delete file="${eximus.build_dir}/index.php" />
         <delete file="${eximus.build_dir}/protected/build" />
+        <delete dir="${eximus.build_dir}/assets" includeemptydirs="true"/>
+
+        <copy file="${eximus.source_dir}/protected/build/index.php.release" tofile="${eximus.build_dir}/index.php"/>
 
         <mkdir dir="${eximus.build_dir}/assets" mode="0777" />
         <mkdir dir="${eximus.build_dir}/assets/productThumbs" mode="0777" />

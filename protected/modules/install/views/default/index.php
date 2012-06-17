@@ -6,6 +6,10 @@
 $errors=false;
 ?>
 
+<div class="progress">
+	<span class="active">1</span>→2→3→4
+</div>
+
 <h1><?php echo Yii::t('InstallModule.core','Шаг 1. Проверка.') ?></h1>
 
 <div class="line"></div>

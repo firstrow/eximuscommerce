@@ -59,8 +59,9 @@ class SGridView extends CGridView {
 
 		if($this->baseScriptUrl===null)
 		{
-			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.sgridview.assets'),
-				true,
+			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(
+				Yii::getPathOfAlias('ext.sgridview.assets'),
+				false,
 				-1,
 				YII_DEBUG
 			);
