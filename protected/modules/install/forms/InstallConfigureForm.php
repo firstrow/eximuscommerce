@@ -100,6 +100,10 @@ class InstallConfigureForm extends CFormModel
 			if($importer->validate() && !$importer->hasErrors())
 				$importer->import();
 		}
+
+		StoreProduct::model()->updateAll(array(
+			'is_active'=>1,
+		));
 	}
 
 	/**

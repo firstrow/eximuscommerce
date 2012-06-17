@@ -71,6 +71,7 @@
         </copy>
 
         <delete file="${eximus.build_dir}/index-test.php" />
+        <delete file="${eximus.build_dir}/protected/build" />
 
         <mkdir dir="${eximus.build_dir}/assets" mode="0777" />
         <mkdir dir="${eximus.build_dir}/assets/productThumbs" mode="0777" />
