@@ -187,14 +187,22 @@ class CsvImporter extends CComponent
 
 		if($model->validate())
 		{
+			$categories=array($category_id);
+
+			if(!$newProduct)
+			{
+				foreach($model->categorization as $c)
+					$categories[]=$c->category;
+				$categories=array_unique($categories);
+			}
+
 			// Save product
 			$model->save();
 			// Update EAV data
 			if(!empty($eav))
 				$model->setEavAttributes($eav, true);
-			// Update categories only for new products
-			if($newProduct===true)
-				$model->setCategories(array($category_id), $category_id);
+			// Update categories
+			$model->setCategories($categories, $category_id);
 			// Process product main image if product doesn't have one
 			if(isset($data['image']) && !empty($data['image']))
 			{
