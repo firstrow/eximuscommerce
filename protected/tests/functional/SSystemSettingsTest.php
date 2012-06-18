@@ -13,8 +13,6 @@ class SSystemSettingsTest extends CTestCase
 		));
 
 		$this->assertTrue(is_array(Yii::app()->settings->get('settings_test')));
-
-
 		$this->assertTrue(Yii::app()->settings->get('settings_test','key')===$val);
 
 		Yii::app()->settings->clear('settings_test');

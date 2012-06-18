@@ -2,10 +2,12 @@
 
 <project name="ProjectTesting" basedir="." default="test">
 <target name="test" description="Launch the unit-tests">
-    <!-- Copy module fixtures to main fixture directory -->
     <phpunit bootstrap="bootstrap.php" printsummary="true">
         <formatter type="plain" usefile="false"/>
         <batchtest>
+            <fileset dir="././functional">
+                <include name="*Test.php"/>
+            </fileset>
             <fileset dir="../modules/">
                 <include name="*/tests/*/*Test.php"/>
             </fileset>
