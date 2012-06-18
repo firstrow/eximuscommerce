@@ -72,7 +72,7 @@ class SSystemSettings extends CComponent
 
 			if(!isset($this->data[$category]))
 				$this->data[$category]=array();
-			CMap::mergeArray($this->data[$category], $data);
+			$this->data[$category]=CMap::mergeArray($this->data[$category], $data);
 		}
 	}
 
@@ -88,7 +88,7 @@ class SSystemSettings extends CComponent
 
 		if($key===null)
 			return $this->data[$category];
-		elseif(isset($this->data[$category][$key]))
+		if(isset($this->data[$category][$key]))
 			return $this->data[$category][$key];
 		else
 			return $default;
@@ -101,6 +101,8 @@ class SSystemSettings extends CComponent
 	public function clear($category)
 	{
 		Yii::app()->db->createCommand()->delete('SystemSettings', 'category=:category', array(':category'=>$category));
+		if(isset($this->data[$category]))
+			unset($this->data[$category]);
 	}
 
 }
