@@ -59,6 +59,8 @@ class CsvExporter
 					$value = $this->getManufacturer($p);
 				}elseif($attr==='image'){
 					$value = $p->mainImage ? $p->mainImage->name : '';
+				}elseif($attr==='additionalCategories'){
+					$value = $this->getAdditionalCategories($p);
 				}else{
 					$value = $p->$attr;
 				}
@@ -102,6 +104,34 @@ class CsvExporter
 	}
 
 	/**
+	 * @param StoreProduct $product
+	 * @return string
+	 */
+	public function getAdditionalCategories(StoreProduct $product)
+	{
+		$mainCategory = $product->mainCategory;
+		$categories   = $product->categories;
+
+		$result=array();
+		foreach($categories as $category)
+		{
+			if($category->id!==$mainCategory->id)
+			{
+				$path=array();
+				$ancestors = $category->excludeRoot()->ancestors()->findAll();
+				foreach($ancestors as $c)
+					$path[]=preg_replace('/\//','\/',$c->name);
+				$path[]=preg_replace('/\//','\/',$category->name);
+				$result[]=implode('/', $path);
+			}
+		}
+
+		if(!empty($result))
+			return implode(';', $result);
+		return '';
+	}
+
+	/**
 	 * Get manufacturer
 	 */
 	public function getManufacturer(StoreProduct $product)
@@ -127,6 +157,6 @@ class CsvExporter
 				echo $this->enclosure.str_replace($this->enclosure, $this->enclosure.$this->enclosure, $l).$this->enclosure.$this->delimiter;
 			echo PHP_EOL;
 		}
-		exit;
+		Yii::app()->end();
 	}
 }

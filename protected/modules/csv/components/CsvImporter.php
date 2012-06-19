@@ -180,7 +180,7 @@ class CsvImporter extends CComponent
 				$model->$key = $val;
 			}catch(CException $e){
 				// Process eav
-				if(!in_array($key, array('category','type','manufacturer', 'image')) && !empty($val))
+				if(!in_array($key, array('category','type','manufacturer', 'image','additionalCategories')) && !empty($val))
 					$eav[$key] = $this->processEavData($model->type_id, $key, $val);
 			}
 		}
@@ -188,6 +188,9 @@ class CsvImporter extends CComponent
 		if($model->validate())
 		{
 			$categories=array($category_id);
+
+			if(isset($data['additionalCategories']))
+				 $categories=array_merge($categories, $this->getAdditionalCategories($data['additionalCategories']));
 
 			if(!$newProduct)
 			{
@@ -221,6 +224,21 @@ class CsvImporter extends CComponent
 		}
 	}
 
+	/**
+	 * Get additional categories array from string separated by ";"
+	 * E.g. Video/cat1;Video/cat2
+	 * @param $str
+	 * @return array
+	 */
+	public function getAdditionalCategories($str)
+	{
+		$result=array();
+		$parts=explode(';', $str);
+		foreach($parts as $path)
+			$result[]=$this->getCategoryByPath(trim($path));
+		return $result;
+	}
+	
 	/**
 	 * @param $type_id
 	 * @param $attribute_name
@@ -437,6 +455,7 @@ class CsvImporter extends CComponent
 			'type'                   => Yii::t('StoreModule.core', 'Тип'),
 			'name'                   => Yii::t('StoreModule.core', 'Название'),
 			'category'               => Yii::t('StoreModule.core', 'Категория'),
+			'additionalCategories'   => Yii::t('StoreModule.core', 'Доп. Категории'),
 			'manufacturer'           => Yii::t('StoreModule.core', 'Производитель'),
 			'sku'                    => Yii::t('StoreModule.core', 'Артикул'),
 			'url'                    => Yii::t('StoreModule.core', 'URL'),
@@ -457,9 +476,7 @@ class CsvImporter extends CComponent
 		);
 
 		foreach(StoreAttribute::model()->findAll() as $attr)
-		{
 			$attributes[$eav_prefix.$attr->name] = $attr->title;
-		}
 
 		return $attributes;
 	}
