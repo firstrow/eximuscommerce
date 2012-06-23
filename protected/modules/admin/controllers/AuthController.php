@@ -16,7 +16,7 @@ class AuthController extends SAdminController
 	public function actionIndex()
 	{
 		if(!Yii::app()->user->isGuest)
-			throw new CHttpException(405, Yii::t('AdminModule.admin', 'Вы уже авторизированы.'));
+			$this->redirect('/admin');
 
 		Yii::import('application.modules.admin.forms.LoginForm');
 		$model = new LoginForm();

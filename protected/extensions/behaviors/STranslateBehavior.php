@@ -207,4 +207,12 @@ class STranslateBehavior extends CActiveRecordBehavior {
 		return $this->owner;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getTranslateAttributes()
+	{
+		return $this->translateAttributes;
+	}
+
 }

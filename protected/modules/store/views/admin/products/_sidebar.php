@@ -1,7 +1,7 @@
 <h3><?php echo Yii::t('StoreModule.admin', 'Поиск по категории') ?></h3>
 
 <div class="form wide">
-	<input type="text" style="width: 190px;float: left; margin-right: 5px;" onkeyup='$("#StoreCategoryTreeFilter").jstree("search", $(this).val());' />
+	<input type="text" style="width: 170px;float: left; margin-right: 5px;" onkeyup='$("#StoreCategoryTreeFilter").jstree("search", $(this).val());' />
 	<?php
 		$this->beginWidget('zii.widgets.jui.CJuiButton', array(
 			'buttonType'=>'buttonset',

@@ -1,6 +1,6 @@
 <h3>&nbsp;</h3>
 <div class="form wide">
-	<input type="text" style="width: 90%" onkeyup='$("#StoreCategoryTree").jstree("search", $(this).val());' />
+	<input type="text" style="width: 80%;" onkeyup='$("#StoreCategoryTree").jstree("search", $(this).val());' />
 </div>
 
 <?php

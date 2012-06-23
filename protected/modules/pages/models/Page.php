@@ -51,7 +51,6 @@ class Page extends BaseModel
 	 */
 	public $translateModelName = 'PageTranslate';
 
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Page the static model class
@@ -150,6 +149,9 @@ class Page extends BaseModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function behaviors()
 	{
 		return array(
@@ -192,6 +194,9 @@ class Page extends BaseModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function statuses()
 	{
 		return array(
@@ -202,6 +207,9 @@ class Page extends BaseModel
 		);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getStatusLabel()
 	{
 		$statuses = $this->statuses();
@@ -252,6 +260,9 @@ class Page extends BaseModel
 		));
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function beforeSave()
 	{
 		if(!$this->created && $this->isNewRecord)

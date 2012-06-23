@@ -264,6 +264,23 @@ class SAdminTopButtons extends CWidget {
 				'encodeLabel'=>false
 			));
 			echo CHtml::closeTag('div');
+
+			// Add flags to translateable inputs
+			if($this->form && isset($this->form->model) && array_key_exists('STranslateBehavior', $this->form->model->behaviors()))
+			{
+				if (count(Yii::app()->languageManager->languages) > 1)
+				{
+					$flagUrl = Yii::app()->getModule('admin')->assetsUrl.'/images/flags/png/'.$currentLang->flag_name;
+					$class = get_class($this->form->model);
+					$attrs = $this->form->model->getTranslateAttributes();
+					foreach($attrs as $id)
+					{
+						Yii::app()->clientScript->registerScript($attrs.$id.'css', "
+						$('#{$class}_{$id}').css('background', '#fff url({$flagUrl}) no-repeat 99% 7px');
+						");
+					}
+				}
+			}
 		}
 
 		return array(
