@@ -30,10 +30,14 @@ class DefaultController extends SAdminController
 
 					$file = Yii::getPathOfAlias('webroot.protected.backups').DIRECTORY_SEPARATOR.'dump_'.date('Y-m-d_H_i_s').'.sql';
 
-					if(function_exists('gzencode'))
-						file_put_contents($file.'.gz', gzencode($dumper->getDump()));
-					else
-						file_put_contents($file, $dumper->getDump());
+					if(is_writable(Yii::getPathOfAlias('webroot.protected.backups')))
+					{
+						if(function_exists('gzencode'))
+							file_put_contents($file.'.gz', gzencode($dumper->getDump()));
+						else
+							file_put_contents($file, $dumper->getDump());
+					}else
+						throw new CHttpException(503, Yii::t('CsvModule.admin', 'Ошибка. Директория для бэкапов недоступна для записи.'));
 				}
 				$importer->import();
 			}
@@ -70,6 +74,6 @@ class DefaultController extends SAdminController
 		header("Content-Disposition: attachment; filename=\"sample.csv\"");
 		echo '"name";"category";"price";"type"'."\n";
 		echo '"Product Name";"Category/Subcategory";"10.99";"Base Product"'."\n";
-		exit;
+		Yii::app()->end();
 	}
 }

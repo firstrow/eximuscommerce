@@ -180,7 +180,7 @@ class CsvImporter extends CComponent
 				$model->$key = $val;
 			}catch(CException $e){
 				// Process eav
-				if(!in_array($key, array('category','type','manufacturer', 'image','additionalCategories')) && !empty($val))
+				if(!in_array($key, array('category','type','manufacturer', 'image', 'additionalCategories')) && !empty($val))
 					$eav[$key] = $this->processEavData($model->type_id, $key, $val);
 			}
 		}
@@ -272,6 +272,8 @@ class CsvImporter extends CComponent
 			$cr = new CDbCriteria;
 			$cr->with = 'option_translate';
 			$cr->compare('option_translate.value', $attribute_value);
+			$cr->compare('option_translate.language_id', Yii::app()->languageManager->default->id);
+			$cr->compare('option_translate.object_id', $attribute->id);
 			$option = StoreAttributeOption::model()->find($cr);
 
 			if(!$option)
