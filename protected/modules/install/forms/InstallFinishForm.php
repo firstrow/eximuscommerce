@@ -48,37 +48,46 @@ class InstallFinishForm extends CFormModel
 
 		// Translate attributes
 		$attrsData=array(
-			'rms_power'=>'Суммарная мощность',
-			'monitor_dimension'=>'Разрешение',
-			'corpus_material'=>'Материал',
-			'view_angle'=>'Угол обзора',
-			'sound_type'=>'Тип',
-			'manufacturer'=>'Производитель',
-			'processor_manufacturer'=>'Тип процессора',
-			'phone_platform'=>'Платформа',
-			'freq'=>'Частота процессора',
-			'phone_weight'=>'Вес',
-			'memmory'=>'Объем памяти',
-			'phone_display'=>'Диагональ',
-			'memmory_type'=>'Тип памяти',
-			'phone_camera'=>'Камера',
-			'screen'=>'Диагональ',
-			'tablet_screen_size'=>'Диагональ',
-			'video'=>'Видео',
-			'memmory_size'=>'Объем памяти',
-			'screen_dimension'=>'Разрешение',
-			'monitor_diagonal'=>'Диагональ',
-			'weight'=>'Вес',
+			'Rms power'=>'Суммарная мощность',
+			'Monitor dimension'=>'Разрешение',
+			'Corpus material'=>'Материал',
+			'View angle'=>'Угол обзора',
+			'Sound type'=>'Тип',
+			'Manufacturer'=>'Производитель',
+			'Processor manufacturer'=>'Тип процессора',
+			'Phone platform'=>'Платформа',
+			'Freq'=>'Частота процессора',
+			'Phone weight'=>'Вес',
+			'Memmory'=>'Объем памяти',
+			'Phone display'=>'Диагональ',
+			'Memmory type'=>'Тип памяти',
+			'Phone camera'=>'Камера',
+			'Screen'=>'Диагональ',
+			'Tablet screen size'=>'Диагональ',
+			'Video'=>'Видео',
+			'Memmory size'=>'Объем памяти',
+			'Screen dimension'=>'Разрешение',
+			'Monitor diagonal'=>'Диагональ',
+			'Weight'=>'Вес',
 		);
 
 		foreach($attrsData as $key=>$val)
 		{
-			$model=StoreAttribute::model()->findByAttributes(array('name'=>$key));
-			if($model)
-			{
-				$model->title=$val;
-				$model->save(false);
-			}
+			Yii::app()->db->createCommand("UPDATE StoreAttributeTranslate SET title='{$val}' WHERE title='{$key}'")->execute();
+		}
+
+		// Translate product types
+		$typesData=array(
+			'computer_sound'=>'Акустика',
+			'laptop'=>'Ноутбук',
+			'monitor'=>'Монитор',
+			'phone'=>'Телефон',
+			'tablet'=>'Планшет',
+		);
+
+		foreach ($typesData as $key=>$val)
+		{
+			Yii::app()->db->createCommand("UPDATE StoreProductType SET name='{$val}' WHERE name='{$key}'")->execute();
 		}
 
 		return true;

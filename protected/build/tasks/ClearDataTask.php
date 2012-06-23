@@ -16,6 +16,7 @@ $clear=array(
 	'ActionLog',
 	'StoreWishlist',
 	'Comment',
+	'StoreProductType',
 );
 
 $truncate = array(
@@ -28,6 +29,10 @@ foreach($clear as $class)
 	ClearData_objects($class);
 	ClearData_truncate($class::tableName());
 }
+
+$type=new StoreProductType;
+$type->name='Простой продукт';
+$type->save();
 
 foreach($truncate as $tblName)
 	ClearData_truncate($tblName);
