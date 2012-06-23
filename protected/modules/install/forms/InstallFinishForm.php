@@ -1,5 +1,6 @@
 <?php
 
+Yii::import('application.modules.store.models.*');
 Yii::import('application.modules.core.models.*');
 Yii::import('application.modules.users.models.*');
 
@@ -45,6 +46,41 @@ class InstallFinishForm extends CFormModel
 		$model->last_login=date('Y-m-d H:i:s');
 		$model->save(false);
 
+		// Translate attributes
+		$attrsData=array(
+			'rms_power'=>'Суммарная мощность',
+			'monitor_dimension'=>'Разрешение',
+			'corpus_material'=>'Материал',
+			'view_angle'=>'Угол обзора',
+			'sound_type'=>'Тип',
+			'manufacturer'=>'Производитель',
+			'processor_manufacturer'=>'Тип процессора',
+			'phone_platform'=>'Платформа',
+			'freq'=>'Частота процессора',
+			'phone_weight'=>'Вес',
+			'memmory'=>'Объем памяти',
+			'phone_display'=>'Диагональ',
+			'memmory_type'=>'Тип памяти',
+			'phone_camera'=>'Камера',
+			'screen'=>'Диагональ',
+			'tablet_screen_size'=>'Диагональ',
+			'video'=>'Видео',
+			'memmory_size'=>'Объем памяти',
+			'screen_dimension'=>'Разрешение',
+			'monitor_diagonal'=>'Диагональ',
+			'weight'=>'Вес',
+		);
+
+		foreach($attrsData as $key=>$val)
+		{
+			$model=StoreAttribute::model()->findByAttributes(array('name'=>$key));
+			if($model)
+			{
+				$model->title=$val;
+				$model->save(false);
+			}
+		}
+
 		return true;
 	}
 
@@ -61,3 +97,10 @@ class InstallFinishForm extends CFormModel
 		);
 	}
 }
+
+
+
+
+
+
+
