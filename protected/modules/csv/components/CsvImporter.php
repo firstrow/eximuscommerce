@@ -72,6 +72,11 @@ class CsvImporter extends CComponent
 	protected $manufacturerCache = array();
 
 	/**
+	 * @var array
+	 */
+	protected $attributesCache = array();
+
+	/**
 	 * @var int
 	 */
 	protected $line = 1;
@@ -247,7 +252,7 @@ class CsvImporter extends CComponent
 	 */
 	public function processEavData($type_id, $attribute_name, $attribute_value)
 	{
-		$attribute = StoreAttribute::model()->findByAttributes(array('name'=>$attribute_name));
+		$attribute = $this->getAttributeByName($attribute_name);
 		if(!$attribute)
 		{
 			// Create new attribute
@@ -257,6 +262,7 @@ class CsvImporter extends CComponent
 			$attribute->type  = StoreAttribute::TYPE_DROPDOWN;
 			$attribute->display_on_front = true;
 			$attribute->save();
+			$this->attributesCache[$attribute_name]=$attribute;
 
 			// Add to type
 			$typeAttribute = new StoreTypeAttribute;
@@ -272,8 +278,7 @@ class CsvImporter extends CComponent
 			$cr = new CDbCriteria;
 			$cr->with = 'option_translate';
 			$cr->compare('option_translate.value', $attribute_value);
-			$cr->compare('option_translate.language_id', Yii::app()->languageManager->default->id);
-			$cr->compare('option_translate.object_id', $attribute->id);
+			$cr->compare('t.attribute_id', $attribute->id);
 			$option = StoreAttributeOption::model()->find($cr);
 
 			if(!$option)
@@ -281,6 +286,19 @@ class CsvImporter extends CComponent
 		}
 
 		return $option->id;
+	}
+
+	/**
+	 * @param $name
+	 * @return CActiveRecord
+	 */
+	public function getAttributeByName($name)
+	{
+		if(isset($this->attributesCache[$name]))
+			return $this->attributesCache[$name];
+
+		$this->attributesCache[$name]=StoreAttribute::model()->findByAttributes(array('name'=>$name));
+		return $this->attributesCache[$name];
 	}
 
 	/**
