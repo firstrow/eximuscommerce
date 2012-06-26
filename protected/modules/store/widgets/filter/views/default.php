@@ -84,7 +84,6 @@ if(!empty($manufacturers['filters']) || !empty($attributes))
 		{
 			$url = Yii::app()->request->addUrlParam('/store/category/view', array($filter['queryKey'] => $filter['queryParam']), $manufacturers['selectMany']);
 			$queryData = explode(';', Yii::app()->request->getQuery($filter['queryKey']));
-			$filter = CHtml::encodeArray($filter);
 
 			echo CHtml::openTag('li');
 			// Filter link was selected.
@@ -97,7 +96,7 @@ if(!empty($manufacturers['filters']) || !empty($attributes))
 			elseif($filter['count'] > 0)
 				echo CHtml::link($filter['title'], $url).' ('.$filter['count'].')';
 			else
-				echo Chtml::encode($filter['title']).' (0)';
+				echo $filter['title'].' (0)';
 
 			echo CHtml::closeTag('li');
 		}
@@ -116,7 +115,6 @@ if(!empty($manufacturers['filters']) || !empty($attributes))
 		{
 			$url = Yii::app()->request->addUrlParam('/store/category/view', array($filter['queryKey'] => $filter['queryParam']), $attrData['selectMany']);
 			$queryData = explode(';', Yii::app()->request->getQuery($filter['queryKey']));
-			$filter = CHtml::encodeArray($filter);
 
 			echo CHtml::openTag('li');
 			// Filter link was selected.
@@ -129,7 +127,7 @@ if(!empty($manufacturers['filters']) || !empty($attributes))
 			elseif($filter['count'] > 0)
 				echo CHtml::link($filter['title'], $url).' ('.$filter['count'].')';
 			else
-				echo Chtml::encode($filter['title']).' (0)';
+				echo $filter['title'].' (0)';
 
 			echo CHtml::closeTag('li');
 		}

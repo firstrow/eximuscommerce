@@ -114,7 +114,7 @@ class SFilterRenderer extends CWidget
 						if(isset($activeAttributes[$attribute->name]) && in_array($option->id, $activeAttributes[$attribute->name]))
 						{
 							array_push($menuItems, array(
-								'label'=> CHtml::encode($option->value),
+								'label'=> $option->value,
 								'url'  => Yii::app()->request->removeUrlParam('/store/category/view', $attribute->name, $option->id)
 							));
 						}

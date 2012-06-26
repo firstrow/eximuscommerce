@@ -72,9 +72,7 @@ class InstallFinishForm extends CFormModel
 		);
 
 		foreach($attrsData as $key=>$val)
-		{
 			Yii::app()->db->createCommand("UPDATE StoreAttributeTranslate SET title='{$val}' WHERE title='{$key}'")->execute();
-		}
 
 		// Translate product types
 		$typesData=array(
@@ -86,9 +84,20 @@ class InstallFinishForm extends CFormModel
 		);
 
 		foreach ($typesData as $key=>$val)
-		{
 			Yii::app()->db->createCommand("UPDATE StoreProductType SET name='{$val}' WHERE name='{$key}'")->execute();
-		}
+
+		// Display all attributes on compare page
+		Yii::app()->db->createCommand("UPDATE StoreAttribute SET use_in_compare=1")->execute();
+
+		$filters=array(
+			'processor_manufacturer', 'screen',
+			'corpus_material', 'sound_type',
+			'monitor_diagonal',
+			'phone_platform',
+		);
+
+		foreach ($filters as $name)
+			Yii::app()->db->createCommand("UPDATE StoreAttribute SET use_in_filter=1 WHERE name='{$name}'")->execute();
 
 		return true;
 	}
