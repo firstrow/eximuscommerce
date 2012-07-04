@@ -11,7 +11,6 @@ class ProductCommentsWebTest extends WebTestCase
 
 	/**
 	 * Check creating new comment
-	 * This test is passing only whe YII_DEBUG=True
 	 */
 	public function testCreateComment()
 	{
@@ -25,10 +24,11 @@ class ProductCommentsWebTest extends WebTestCase
 		$this->type('id=Comment_email','tester@localhost.loc');
 		$this->type('id=Comment_text','this is test comment');
 		$this->clickAndWait('name=yt1');
-		if(YII_DEBUG)
-			$this->assertTrue($this->isTextPresent('Ваш комментарий успешно добавлен. Он будет опубликован после проверки администратором.'));
-		else
-			$this->assertTrue($this->isTextPresent('Неправильный код проверки.'));
+
+//		if(defined('YII_DEBUG'))
+//			$this->assertTrue($this->isTextPresent('Неправильный код проверки.'));
+//		else
+		$this->assertTrue($this->isTextPresent('Ваш комментарий успешно добавлен. Он будет опубликован после проверки администратором.'));
 	}
 
 }
