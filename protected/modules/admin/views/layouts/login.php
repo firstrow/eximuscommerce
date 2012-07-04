@@ -8,6 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->module->assetsUrl ?>/css/base.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->module->assetsUrl ?>/css/forms.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->module->assetsUrl ?>/css/theme.css">
+	<style type="text/css">
+		#LoginForm_username, #LoginForm_password {width:400px;}
+	</style>
 </head>
 <body>
 	<div id="doc3" class="yui-t" style="width:750px;margin:auto;margin-top:150px;">
