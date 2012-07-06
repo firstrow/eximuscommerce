@@ -1,5 +1,5 @@
 <?php
-	/*** Display list of modules aviable for installation ***/
+	/*** Display list of modules available for installation ***/
 
 	$this->pageHeader = Yii::t('CoreModule.admin', Yii::t('CoreModule.core', 'Список доступных модулей'));
 
