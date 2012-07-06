@@ -99,6 +99,12 @@ class InstallFinishForm extends CFormModel
 		foreach ($filters as $name)
 			Yii::app()->db->createCommand("UPDATE StoreAttribute SET use_in_filter=1 WHERE name='{$name}'")->execute();
 
+		// Update site settings
+		$siteName=Yii::app()->db->quoteValue($this->siteName);
+		Yii::app()->db->createCommand("UPDATE SystemSettings t SET t.value={$siteName} WHERE t.key='siteName'")->execute();
+		Yii::app()->db->createCommand("UPDATE SystemSettings t SET t.value='12,18,24' WHERE t.key='productsPerPage'")->execute();
+		Yii::app()->db->createCommand("UPDATE SystemSettings t SET t.value='30' WHERE t.key='productsPerPageAdmin'")->execute();
+
 		return true;
 	}
 
