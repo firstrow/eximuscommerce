@@ -24,17 +24,17 @@ class Controller extends RController
 	/**
 	 * @var string
 	 */
-	public $pageTitle;
-
-	/**
-	 * @var string
-	 */
 	public $pageKeywords;
 
 	/**
 	 * @var string
 	 */
 	public $pageDescription;
+
+	/**
+	 * @var string
+	 */
+	private $_pageTitle;
 
 	/**
 	 * Set layout and view
@@ -68,4 +68,17 @@ class Controller extends RController
 		Yii::app()->user->setFlash('messages', CMap::mergeArray($currentMessages, array($message)));
 	}
 
+	public function setPageTitle($title)
+	{
+		$this->_pageTitle=$title;
+	}
+
+
+	public function getPageTitle()
+	{
+		$title=Yii::app()->settings->get('core', 'siteName');
+		if(!empty($this->_pageTitle))
+			$title=$this->_pageTitle.=' / '.$title;
+		return $title;
+	}
 }

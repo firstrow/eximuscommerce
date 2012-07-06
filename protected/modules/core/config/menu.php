@@ -10,6 +10,11 @@ return array(
 	'users'=>array(
 		'items'=>array(
 			array(
+				'label'=>Yii::t('CoreModule.core', 'Настройки'),
+				'url'=>Yii::app()->createUrl('core/admin/systemSettings'),
+				'position'=>0
+			),
+			array(
 				'label'=>Yii::t('CoreModule.core', 'Модули'),
 				'url'=>Yii::app()->createUrl('core/admin/systemModules'),
 				'position'=>3

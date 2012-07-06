@@ -28,7 +28,7 @@ class CategoryController extends Controller
 	/**
 	 * @var array
 	 */
-	public $allowedPageLimit = array(12,18,24);
+	public $allowedPageLimit = array();
 
 	/**
 	 * Current query clone to use in min/max price queries
@@ -57,6 +57,8 @@ class CategoryController extends Controller
 	 */
 	public function beforeAction()
 	{
+		$this->allowedPageLimit=explode(',',Yii::app()->settings->get('core', 'productsPerPage'));
+
 		if(Yii::app()->request->getPost('min_price') || Yii::app()->request->getPost('max_price'))
 		{
 			$data=array();
@@ -100,6 +102,7 @@ class CategoryController extends Controller
 	/**
 	 * Search products
 	 * @param $data StoreCategory|string
+	 * @param string $view
 	 */
 	public function doSearch($data, $view)
 	{

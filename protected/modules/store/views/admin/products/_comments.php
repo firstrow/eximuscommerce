@@ -18,7 +18,7 @@ $comments->object_pk  = $model->id;
 
 // Fix sort url
 $dataProvider = $comments->search();
-$dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
+$dataProvider->pagination->pageSize = Yii::app()->settings->get('core', 'productsPerPageAdmin');
 $dataProvider->sort->route = 'applyCommentsFilter';
 $dataProvider->pagination->route = 'applyCommentsFilter';
 

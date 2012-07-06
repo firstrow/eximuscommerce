@@ -55,12 +55,13 @@ $this->breadcrumbs[] = $this->model->name;
 			?>
 
 			<?php
+				$limits=array(Yii::app()->request->removeUrlParam('/store/category/view', 'per_page')  => $this->allowedPageLimit[0]);
+				array_shift($this->allowedPageLimit);
+				foreach($this->allowedPageLimit as $l)
+					$limits[Yii::app()->request->addUrlParam('/store/category/view', array('per_page'=> $l))]=$l;
+
 				echo Yii::t('StoreModule.core', 'На странице:');
-				echo CHtml::dropDownList('per_page', Yii::app()->request->url, array(
-					Yii::app()->request->removeUrlParam('/store/category/view', 'per_page')  => 12,
-					Yii::app()->request->addUrlParam('/store/category/view', array('per_page'=> 18)) => 18,
-					Yii::app()->request->addUrlParam('/store/category/view', array('per_page'=> 24)) => 24,
-				), array('onchange'=>'applyCategorySorter(this)'));
+				echo CHtml::dropDownList('per_page', Yii::app()->request->url, $limits, array('onchange'=>'applyCategorySorter(this)'));
 			?>
 
 			<div class="buttons">

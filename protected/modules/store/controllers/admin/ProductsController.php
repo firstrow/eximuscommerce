@@ -22,7 +22,7 @@ class ProductsController extends SAdminController
 		);
 
 		$dataProvider = $model->search($params);
-		$dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
+		$dataProvider->pagination->pageSize = Yii::app()->settings->get('core', 'productsPerPageAdmin');
 
 		$this->render('index', array(
 			'model'=>$model,

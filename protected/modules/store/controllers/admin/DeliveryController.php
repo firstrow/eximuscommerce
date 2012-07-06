@@ -17,7 +17,7 @@ class DeliveryController extends SAdminController {
 			$model->attributes = $_GET['StoreDeliveryMethod'];
 
 		$dataProvider = $model->search();
-		$dataProvider->pagination->pageSize = Yii::app()->params['adminPageSize'];
+		$dataProvider->pagination->pageSize = Yii::app()->settings->get('core', 'productsPerPageAdmin');
 
 		$this->render('index', array(
 			'model'=>$model,
