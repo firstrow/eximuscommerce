@@ -76,11 +76,11 @@ class InstallFinishForm extends CFormModel
 
 		// Translate product types
 		$typesData=array(
+			'laptop'        =>'Ноутбук',
 			'computer_sound'=>'Акустика',
-			'laptop'=>'Ноутбук',
-			'monitor'=>'Монитор',
-			'phone'=>'Телефон',
-			'tablet'=>'Планшет',
+			'monitor'       =>'Монитор',
+			'phone'         =>'Телефон',
+			'tablet'        =>'Планшет',
 		);
 
 		foreach ($typesData as $key=>$val)

@@ -64,9 +64,7 @@ class InstallConfigureForm extends CFormModel
 		Yii::app()->languageManager->setActive();
 
 		if($this->installDemoData)
-		{
 			$this->importCsvFiles();
-		}
 	}
 
 	/**
@@ -75,14 +73,14 @@ class InstallConfigureForm extends CFormModel
 	private function importCsvFiles()
 	{
 		$files = array(
-			'computer_sound',
 			'laptops',
+			'computer_sound',
 			'monitors',
 			'phones',
 			'tablets',
 		);
 
-		foreach ($files as $file)
+		foreach($files as $file)
 		{
 			$importer=new CsvImporter();
 			$importer->file=Yii::getPathOfAlias('application.modules.install.data').DIRECTORY_SEPARATOR.$file.'.csv';

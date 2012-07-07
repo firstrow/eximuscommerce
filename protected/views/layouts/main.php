@@ -33,13 +33,17 @@
 	<!-- Small top menu -->
 	<div id="top_menu">
 		<div class="left">
-			<ul>
-				<li><a href="#">Помощь</a></li>
-				<li><a href="#">Как сделать заказ</a></li>
-				<li><a href="#">Гарантия</a></li>
-				<li><a href="#">Доставка и оплата</a></li>
-				<li><a href="#">Контакты</a></li>
-			</ul>
+			<?php
+				$this->widget('zii.widgets.CMenu', array(
+					'items'=>array(
+						array('label'=>Yii::t('core', 'Помощь'), 'url'=>array('/pages/pages/view', 'url'=>'help')),
+						array('label'=>Yii::t('core', 'Как сделать заказ'), 'url'=>array('/pages/pages/view', 'url'=>'how-to-create-order')),
+						array('label'=>Yii::t('core', 'Гарантия'), 'url'=>array('/pages/pages/view', 'url'=>'garantiya')),
+						array('label'=>Yii::t('core', 'Доставка и оплата'), 'url'=>array('/pages/pages/view', 'url'=>'dostavka-i-oplata')),
+						array('label'=>Yii::t('core', 'Обратная связь'), 'url'=>array('/feedback/default/index')),
+					),
+				));
+			?>
 		</div>
 		<div class="right">
 			<ul>
@@ -149,13 +153,17 @@
 		</div>
 
 		<div class="middle">
-			<ul>
-				<li><a href="#">Помощь</a></li>
-				<li><a href="#">Как сделать заказ</a></li>
-				<li><a href="#">Гарантия</a></li>
-				<li><a href="#">Доставка и оплата</a></li>
-				<li><a href="#">Контакты</a></li>
-			</ul>
+			<?php
+			$this->widget('zii.widgets.CMenu', array(
+				'items'=>array(
+					array('label'=>Yii::t('core', 'Помощь'), 'url'=>array('/pages/pages/view', 'url'=>'help')),
+					array('label'=>Yii::t('core', 'Как сделать заказ'), 'url'=>array('/pages/pages/view', 'url'=>'how-to-create-order')),
+					array('label'=>Yii::t('core', 'Гарантия'), 'url'=>array('/pages/pages/view', 'url'=>'garantiya')),
+					array('label'=>Yii::t('core', 'Доставка и оплата'), 'url'=>array('/pages/pages/view', 'url'=>'dostavka-i-oplata')),
+					array('label'=>Yii::t('core', 'Обратная связь'), 'url'=>array('/feedback/default/index')),
+				),
+			));
+			?>
 		</div>
 		<div class="right">
 			Контактная информация
