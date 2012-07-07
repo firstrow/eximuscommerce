@@ -99,7 +99,7 @@ class StoreDeliveryMethod extends BaseModel
 	{
 		return array(
 			'categorization' => array(self::HAS_MANY, 'StoreDeliveryPayment', 'delivery_id'),
-			'paymentMethods' => array(self::HAS_MANY, 'StorePaymentMethod', array('payment_id'=>'id'), 'through'=>'categorization'),
+			'paymentMethods' => array(self::HAS_MANY, 'StorePaymentMethod', array('payment_id'=>'id'), 'through'=>'categorization', 'order'=>'paymentMethods.position'),
 			'dm_translate'   => array(self::HAS_ONE, 'StoreDeliveryMethodTranslate', 'object_id'),
 		);
 	}

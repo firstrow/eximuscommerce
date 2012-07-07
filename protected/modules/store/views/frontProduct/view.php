@@ -89,6 +89,13 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 
 		<div class="errors" id="productErrors"></div>
 
+		<div style="clear: both;font-size: 16px">
+			<?php
+			if($model->appliedDiscount)
+				echo '<span style="color:red; "><s>'.$model->originalPrice.' '.Yii::app()->currency->active->symbol.'</s></span>';
+			?>
+		</div>
+
 		<div class="price">
 			<span id="productPrice"><?php echo StoreProduct::formatPrice($model->toCurrentCurrency()); ?></span>
 			<?php echo Yii::app()->currency->active->symbol; ?>
