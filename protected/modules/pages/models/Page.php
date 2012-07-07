@@ -107,18 +107,22 @@ class Page extends BaseModel
 	/**
 	 * Filter pages by category.
 	 * Scope.
-	 * @param PageCategory $model
+	 * @param PageCategory|int $category
 	 * @return Page
 	 */
-	public function filterByCategory($model)
+	public function filterByCategory($category)
 	{
+		if($category instanceof PageCategory)
+			$category=$category->id;
+
 		$this->getDbCriteria()->mergeWith(array(
 			'condition'=>'category_id=:category',
-			'params'=>array(':category'=>$model->id)
+			'params'=>array(':category'=>$category)
 		));
 
 		return $this;
 	}
+
 
 	/**
 	 * @return array validation rules for model attributes.
