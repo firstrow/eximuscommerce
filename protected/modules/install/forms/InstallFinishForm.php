@@ -105,7 +105,70 @@ class InstallFinishForm extends CFormModel
 		Yii::app()->db->createCommand("UPDATE SystemSettings t SET t.value='12,18,24' WHERE t.key='productsPerPage'")->execute();
 		Yii::app()->db->createCommand("UPDATE SystemSettings t SET t.value='30' WHERE t.key='productsPerPageAdmin'")->execute();
 
+		$this->createDiscount();
+		$this->createPopularProducts();
+
 		return true;
+	}
+
+	/**
+	 * Creates test discount for Apple brand
+	 */
+	protected function createDiscount()
+	{
+		$manufacturer=Yii::app()->db->createCommand()
+			->from('StoreManufacturerTranslate')
+			->where(array('and', 'name="Apple"'))
+			->queryRow();
+
+		Yii::app()->db->createCommand()->insert('Discount', array(
+			'name'=>'Скидка на всю технику Apple',
+			'active'=>1,
+			'sum'=>'5%',
+			'start_date'=>'2012-01-01 12:00:00',
+			'end_date'=>'2013-01-01 12:00:00',
+		));
+		$discountId=Yii::app()->db->getLastInsertID();
+
+		Yii::app()->db->createCommand()->insert('DiscountManufacturer', array(
+			'discount_id'=>$discountId,
+			'manufacturer_id'=>$manufacturer['object_id'],
+		));
+
+		$categories=Yii::app()->db->createCommand()
+			->from('StoreCategory')
+			->queryAll();
+
+		foreach($categories as $c)
+		{
+			Yii::app()->db->createCommand()->insert('DiscountCategory', array(
+				'discount_id'=>$discountId,
+				'category_id'=>$c['id'],
+			));
+		}
+	}
+
+	/**
+	 * Set initial view for some product to display then in `Popular products` block
+	 */
+	public function createPopularProducts()
+	{
+		$urls=array(
+			'apple-macbook-pro-15-late-2011',
+			'htc-one-xl',
+			'nokia-n9',
+			'apple-ipad-2-16gb-wi-fi--3g',
+		);
+
+		$n=5;
+		foreach ($urls as $url)
+		{
+			Yii::app()->db->createCommand()->update('StoreProduct',array(
+				'views_count'=>$n
+			),'url=:url', array(':url'=>$url));
+			++$n;
+		}
+
 	}
 
 	/**

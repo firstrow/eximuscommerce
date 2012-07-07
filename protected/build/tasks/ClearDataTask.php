@@ -7,6 +7,7 @@ Yii::import('application.modules.store.models..wishlist.*');
 Yii::import('application.modules.orders.models.*');
 Yii::import('application.modules.logger.models.*');
 Yii::import('application.modules.comments.models.*');
+Yii::import('application.modules.discounts.models.*');
 
 $clear=array(
 	'StoreProduct',
@@ -17,6 +18,7 @@ $clear=array(
 	'StoreWishlist',
 	'Comment',
 	'StoreProductType',
+	'Discount',
 );
 
 $truncate = array(

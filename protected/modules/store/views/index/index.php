@@ -6,7 +6,7 @@
 ?>
 
 <div class="banners" align="center">
-	<img src="http://placehold.it/900x400">
+	<a href="/products/search/q/Apple"><img src="/themes/default/assets/images/mainPageBanner.png"></a>
 </div>
 
 <div class="wide_line">
