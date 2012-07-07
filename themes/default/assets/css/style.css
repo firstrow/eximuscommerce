@@ -8,6 +8,7 @@ body {
 h1 {
     color:#000;
     font-size:24px;
+    line-height:26px;
     margin:15px 0 15px 0;
     text-shadow:0px 1px 0px #d4d4d4;
 }
