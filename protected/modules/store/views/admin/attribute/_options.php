@@ -78,9 +78,12 @@ Yii::app()->getClientScript()
 		?>
 			<tr>
 				<td><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></td>
-				<?php foreach(Yii::app()->languageManager->languages as $l): ?>
+				<?php
+				$rnd=rand(1,9999);
+				foreach(Yii::app()->languageManager->languages as $l):
+				?>
 				<td>
-					<input name="options[<?php rand(1,9999) ?>][]" type="text">
+					<input name="options[<?php echo $rnd ?>][]" type="text">
 				</td>
 				<?php endforeach; ?>
 				<td>

@@ -90,8 +90,6 @@ class AttributeController extends SAdminController
 	 */
 	protected function saveOptions($model)
 	{
-//		var_dump($_POST);
-//		exit;
 		$dontDelete = array();
 		if(!empty($_POST['options']))
 		{
@@ -126,7 +124,7 @@ class AttributeController extends SAdminController
 						$attributeOption->value = $val[$index];
 						$attributeOption->save(false);
 
-						$index++;
+						++$index;
 					}
 
 					array_push($dontDelete, $attributeOption->id);

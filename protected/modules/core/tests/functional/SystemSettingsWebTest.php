@@ -16,6 +16,7 @@ class SystemSettingsWebTest extends WebTestCase
 		$this->clickAndWait('css=#save_topLink > span.ui-button-text');
 
 		Yii::import('application.modules.core.models.SystemSettingsForm');
+		Yii::app()->settings->init();
 		$model=new SystemSettingsForm;
 		$this->assertEquals($model->siteName, $siteName);
 		$this->assertEquals($model->productsPerPage, $pp);
@@ -35,7 +36,7 @@ class SystemSettingsWebTest extends WebTestCase
 		$product = StoreProduct::model()->active()->find();
 		$this->assertTrue($product instanceof StoreProduct);
 
-		// Open product page and post comment
+		// Open product page
 		$this->open(Yii::app()->createUrl('/store/frontProduct/view', array('url'=>$product->url)));
 
 		$this->assertEquals($product->name.' / '.Yii::app()->settings->get('core','siteName'), $this->getTitle());
