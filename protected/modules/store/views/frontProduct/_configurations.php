@@ -4,6 +4,7 @@
 
 	foreach($model->processVariants() as $variant)
 	{
+		$dropDownData=array();
 		echo '<tr><td class="attr_name">';
 		echo $variant['attribute']->title.':';
 		echo '</td><td>';
