@@ -5,15 +5,15 @@
  *
  * @var $model StoreProduct
  */
+Yii::import('comments.models.Comment');
 
 $module = Yii::app()->getModule('comments');
-Yii::import('comments.models.Comment');
 $comments = new Comment('search');
 
 if(!empty($_GET['Comment']))
 	$comments->attributes = $_GET['Comment'];
 
-$comments->class_name = 'store.models.StoreProduct';
+$comments->class_name = 'application.modules.store.models.StoreProduct';
 $comments->object_pk  = $model->id;
 
 // Fix sort url
