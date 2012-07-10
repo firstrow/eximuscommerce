@@ -96,6 +96,7 @@ $this->widget('ext.sgridview.SGridView', array(
 	'template'=>'{items}{summary}{pager}',
 	'enableCustomActions'=>false,
 	'enableSorting'=>false,
+	'extended'=>false,
 	'selectionChanged'=>'js:function(id){processConfigurableSelection(id)}',
 	'selectableRows'=>2,
 	'filter'=>$model,
