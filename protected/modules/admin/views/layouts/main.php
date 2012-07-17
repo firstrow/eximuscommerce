@@ -155,7 +155,10 @@
 	<!-- footer -->
 	<div id="ft" style="height:50px;">
 		&nbsp;
-		<?php if(SLicenseChecker::check()===false): ?>
+		<?php
+			Yii::import('application.modules.admin.components.SLicenseChecker');
+			if(SLicenseChecker::check()===false):
+		?>
 		<div style="text-align: center;color:maroon;">
 			Для покупки лицензии посетите <a href="http://eximuscommerce.com" target="_blank">eximuscommerce.com</a>
 		</div>
