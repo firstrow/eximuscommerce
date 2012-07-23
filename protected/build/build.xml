@@ -71,7 +71,7 @@
 
         <delete file="${eximus.build_dir}/index-test.php" />
         <delete file="${eximus.build_dir}/index.php" />
-        <delete file="${eximus.build_dir}/protected/build" />
+        <delete dir="${eximus.build_dir}/protected/build" includeemptydirs="true" />
         <delete dir="${eximus.build_dir}/assets" includeemptydirs="true"/>
 
         <copy file="${eximus.source_dir}/protected/build/index.php.release" tofile="${eximus.build_dir}/index.php"/>

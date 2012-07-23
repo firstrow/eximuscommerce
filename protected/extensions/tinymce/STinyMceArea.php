@@ -36,6 +36,6 @@ class STinyMceArea extends CInputWidget
 			echo CHtml::activeTextArea($this->model, $this->attribute, $this->htmlOptions);
 		else
 			echo CHtml::textArea($name, $this->value, $this->htmlOptions);
-		echo '<p class="hint" style="float:left;"><a onclick="return setupTinyMce(\'#'.$id.'\', this);">WYSIWYG</a></p>';
+		echo '<div class="hint"><a onclick="return setupTinyMce(\'#'.$id.'\', this);">WYSIWYG</a></div>';
 	}
 }
