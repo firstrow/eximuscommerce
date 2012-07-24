@@ -3,12 +3,16 @@
 <project name="releaseBuilder" basedir="." default="build">
     <property file="./build.properties" />
 
-    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall, clearDbConnSettings" />
+    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall, clearDbConnSettings, deleteBuild" />
 
     <!-- Clean build dir -->
     <target name="clean">
         <delete dir="${eximus.build_dir}" includeemptydirs="true" />
         <mkdir dir="${eximus.build_dir}" />
+    </target>
+
+    <target name="deleteBuild">
+        <delete dir="${eximus.build_dir}/protected/build" includeemptydirs="true" />
     </target>
 
     <!-- Write db conn settings to build_db -->
@@ -71,8 +75,8 @@
 
         <delete file="${eximus.build_dir}/index-test.php" />
         <delete file="${eximus.build_dir}/index.php" />
-        <delete dir="${eximus.build_dir}/protected/build" includeemptydirs="true" />
         <delete dir="${eximus.build_dir}/assets" includeemptydirs="true"/>
+        <delete dir="${eximus.build_dir}/protected/runtime" includeemptydirs="true"/>
 
         <copy file="${eximus.source_dir}/protected/build/index.php.release" tofile="${eximus.build_dir}/index.php"/>
 
