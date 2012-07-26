@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('system.utils.CFileHelper');
+
 /**
  * Class to make easier importing images
  */
@@ -33,7 +35,7 @@ class CsvImage extends CUploadedFile
 		if(!file_exists($tmpName))
 			return false;
 
-		return new CsvImage($image, $tmpName, mime_content_type($tmpName),filesize($tmpName), false);
+		return new CsvImage($image, $tmpName, CFileHelper::getMimeType($tmpName),filesize($tmpName), false);
 	}
 
 	/**

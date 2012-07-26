@@ -39,7 +39,6 @@
 	<div class="row">
 		<?php echo $form->label($model,'dbPassword'); ?>
 		<?php echo $form->textField($model,'dbPassword') ?>
-		<span class="required"> *</span>
 	</div>
 
 	<div class="row buttons">

@@ -16,7 +16,7 @@ class InstallConfigureForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('installDemoData, dbHost, dbName, dbUserName, dbPassword','required'),
+			array('installDemoData, dbHost, dbName, dbUserName','required'),
 			array('dbPassword', 'checkDbConnection'),
 		);
 	}
@@ -124,7 +124,20 @@ class InstallConfigureForm extends CFormModel
 		{
 			$q=trim($q);
 			if(!empty($q))
-				$connection->createCommand($q)->execute();
+			{
+				if(strpos($q, 'DROP TABLE IF EXISTS')===false)
+					$connection->createCommand($q)->execute();
+				else
+				{
+					$lines=preg_split("/(\r?\n)+/", $q);
+					$dropQuery=$lines[0];
+					array_shift($lines);
+					$query=implode('', $lines);
+
+					$connection->createCommand($dropQuery)->execute();
+					$connection->createCommand($query)->execute();
+				}
+			}
 		}
 	}
 

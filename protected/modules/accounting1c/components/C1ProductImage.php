@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('system.utils.CFileHelper');
+
 class C1ProductImage extends CUploadedFile
 {
 
@@ -29,7 +31,7 @@ class C1ProductImage extends CUploadedFile
 		if(!file_exists($fullPath))
 			return false;
 		$name=explode(DIRECTORY_SEPARATOR, $fullPath);
-		return new C1ProductImage(end($name), $fullPath, mime_content_type($fullPath), filesize($fullPath), false);
+		return new C1ProductImage(end($name), $fullPath, CFileHelper::getMimeType($fullPath), filesize($fullPath), false);
 	}
 
 	/**

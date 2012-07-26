@@ -6,6 +6,13 @@
 $errors=false;
 ?>
 
+<?php if(PHP_VERSION_ID < 50300): ?>
+<h3>
+	Для установки нужен PHP 5.3<br/>
+	У вас установлен: <?php echo phpversion(); ?>
+</h3>
+<?php else: ?>
+
 <div class="progress">
 	<span class="active">1</span>→2→3→4
 </div>
@@ -24,14 +31,14 @@ $errors=false;
 			<td width="300px"><?php echo $path ?></td>
 			<td>
 				<?php
-					$result=$this->isWritable($path);
-					if($result)
-						echo '<span class="green">OK</span>';
-					else
-					{
-						$errors=true;
-						echo '<span class="red">NO</span>';
-					}
+				$result=$this->isWritable($path);
+				if($result)
+					echo '<span class="green">OK</span>';
+				else
+				{
+					$errors=true;
+					echo '<span class="red">NO</span>';
+				}
 				?>
 			</td>
 		</tr>
@@ -51,3 +58,4 @@ $errors=false;
 		<?php endif ?>
 	</div>
 </div>
+<?php endif; ?>
