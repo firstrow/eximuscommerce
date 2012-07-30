@@ -105,10 +105,10 @@ class SHttpRequest extends CHttpRequest {
 
 		if($this->enableCsrfValidation && $this->isCLI()===false)
 		{
-			$url=Yii::app()->getUrlManager()->parseUrl($this);
+			$url=$this->getRequestUri();
 			foreach($this->noCsrfValidationRoutes as $route)
 			{
-				if(strpos($url,$route)===0)
+				if(substr($url,0,strlen($route))===$route)
 					Yii::app()->detachEventHandler('onBeginRequest', array($this,'validateCsrfToken'));
 			}
 		}

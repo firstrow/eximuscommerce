@@ -9,7 +9,7 @@ return array(
 	'language'=>'ru',
 	//'sourceLanguage'=>'ru',
 	'theme'=>'default',
-	// preloading 'log' component
+	// pre-loading components
 	'preload'=>array('log'),
 
 	// autoloading model and component classes
@@ -38,7 +38,6 @@ return array(
 			'layout'=>'application.modules.admin.views.layouts.main',
 			'cssFile'=>false,
 			'debug'=>YII_DEBUG,
-			//'appLayout'=>'application.modules.admin.views.layouts.main,'
 		),
 		'core',
 	),
@@ -74,7 +73,6 @@ return array(
 				'rights/<controller:\w+>/<id:\d+>'=>'rights/<controller>/view',
 				'rights/<controller:\w+>/<action:\w+>/<id:\d+>'=>'rights/<controller>/<action>',
 				'rights/<controller:\w+>/<action:\w+>'=>'rights/<controller>/<action>',
-
 				'gii'=>'gii',
 				'gii/<controller:\w+>'=>'gii/<controller>',
 				'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',
@@ -95,8 +93,8 @@ return array(
 			'enableCsrfValidation'=>true,
 			'enableCookieValidation'=>true,
 			'noCsrfValidationRoutes'=>array(
-				'orders/payment/process',
-				'accounting1c/default',
+				'/processPayment',
+				'/accounting1c/default/',
 			)
 		),
 		'errorHandler'=>array(
@@ -104,7 +102,6 @@ return array(
 			'errorAction'=>'site/error',
 		),
 		'authManager'=>array(
-			//'class'=>'CDbAuthManager',
 			'class'=>'RDbAuthManager',
 			'connectionID'=>'db',
 		),
@@ -140,13 +137,13 @@ return array(
 		'adminEmail'=>'webmaster@example.com',
 		'adminPageSize'=>30,
 		'storeImages'=>array(
-			'path'=>'webroot.uploads.product',
-			'thumbPath'=>'webroot.assets.productThumbs',
-			'maxFileSize'=>10*1024*1024,
-			'extensions'=>array('jpg', 'jpeg','png', 'gif'),
-			'types'=>array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
-			'url'=>'/uploads/product/', // With ending slash
-			'thumbUrl'=>'/assets/productThumbs/', // With ending slash
+			'path'        => 'webroot.uploads.product',
+			'thumbPath'   => 'webroot.assets.productThumbs',
+			'maxFileSize' => 10*1024*1024,
+			'extensions'  => array('jpg', 'jpeg','png', 'gif'),
+			'types'       => array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
+			'url'         => '/uploads/product/', // With ending slash
+			'thumbUrl'    => '/assets/productThumbs/', // With ending slash
 			'sizes'=>array(
 				'resizeMethod'=>'resize', // resize/adaptiveResize
 				'resizeThumbMethod'=>'resize', // resize/adaptiveResize

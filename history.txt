@@ -2,6 +2,7 @@ Version 1.1
     Bug: Fixed additional attributes validation on products update.
     Bug: Fixed behaviors signatures.
     Bug: Fixed products search and changing per page limits.
+    Bug: Fixed error view on production mode.
 
 Version 1.0 2012-07-23
     Initial release.

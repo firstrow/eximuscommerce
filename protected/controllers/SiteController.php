@@ -1,11 +1,7 @@
 <?php
-class SiteController extends Controller {
 
-
-	public function allowedActions()
-	{
-		return 'login, index, error, contact';
-	}
+class SiteController extends Controller
+{
 
 	public function actionIndex()
 	{
@@ -16,15 +12,12 @@ class SiteController extends Controller {
 	 */
 	public function actionError()
 	{
-		$error=Yii::app()->errorHandler->error;
-		if($error)
+		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)
 				echo $error['message'];
 			else
-				var_dump($error);
-		}else{
-			echo 'Error.';
+				$this->render('error', array('error'=>$error));
 		}
 	}
 }
