@@ -1,2 +1,5 @@
-2012-07-23
+Version 1.1
+    Bug: Fixed additional attributes validation on products update.
+
+Version 1.0 2012-07-23
     Initial release.

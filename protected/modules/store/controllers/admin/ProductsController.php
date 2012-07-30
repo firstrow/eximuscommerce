@@ -96,7 +96,7 @@ class ProductsController extends SAdminController
 			// Handle related products
 			$model->setRelatedProducts(Yii::app()->getRequest()->getPost('RelatedProductId', array()));
 
-			if ($model->validate() && $this->validateAttributes(&$model))
+			if ($model->validate() && $this->validateAttributes($model))
 			{
 				$model->save();
 
