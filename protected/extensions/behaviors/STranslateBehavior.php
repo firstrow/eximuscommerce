@@ -36,7 +36,8 @@
  *
  * @todo: Dont load translations when system, has only one language
  */
-class STranslateBehavior extends CActiveRecordBehavior {
+class STranslateBehavior extends CActiveRecordBehavior
+{
 
 	/**
 	 * @var array Model attributes available for translate
@@ -65,7 +66,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	/**
 	 * Merge object query with translate query.
 	 */
-	public function beforeFind()
+	public function beforeFind($event)
 	{
 		$this->applyTranslateCriteria();
 		return true;
@@ -115,7 +116,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	/**
 	 * Update model translations
 	 */
-	public function afterSave()
+	public function afterSave($event)
 	{
 		$relation = $this->relationName;
 		$translate = $this->owner->$relation;
@@ -129,7 +130,7 @@ class STranslateBehavior extends CActiveRecordBehavior {
 	/**
 	 * Delete model related translations
 	 */
-	public function afterDelete()
+	public function afterDelete($event)
 	{
 		$className = $this->owner->translateModelName;
 		$className::model()

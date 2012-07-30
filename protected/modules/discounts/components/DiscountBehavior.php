@@ -48,7 +48,7 @@ class DiscountBehavior extends CActiveRecordBehavior
 	/**
 	 * After find event
 	 */
-	public function afterFind()
+	public function afterFind($event)
 	{
 		if($this->appliedDiscount!==null)
 			return;
