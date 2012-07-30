@@ -39,10 +39,10 @@ $this->breadcrumbs[] = Yii::t('StoreModule.core', 'Поиск');
 			?>
 
 			<?php
-				$limits=array(Yii::app()->request->removeUrlParam('/store/category/view', 'per_page')  => $this->allowedPageLimit[0]);
+				$limits=array(Yii::app()->request->removeUrlParam('/store/category/search', 'per_page')  => $this->allowedPageLimit[0]);
 				array_shift($this->allowedPageLimit);
 				foreach($this->allowedPageLimit as $l)
-					$limits[Yii::app()->request->addUrlParam('/store/category/view', array('per_page'=> $l))]=$l;
+					$limits[Yii::app()->request->addUrlParam('/store/category/search', array('per_page'=> $l))]=$l;
 
 				echo Yii::t('StoreModule.core', 'На странице:');
 				echo CHtml::dropDownList('per_page', Yii::app()->request->url, $limits, array('onchange'=>'applyCategorySorter(this)'));
