@@ -119,11 +119,11 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			?>
 
 			<div class="silver_clean silver_button">
-				<button onclick="return addProductToCompare(<?php echo $model->id ?>);"><span class="icon compare"></span>Сравнить</button>
+				<button title="<?=Yii::t('core','Сравнить')?>" onclick="return addProductToCompare(<?php echo $model->id ?>);"><span class="icon compare"></span>Сравнить</button>
 			</div>
 
 			<div class="silver_clean silver_button">
-				<button onclick="return addProductToWishList(<?php echo $model->id ?>);"><span class="icon heart"></span>Список желаний</button>
+				<button title="<?=Yii::t('core','В список желаний')?>" onclick="return addProductToWishList(<?php echo $model->id ?>);"><span class="icon heart"></span>Список желаний</button>
 			</div>
 
 			<div id="successAddedToCart"></div>
