@@ -37,6 +37,7 @@ if(!empty($comments))
 		'id'=>'comment-create-form',
 		'action'=>'#comment-create-form',
 		'enableAjaxValidation'=>false,
+		'enableClientValidation'=>true,
 	)); ?>
 
 	<?php if(Yii::app()->user->isGuest): ?>
