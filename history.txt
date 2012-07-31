@@ -5,6 +5,7 @@ Version 1.1
     Bug: Fixed error view on production mode.
     Bug: Fixed product discount display on different currencies.
     Bug: Added title to compare and wishlist buttons.
+    Enh: Added client side validation for comments form.
 
 Version 1.0 2012-07-23
     Initial release.
