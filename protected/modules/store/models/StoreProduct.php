@@ -770,9 +770,9 @@ class StoreProduct extends BaseModel
 	 * Convert price to currenct currency
 	 * @return float
 	 */
-	public function toCurrentCurrency()
+	public function toCurrentCurrency($attr='price')
 	{
-		return Yii::app()->currency->convert($this->price);
+		return Yii::app()->currency->convert($this->$attr);
 	}
 
 	/**
