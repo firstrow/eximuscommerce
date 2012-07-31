@@ -3,7 +3,7 @@
 <project name="releaseBuilder" basedir="." default="build">
     <property file="./build.properties" />
 
-    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall, clearDbConnSettings, deleteBuild" />
+    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall, clearDbConnSettings, removeDebugToolbarFromLogging, deleteBuild" />
 
     <!-- Clean build dir -->
     <target name="clean">
@@ -54,9 +54,28 @@
                     <regexp pattern="dbname=build_test" replace="dbname="/>
                     <regexp pattern="\'username\'\s*\=\>\s*\'.*\'" replace="'username'=>''"/>
                     <regexp pattern="\'password\'\s*\=\>\s*\'.*\'" replace="'password'=>''"/>
+                    <!-- Remove gii module -->
+                    <regexp pattern="\'gii\'=>array\(.*?\),.*?\)\," replace="" multiline="true" modifiers="sm"/>
                 </replaceregexp>
             </filterchain>
         </reflexive>
+    </target>
+
+    <target name="removeDebugToolbarFromLogging">
+        <reflexive>
+            <fileset dir="${eximus.build_dir}/protected/config/">
+                <include name="logging.php" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="'class'=>'ext.yii-debug-toolbar.YiiDebugToolbarRoute'," replace=""/>
+                    <regexp pattern="'ipFilters'=>array\('127.0.0.1'\)," replace=""/>
+                    <regexp pattern="array\(\s*?\)\," replace="" multiline="true" modifiers="sm"/>
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
+
+        <delete dir="${eximus.build_dir}/protected/extensions/yii-debug-toolbar" includeemptydirs="true"/>
     </target>
 
     <!-- Copy source to build dir -->
