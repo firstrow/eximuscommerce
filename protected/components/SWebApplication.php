@@ -25,9 +25,9 @@ class SWebApplication extends CWebApplication
 		// Enable installed modules
 		$modules = SystemModules::getEnabled();
 
-		if ($modules)
+		if($modules)
 		{
-			foreach ($modules as $module)
+			foreach($modules as $module)
 				$this->setModules(array($module->name));
 		}
 	}
