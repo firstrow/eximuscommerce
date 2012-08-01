@@ -18,6 +18,10 @@ class SystemSettingsForm extends CFormModel
 	 */
 	public $productsPerPageAdmin;
 
+	/**
+	 * @var string site theme name
+	 */
+	public $theme;
 
 	public function init()
 	{
@@ -29,7 +33,7 @@ class SystemSettingsForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('siteName, productsPerPage, productsPerPageAdmin', 'required'),
+			array('siteName, productsPerPage, productsPerPageAdmin, theme', 'required'),
 		);
 	}
 
@@ -42,6 +46,7 @@ class SystemSettingsForm extends CFormModel
 			'siteName'            =>Yii::t('CoreModule.admin', 'Название сайта'),
 			'productsPerPage'     =>Yii::t('CoreModule.admin', 'Количество товаров на сайте'),
 			'productsPerPageAdmin'=>Yii::t('CoreModule.admin', 'Количество товаров в панели управления'),
+			'theme'               =>Yii::t('CoreModule.admin', 'Тема'),
 		);
 	}
 

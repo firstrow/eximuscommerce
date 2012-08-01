@@ -8,7 +8,6 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'language'=>'ru',
 	//'sourceLanguage'=>'ru',
-	'theme'=>'default',
 	// pre-loading components
 	'preload'=>array('log'),
 
