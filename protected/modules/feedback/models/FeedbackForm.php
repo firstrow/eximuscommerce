@@ -27,6 +27,19 @@ class FeedbackForm extends CFormModel
 	public $code;
 
 	/**
+	 * Initialize model
+	 */
+	public function init()
+	{
+		$user=Yii::app()->user;
+		if($user->isGuest===false)
+		{
+			$this->name=$user->username;
+			$this->email=$user->email;
+		}
+	}
+
+	/**
 	 * Validation rules
 	 * @return array
 	 */
