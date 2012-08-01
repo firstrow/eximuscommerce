@@ -16,9 +16,9 @@
 <html>
 <head>
 	<title><?php echo CHtml::encode($this->pageTitle) ?></title>
+	<meta charset="UTF-8"/>
 	<meta name="description" content="<?php echo CHtml::encode($this->pageDescription) ?>">
 	<meta name="keywords" content="<?php echo CHtml::encode($this->pageKeywords) ?>">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/css/reset.css">
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/css/style.css">
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl ?>/assets/css/catalog.css">

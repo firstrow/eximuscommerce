@@ -38,8 +38,11 @@ class DefaultController extends SAdminController
 	 */
 	public function actionUpdate($new = false)
 	{
-		if ($new === true)
+		if($new === true)
+		{
 			$model = new User;
+			$model->profile = new UserProfile;
+		}
 		else
 			$model = User::model()->findByPk($_GET['id']);
 
@@ -47,10 +50,11 @@ class DefaultController extends SAdminController
 			throw new CHttpException(400, 'Bad request.');
 
 		$form = new SAdminForm('application.modules.users.views.admin.default.userForm', $model);
+
 		$form['user']->model = $model;
 		$form['profile']->model = $model->profile;
 
-		if (Yii::app()->request->isPostRequest)
+		if(Yii::app()->request->isPostRequest)
 		{
 			$model->attributes = $_POST['User'];
 			$model->profile->attributes = $_POST['UserProfile'];
@@ -60,6 +64,8 @@ class DefaultController extends SAdminController
 			if($valid)
 			{
 				$model->save();
+				if(!$model->profile->user_id)
+					$model->profile->user_id=$model->id;
 				$model->profile->save();
 
 				$this->setFlashMessage(Yii::t('UsersModule.core', 'Изменения успешно сохранены'));

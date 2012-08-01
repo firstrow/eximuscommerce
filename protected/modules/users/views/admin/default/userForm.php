@@ -7,7 +7,7 @@ Yii::import('zii.widgets.jui.CJuiDatePicker');
 
 return array(
 	'id'=>'userUpdateForm',
-	//'showErrorSummary'=>true,
+	'showErrorSummary'=>true,
 	'elements'=>array(
 		'user'=>array(
 			'type'=>'form',

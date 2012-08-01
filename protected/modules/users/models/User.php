@@ -53,7 +53,7 @@ class User extends BaseModel
 			array('created_at, last_login', 'date','format'=>array('yyyy-M-d H:m:s', '0000-00-00 00:00:00')),
 			array('username, password, email', 'length', 'max'=>255),
 			array('new_password', 'length', 'min'=>4, 'max'=>40, 'on'=>'update'),
-			array('password', 'length', 'min'=>4, 'max'=>40, 'allowEmpty'=>false),
+			array('password', 'length', 'min'=>4, 'max'=>40),
 			// Search
 			array('id, username, email, created_at, last_login', 'safe', 'on'=>'search'),
 		);
