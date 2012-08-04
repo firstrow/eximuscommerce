@@ -66,10 +66,13 @@ class SystemLanguagesController extends SAdminController
 	{
 		if (Yii::app()->request->isPostRequest)
 		{
-			$model = SSystemLanguage::model()->findByPk($_GET['id']);
+			$model = SSystemLanguage::model()->findAllByPk($_REQUEST['id']);
 
-			if ($model)
-				$model->delete();
+			if(!empty($model))
+			{
+				foreach($model as $page)
+					$page->delete();
+			}
 
 			if (!Yii::app()->request->isAjaxRequest)
 				$this->redirect('index');
