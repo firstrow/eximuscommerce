@@ -72,7 +72,7 @@ $('.eavData:last').change(function(){
 // Calculate prices.
 $(document).ready(function(){
     $('.variantData').change(function(){
-        recalculateProductPrice();
+        recalculateProductPrice(this);
     });
 });
 
@@ -80,7 +80,7 @@ $(document).ready(function(){
  * Recalculate product price on change variant or configurable options.
  * Sum product price + variant prices + configurable prices.
  */
-function recalculateProductPrice()
+function recalculateProductPrice(el_clicked)
 {
     var result = parseFloat($('#product_price').val());
 
@@ -93,6 +93,11 @@ function recalculateProductPrice()
     }
 
     $('.variantData').each(function(){
+
+        //if($(this).is('input:radio')==true && $(this).attr('checked')!='checked'){
+        //    return;
+		//}
+
         var variant_id = $(this).val();
         if(jsVariantsData[variant_id]){
             if(jsVariantsData[variant_id].price_type == "1"){

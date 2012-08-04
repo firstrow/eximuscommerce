@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('application.modules.store.models.StoreProduct');
+Yii::import('application.modules.store.models.*');
 
 /**
  * Global events
@@ -12,11 +12,11 @@ class StoreModuleEvents
 	 * @var array
 	 */
 	public $classes = array(
-		'StoreProductTranslate',
-		'StoreCategoryTranslate',
-		'StoreAttributeTranslate',
-		'StoreManufacturerTranslate',
-		'StoreDeliveryMethodTranslate',
+		'StoreProduct',
+		'StoreCategory',
+		'StoreAttribute',
+		'StoreManufacturer',
+		'StoreDeliveryMethod',
 	);
 
 	/**
@@ -45,16 +45,6 @@ class StoreModuleEvents
 	}
 
 	/**
-	 * Delete product translations after deleting language
-	 * @param $event
-	 */
-	public function deleteTranslations($event)
-	{
-		foreach($this->classes as $class)
-			$this->_delete($class, $event);
-	}
-
-	/**
 	 * @param $class
 	 * @param $event
 	 */
@@ -69,6 +59,16 @@ class StoreModuleEvents
 			foreach($objects as $obj)
 				$obj->createTranslation($event->sender->getPrimaryKey());
 		}
+	}
+
+	/**
+	 * Delete product translations after deleting language
+	 * @param $event
+	 */
+	public function deleteTranslations($event)
+	{
+		foreach($this->classes as $class)
+			$this->_delete($class.'Translate', $event);
 	}
 
 	/**

@@ -94,7 +94,7 @@ class SAdminTopButtons extends CWidget {
 		if ($this->addNewElements)
 			$this->template = array_unique(CMap::mergeArray(array_keys($this->elements), $this->template));
 
-		if ($this->langSwitcher)
+		if ($this->langSwitcher && count(Yii::app()->languageManager->languages) > 1)
 			array_unshift($this->template, 'langSwitch');
 
 		// Remove `delete` button on new record
@@ -229,56 +229,53 @@ class SAdminTopButtons extends CWidget {
 		else
 			$currentId = $currentLang->id;
 
-		if (count(Yii::app()->languageManager->languages) > 1)
+		$langs = array();
+		foreach(Yii::app()->languageManager->languages as $lang)
 		{
-			$langs = array();
-			foreach(Yii::app()->languageManager->languages as $lang)
+			if($currentId != $lang->id)
 			{
-				if($currentId != $lang->id)
-				{
-					$langs[] = array(
-						'label'=>$this->getFlagImage($lang).CHtml::encode($lang['name']),
-						'url'=>'#',
-						'linkOptions'=>array(
-							'onClick'=>"window.location = jQuery.param.querystring(window.location.href,{lang_id:$lang->id});",
-						),
-					);
-				}
-				else
-					$currentLang = $lang;
+				$langs[] = array(
+					'label'=>$this->getFlagImage($lang).CHtml::encode($lang['name']),
+					'url'=>'#',
+					'linkOptions'=>array(
+						'onClick'=>"window.location = jQuery.param.querystring(window.location.href,{lang_id:$lang->id});",
+					),
+				);
 			}
+			else
+				$currentLang = $lang;
+		}
 
-			Yii::app()->clientScript->registerScript('langSwithMenu', "
-				$('#langSwitch_topLink').menu({
-					content: $('#langSwitchButtonMenu').html(),
-					showSpeed: 400
-				});
-			", CClientScript::POS_END);
+		Yii::app()->clientScript->registerScript('langSwithMenu', "
+			$('#langSwitch_topLink').menu({
+				content: $('#langSwitchButtonMenu').html(),
+				showSpeed: 400
+			});
+		", CClientScript::POS_END);
 
-			echo CHtml::openTag('div', array(
-				'id'=>'langSwitchButtonMenu',
-				'style'=>'display:none'
-			));
-			$this->widget('zii.widgets.CMenu', array(
-				'items'=>$langs,
-				'encodeLabel'=>false
-			));
-			echo CHtml::closeTag('div');
+		echo CHtml::openTag('div', array(
+			'id'=>'langSwitchButtonMenu',
+			'style'=>'display:none'
+		));
+		$this->widget('zii.widgets.CMenu', array(
+			'items'=>$langs,
+			'encodeLabel'=>false
+		));
+		echo CHtml::closeTag('div');
 
-			// Add flags to translateable inputs
-			if($this->form && isset($this->form->model) && array_key_exists('STranslateBehavior', $this->form->model->behaviors()))
+		// Add flags to translateable inputs
+		if($this->form && isset($this->form->model) && array_key_exists('STranslateBehavior', $this->form->model->behaviors()))
+		{
+			if (count(Yii::app()->languageManager->languages) > 1)
 			{
-				if (count(Yii::app()->languageManager->languages) > 1)
+				$flagUrl = Yii::app()->getModule('admin')->assetsUrl.'/images/flags/png/'.$currentLang->flag_name;
+				$class = get_class($this->form->model);
+				$attrs = $this->form->model->getTranslateAttributes();
+				foreach($attrs as $id)
 				{
-					$flagUrl = Yii::app()->getModule('admin')->assetsUrl.'/images/flags/png/'.$currentLang->flag_name;
-					$class = get_class($this->form->model);
-					$attrs = $this->form->model->getTranslateAttributes();
-					foreach($attrs as $id)
-					{
-						Yii::app()->clientScript->registerScript($attrs.$id.'css', "
-						$('#{$class}_{$id}').css('background', '#fff url({$flagUrl}) no-repeat 99% 7px');
-						");
-					}
+					Yii::app()->clientScript->registerScript($attrs.$id.'css', "
+					$('#{$class}_{$id}').css('background', '#fff url({$flagUrl}) no-repeat 99% 7px');
+					");
 				}
 			}
 		}
