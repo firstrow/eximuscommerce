@@ -220,6 +220,7 @@ class ProductsController extends SAdminController
 		{
 			$cr = new CDbCriteria;
 			$cr->addNotInCondition('id', $dontDelete);
+			$cr->addCondition('product_id='.$model->id);
 			StoreProductVariant::model()->deleteAll($cr);
 		}else
 			StoreProductVariant::model()->deleteAllByAttributes(array('product_id'=>$model->id));
