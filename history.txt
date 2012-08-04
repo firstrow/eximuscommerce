@@ -1,4 +1,4 @@
-Version 1.1
+Version 1.1 2012-08-04
     Bug: Fixed additional attributes validation on products update.
     Bug: Fixed behaviors signatures.
     Bug: Fixed products search and changing per page limits.
@@ -8,7 +8,7 @@ Version 1.1
     Bug: Fixed user account creating from admin panel.
     Enh: Added client side validation for comments form.
     Enh: Added ability to change theme from admin panel.
-    Enh: Feedback module - personal data automatically populated for authorized users.
+    Enh: Feedback1 module - personal data automatically populated for authorized users.
 
 Version 1.0 2012-07-23
     Initial release.
