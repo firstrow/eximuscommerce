@@ -397,13 +397,13 @@ class ProductsController extends SAdminController
 	{
 		$attributes = $model->type->storeAttributes;
 
-		if(empty($attributes) OR $model->use_configurations)
+		if(empty($attributes) || $model->use_configurations)
 			return true;
 
 		$errors = false;
 		foreach($attributes as $attr)
 		{
-			if($attr->required && !$_POST['StoreAttribute'][$attr->name])
+			if($attr->required && !isset($_POST['StoreAttribute'][$attr->name]))
 			{
 				$errors = true;
 				$model->addError($attr->name, Yii::t('StoreModule.admin', 'Поле %s обязательно для заполнения', array('%s'=>$attr->title)));

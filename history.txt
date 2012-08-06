@@ -1,3 +1,7 @@
+Version 1.2 2012-?-?
+    Bug: Fixed product attributes validating for required value.
+    Bug: Fixed store module language events.
+    Bug: Fixed creating products with some variants.11
 Version 1.1 2012-08-04
     Bug: Fixed additional attributes validation on products update.
     Bug: Fixed behaviors signatures.
