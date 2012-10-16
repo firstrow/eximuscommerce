@@ -848,7 +848,7 @@ class StoreProduct extends BaseModel
 			else
 				return null;
 
-			$attributeModel = StoreAttribute::model()->with('options')->findByAttributes(array('name'=>$attribute));
+			$attributeModel = StoreAttribute::model()->findByAttributes(array('name'=>$attribute));
 			return $attributeModel->renderValue($value);
 		}
 		return parent::__get($name);

@@ -72,7 +72,6 @@ class SAttributesTableRenderer extends CWidget
 		$cr->addInCondition('StoreAttribute.name', array_keys($this->_attributes));
 		$query = StoreAttribute::model()
 			->displayOnFront()
-			->with(array('options'))
 			->findAll($cr);
 
 		foreach($query as $m)
