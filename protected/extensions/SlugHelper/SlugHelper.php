@@ -1,6 +1,7 @@
 <?php
 
-class SlugHelper {
+class SlugHelper
+{
 
     /**
      * Create slug from text. Also translit cirylic text.
@@ -28,7 +29,7 @@ class SlugHelper {
             $text=mb_eregi_replace($from,$to,$text);
         $text = preg_replace('/[^A-Za-z0-9_\-]/', '', $text);
 
-        return strtolower($text);
+        return trim(strtolower($text));
     }
 
 }
