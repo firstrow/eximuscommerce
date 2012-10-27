@@ -52,7 +52,7 @@ class SCart extends CComponent
 		$currentData = $this->getData();
 
 		if(isset($currentData[$itemIndex]))
-			$currentData[$itemIndex]['quantity']++;
+			$currentData[$itemIndex]['quantity'] += (int) $data['quantity'];
 		else
 			$currentData[$itemIndex] = $data;
 
