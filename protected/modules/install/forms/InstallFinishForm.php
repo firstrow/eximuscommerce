@@ -121,6 +121,10 @@ class InstallFinishForm extends CFormModel
 			->where(array('and', 'name="Apple"'))
 			->queryRow();
 
+		// TODO: Rafactor. Check if user install test data.
+		if(!$manufacturer)
+			return;
+
 		Yii::app()->db->createCommand()->insert('Discount', array(
 			'name'=>'Скидка на всю технику Apple',
 			'active'=>1,
@@ -131,8 +135,8 @@ class InstallFinishForm extends CFormModel
 		$discountId=Yii::app()->db->getLastInsertID();
 
 		Yii::app()->db->createCommand()->insert('DiscountManufacturer', array(
-			'discount_id'=>$discountId,
-			'manufacturer_id'=>$manufacturer['object_id'],
+			'discount_id'     => $discountId,
+			'manufacturer_id' => $manufacturer['object_id'],
 		));
 
 		$categories=Yii::app()->db->createCommand()

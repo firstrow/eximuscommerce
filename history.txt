@@ -3,6 +3,7 @@ Version 1.2 2012-?-?
     Bug: Fixed store module language events.
     Bug: Fixed creating products with some variants.
     Bug: Fixed displaying text baesd attributes on product view and compare pages.
+    Bug: Fixed installing without demo data.
 
 Version 1.1 2012-08-04
     Bug: Fixed additional attributes validation on products update.
