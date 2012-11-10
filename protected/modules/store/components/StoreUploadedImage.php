@@ -31,7 +31,10 @@ class StoreUploadedImage
 	 */
 	public static function isAllowedType(CUploadedFile $image)
 	{
-		return in_array(CFileHelper::getMimeType($image->getTempName()), Yii::app()->params['storeImages']['types']);
+		$type = CFileHelper::getMimeType($image->getTempName());
+		if(!$type)
+			$type = CFileHelper::getMimeTypeByExtension($image->getName());
+		return in_array($type, Yii::app()->params['storeImages']['types']);
 	}
 
 	/**
