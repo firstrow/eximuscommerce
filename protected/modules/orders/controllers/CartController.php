@@ -236,6 +236,9 @@ class CartController extends Controller
 		// All products added. Update delivery price
 		$order->updateDeliveryPrice();
 
+		// Send email to user.
+		$this->sendEmail($order);
+
 		return $order;
 	}
 
@@ -294,5 +297,32 @@ class CartController extends Controller
 			)),
 		));
 		exit;
+	}
+
+	/**
+	 * Sends email to user after create new order.
+	 */
+	private function sendEmail(Order $order)
+	{
+		$theme=Yii::t('OrdersModule', 'Ваш заказ №').$this->id;
+
+		$lang=Yii::app()->language;
+		$emailBodyFile=Yii::getPathOfAlias("application.emails.$lang").DIRECTORY_SEPARATOR.'new_order.php';
+		
+		// If template file does not exists use default russian translation
+		if(!file_exists($emailBodyFile))
+			$emailBodyFile=Yii::getPathOfAlias("application.emails.ru").DIRECTORY_SEPARATOR.'new_order.php';
+		$body = $this->renderFile($emailBodyFile, array('order'=>$order), true);
+
+		$mailer           = Yii::app()->mail;
+		$mailer->From     = Yii::app()->params['adminEmail'];
+		$mailer->FromName = Yii::app()->settings->get('core', 'siteName');
+		$mailer->Subject  = $theme;
+		$mailer->Body     = $body;
+		$mailer->AddAddress($order->user_email);
+		$mailer->AddReplyTo(Yii::app()->params['adminEmail']);
+		$mailer->isHtml(true);
+		$mailer->Send();
+		$mailer->ClearAddresses();
 	}
 }
