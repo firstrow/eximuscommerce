@@ -100,6 +100,7 @@ class RobokassaPaymentSystem extends BasePaymentSystem
 		$html .= CHtml::hiddenField('IncCurrLabel', $in_curr);
 		$html .= CHtml::hiddenField('Culture', $culture);
 		$html .= $this->renderSubmit();
+		$html .= CHtml::endForm();
 
 		return $html;
 	}

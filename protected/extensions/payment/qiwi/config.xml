@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+    <id>qiwi</id>
+    <name>Qiwi</name>
+    <class>QiwiPaymentSystem</class>
+    <version>1.0</version>
+</system>
