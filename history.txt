@@ -7,7 +7,7 @@ Version 1.2 2012-?-?
     Bug: Fixed product quantity adding to cart.
     Enh: Added Qiwi payment module.
     Enh: Send email for new orders.
-    Enh: Raplaced tinymce with elrte + elfinder.
+    Enh: Replaced tinymce with elrte + elfinder.
     Enh: Added ability to configure WYSIWYG editor settings from admin panel.
 
 Version 1.1 2012-08-04
