@@ -1,11 +1,11 @@
 <?php
 
-Yii::import('ext.tinymce.STinyMceArea');
+Yii::import('ext.elrte.SElrteArea');
 
 /**
  * Draw textarea widget
  */
-class SRichTextarea extends STinyMceArea
+class SRichTextarea extends SElrteArea
 {
 	public function setModel($model)
 	{

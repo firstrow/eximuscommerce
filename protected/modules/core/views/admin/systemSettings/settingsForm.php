@@ -17,5 +17,21 @@ return array(
 			'type'=>'dropdownlist',
 			'items'=>$themes
 		),
+		'	<div class="row">
+			<label>&nbsp;</label>
+			<h3>Настройки WYSIWYG редактора</h3>
+			</div>
+		',
+		'editorTheme'=>array(
+			'type'=>'dropdownlist',
+			'items'=>array(
+				'compant'  => Yii::t('CoreModule.admin', 'Компактная'),
+				'normal'   => Yii::t('CoreModule.admin', 'Стандартная'),
+				'complete' => Yii::t('CoreModule.admin', 'Полная'),
+				'maxi'     => Yii::t('CoreModule.admin', 'Максимальная')
+			)
+		),
+		'editorHeight'=>array('type'=>'text'),
+		'editorAutoload'=>array('type'=>'checkbox'),
 	)
 );

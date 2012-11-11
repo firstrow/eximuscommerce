@@ -23,6 +23,13 @@ class SystemSettingsForm extends CFormModel
 	 */
 	public $theme;
 
+	/**
+	 * Editor settings
+	 */
+	public $editorTheme;
+	public $editorHeight;
+	public $editorAutoload;
+
 	public function init()
 	{
 		$this->attributes=Yii::app()->settings->get('core');
@@ -33,7 +40,7 @@ class SystemSettingsForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('siteName, productsPerPage, productsPerPageAdmin, theme', 'required'),
+			array('siteName, productsPerPage, productsPerPageAdmin, theme, editorTheme, editorHeight, editorAutoload', 'required'),
 		);
 	}
 
@@ -43,10 +50,14 @@ class SystemSettingsForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'siteName'            =>Yii::t('CoreModule.admin', 'Название сайта'),
-			'productsPerPage'     =>Yii::t('CoreModule.admin', 'Количество товаров на сайте'),
-			'productsPerPageAdmin'=>Yii::t('CoreModule.admin', 'Количество товаров в панели управления'),
-			'theme'               =>Yii::t('CoreModule.admin', 'Тема'),
+			'siteName'            => Yii::t('CoreModule.admin', 'Название сайта'),
+			'productsPerPage'     => Yii::t('CoreModule.admin', 'Количество товаров на сайте'),
+			'productsPerPageAdmin'=> Yii::t('CoreModule.admin', 'Количество товаров в панели управления'),
+			'theme'               => Yii::t('CoreModule.admin', 'Тема'),
+			// Editor
+			'editorTheme'         => Yii::t('CoreModule.admin', 'Тема'),
+			'editorHeight'        => Yii::t('CoreModule.admin', 'Высота'),
+			'editorAutoload'      => Yii::t('CoreModule.admin', 'Автоматическая активация'),
 		);
 	}
 
