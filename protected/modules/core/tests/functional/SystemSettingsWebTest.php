@@ -13,6 +13,7 @@ class SystemSettingsWebTest extends WebTestCase
 		$this->type('id=SystemSettingsForm_siteName', $siteName);
 		$this->type('id=SystemSettingsForm_productsPerPage', $pp);
 		$this->type('id=SystemSettingsForm_productsPerPageAdmin', $ppa);
+		$this->type('id=SystemSettingsForm_editorHeight', 150);
 		$this->clickAndWait('css=#save_topLink > span.ui-button-text');
 
 		Yii::import('application.modules.core.models.SystemSettingsForm');
@@ -22,6 +23,7 @@ class SystemSettingsWebTest extends WebTestCase
 		$this->assertEquals($model->productsPerPage, $pp);
 		$this->assertEquals($model->productsPerPageAdmin, $ppa);
 		$this->assertEquals(Yii::app()->settings->get('core', 'siteName'), $siteName);
+		$this->assertEquals(Yii::app()->settings->get('core', 'editorHeight'), 150);
 	}
 
 	public function testTitle()
