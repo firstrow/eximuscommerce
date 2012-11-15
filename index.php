@@ -3,7 +3,7 @@
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/framework/yii.php';
 
-if($_SERVER['SERVER_NAME']==='cms-test') // Remove in production mode
+if($_SERVER['SERVER_NAME']==='cms-test.dev') // Remove in production mode
 	$config=dirname(__FILE__).'/protected/config/test.php';
 else
 	$config=dirname(__FILE__).'/protected/config/main.php';
