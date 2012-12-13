@@ -110,10 +110,20 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				echo CHtml::hiddenField('configurable_id', 0);
 				echo CHtml::hiddenField('quantity', 1);
 
-				echo CHtml::ajaxSubmitButton(Yii::t('StoreModule.core','Купить'), array('/orders/cart/add'), array(
-					'dataType'=>'json',
-					'success'=>'js:function(data, textStatus, jqXHR){processCartResponse(data, textStatus, jqXHR)}',
-				), array('id'=>'buyButton','class'=>'blue_button'));
+				if($model->availability == 1)
+				{
+					echo CHtml::ajaxSubmitButton(Yii::t('StoreModule.core','Купить'), array('/orders/cart/add'), array(
+						'dataType'=>'json',
+						'success'=>'js:function(data, textStatus, jqXHR){processCartResponse(data, textStatus, jqXHR)}',
+					), array('id'=>'buyButton','class'=>'blue_button'));
+				}
+				else
+				{
+					echo CHtml::link('Сообщить о появлении', '#', array(
+   					'onclick'=>'$("#notify_me").dialog("open"); return false;',
+					));
+
+				}
 
 				echo CHtml::endForm();
 			?>

@@ -43,7 +43,7 @@ class SElrteArea extends CInputWidget
 		if(!$theme)
 			$theme = 'compant';
 		$height = Yii::app()->settings->get('core', 'editorHeight');
-		if($height<50)
+		if($height < 50)
 			$height = 150;
 
 		list($name, $id) = $this->resolveNameID();
