@@ -10,7 +10,7 @@ class YandexMarketXML
 	/**
 	 * @var int Maximum loaded products per one query
 	 */
-	public $limit=50;
+	public $limit=2;
 
 	/**
 	 * @var string Default currency
@@ -133,18 +133,24 @@ class YandexMarketXML
 	 */
 	public function loadProducts()
 	{
-		$limit=$this->limit;
-		$total=ceil(StoreProduct::model()->active()->count()/$limit);
+		$limit  = $this->limit;
+		$total  = ceil(StoreProduct::model()->active()->count()/$limit);
+		$offset = 0;
+
+		$this->write('<offers>');
+
 		for($i=0;$i<=$total;++$i)
 		{
 			$products=StoreProduct::model()->active()->findAll(array(
-				'limit'=>$limit,
-				'offset'=>$limit*$i,
+				'limit'  => $limit,
+				'offset' => $offset,
 			));
 			$this->renderProducts($products);
-			unset($products);
-			$i+=$limit;
+
+			$offset+=$limit;
 		}
+
+		$this->write('</offers>');
 	}
 
 	/**
@@ -152,7 +158,6 @@ class YandexMarketXML
 	 */
 	public function renderProducts(array $products)
 	{
-		$this->write('<offers>');
 		foreach($products as $p)
 		{
 			$this->renderOffer($p, array(
@@ -160,12 +165,11 @@ class YandexMarketXML
 				'price'       => Yii::app()->currency->convert($p->price, $this->_config['currency_id']),
 				'currencyId'  => $this->currencyIso,
 				'categoryId'  => $p->mainCategory->id,
-				'picture'     => $p->mainImage ? $p->mainImage->getUrl() : null,
+				'picture'     => $p->mainImage ? Yii::app()->createAbsoluteUrl($p->mainImage->getUrl()) : null,
 				'name'        => CHtml::encode($p->name),
 				'description' => $this->clearText($p->short_description),
 			));
 		}
-		$this->write('</offers>');
 	}
 
 	/**

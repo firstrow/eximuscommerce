@@ -2,9 +2,10 @@ Version 1.2 2012-?-?
     Bug: Fixed product attributes validating for required value.
     Bug: Fixed store module language events.
     Bug: Fixed creating products with some variants.
-    Bug: Fixed displaying text baesd attributes on product view and compare pages.
+    Bug: Fixed displaying text based attributes on product view and compare pages.
     Bug: Fixed installing without demo data.
     Bug: Fixed product quantity adding to cart.
+    Bug: Fixed Yandex market XML export.
     Enh: Added Qiwi payment module.
     Enh: Send email for new orders.
     Enh: Replaced tinymce with elrte + elfinder.
