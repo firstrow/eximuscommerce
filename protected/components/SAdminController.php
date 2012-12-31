@@ -36,6 +36,7 @@ class SAdminController extends RController
 	public function init()
 	{
 		Yii::app()->user->loginUrl = '/admin/auth';
+		Yii::app()->errorHandler->errorAction = '/admin/errors/error';
 		$this->module->initAdmin();
 	}
 
