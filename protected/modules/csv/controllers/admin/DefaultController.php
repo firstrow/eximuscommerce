@@ -55,9 +55,7 @@ class DefaultController extends SAdminController
 	{
 		$exporter = new CsvExporter;
 		if(Yii::app()->request->isPostRequest && isset($_POST['attributes']) && !empty($_POST['attributes']))
-		{
 			$exporter->export($_POST['attributes']);
-		}
 
 		$this->render('export', array(
 			'exporter'=>$exporter,

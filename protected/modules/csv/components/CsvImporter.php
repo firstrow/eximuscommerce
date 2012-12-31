@@ -100,7 +100,13 @@ class CsvImporter extends CComponent
 	public function validate()
 	{
 		// Check file exists and readable
-		if(!file_exists($this->file))
+		if(is_uploaded_file($this->file))
+		{
+			$newDir = Yii::getPathOfAlias('application.runtime').'/tmp.csv';
+			move_uploaded_file($this->file, $newDir);
+			$this->file = $newDir;
+		}
+		else
 		{
 			$this->errors[]= array('line'=>0,'error'=>Yii::t('CsvModule.admin', 'Файл недоступен.'));
 			return false;
@@ -144,6 +150,9 @@ class CsvImporter extends CComponent
 	 */
 	protected function importRow($data)
 	{
+		if(!isset($data['category']) || empty($data['category']))
+			$data['category'] = 'root';
+
 		$newProduct = false;
 		$category_id = $this->getCategoryByPath($data['category']);
 
@@ -507,6 +516,9 @@ class CsvImporter extends CComponent
 	public function __destruct()
 	{
 		if($this->fileHandler!==null)
+		{
 			fclose($this->fileHandler);
+			unlink($this->file);
+		}
 	}
 }

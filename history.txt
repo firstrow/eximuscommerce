@@ -6,6 +6,7 @@ Version 1.2 2012-?-?
     Bug: Fixed installing without demo data.
     Bug: Fixed product quantity adding to cart.
     Bug: Fixed Yandex market XML export.
+    Bug: Fixed csv file validating.
     Enh: Added Qiwi payment module.
     Enh: Send email for new orders.
     Enh: Replaced tinymce with elrte + elfinder.
