@@ -49,8 +49,8 @@ $this->breadcrumbs[] = $this->model->name;
 				echo Yii::t('StoreModule.core', 'Сортировать:');
 				echo CHtml::dropDownList('sorter', Yii::app()->request->url, array(
 					Yii::app()->request->removeUrlParam('/store/category/view', 'sort')  => '---',
-					Yii::app()->request->addUrlParam('/store/category/view', array('sort'=>'price'))  => Yii::t('StoreModule.core', 'Сначала дешовые'),
-					Yii::app()->request->addUrlParam('/store/category/view', array('sort'=>'price.desc')) => Yii::t('StoreModule.core', 'Сначала догорие'),
+					Yii::app()->request->addUrlParam('/store/category/view', array('sort'=>'price'))  => Yii::t('StoreModule.core', 'Сначала дешевые'),
+					Yii::app()->request->addUrlParam('/store/category/view', array('sort'=>'price.desc')) => Yii::t('StoreModule.core', 'Сначала дорогие'),
 				), array('onchange'=>'applyCategorySorter(this)'));
 			?>
 
