@@ -253,6 +253,15 @@ class StoreAttribute extends BaseModel
 	}
 
 	/**
+	 * @return string html id based on name
+	 */
+	public function getIdByName()
+	{
+		$name = 'StoreAttribute['.$this->name.']';
+		return CHtml::getIdByName($name);
+	}
+
+	/**
 	 * Get type label
 	 * @static
 	 * @param $type

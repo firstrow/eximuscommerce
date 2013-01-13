@@ -11,6 +11,7 @@ Version 1.2 2012-?-?
     Enh: Send email for new orders.
     Enh: Replaced tinymce with elrte + elfinder.
     Enh: Added ability to configure WYSIWYG editor settings from admin panel.
+    Enh: Added Chosen widget to product attributes page.
 
 Version 1.1 2012-08-04
     Bug: Fixed additional attributes validation on products update.
