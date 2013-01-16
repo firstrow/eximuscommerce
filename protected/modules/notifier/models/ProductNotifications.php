@@ -87,7 +87,7 @@ class ProductNotifications extends CActiveRecord
 			$criteria->compare('email',$this->email,true);
 
 			return new CActiveDataProvider($this, array(
-					'criteria'=>$criteria,
+				'criteria'=>$criteria,
 			));
 		}
 

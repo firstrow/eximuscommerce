@@ -19,8 +19,8 @@ class NotifyRequestController extends Controller
 		);
 		$record->product_id = $product->id;
 
-		if($record->validate() && $record->hasEmail() == false)
+		if($record->validate() && $record->hasEmail() === false)
 			$record->save();
 	}
-	
+
 }

@@ -830,6 +830,22 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getAbsoluteUrl()
+	{
+		return Yii::app()->createAbsoluteUrl('/store/frontProduct/view',array('url'=>$this->url));
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRelativeUrl()
+	{
+		return Yii::app()->createUrl('/store/frontProduct/view',array('url'=>$this->url));
+	}
+
+	/**
 	 * @todo Optimize
 	 * @param $name
 	 * @return null

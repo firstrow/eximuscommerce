@@ -1115,3 +1115,23 @@ table.compareTable .attr {
 #ordersListGrid {
     padding: 0 0 0 0;
 }
+
+#notify_me {
+    border:1px solid #c0c0c0;
+    position: absolute;
+    background-color: #fff;
+    padding: 10px;
+    z-index: 1002;
+}
+
+#notify_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    z-index: 1001;
+}

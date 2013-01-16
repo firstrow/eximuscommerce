@@ -3,6 +3,9 @@
 class DefaultController extends SAdminController
 {
 
+	/**
+	 * Display list of requests
+	 */
 	public function actionIndex()
 	{
 		$this->render('index', array(
@@ -10,36 +13,46 @@ class DefaultController extends SAdminController
 		));
 	}
 
+	/**
+	 * Send emails
+	 */
 	public function actionSend()
 	{
-		$record = ProductNotifications::model()->findAllByAttributes(array('product_id'=>$_GET['product_id']));
+		$lang     = Yii::app()->language;
+		$record   = ProductNotifications::model()->findAllByAttributes(array('product_id'=>$_GET['product_id']));
+		$siteName = Yii::app()->settings->get('core', 'siteName');
 
 		foreach ($record as $row)
 		{
 			if(!$row->product)
 				continue;
 
-			$theme='Yumilife.ru уведомляет о наличии интересующего Вас продукта';
+			$theme = Yii::t('NotifierModule.admin', '{site_name} уведомляет о наличии интересующего Вас продукта',array(
+				'{site_name}' => $siteName
+			));
 
 			$mailer           = Yii::app()->mail;
-			$mailer->From     = 'sales@yumilife.ru';
-			$mailer->FromName = 'Магазин YUMILIFE.RU';
+			$mailer->From     = 'robot@'.Yii::app()->params['adminEmail'];
+			$mailer->FromName = Yii::app()->settings->get('core', 'siteName');;
 			$mailer->Subject  = $theme;
 			$mailer->Body     = $this->renderFile(
-				Yii::getPathOfAlias('application.emails').'/product_notification.php',
-				array('product'=>$row->product),
+				Yii::getPathOfAlias("application.emails.$lang").'/product_notification.php',
+				array(
+					'product'  => $row->product,
+					'sitename' => $siteName
+				),
 				true
 			);
 			$mailer->AddAddress($row->email);
-			$mailer->AddReplyTo('sales@yumilife.ru');
+			$mailer->AddReplyTo('robot@'.Yii::app()->params['adminEmail']);
 			$mailer->isHtml(true);
 			$mailer->Send();
 			$mailer->ClearAddresses();
-			
-			$row->delete();
+
+			//$row->delete();
 		}
 
-		$this->setFlashMessage('Сообщения успешно отправлены.');
+		$this->setFlashMessage(Yii::t('NotifierModule.admin', 'Сообщения успешно отправлены.'));
 		$this->redirect('index');
 	}
 
