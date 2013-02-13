@@ -28,11 +28,21 @@
 		echo CHtml::hiddenField('configurable_id', 0);
 		echo CHtml::hiddenField('quantity', 1);
 
-		echo CHtml::ajaxSubmitButton(Yii::t('StoreModule.core','Купить'), array('/orders/cart/add'), array(
-			'id'=>'addProduct'.$data->id,
-			'dataType'=>'json',
-			'success'=>'js:function(data, textStatus, jqXHR){processCartResponseFromList(data, textStatus, jqXHR, "'.Yii::app()->createAbsoluteUrl('/store/frontProduct/view', array('url'=>$data->url)).'")}',
-		), array('class'=>'blue_button'));
+		if($data->getIsAvailable())
+		{
+			echo CHtml::ajaxSubmitButton(Yii::t('StoreModule.core','Купить'), array('/orders/cart/add'), array(
+				'id'=>'addProduct'.$data->id,
+				'dataType'=>'json',
+				'success'=>'js:function(data, textStatus, jqXHR){processCartResponseFromList(data, textStatus, jqXHR, "'.Yii::app()->createAbsoluteUrl('/store/frontProduct/view', array('url'=>$data->url)).'")}',
+			), array('class'=>'blue_button'));
+		}
+		else
+		{
+			echo CHtml::link('Нет в наличии', '#', array(
+				'onclick' => 'showNotifierPopup('.$data->id.'); return false;',
+				'class'   => 'notify_link',
+			));
+		}
 
 		echo CHtml::link(Yii::t('StoreModule.core', 'Удалить'), array('/store/compare/remove','id'=>$data->id),array(
 			'class'=>'remove',

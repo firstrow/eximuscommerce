@@ -7,6 +7,10 @@
 	$assetsManager->registerCoreScript('jquery');
 	$assetsManager->registerCoreScript('jquery.ui');
 
+	// jGrowl notifications
+	Yii::import('ext.jgrowl.Jgrowl');
+	Jgrowl::register();
+
 	// Disable jquery-ui default theme
 	$assetsManager->scriptMap=array(
 		'jquery-ui.css'=>false,
@@ -29,6 +33,13 @@
 	<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl ?>/assets/js/menu.js"></script>
 </head>
 <body>
+
+<?php
+	// Notifier module form
+	Yii::import('application.modules.notifier.NotifierModule');
+	NotifierModule::renderDialog();
+?>
+
 <div id="header">
 	<!-- Small top menu -->
 	<div id="top_menu">
@@ -116,9 +127,9 @@
 			if(isset($items['items']))
 			{
 				$this->widget('application.extensions.mbmenu.MbMenu',array(
-						'cssFile'=>Yii::app()->theme->baseUrl.'/assets/css/menu.css',
-						'htmlOptions'=>array('class'=>'dropdown', 'id'=>'nav'),
-						'items'=>$items['items'])
+					'cssFile'=>Yii::app()->theme->baseUrl.'/assets/css/menu.css',
+					'htmlOptions'=>array('class'=>'dropdown', 'id'=>'nav'),
+					'items'=>$items['items'])
 				);
 			}
 		?>

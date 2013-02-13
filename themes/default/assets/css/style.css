@@ -1115,3 +1115,7 @@ table.compareTable .attr {
 #ordersListGrid {
     padding: 0 0 0 0;
 }
+
+.notify_link {
+    margin-right: 20px;;
+}

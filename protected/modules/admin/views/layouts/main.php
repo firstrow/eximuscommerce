@@ -19,8 +19,8 @@
 	$assetsManager->registerCssFile($adminAssetsUrl.'/css/theme.css');
 
 	// jGrowl
-	$assetsManager->registerCssFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.css');
-	$assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jgrowl/jquery.jgrowl.js');
+	Yii::import('ext.jgrowl.Jgrowl');
+	Jgrowl::register();
 
 	// Back Button & Query Library
 	$assetsManager->registerScriptFile($adminAssetsUrl.'/vendors/jquery.ba-bbq.min.js');

@@ -1,5 +1,6 @@
 <?php
 
+Yii::import('application.modules.store.StoreModule');
 Yii::import('application.modules.store.models.StoreProductTranslate');
 Yii::import('application.modules.store.models.StoreProductCategoryRef');
 Yii::import('application.modules.store.models.StoreProductImage');
@@ -826,6 +827,32 @@ class StoreProduct extends BaseModel
 			),
 		);
 		return $sort;
+	}
+
+	/**
+	 * Check if product is on warehouse.
+	 *
+	 * @return bool
+	 */
+	public function getIsAvailable()
+	{
+		return $this->availability == 1;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAbsoluteUrl()
+	{
+		return Yii::app()->createAbsoluteUrl('/store/frontProduct/view',array('url'=>$this->url));
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRelativeUrl()
+	{
+		return Yii::app()->createUrl('/store/frontProduct/view',array('url'=>$this->url));
 	}
 
 	/**

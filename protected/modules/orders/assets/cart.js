@@ -11,7 +11,9 @@ $(document).ready(function(){
     });
     $('button.minus').click(function(){
         var count = $(this).prev('.count');
-        $(count).val(parseInt($(count).val())-1);
+        var val   = parseInt($(count).val())-1;
+        if(val < 1) val = 1;
+        $(count).val(val);
         return false;
     });
 });
