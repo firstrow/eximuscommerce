@@ -1,7 +1,11 @@
-<?php 
+<?php
 
+/**
+ * Allow user to receive email when product appears at the store.
+ */
 class NotifierModule extends BaseModule
 {
+
 	public $moduleName = 'notifier';
 
 	public function init()
@@ -26,6 +30,11 @@ class NotifierModule extends BaseModule
 	{
 		Yii::app()->db->createCommand()->dropTable('notifications');
 		Yii::app()->settings->clear('notifier');
+	}
+
+	public static function renderDialog()
+	{
+		Yii::app()->controller->renderFile(Yii::getPathOfAlias('application.modules.notifier.views.shared').'/_notifier.php');
 	}
 
 }

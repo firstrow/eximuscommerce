@@ -110,7 +110,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				echo CHtml::hiddenField('configurable_id', 0);
 				echo CHtml::hiddenField('quantity', 1);
 
-				if($model->availability == 1)
+				if($model->isAvailable)
 				{
 					echo CHtml::ajaxSubmitButton(Yii::t('StoreModule.core','Купить'), array('/orders/cart/add'), array(
 						'dataType' => 'json',
@@ -123,17 +123,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				else
 				{
 					echo CHtml::link('Сообщить о появлении', '#', array(
-						'onclick' => 'showNotifierPopup(); return false;',
+						'onclick' => 'showNotifierPopup('.$model->id.'); return false;',
 					));
 				}
 
 				echo CHtml::endForm();
-				// Notifier module form
-				$this->renderPartial('_notifier', array(
-					'model' => $model
-				));
 			?>
-
 
 			<div class="silver_clean silver_button">
 				<button title="<?=Yii::t('core','Сравнить')?>" onclick="return addProductToCompare(<?php echo $model->id ?>);"><span class="icon compare"></span>Сравнить</button>

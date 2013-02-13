@@ -49,11 +49,25 @@ class DefaultController extends SAdminController
 			$mailer->Send();
 			$mailer->ClearAddresses();
 
-			//$row->delete();
+			$row->delete();
 		}
 
 		$this->setFlashMessage(Yii::t('NotifierModule.admin', 'Сообщения успешно отправлены.'));
 		$this->redirect('index');
 	}
 
+	/**
+	 * Delete requests
+	 */
+	public function actionDelete()
+	{
+		$model = ProductNotifications::model()->findByPk(Yii::app()->request->getParam('id'));
+
+		if($model)
+		{
+			ProductNotifications::model()->deleteAllByAttributes(array(
+				'product_id' => $model->product_id
+			));
+		}
+	}
 }

@@ -830,6 +830,16 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
+	 * Check if product is on warehouse.
+	 *
+	 * @return bool
+	 */
+	public function getIsAvailable()
+	{
+		return $this->availability == 1;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getAbsoluteUrl()

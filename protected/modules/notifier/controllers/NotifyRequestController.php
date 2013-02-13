@@ -8,7 +8,7 @@ class NotifyRequestController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$product = StoreProduct::model()->findByPk($_POST['product_id']);
+		$product = StoreProduct::model()->findByPk(Yii::app()->request->getPost('product_id'));
 
 		if(!$product)
 			throw new CHttpException(404);

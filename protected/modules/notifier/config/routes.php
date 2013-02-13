@@ -1,5 +1,5 @@
 <?php
 
 return array(
-	'notifyRequest/index' => '/notifier/notifyRequest/index',	
+	'notifyRequest/index' => '/notifier/notifyRequest/index',
 );

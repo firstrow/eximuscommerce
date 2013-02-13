@@ -14,7 +14,7 @@ class DefaultController extends Controller
 			exit('ERR_WRONG_PASS');
 
 		if($request->userHostAddress != Yii::app()->settings->get('accounting1c', 'ip'))
-			exit('ERR_WRING_IP');
+			exit('ERR_WRONG_IP');
 
 		if($request->getQuery('type') && $request->getQuery('mode'))
 		{

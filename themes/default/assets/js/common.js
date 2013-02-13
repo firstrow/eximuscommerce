@@ -80,7 +80,7 @@ function processCartResponseFromList(data, textStatus, jqXHR, redirect)
         window.location = redirect
     }else{
         reloadSmallCart();
-        $('html, body').animate({scrollTop:0}, 'slow');
+        $.jGrowl("Товар успешно добавлен в корзину. <a href='/cart'>Перейти к оформлению</a>.", {position:"bottom-right"});
         $("#cart").fadeOut().fadeIn().fadeOut().fadeIn();
     }
 }

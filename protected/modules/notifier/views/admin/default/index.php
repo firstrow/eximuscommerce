@@ -42,6 +42,10 @@
 					'confirm' => Yii::t('NotifierModule.core', 'Вы уверены?')
 				)
 			),
+			array(
+				'class'=>'CButtonColumn',
+				'template'=>'{delete}',
+			),
 		),
 	));
 
