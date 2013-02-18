@@ -13,6 +13,7 @@ Version 1.2 2012-?-?
     Enh: Added ability to configure WYSIWYG editor settings from admin panel.
     Enh: Added Chosen widget to product attributes page.
     Enh: Added notifier module
+    Enh: Added description field to store category.
 
 Version 1.1 2012-08-04
     Bug: Fixed additional attributes validation on products update.

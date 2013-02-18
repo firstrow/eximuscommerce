@@ -18,6 +18,7 @@ Yii::import('application.modules.store.models.StoreCategoryTranslate');
  * @property string $meta_description
  * @property string $meta_keywords
  * @property string $layout
+ * @property string $description
  * @property string $view
  */
 class StoreCategory extends BaseModel
@@ -37,6 +38,7 @@ class StoreCategory extends BaseModel
 	public $meta_title;
 	public $meta_description;
 	public $meta_keywords;
+	public $description;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -64,6 +66,7 @@ class StoreCategory extends BaseModel
 			array('name', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_keywords, meta_title, meta_description, layout, view', 'length', 'max'=>255),
+			array('description', 'type'),
 			// Search
 			array('id, name, url', 'safe', 'on'=>'search'),
 		);
@@ -91,6 +94,7 @@ class StoreCategory extends BaseModel
 					'meta_title',
 					'meta_description',
 					'meta_keywords',
+					'description',
 				),
 			),
 		);
@@ -150,7 +154,8 @@ class StoreCategory extends BaseModel
 			'meta_keywords'    => Yii::t('StoreModule.core', 'Meta Keywords'),
 			'meta_description' => Yii::t('StoreModule.core', 'Meta Description'),
 			'layout'           => Yii::t('StoreModule.core', 'Макет'),
-			'view'             => Yii::t('StoreModule.core', 'Шаблон')
+			'view'             => Yii::t('StoreModule.core', 'Шаблон'),
+			'description'      => Yii::t('StoreModule.core', 'Описание')
 		);
 	}
 

@@ -14,8 +14,8 @@ return array(
 				'url'=>array(
 					'type'=>'text',
 				),
-				'name'=>array(
-					'type'=>'text',
+				'description'=>array(
+					'type'=>'textarea',
 				),
 			),
 		),

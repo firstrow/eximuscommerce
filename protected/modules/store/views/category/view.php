@@ -44,6 +44,12 @@ $this->breadcrumbs[] = $this->model->name;
 
 		<h1><?php echo CHtml::encode($this->model->name); ?></h1>
 
+		<?php if(!empty($this->model->description)): ?>
+			<div>
+				<?php echo $this->model->description ?>
+			</div>
+		<?php endif ?>
+
 		<div class="actions">
 			<?php
 				echo Yii::t('StoreModule.core', 'Сортировать:');
