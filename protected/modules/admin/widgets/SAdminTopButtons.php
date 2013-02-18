@@ -16,6 +16,7 @@ class SAdminTopButtons extends CWidget {
 	public $defaultUpdateAction = 'update';
 	public $updateAction;
 	public $result = array();
+	public $dropDownMenu = array();
 
 	/**
 	 * List of default css classes to append to each link
@@ -335,27 +336,32 @@ class SAdminTopButtons extends CWidget {
 				});
 			", CClientScript::POS_END);
 
+			$dropDownItems = array(
+				array(
+					'label'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
+					'url'=>$this->createAction,
+					'linkOptions'=>array(
+						'onClick'=>$this->renderSubmitFormJs()
+					),
+				),
+				array(
+					'label'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать'),
+					'url'=>$this->updateAction,
+					'linkOptions'=>array(
+						'onClick'=>$this->renderSubmitFormJs()
+					),
+				),
+			);
+
+			if(!empty($this->dropDownMenu))
+				$dropDownItems = array_merge($dropDownItems, $this->dropDownMenu);
+
 			echo CHtml::openTag('div', array(
 				'id'=>'dropDownButtonMenu',
 				'style'=>'display:none'
 			));
 			$this->widget('zii.widgets.CMenu', array(
-				'items'=>array(
-					array(
-						'label'=>Yii::t('AdminModule.admin', 'Сохранить и создать'),
-						'url'=>$this->createAction,
-						'linkOptions'=>array(
-							'onClick'=>$this->renderSubmitFormJs()
-						),
-					),
-					array(
-						'label'=>Yii::t('AdminModule.admin', 'Сохранить и редактировать'),
-						'url'=>$this->updateAction,
-						'linkOptions'=>array(
-							'onClick'=>$this->renderSubmitFormJs()
-						),
-					),
-				),
+				'items'=>$dropDownItems
 			));
 			echo CHtml::closeTag('div');
 		}

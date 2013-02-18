@@ -207,10 +207,10 @@ function Menu(caller, options){
 		}
 		else {
 			container.find('a').click(function(){
-				menu.chooseItem(this);
+                menu.chooseItem(this);
 				return false;
 			});
-		};	
+		};
 		
 		if (options.linkHover) {
 			var allLinks = container.find('.fg-menu li a');
@@ -249,7 +249,11 @@ function Menu(caller, options){
 		menu.kill();
 		// edit this for your own custom function/callback:
 		$('#menuSelection').text($(item).text());
-		//location.href = $(item).attr('href');
+
+		if($(item).attr('target'))
+        {
+		    location.href = $(item).attr('href');
+        }
 	};
 };
 

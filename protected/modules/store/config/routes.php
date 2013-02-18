@@ -25,4 +25,5 @@ return array(
 	'store/index'=>'site/error',
 	'store/compare'=>'site/error',
 	'store/wishlist'=>'site/error',
+	'manufacturer/<url>'=>array('/store/manufacturer/index'),
 );
