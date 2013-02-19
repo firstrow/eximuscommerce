@@ -82,7 +82,7 @@
 
 			<div class="currencies">
 				<?php echo Yii::t('core','Валюта:') ?>
-				<?
+				<?php
 					foreach(Yii::app()->currency->currencies as $currency)
 					{
 						echo CHtml::ajaxLink($currency->symbol, '/store/ajax/activateCurrency/'.$currency->id, array(
