@@ -413,4 +413,24 @@ class ProductsController extends SAdminController
 		return !$errors;
 	}
 
+	/**
+	 * Add option to store attribute
+	 *
+	 * @throws CHttpException
+	 */
+	public function actionAddOptionToAttribute()
+	{
+		$attribute = StoreAttribute::model()
+			->findByPk($_GET['attr_id']);
+
+		if(!$attribute)
+			throw new CHttpException(404, Yii::t('StoreModule.admin', 'Ошибка загрузки атрибута'));
+
+		$attributeOption = new StoreAttributeOption;
+		$attributeOption->attribute_id = $attribute->id;
+		$attributeOption->value        = $_GET['value'];
+		$attributeOption->save(false);
+
+		echo $attributeOption->id;
+	}
 }

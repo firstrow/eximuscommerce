@@ -15,6 +15,7 @@ Version 1.2 2012-?-?
     Enh: Added notifier module
     Enh: Added description field to store category.
     Enh: View manufacturer by link /manufacturer/<url>.
+    Enh: Added ability to add new attribute options directly from variations tab.
 
 Version 1.1 2012-08-04
     Bug: Fixed additional attributes validation on products update.

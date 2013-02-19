@@ -19,6 +19,12 @@
 				));
 				?>
 			</h4>
+			<?php
+			echo CHtml::link(' Добавить опцию', '#', array(
+				'rel'=>$attribute->id,
+				'onclick'=>'js: return addNewOption($(this));'
+			));
+			?>
 		</td>
 	</tr>
 	<tr>
@@ -30,39 +36,39 @@
 	</tr>
 	</thead>
 	<tbody>
-		<?php
-			if(!isset($options)):
+	<?php
+	if(!isset($options)):
 		?>
+	<tr>
+		<td>
+			<?php
+			echo CHtml::dropDownList('variants['.$attribute->id.'][option_id][]', null, CHtml::listData($attribute->options, 'id', 'value'), array('class'=>'options_list'));
+			?>
+		</td>
+		<td>
+			<input type="text" name="variants[<?php echo $attribute->id ?>][price][]">
+		</td>
+		<td>
+			<?php echo CHtml::dropDownList('variants['.$attribute->id.'][price_type][]', null, array(0=>'Фиксированная', 1=>'Процент')); ?>
+		</td>
+		<td>
+			<input type="text" name="variants[<?php echo $attribute->id ?>][sku][]">
+		</td>
+		<td>
+			<a href="#" onclick="return deleteVariantRow($(this));">Удалить</a>
+		</td>
+	</tr>
+		<?php
+	endif;
+	?>
+	<?php
+	if(isset($options)):
+		foreach($options as $o):
+			?>
 		<tr>
 			<td>
 				<?php
-					echo CHtml::dropDownList('variants['.$attribute->id.'][option_id][]', null, CHtml::listData($attribute->options, 'id', 'value'));
-				?>
-			</td>
-			<td>
-				<input type="text" name="variants[<?php echo $attribute->id ?>][price][]">
-			</td>
-			<td>
-				<?php echo CHtml::dropDownList('variants['.$attribute->id.'][price_type][]', null, array(0=>'Фиксированная', 1=>'Процент')); ?>
-			</td>
-			<td>
-				<input type="text" name="variants[<?php echo $attribute->id ?>][sku][]">
-			</td>
-			<td>
-				<a href="#" onclick="return deleteVariantRow($(this));">Удалить</a>
-			</td>
-		</tr>
-		<?php
-			endif;
-		?>
-		<?php
-			if(isset($options)):
-			foreach($options as $o):
-		?>
-		<tr>
-			<td>
-				<?php
-					echo CHtml::dropDownList('variants['.$attribute->id.'][option_id][]', $o->option->id, CHtml::listData($attribute->options, 'id', 'value'));
+				echo CHtml::dropDownList('variants['.$attribute->id.'][option_id][]', $o->option->id, CHtml::listData($attribute->options, 'id', 'value'), array('class'=>'options_list'));
 				?>
 			</td>
 			<td>
@@ -78,9 +84,9 @@
 				<a href="#" onclick="return deleteVariantRow($(this));">Удалить</a>
 			</td>
 		</tr>
-		<?php
-			endforeach;
-			endif;
-		?>
+			<?php
+		endforeach;
+	endif;
+	?>
 	</tbody>
 </table>

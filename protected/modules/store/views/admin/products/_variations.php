@@ -26,6 +26,7 @@ Yii::app()->getClientScript()->registerScriptFile($this->module->assetsUrl.'/adm
 
 	<hr>
 
+
 	<div id="variantsData">
 		<?php
 			foreach($model->processVariants() as $row)

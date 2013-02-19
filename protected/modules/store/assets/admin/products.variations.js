@@ -43,3 +43,34 @@ function deleteVariantRow(el)
     }
     return false;
 }
+
+/**
+ * Add option to attribut
+ * @param link_clicked
+ */
+function addNewOption(link_clicked)
+{
+    var attr_id = $(link_clicked).attr('rel');
+    var name    = prompt("Укажите значение опции");
+
+    if(name != null)
+    {
+        $.ajax({
+            type: 'get',
+            dataType: 'html',
+            url: '/admin/store/products/addOptionToAttribute',
+            data: {
+                attr_id: attr_id,
+                value: name
+            },
+            success: function(data){
+                $('#variantAttribute'+attr_id+' select.options_list').each(function(i,el){
+                    $(el).append($("<option/>", {
+                        value: data,
+                        text: name
+                    }));
+                });
+            }
+        });
+    }
+}
