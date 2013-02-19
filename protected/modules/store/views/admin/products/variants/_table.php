@@ -12,17 +12,18 @@
 		<td colspan="6">
 			<h4>
 				<?php
-				echo CHtml::encode($attribute->title);
-				echo CHtml::link(' +', '#', array(
-					'rel'=>'#variantAttribute'.$attribute->id,
-					'onclick'=>'js: return cloneVariantRow($(this));'
+					echo CHtml::encode($attribute->title);
+					echo CHtml::link(' +', '#', array(
+						'rel'=>'#variantAttribute'.$attribute->id,
+						'onclick'=>'js: return cloneVariantRow($(this));'
 				));
 				?>
 			</h4>
 			<?php
-			echo CHtml::link(' Добавить опцию', '#', array(
-				'rel'=>$attribute->id,
-				'onclick'=>'js: return addNewOption($(this));'
+				echo CHtml::link(' Добавить опцию', '#', array(
+					'rel'       => $attribute->id,
+					'onclick'   => 'js: return addNewOption($(this));',
+					'data-name' => $attribute->getIdByName(),
 			));
 			?>
 		</td>

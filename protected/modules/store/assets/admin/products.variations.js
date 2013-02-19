@@ -64,13 +64,20 @@ function addNewOption(link_clicked)
                 value: name
             },
             success: function(data){
-                $('#variantAttribute'+attr_id+' select.options_list').each(function(i,el){
+                $('#variantAttribute'+attr_id+' select.options_list, #'+$(link_clicked).data('name')).each(function(i,el){
                     $(el).append($("<option/>", {
                         value: data,
                         text: name
                     }));
                 });
+
+                if( $(link_clicked).data('name') )
+                {
+                    $('#' + $(link_clicked).data('name')).trigger("liszt:updated");
+                }
             }
         });
     }
+
+    return false;
 }

@@ -25,12 +25,24 @@ if ($model->type)
 			$a->required ? $required = ' <span class="required">*</span>' : $required = null;
 
 			if($a->type == StoreAttribute::TYPE_DROPDOWN)
+			{
 				$chosen[] = $a->getIdByName();
 
-			echo CHtml::openTag('div', array('class'=>'row'));
-			echo CHtml::label($a->attr_translate->title.$required, $a->name, array('class'=> $a->required ? 'required' : ''));
-			echo '<div class="rowInput">'.$a->renderField($value).'</div>';
-			echo CHtml::closeTag('div');
+				$addOptionLink = CHtml::link(' +', '#', array(
+					'rel'       => $a->id,
+					'data-name' => $a->getIdByName(),
+					'onclick'   => 'js: return addNewOption($(this));',
+					'class'     => 'bold',
+					'title'     => Yii::t('StoreModule.admin', 'Создать опцию')
+				));
+
+			}else
+				$addOptionLink = null;
+
+			echo CHtml::openTag('div', array('class'=>'row')),
+					CHtml::label($a->attr_translate->title.$required, $a->name, array('class'=> $a->required ? 'required' : '')),
+					'<div class="rowInput">'.$a->renderField($value).$addOptionLink.'</div>',
+				CHtml::closeTag('div');
 		}
 	}
 

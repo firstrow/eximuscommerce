@@ -203,3 +203,7 @@ select {
     float: none;
     display: inline-block;
 }
+
+.bold {
+    font-weight: bold;
+}
