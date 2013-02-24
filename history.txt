@@ -17,6 +17,7 @@ Version 1.2 2012-?-?
     Enh: View manufacturer by link /manufacturer/<url>.
     Enh: Added ability to add new attribute options directly from variations tab.
     Enh: Added ability to add new attribute options directly from attributes tab.
+    Enh: Added statistics module.
 
 Version 1.1 2012-08-04
     Bug: Fixed additional attributes validation on products update.
