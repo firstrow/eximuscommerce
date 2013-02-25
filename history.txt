@@ -1,4 +1,4 @@
-Version 1.2 2012-?-?
+Version 1.2 2012-02-25
     Bug: Fixed product attributes validating for required value.
     Bug: Fixed store module language events.
     Bug: Fixed creating products with some variants.
