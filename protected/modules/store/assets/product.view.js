@@ -13,6 +13,6 @@ function processCartResponse(data, textStatus, jqXHR)
         // Display "Successful message"
         productErrors.hide();
         reloadSmallCart();
-        $("#successAddedToCart").html(data.message).fadeIn();
+        $.jGrowl("Товар успешно добавлен в корзину. <a href='/cart'>Перейти к оформлению</a>.", {position:"bottom-right"});
     }
 }

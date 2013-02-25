@@ -137,8 +137,6 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<div class="silver_clean silver_button">
 				<button title="<?=Yii::t('core','В список желаний')?>" onclick="return addProductToWishList(<?php echo $model->id ?>);"><span class="icon heart"></span>Список желаний</button>
 			</div>
-
-			<div id="successAddedToCart"></div>
 		</div>
 		<div class="desc"><?php echo $model->short_description; ?></div>
 	</div>
