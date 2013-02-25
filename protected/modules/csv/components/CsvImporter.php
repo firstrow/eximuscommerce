@@ -105,6 +105,9 @@ class CsvImporter extends CComponent
 			$newDir = Yii::getPathOfAlias('application.runtime').'/tmp.csv';
 			move_uploaded_file($this->file, $newDir);
 			$this->file = $newDir;
+		}elseif(file_exists($this->file))
+		{
+			// ok. file exists.
 		}
 		else
 		{
