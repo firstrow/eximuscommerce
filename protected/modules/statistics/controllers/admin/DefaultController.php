@@ -35,10 +35,10 @@ class DefaultController extends SAdminController
 		}
 
 		$this->render('index', array(
-			'data'  => $data,
-			'data_total'  => $data_total,
-			'year'  => $year,
-			'month' => $month
+			'data'       => $data,
+			'data_total' => $data_total,
+			'year'       => $year,
+			'month'      => $month
 		));
 	}
 
@@ -49,7 +49,12 @@ class DefaultController extends SAdminController
 	 */
 	public function loadOrders($year, $month)
 	{
-		$date_match = (int)$year . '-' . (int)$month;
+		$month = (int) $month;
+
+		if($month < 10)
+			$month = '0'.$month;
+
+		$date_match = (int)$year . '-' . $month;
 
 		$query = new CDbCriteria( array(
 			'condition' => "created LIKE '$date_match%'"
