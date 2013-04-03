@@ -43,10 +43,11 @@ $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopBu
 ));
 
 $this->widget('ext.sgridview.SGridView', array(
-	'dataProvider'=>$dataProvider,
-	'id'=>'productsListGrid',
-	'filter'=>$model,
-	'customActions'=>array(
+	'dataProvider'  => $dataProvider,
+	'id'            => 'productsListGrid',
+	'ajaxUpdate'    => false,
+	'filter'        => $model,
+	'customActions' => array(
 		array(
 			'label'=>Yii::t('StoreModule.admin', 'Активен'),
 			'url'=>'#',

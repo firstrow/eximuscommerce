@@ -1,7 +1,8 @@
 Version 1.3 Work in progress.
-    Bug: Fixed statistics module
+    Bug: Fixed statistics module.
     Bug: Fixed total price in new order email message.
-    Enh: Sort orders list by created desc
+    Enh: Sort orders list by created desc.
+    Enh: Removed ajax mode from products list.
 
 Version 1.2 2012-02-25
     Bug: Fixed product attributes validating for required value.
