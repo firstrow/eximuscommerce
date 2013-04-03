@@ -271,11 +271,11 @@ class Order extends BaseModel
 		$criteria->compare('updated',$this->updated,true);
 
 		$sort=new CSort;
-		$sort->defaultOrder = $this->getTableAlias().'.created ASC';
+		$sort->defaultOrder = $this->getTableAlias().'.created DESC';
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-			'sort'=>$sort
+			'criteria' => $criteria,
+			'sort'     => $sort
 		));
 	}
 }
