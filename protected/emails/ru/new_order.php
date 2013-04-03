@@ -6,7 +6,9 @@
 
   <p>
     Детали заказа вы можете просмотреть на странице:<br>
-    <?= $this->createUrl('view', array('secret_key'=>$order->secret_key)) ?>
+	 <a href="<?= $this->createAbsoluteUrl('view', array('secret_key'=>$order->secret_key)) ?>">
+		 <?= $this->createAbsoluteUrl('view', array('secret_key'=>$order->secret_key)) ?>
+	 </a>
   </p>
 
   <p>

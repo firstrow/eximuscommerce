@@ -42,7 +42,7 @@ class CartController extends Controller
 				{
 					$order = $this->createOrder();
 					Yii::app()->cart->clear();
-					$this->addFlashMessage(Yii::t('OrdersModule.core', 'Списибо. Ваш заказ принят.'));
+					$this->addFlashMessage(Yii::t('OrdersModule.core', 'Спасибо. Ваш заказ принят.'));
 					Yii::app()->request->redirect($this->createUrl('view', array('secret_key'=>$order->secret_key)));
 				}
 			}
@@ -235,6 +235,9 @@ class CartController extends Controller
 
 		// All products added. Update delivery price
 		$order->updateDeliveryPrice();
+
+		// Reload order data.
+		$order->refresh();
 
 		// Send email to user.
 		$this->sendEmail($order);

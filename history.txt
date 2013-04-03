@@ -1,3 +1,7 @@
+Version 1.3 Work in progress.
+    Bug: Fixed statistics module
+    Bug: Fixed total price in new order email message.
+
 Version 1.2 2012-02-25
     Bug: Fixed product attributes validating for required value.
     Bug: Fixed store module language events.
