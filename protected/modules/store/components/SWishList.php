@@ -76,7 +76,12 @@ class SWishList extends CComponent
 	 */
 	public function getIds()
 	{
-		return $this->getModel()->getIds();
+		$model = $this->getModel();
+
+		if($model)
+			return $model->getIds();
+
+		return array();
 	}
 
 	/**
@@ -143,6 +148,8 @@ class SWishList extends CComponent
 
 	/**
 	 * @param $key
+	 * @return CActiveRecord
+	 * @throws CException
 	 */
 	public function loadByKey($key)
 	{
