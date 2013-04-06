@@ -139,6 +139,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			</div>
 		</div>
 		<div class="desc"><?php echo $model->short_description; ?></div>
+		<div class="desc"><?php echo $model->full_description; ?></div>
 	</div>
 
 	<div style="clear:both;"></div>
