@@ -798,10 +798,10 @@ class StoreProduct extends BaseModel
 		));
 
 		$imageModel = new StoreProductImage;
-		$imageModel->product_id = $this->id;
-		$imageModel->name = $name;
-		$imageModel->is_main = ($is_main == 0) ? true : false;
-		$imageModel->uploaded_by = Yii::app()->user->getId();
+		$imageModel->product_id    = $this->id;
+		$imageModel->name          = $name;
+		$imageModel->is_main       = ($is_main == 0) ? true : false;
+		$imageModel->uploaded_by   = Yii::app()->user->getId();
 		$imageModel->date_uploaded = date('Y-m-d H:i:s');
 		$imageModel->save();
 

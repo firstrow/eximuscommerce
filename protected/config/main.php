@@ -146,9 +146,9 @@ return array(
 			'url'         => '/uploads/product/', // With ending slash
 			'thumbUrl'    => '/assets/productThumbs/', // With ending slash
 			'sizes'=>array(
-				'resizeMethod'=>'resize', // resize/adaptiveResize
-				'resizeThumbMethod'=>'resize', // resize/adaptiveResize
-				'maximum'=>array(800, 600), // All uploaded images
+				'resizeMethod'      =>'resize', // resize/adaptiveResize
+				'resizeThumbMethod' =>'resize', // resize/adaptiveResize
+				'maximum'           => array(800, 600), // All uploaded images
 			)
 		)
 	),

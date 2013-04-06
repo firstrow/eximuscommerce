@@ -62,12 +62,24 @@ class StoreUploadedImage
 	public static function createName(StoreProduct $model, CUploadedFile $image)
 	{
 		$path = self::getSavePath();
-		$name = strtolower($model->id.'.'.$image->getExtensionName());
+		$name = self::generateRandomName($model, $image);
 
 		if (!file_exists($path.'/'.$name))
 			return $name;
 		else
-			return strtolower($model->id.'_'.md5(microtime()).'.'.$image->getExtensionName());
+			self::createName($model, $image);
+	}
+
+	/**
+	 * Generates random name bases on product and image models
+	 *
+	 * @param StoreProduct $model
+	 * @param CUploadedFile $image
+	 * @return string
+	 */
+	public static function generateRandomName(StoreProduct $model, CUploadedFile $image)
+	{
+		return strtolower($model->id.'_'.crc32(microtime()).'.'.$image->getExtensionName());
 	}
 
 }
