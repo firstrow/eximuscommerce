@@ -82,7 +82,7 @@ class StoreProductImage extends BaseModel
 				$thumb->$resizeMethod($sizes[0],$sizes[1])->save($thumbPath);
 			}
 
-			return Yii::app()->params['storeImages']['thumbUrl'].'/'.$size.'/'.$this->name;
+			return Yii::app()->params['storeImages']['thumbUrl'].$size.'/'.$this->name;
 		}
 
 		if ($random === true)
