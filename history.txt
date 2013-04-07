@@ -1,4 +1,4 @@
-Version 1.3 Work in progress.
+Version 1.3 2013-04-07
     Bug: Fixed statistics module.
     Bug: Fixed total price in new order email message.
     Bug: Fixed adding first product to wishlist.
@@ -8,7 +8,7 @@ Version 1.3 Work in progress.
     Enh: Removed ajax mode from products list.
     Enh: Added autofocus to admin login form.
 
-Version 1.2 2012-02-25
+Version 1.2 2013-02-25
     Bug: Fixed product attributes validating for required value.
     Bug: Fixed store module language events.
     Bug: Fixed creating products with some variants.
