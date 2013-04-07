@@ -3,7 +3,7 @@
 <project name="releaseBuilder" basedir="." default="build">
     <property file="./build.properties" />
 
-    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall, clearDbConnSettings, removeDebugToolbarFromLogging, deleteBuild" />
+    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall,clearDbConnSettings,removeDebugToolbarFromLogging, deleteBuild, writeVersion" />
 
     <!-- Clean build dir -->
     <target name="clean">
@@ -95,12 +95,14 @@
         <delete file="${eximus.build_dir}/index-test.php" />
         <delete file="${eximus.build_dir}/index.php" />
         <delete dir="${eximus.build_dir}/assets" includeemptydirs="true"/>
+        <delete dir="${eximus.build_dir}/uploads/product" includeemptydirs="true"/>
         <delete dir="${eximus.build_dir}/protected/runtime" includeemptydirs="true"/>
         <delete dir="${eximus.build_dir}/protected/modules/install/importImages" includeemptydirs="true"/>
 
         <copy file="${eximus.source_dir}/protected/build/index.php.release" tofile="${eximus.build_dir}/index.php"/>
 
         <mkdir dir="${eximus.build_dir}/assets" mode="0777" />
+        <mkdir dir="${eximus.build_dir}/uploads/product" mode="0777" />
         <mkdir dir="${eximus.build_dir}/assets/productThumbs" mode="0777" />
         <mkdir dir="${eximus.build_dir}/protected/runtime" mode="0777" />
         <mkdir dir="${eximus.build_dir}/protected/backups" mode="0777" />
@@ -108,5 +110,18 @@
         <chmod file="${eximus.build_dir}/uploads" mode="0777" />
         <chmod file="${eximus.build_dir}/uploads/importImages" mode="0777" />
         <chmod file="${eximus.build_dir}/uploads/product" mode="0777" />
+    </target>
+
+    <target name="writeVersion">
+        <reflexive>
+            <fileset dir="${eximus.build_dir}">
+                <include name="index.php" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="\{EXIMUS\_VERSION\}" replace="${v}"/>
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
     </target>
 </project>

@@ -1,5 +1,7 @@
 <?php
 
+define('VERSION', '{EXIMUS_VERSION}');
+
 error_reporting(0);
 
 $yii=dirname(__FILE__).'/framework/yii.php';
