@@ -11,6 +11,8 @@ $comment = $module->processRequest($model);
 // Load model comments
 $comments = Comment::getObjectComments($model);
 
+$currentUrl = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
 // Display comments
 if(!empty($comments))
 {
@@ -34,10 +36,10 @@ if(!empty($comments))
 	<h3><?php echo Yii::t('CommentsModule.core', 'Оставить отзыв') ?></h3>
 	<div class="form wide ">
 	<?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'comment-create-form',
-		'action'=>'#comment-create-form',
-		'enableAjaxValidation'=>false,
-		'enableClientValidation'=>true,
+		'id'                     =>'comment-create-form',
+		'action'                 =>$currentUrl.'#comment-create-form',
+		'enableAjaxValidation'   =>false,
+		'enableClientValidation' =>true,
 	)); ?>
 
 	<?php if(Yii::app()->user->isGuest): ?>
