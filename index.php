@@ -17,7 +17,7 @@ defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 require $yii;
 require 'protected/components/SWebApplication.php';
 
-error_reporting(E_ALL);
+error_reporting(E_ALL|E_STRICT);
 
 // Create application
 Yii::createApplication('SWebApplication', $config)->run();

@@ -164,7 +164,9 @@ class CsvImporter extends CComponent
 		$cr = new CDbCriteria;
 		$cr->with = array('translate');
 
-		// Search by sku or name
+		if(isset($data['url']) && !empty($data['url']) && $data['url'] != '')
+			$cr->compare('t.url', $data['url']);
+
 		if(isset($data['sku']) && !empty($data['sku']) && $data['sku'] != '')
 			$cr->compare('t.sku', $data['sku']);
 		else

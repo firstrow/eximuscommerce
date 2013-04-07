@@ -15,9 +15,11 @@ class WishlistController extends Controller
 	public $model;
 
 	/**
+	 * @param CAction $action
 	 * @return bool
+	 * @throws CHttpException
 	 */
-	public function beforeAction()
+	public function beforeAction($action)
 	{
 		if(Yii::app()->user->isGuest && $this->action->id!=='view')
 		{

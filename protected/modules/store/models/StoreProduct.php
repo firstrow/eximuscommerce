@@ -561,7 +561,7 @@ class StoreProduct extends BaseModel
 	/**
 	 * @return array
 	 */
-	public function getAvailabilityItems()
+	public static function getAvailabilityItems()
 	{
 		return array(
 			1=>Yii::t('StoreModule.core', 'Есть на складе'),

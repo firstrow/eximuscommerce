@@ -113,14 +113,14 @@ class StoreWishlist extends BaseModel
 	}
 
 	/**
-	 * @static
 	 * @param null $user_id if null will count for current user
+	 * @return mixed
 	 */
 	public static function countByUser($user_id=null)
 	{
 		if($user_id===null)
 			$user_id=Yii::app()->user->id;
-		$table=StoreWishlistProducts::tableName();
+		$table=StoreWishlistProducts::model()->tableName();
 		return Yii::app()->db->createCommand("SELECT COUNT(id) FROM {$table} WHERE user_id=:user_id")->bindValue(':user_id', $user_id)->queryScalar();
 	}
 

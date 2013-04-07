@@ -13,7 +13,7 @@ class CompareController extends Controller
 	 */
 	public $model;
 
-	public function beforeAction()
+	public function beforeAction($action)
 	{
 		$this->model = new SCompareProducts;
 		return true;

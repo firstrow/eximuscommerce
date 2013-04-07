@@ -25,8 +25,9 @@ class SProductsPreviewColumn extends CGridColumn
 	/**
 	 * Renders column content
 	 * @param int $row
+	 * @param mixed $data
 	 */
-	public function renderDataCellContent($row)
+	public function renderDataCellContent($row, $data)
 	{
 		$order=$this->grid->dataProvider->data[$row];
 		echo CHtml::image($this->baseUrl.'/trolley.png', '', array(

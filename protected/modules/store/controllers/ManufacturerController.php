@@ -17,7 +17,7 @@ class ManufacturerController extends Controller
 	 *
 	 * @return bool
 	 */
-	public function beforeAction()
+	public function beforeAction($action)
 	{
 		$this->allowedPageLimit=explode(',',Yii::app()->settings->get('core', 'productsPerPage'));
 		return true;

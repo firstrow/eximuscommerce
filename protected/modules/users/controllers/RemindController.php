@@ -9,9 +9,10 @@ class RemindController extends Controller
 {
 
 	/**
+	 * @param CAction $action
 	 * @return bool
 	 */
-	public function beforeAction()
+	public function beforeAction($action)
 	{
 		// Allow only gues access
 		if(Yii::app()->user->isGuest)

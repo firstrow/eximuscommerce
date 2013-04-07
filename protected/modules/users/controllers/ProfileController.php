@@ -11,7 +11,7 @@ class ProfileController extends Controller
 	 * @return bool
 	 * @throws CHttpException
 	 */
-	public function beforeAction()
+	public function beforeAction($action)
 	{
 		if(Yii::app()->user->isGuest)
 			throw new CHttpException(404, Yii::t('UsersModule.core', 'Ошибка доступа.'));

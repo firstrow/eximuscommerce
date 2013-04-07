@@ -51,7 +51,7 @@ class SAdminController extends RController
 	/**
 	 * @return bool
 	 */
-	public function beforeAction()
+	public function beforeAction($action)
 	{
 		// Allow only authorized users access
 		if (Yii::app()->user->isGuest && get_class($this) !== 'AuthController')

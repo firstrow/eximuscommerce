@@ -55,7 +55,7 @@ class CategoryController extends Controller
 	 * Load category model by url
 	 * @return bool
 	 */
-	public function beforeAction()
+	public function beforeAction($action)
 	{
 		$this->allowedPageLimit=explode(',',Yii::app()->settings->get('core', 'productsPerPage'));
 
