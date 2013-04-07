@@ -29,7 +29,7 @@ $truncate = array(
 foreach($clear as $class)
 {
 	ClearData_objects($class);
-	ClearData_truncate($class::tableName());
+	ClearData_truncate($class::model()->tableName());
 }
 
 $type=new StoreProductType;

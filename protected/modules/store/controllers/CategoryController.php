@@ -200,7 +200,7 @@ class CategoryController extends Controller
 		$criteria->select    = 'type_id';
 		$criteria->group     = 'type_id';
 		$criteria->distinct  = true;
-		$typesUsed = $builder->createFindCommand(StoreProduct::tableName(), $criteria)->queryColumn();
+		$typesUsed = $builder->createFindCommand(StoreProduct::model()->tableName(), $criteria)->queryColumn();
 
 		// Find attributes by type
 		$criteria = new CDbCriteria;
