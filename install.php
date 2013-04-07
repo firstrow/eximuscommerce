@@ -37,6 +37,7 @@ $config=array(
 );
 
 error_reporting(0);
+define('VERSION', '{EXIMUS_VERSION}');
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/framework/yii.php';

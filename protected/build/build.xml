@@ -116,6 +116,7 @@
         <reflexive>
             <fileset dir="${eximus.build_dir}">
                 <include name="index.php" />
+                <include name="install.php" />
             </fileset>
             <filterchain>
                 <replaceregexp>

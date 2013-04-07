@@ -10,7 +10,7 @@
 <body>
 	<div id="header">
 		<div class="left">
-			Eximus <span>Commerce</span>
+			Eximus <span>Commerce</span> <?=VERSION?>
 		</div>
 		<div class="right">
 <!--			<a href="">Помощь в установке</a>-->
