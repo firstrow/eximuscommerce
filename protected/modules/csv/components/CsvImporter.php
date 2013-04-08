@@ -235,10 +235,12 @@ class CsvImporter extends CComponent
 		}
 		else
 		{
-			$error = array_shift($model->getErrors());
+			$errors = $model->getErrors();
+			$error  = array_shift($errors);
+
 			$this->errors[] = array(
-				'line'=>$this->line,
-				'error'=>$error[0],
+				'line'  => $this->line,
+				'error '=> $error[0],
 			);
 		}
 	}

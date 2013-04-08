@@ -125,7 +125,7 @@ class OrderProduct extends BaseModel
 
 		$variants = unserialize($this->variants);
 
-		if($this->configurable_data!=='')
+		if($this->configurable_data!=='' && is_string($this->configurable_data))
 			$this->configurable_data=unserialize($this->configurable_data);
 
 		if(!is_array($variants))

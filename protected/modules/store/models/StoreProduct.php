@@ -130,8 +130,8 @@ class StoreProduct extends BaseModel
 			array('quantity, availability, manufacturer_id', 'numerical', 'integerOnly'=>true),
 			array('name, price', 'required'),
 			array('url', 'LocalUrlValidator'),
-			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku', 'length', 'max'=>255),
-			array('short_description, full_description, auto_decrease_quantity', 'type'),
+			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku, auto_decrease_quantity', 'length', 'max'=>255),
+			array('short_description, full_description', 'type'),
 			// Search
 			array('id, name, url, price, short_description, full_description, created, updated, manufacturer_id', 'safe', 'on'=>'search'),
 		);
