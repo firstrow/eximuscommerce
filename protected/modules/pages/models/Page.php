@@ -201,7 +201,7 @@ class Page extends BaseModel
 	/**
 	 * @return array
 	 */
-	public function statuses()
+	public static function statuses()
 	{
 		return array(
 			'published'=>Yii::t('PagesModule.core', 'Опубликован'),

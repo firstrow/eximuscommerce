@@ -14,9 +14,9 @@ class IndexController extends Controller
 	public function actionIndex()
 	{
 		$this->render('index', array(
-			'popular'=>$this->getPopular(4),
-			'newest'=>$this->getNewest(4),
-			'news'=>Page::model()->published()->filterByCategory(7)->findAll(array('limit'=>3))
+			'popular' => $this->getPopular(4),
+			'newest'  => $this->getNewest(4),
+			'news'    => Page::model()->published()->filterByCategory(7)->findAll(array('limit'=>3))
 		));
 	}
 
