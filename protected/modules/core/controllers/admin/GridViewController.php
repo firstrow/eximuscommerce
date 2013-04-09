@@ -8,6 +8,7 @@ class GridViewController extends SAdminController
 	 */
 	public function filters() {
 		return array(
+			'rights',
 			'ajaxOnly + saveFilterData',
 		);
 	}

@@ -7,6 +7,7 @@ class CategoryController extends SAdminController {
 
 	public function filters() {
 		return array(
+			'rights',
 			'ajaxOnly + moveNode',
 		);
 	}

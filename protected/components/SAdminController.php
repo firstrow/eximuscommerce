@@ -36,7 +36,6 @@ class SAdminController extends RController
 	public function init()
 	{
 		Yii::app()->user->loginUrl = '/admin/auth';
-		Yii::app()->errorHandler->errorAction = '/admin/errors/error';
 		$this->module->initAdmin();
 	}
 
@@ -49,6 +48,7 @@ class SAdminController extends RController
 	}
 
 	/**
+	 * @param CAction $action
 	 * @return bool
 	 */
 	public function beforeAction($action)
@@ -56,6 +56,9 @@ class SAdminController extends RController
 		// Allow only authorized users access
 		if (Yii::app()->user->isGuest && get_class($this) !== 'AuthController')
 			Yii::app()->request->redirect($this->createUrl('/admin/auth'));
+
+		Yii::app()->errorHandler->errorAction = '/admin/errors/error';
+
 		return true;
 	}
 
