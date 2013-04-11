@@ -23,7 +23,7 @@
 			$(this).closest('tr').addClass('selected');
 		});
 
-		table.children('thead').find('th input').filter('[type="checkbox"]').each(function () {
+        table.children('thead').find('th input').filter('[type="checkbox"]').each(function () {
 			var name = this.name.substring(0, this.name.length - 4) + '[]', //.. remove '_all' and add '[]''
 				$checks = $("input[name='" + name + "']", table);
 			this.checked = $checks.length > 0 && $checks.length === $checks.filter(':checked').length;
@@ -157,6 +157,9 @@
 						$('input.select-on-check', $row).prop('checked', isRowSelected);
 						$("input.select-on-check-all", $currentGrid).prop('checked', $checks.length === $checks.filter(':checked').length);
 
+                        // Added by firstrow@gmail.com
+                        $.fn.yiiGridView.showActions(id);
+
 						if (settings.selectionChanged !== undefined) {
 							settings.selectionChanged(id);
 						}
@@ -179,10 +182,13 @@
 							if (settings.selectionChanged !== undefined) {
 								settings.selectionChanged(id);
 							}
-						});
+
+                            $.fn.yiiGridView.showActions(id);
+                        });
 					}
 				} else {
-					$(document).on('click.yiiGridView', '#' + id + ' .select-on-check', false);
+                    $.fn.yiiGridView.showActions(id);
+                    $(document).on('click.yiiGridView', '#' + id + ' .select-on-check', false);
 				}
 			});
 		},
@@ -387,7 +393,71 @@
 		}
 	};
 
-/******************************************************************************
+    // Added by firstrow@gmail.com
+    $.fn.yiiGridView.showActions = function(id) {
+        var actions = $('#'+id+'Actions');
+        if($.fn.yiiGridView.getSelection(id) == '') {
+            actions.css('visibility', 'hidden');
+        }else{
+            actions.css('visibility', 'visible');
+        }
+    };
+
+
+    /**
+     * Send selected rows to url specified in link href
+     * @param id string the ID of the grid view container
+     * @param el link clicked
+     */
+    $.fn.yiiGridView.runAction = function(id, el) {
+        var selection = $.fn.yiiGridView.getSelection(id);
+        var url = $(el).attr('href');
+        var sendRequest = false;
+
+        if($(el).attr('data-question'))
+        {
+            sendRequest = confirm($(el).attr('data-question'));
+        }
+
+        if(selection && url && sendRequest)
+        {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data:{
+                    YII_CSRF_TOKEN: $(el).attr('data-token'),
+                    id: selection
+                },
+                success:function(){
+                    $.fn.yiiGridView.update(id);
+                },
+                error:function(XHR, textStatus, errorThrown){
+                    var err='';
+                    switch(textStatus) {
+                        case 'timeout':
+                            err='The request timed out!';
+                            break;
+                        case 'parsererror':
+                            err='Parser error!';
+                            break;
+                        case 'error':
+                            if(XHR.status && !/^\s*$/.test(XHR.status))
+                                err='Error ' + XHR.status;
+                            else
+                                err='Error';
+                            if(XHR.responseText && !/^\s*$/.test(XHR.responseText))
+                                err=err + ': ' + XHR.responseText;
+                            break;
+                    }
+                    alert(err);
+                }
+            });
+        }
+
+        return false;
+    };
+
+    /******************************************************************************
  *** DEPRECATED METHODS
  *** used before Yii 1.1.9
  ******************************************************************************/

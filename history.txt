@@ -11,6 +11,7 @@ Version 1.3 2013-04-07
     Bug: Fixed adding first product to wishlist.
     Bug: Fixed double slash in thumb image url.
     Bug: Fixed product thumb uploading.
+    Bug: Fixed sgridview custom actions.
     Enh: Sort orders list by created desc.
     Enh: Removed ajax mode from products list.
     Enh: Added autofocus to admin login form.
