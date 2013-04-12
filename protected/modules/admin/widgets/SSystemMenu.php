@@ -87,7 +87,7 @@ class SSystemMenu extends CWidget {
 	{
 		if (isset($a['position']) && isset($b['position']))
 		{
-			if ((int)$a['position'] == (int)$b['position'])
+			if ((int)$a['position'] === (int)$b['position'])
 				return 0;
 			return ((int)$a['position'] > (int)$b['position']) ? 1 : -1;
 		}

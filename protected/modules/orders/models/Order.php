@@ -64,12 +64,23 @@ class Order extends BaseModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function relations()
 	{
 		return array(
 			'products'=>array(self::HAS_MANY, 'OrderProduct', 'order_id'),
 			'status'=>array(self::BELONGS_TO, 'OrderStatus', 'status_id'),
 			'deliveryMethod'=>array(self::BELONGS_TO, 'StoreDeliveryMethod', 'delivery_id'),
+		);
+	}
+
+	public function scopes()
+	{
+		$alias = $this->getTableAlias(true);
+		return array(
+			'new'=>array('condition'=>$alias.'.status_id=1'),
 		);
 	}
 

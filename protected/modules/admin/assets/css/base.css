@@ -207,3 +207,20 @@ select {
 .bold {
     font-weight: bold;
 }
+
+.circle_label {
+    font-size: 11px;
+    background-color: #b94a48;
+    border-radius: 9px;
+    padding: 2px;
+    min-width: 14px;
+    float: right;
+    text-align: center;
+    font-weight: bold;
+    line-height: 14px;
+    vertical-align: baseline;
+    margin-left: -3px;
+    cursor: pointer;
+    display: none;
+    margin-top: 3px;
+}

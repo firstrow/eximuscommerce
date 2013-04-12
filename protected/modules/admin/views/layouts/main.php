@@ -27,6 +27,7 @@
 
 	// Init script
 	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
+	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/red_circles.js');
 ?>
 <!doctype html>
 <html>
