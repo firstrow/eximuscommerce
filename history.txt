@@ -2,6 +2,7 @@ Version 1.4 Work in progress
     Bug: Fixed auto_decrease_quantity import.
     Bug: Fixed configurable_data on order update.
     Bug: Fixed CsvImporter array_shift call.
+    Bug: Fixed submitting form by pressing `Enter` in notifications module.
     Enh: Added E_STRICT to dev mode.
     Enh: Updated Yii to 1.1.13.
     Enh: Added ajax counters for orders and comments.

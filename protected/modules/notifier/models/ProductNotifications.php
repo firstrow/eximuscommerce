@@ -82,6 +82,8 @@ class ProductNotifications extends CActiveRecord
 		{
 			$criteria=new CDbCriteria;
 			$criteria->group = 'product_id';
+			$criteria->with  = 'product';
+
 			$criteria->compare('id',$this->id);
 			$criteria->compare('product_id',$this->product_id);
 			$criteria->compare('email',$this->email,true);

@@ -41,7 +41,7 @@
 	));
 ?>
 	<div class="form wide">
-		<?= CHtml::form('/notifyRequest/index') ?>
+		<?= CHtml::form('/notifyRequest/index', 'post', array('onSubmit'=>'return sendNotifyRequest()')) ?>
 			<input type="hidden" name="product_id" class="product_id">
 			<div class="row">
 				<label>Ваш Email:</label>
