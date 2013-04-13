@@ -33,7 +33,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>CMS</title>
+	<title>EximusCommerce - Admin</title>
 
 	<style type="text/css">
 		/*** Fix for tabs. ***/
