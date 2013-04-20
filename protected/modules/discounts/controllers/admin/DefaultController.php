@@ -53,6 +53,8 @@ class DefaultController extends SAdminController
 				$model->manufacturers = array();
 			if(!isset($_POST['Discount']['categories']))
 				$model->categories = array();
+			if(!isset($_POST['Discount']['userRoles']))
+				$model->userRoles = array();
 
 			$model->attributes = $_POST['Discount'];
 		}

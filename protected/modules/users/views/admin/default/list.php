@@ -36,6 +36,7 @@
 				'value'=>'CHtml::link(CHtml::encode($data->username),array("update","id"=>$data->id))',
 			),
 			'email',
+			'discount',
 			array(
 				'name'=>'created_at',
 			),

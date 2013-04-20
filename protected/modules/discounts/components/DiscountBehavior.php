@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('application.modules.discounts.models.Discount');
+Yii::import('application.modules.discounts.DiscountsModule');
 
 /**
  * Product discount behavior
@@ -53,6 +54,8 @@ class DiscountBehavior extends CActiveRecordBehavior
 		if($this->appliedDiscount!==null)
 			return;
 
+		$user = Yii::app()->user;
+
 		// Process discount rules
 		foreach(DiscountBehavior::$discounts as $discount)
 		{
@@ -66,9 +69,31 @@ class DiscountBehavior extends CActiveRecordBehavior
 				if(!empty($discount->manufacturers))
 					$apply = in_array($this->owner->manufacturer_id,$discount->manufacturers);
 
+				// Apply discount by user role. Discount for admin disabled.
+				if(!empty($discount->userRoles) && $user->checkAccess('Admin')!==true)
+				{
+					foreach($discount->userRoles as $role)
+					{
+						if($user->checkAccess($role))
+						{
+							$apply=true;
+							break;
+						}
+					}
+				}
+
 				if($apply===true)
 					$this->applyDiscount($discount);
 			}
+		}
+
+		// Personal discount for users.
+		if(!$user->isGuest && !empty($user->model->discount))
+		{
+			$discount = new Discount();
+			$discount->name = Yii::t('DiscountsModule.core','Персональная скидка');
+			$discount->sum = $user->model->discount;
+			$this->applyDiscount($discount);
 		}
 	}
 

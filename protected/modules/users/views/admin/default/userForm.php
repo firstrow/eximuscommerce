@@ -30,6 +30,7 @@ return array(
 					),
 				),
 				'login_ip'=>array('type'=>'text',),
+				'discount'=>array('type'=>'text',),
 				'new_password'=>array(
 					'type'=>'password',
 				),

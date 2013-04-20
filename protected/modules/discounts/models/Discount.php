@@ -11,6 +11,7 @@
  * @property string $sum
  * @property integer $start_date
  * @property integer $end_date
+ * @property string $roles json encoded
  */
 class Discount extends BaseModel
 {
@@ -68,7 +69,7 @@ class Discount extends BaseModel
 			array('active', 'boolean'),
 			array('name', 'length', 'max'=>255),
 			array('sum', 'length', 'max'=>10),
-			array('manufacturers, categories', 'type'),
+			array('manufacturers, categories, userRoles', 'type', 'type'=>'array'),
 			array('start_date, end_date', 'date','format'=>'yyyy-M-d H:m:s'),
 
 			array('id, name, active, sum, start_date, end_date', 'safe', 'on'=>'search'),
@@ -98,6 +99,22 @@ class Discount extends BaseModel
 	public function setCategories(array $data)
 	{
 		$this->_categories = $data;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getUserRoles()
+	{
+		return json_decode($this->roles);
+	}
+
+	/**
+	 * @param array $roles
+	 */
+	public function setUserRoles(array $roles)
+	{
+		$this->roles = json_encode($roles);
 	}
 
 	/**
@@ -186,6 +203,7 @@ class Discount extends BaseModel
 			'start_date'    => Yii::t('DiscountsModule.core', 'Дата начала'),
 			'end_date'      => Yii::t('DiscountsModule.core', 'Дата окончания'),
 			'manufacturers' => Yii::t('DiscountsModule.core', 'Производители'),
+			'userRoles'     => Yii::t('DiscountsModule.core', 'Группы пользователей'),
 		);
 	}
 

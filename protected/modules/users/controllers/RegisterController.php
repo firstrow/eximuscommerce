@@ -39,6 +39,9 @@ class RegisterController extends Controller
 				$profile->save();
 				$profile->setUser($user);
 
+				// Add user to authenticated group
+				Yii::app()->authManager->assign('Authenticated', $user->id);
+
 				$this->addFlashMessage(Yii::t('UsersModule.core', 'Спасибо за регистрацию на нашем сайте.'));
 
 				// Authenticate user

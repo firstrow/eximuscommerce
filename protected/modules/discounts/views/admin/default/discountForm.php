@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('application.modules.store.models.StoreManufacturer');
+Yii::import('application.modules.discounts.components.DiscountHelper');
 Yii::import('zii.widgets.jui.CJuiDatePicker');
 
 return array(
@@ -37,6 +38,13 @@ return array(
 					'items'=>CHtml::listData(StoreManufacturer::model()->orderByName()->findAll(), 'id', 'name'),
 					'multiple'=>'multiple',
 					'data-placeholder'=>Yii::t('DiscountsModule.admin', 'Выберите производителя'),
+				),
+				'userRoles'=>array(
+					'type'=>'dropdownlist',
+					'items'=>DiscountHelper::getRoles(),
+					'multiple'=>'multiple',
+					'data-placeholder'=>Yii::t('DiscountsModule.admin', 'Выберите роли'),
+					'hint'=>Yii::t('DiscountsModule.admin', 'Скидки для администраторов запрещены.'),
 				),
 			)
 		)

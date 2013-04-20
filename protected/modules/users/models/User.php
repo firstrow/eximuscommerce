@@ -15,6 +15,7 @@ Yii::import('application.modules.users.models.UserProfile');
  * @property string $login_ip
  * @property string $recovery_key // Password recovery key
  * @property string $recovery_password
+ * @property string $discount
  * @property UserProfile $profile
  */
 class User extends BaseModel
@@ -51,7 +52,7 @@ class User extends BaseModel
 			array('email', 'email'),
 			array('created_at', 'required', 'on'=>'update'),
 			array('created_at, last_login', 'date','format'=>array('yyyy-M-d H:m:s', '0000-00-00 00:00:00')),
-			array('username, password, email', 'length', 'max'=>255),
+			array('username, password, email, discount', 'length', 'max'=>255),
 			array('new_password', 'length', 'min'=>4, 'max'=>40, 'on'=>'update'),
 			array('password', 'length', 'min'=>4, 'max'=>40),
 			// Search
@@ -98,6 +99,7 @@ class User extends BaseModel
 			'last_login'   => Yii::t('UsersModule.core', 'Последний вход'),
 			'login_ip'     => Yii::t('UsersModule.core', 'IP Адрес'),
 			'new_password' => Yii::t('UsersModule.core', 'Новый пароль'),
+			'discount'     => Yii::t('UsersModule.core', 'Персональная скидка'),
 		);
 	}
 
