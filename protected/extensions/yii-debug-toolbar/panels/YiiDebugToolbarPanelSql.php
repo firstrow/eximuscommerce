@@ -37,6 +37,20 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
 
     private $_textHighlighter;
 
+    public function  __construct($owner = null)
+    {
+        parent::__construct($owner);
+
+        try
+        {
+            Yii::app()->db;
+        }
+        catch (Exception $e)
+        {
+            $this->_dbConnections = false;
+        }
+    }
+
     public function getCountLimit()
     {
         return $this->_countLimit;
@@ -96,8 +110,12 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
      */
     public function getMenuSubTitle($f=4)
     {
-        $st = Yii::app()->db->getStats();
-        return YiiDebug::t('{n} query in {s} s.|{n} queries in {s} s.', array($st[0], '{s}'=>vsprintf('%0.'.$f.'F', $st[1])));
+        if (false !== $this->_dbConnections)
+        {
+            $st = Yii::app()->db->getStats();
+            return YiiDebug::t('{n} query in {s} s.|{n} queries in {s} s.', array($st[0], '{s}'=>vsprintf('%0.'.$f.'F', $st[1])));
+        }
+        return YiiDebug::t('No active connections');
     }
 
     /**
@@ -105,8 +123,12 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
      */
     public function getTitle()
     {
-        $conn=$this->getDbConnectionsCount();
+        if (false !== $this->_dbConnections)
+        {
+            $conn=$this->getDbConnectionsCount();
             return YiiDebug::t('SQL Queries from {n} connection|SQL Queries from {n} connections', array($conn));
+        }
+        return YiiDebug::t('No active connections');
     }
 
     /**
@@ -114,7 +136,9 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
      */
     public function getSubTitle()
     {
-        return '(' . self::getMenuSubTitle(6) . ')';
+        return  false !== $this->_dbConnections
+                ?  ('(' . self::getMenuSubTitle(6) . ')')
+                : null;
     }
 
     /**
@@ -130,6 +154,11 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
      */
     public function run()
     {
+        if (false === $this->_dbConnections)
+        {
+            return;
+        }
+
         $logs = $this->filterLogs();
 
         $this->render('sql', array(
@@ -171,7 +200,7 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
     {
         if (null !== ($connection = Yii::app()->getComponent($connectionId))
             && false !== ($connection instanceof CDbConnection)
-            && 'sqlite' !== $connection->driverName
+            && !in_array($connection->driverName, array('sqlite', 'oci', 'dblib'))
             && '' !== ($serverInfo = $connection->getServerInfo()))
         {
             $info = array(
@@ -181,8 +210,7 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
             
             $lines = explode('  ', $serverInfo);
             foreach($lines as $line) {
-                list($key, $value) = explode(': ', $line);
-                
+                list($key, $value) = explode(': ', $line, 2);
                 $info[YiiDebug::t($key)] = $value;
             }
             
@@ -333,14 +361,15 @@ class YiiDebugToolbarPanelSql extends YiiDebugToolbarPanel
         {
             list($query, $params) = explode('. Bound with ', $queryString);
 
-            $params = explode(',', $params);
-            $binds  = array();
+	        $binds  = array();
+	        $matchResult = preg_match_all("/(?<key>[a-z0-9\.\_\-\:]+)=(?<value>[\d\.e\-\+]+|''|'.+?(?<!\\\)')/ims", $params, $paramsMatched, PREG_SET_ORDER);
 
-            foreach ($params as $param)
-            {
-                list($key,$value) = explode('=', $param);
-                $binds[trim($key)] = trim($value);
+            if ($matchResult) {
+                foreach ($paramsMatched as $paramsMatch)
+	                if (isset($paramsMatch['key'], $paramsMatch['value']))                        
+                        $binds[':' . trim($paramsMatch['key'],': ')] = trim($paramsMatch['value']);
             }
+
 
             $entry[0] = strtr($query, $binds);
         }

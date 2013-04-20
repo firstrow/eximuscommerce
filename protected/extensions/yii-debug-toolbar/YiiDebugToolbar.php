@@ -6,6 +6,7 @@
  */
 
 Yii::import('yii-debug-toolbar.panels.*');
+Yii::import('yii-debug-toolbar.widgets.*');
 
 /**
  * YiiDebugToolbar represents an ...
@@ -41,22 +42,6 @@ class YiiDebugToolbar extends CWidget
      */
     private $_panels;
     
-    /**
-     * Adds a panel to the top of the stack
-     * @param string $panel Name class panel
-     */
-    public function prependPanel($panel){
-        array_unshift($this->_panels, $panel);
-    }
-    
-    /**
-     * Adds a panel at the end of the stack
-     * @param string $panel Name class panel
-     */
-    public function appendPanel($panel){
-        array_push($this->_panels, $panel);
-    }
-
     /**
      * Setup toolbar panels.
      *
@@ -151,11 +136,11 @@ class YiiDebugToolbar extends CWidget
         if (false !== $this->cssFile)
         {
             if (null === $this->cssFile)
-                $this->cssFile = $this->assetsUrl . '/style.css';
+                $this->cssFile = $this->assetsUrl . '/yii.debugtoolbar.css';
             $cs->registerCssFile($this->cssFile);
         }
 
-        $cs->registerScriptFile($this->assetsUrl . '/yii.debug.toolbar.js',
+        $cs->registerScriptFile($this->assetsUrl . '/yii.debugtoolbar.js',
                 CClientScript::POS_END);
 
         return $this;
@@ -172,17 +157,23 @@ class YiiDebugToolbar extends CWidget
         {
             if (!is_object($config))
             {
-                isset($config['class']) || $config['class'] = $id;
-                if (isset($config['enabled']) && false === $config['enabled'])
+                if (is_string($config))
                 {
-                    unset($this->_panels[$id]);
-                    continue;
+                    $config = array('class' => $config);
                 }
-                else if (isset($config['enabled']) && true === $config['enabled'])
+                if(is_array($config))
                 {
-                    unset($config['enabled']);
+                    isset($config['class']) || $config['class'] = $id;
+                    if (isset($config['enabled']) && false === $config['enabled'])
+                    {
+                        unset($this->_panels[$id]);
+                        continue;
+                    }
+                    else if (isset($config['enabled']) && true === $config['enabled'])
+                    {
+                        unset($config['enabled']);
+                    }
                 }
-
                 $panel = Yii::createComponent($config, $this);
 
                 if (false === ($panel instanceof YiiDebugToolbarPanelInterface))
