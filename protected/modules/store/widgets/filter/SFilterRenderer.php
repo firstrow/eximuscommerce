@@ -198,18 +198,6 @@ class SFilterRenderer extends CWidget
 	 */
 	public function getCategoryManufacturers()
 	{
-//		$manufacturers = StoreManufacturer::model()
-//			->orderByName()
-//			->findAll(array('with'=>array(
-//			'productsCount'=>array(
-//				'scopes'=>array(
-//					'active',
-//					'applyCategories'=>array($this->model, null),
-//					'applyAttributes'=>array($this->getOwner()->activeAttributes)
-//				),
-//			)
-//			)));
-
 		$cr = new CDbCriteria;
 		$cr->select = 't.manufacturer_id, t.id';
 		$cr->group = 't.manufacturer_id';
