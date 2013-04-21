@@ -56,39 +56,52 @@ class DiscountBehavior extends CActiveRecordBehavior
 
 		$user = Yii::app()->user;
 
-		// Process discount rules
-		foreach(DiscountBehavior::$discounts as $discount)
+		// Personal product discount
+		if(!empty($this->owner->discount))
 		{
-			$apply = false;
-			// Validate category
-			if($this->searchArray($discount->categories, $this->ownerCategories))
+			$discount       = new Discount();
+			$discount->name = Yii::t('DiscountsModule.core','Скидка');
+			$discount->sum  = $this->owner->discount;
+			$this->applyDiscount($discount);
+		}
+
+		// Process discount rules
+		if(!$this->hasDiscount())
+		{
+			foreach(DiscountBehavior::$discounts as $discount)
 			{
-				$apply=true;
+				$apply = false;
 
-				// Validate manufacturer
-				if(!empty($discount->manufacturers))
-					$apply = in_array($this->owner->manufacturer_id,$discount->manufacturers);
-
-				// Apply discount by user role. Discount for admin disabled.
-				if(!empty($discount->userRoles) && $user->checkAccess('Admin')!==true)
+				// Validate category
+				if($this->searchArray($discount->categories, $this->ownerCategories))
 				{
-					foreach($discount->userRoles as $role)
+					$apply=true;
+
+					// Validate manufacturer
+					if(!empty($discount->manufacturers))
+						$apply = in_array($this->owner->manufacturer_id,$discount->manufacturers);
+
+					// Apply discount by user role. Discount for admin disabled.
+					if(!empty($discount->userRoles) && $user->checkAccess('Admin')!==true)
 					{
-						if($user->checkAccess($role))
+						foreach($discount->userRoles as $role)
 						{
-							$apply=true;
-							break;
+							if($user->checkAccess($role))
+							{
+								$apply=true;
+								break;
+							}
 						}
 					}
-				}
 
-				if($apply===true)
-					$this->applyDiscount($discount);
+					if($apply===true)
+						$this->applyDiscount($discount);
+				}
 			}
 		}
 
 		// Personal discount for users.
-		if(!$user->isGuest && !empty($user->model->discount))
+		if(!$user->isGuest && !empty($user->model->discount) && !$this->hasDiscount())
 		{
 			$discount       = new Discount();
 			$discount->name = Yii::t('DiscountsModule.core','Персональная скидка');
@@ -143,5 +156,13 @@ class DiscountBehavior extends CActiveRecordBehavior
 		}
 
 		return $data;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasDiscount()
+	{
+		return !($this->appliedDiscount===null);
 	}
 }

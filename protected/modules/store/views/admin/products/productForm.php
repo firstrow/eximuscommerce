@@ -49,6 +49,10 @@ return array(
 				'quantity'=>array(
 					'type'=>'text',
 				),
+				'discount'=>array(
+					'type'=>'text',
+					'hint'=>Yii::t('StoreModule.admin', 'Укажите целое число или процент. Например 10%.'),
+				),
 				'auto_decrease_quantity'=>array(
 					'type'=>'dropdownlist',
 					'items'=>array(

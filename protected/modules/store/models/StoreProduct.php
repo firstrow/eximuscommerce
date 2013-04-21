@@ -37,6 +37,7 @@ Yii::import('application.modules.store.models.StoreProductImage');
  * @property string $updated
  * @property integer $votes // Star rating votes
  * @property integer $rating
+ * @property string $discount
  * @method StoreProduct active() Find Only active products
  * @method StoreProduct byViews() Order by views count
  * @method StoreProduct byAddedToCart() Order by views count
@@ -131,7 +132,7 @@ class StoreProduct extends BaseModel
 			array('name, price', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_title, meta_keywords, meta_description, layout, view, sku, auto_decrease_quantity', 'length', 'max'=>255),
-			array('short_description, full_description', 'type'),
+			array('short_description, full_description, discount', 'type', 'type'=>'string'),
 			// Search
 			array('id, name, url, price, short_description, full_description, created, updated, manufacturer_id', 'safe', 'on'=>'search'),
 		);
@@ -295,6 +296,7 @@ class StoreProduct extends BaseModel
 			'auto_decrease_quantity' => Yii::t('StoreModule.core', 'Автоматически уменьшать количество'),
 			'created'                => Yii::t('StoreModule.core', 'Дата создания'),
 			'updated'                => Yii::t('StoreModule.core', 'Дата обновления'),
+			'discount'               => Yii::t('StoreModule.core', 'Скидка'),
 		);
 	}
 
