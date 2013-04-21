@@ -61,7 +61,7 @@ class DiscountBehavior extends CActiveRecordBehavior
 		{
 			$apply = false;
 			// Validate category
-			if($this->searchArray($discount->categories, CHtml::listData($this->owner->categories, 'id', 'id')))
+			if($this->searchArray($discount->categories, $this->ownerCategories))
 			{
 				$apply=true;
 
@@ -90,9 +90,9 @@ class DiscountBehavior extends CActiveRecordBehavior
 		// Personal discount for users.
 		if(!$user->isGuest && !empty($user->model->discount))
 		{
-			$discount = new Discount();
+			$discount       = new Discount();
 			$discount->name = Yii::t('DiscountsModule.core','Персональная скидка');
-			$discount->sum = $user->model->discount;
+			$discount->sum  = $user->model->discount;
 			$this->applyDiscount($discount);
 		}
 	}
@@ -119,11 +119,20 @@ class DiscountBehavior extends CActiveRecordBehavior
 	 * Search value from $a in $b
 	 * @param array $a
 	 * @param array $b
+	 * @return array
 	 */
 	protected function searchArray(array $a, array $b)
 	{
 		foreach($a as $v)
 			if(in_array($v, $b)) return true;
 		return false;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getOwnerCategories()
+	{
+		return CHtml::listData($this->owner->categories, 'id', 'id');
 	}
 }
