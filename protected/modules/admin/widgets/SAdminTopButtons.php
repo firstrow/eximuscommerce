@@ -270,11 +270,13 @@ class SAdminTopButtons extends CWidget {
 			if (count(Yii::app()->languageManager->languages) > 1)
 			{
 				$flagUrl = Yii::app()->getModule('admin')->assetsUrl.'/images/flags/png/'.$currentLang->flag_name;
-				$class = get_class($this->form->model);
-				$attrs = $this->form->model->getTranslateAttributes();
+				$class   = get_class($this->form->model);
+				$attrs   = $this->form->model->getTranslateAttributes();
+				$prefix  = serialize($attrs);
+				
 				foreach($attrs as $id)
 				{
-					Yii::app()->clientScript->registerScript($attrs.$id.'css', "
+					Yii::app()->clientScript->registerScript($prefix.$id.'css', "
 					$('#{$class}_{$id}').css('background', '#fff url({$flagUrl}) no-repeat 99% 7px');
 					");
 				}

@@ -133,6 +133,15 @@ class DiscountBehavior extends CActiveRecordBehavior
 	 */
 	public function getOwnerCategories()
 	{
-		return CHtml::listData($this->owner->categories, 'id', 'id');
+		$id   = 'discount_product_categories' . $this->owner->updated;
+		$data = Yii::app()->cache->get($id);
+
+		if($data===false)
+		{
+			$data = CHtml::listData($this->owner->categories, 'id', 'id');
+			Yii::app()->cache->set($id,$data);
+		}
+
+		return $data;
 	}
 }
