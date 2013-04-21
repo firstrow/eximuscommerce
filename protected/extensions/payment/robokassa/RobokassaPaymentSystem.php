@@ -133,7 +133,7 @@ class RobokassaPaymentSystem extends BasePaymentSystem
 	{
 		$model = new RobokassaConfigurationModel();
 		$model->attributes=$this->getSettings($paymentMethodId);
-		$form  = new CForm($model->getFormConfigArray(), $model);
+		$form  = new BasePaymentForm($model->getFormConfigArray(), $model);
 		return $form;
 	}
 

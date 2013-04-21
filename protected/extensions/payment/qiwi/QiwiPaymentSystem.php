@@ -101,7 +101,7 @@ class QiwiPaymentSystem extends BasePaymentSystem
 	{
 		$model = new QiwiConfigurationModel();
 		$model->attributes=$this->getSettings($paymentMethodId);
-		$form  = new CForm($model->getFormConfigArray(), $model);
+		$form  = new BasePaymentForm($model->getFormConfigArray(), $model);
 		return $form;
 	}
 
