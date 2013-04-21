@@ -66,7 +66,7 @@
 					<input type="text" name="StoreProduct[name]" id="topSearchBox">
 				</form>
 
-				<?php echo CHtml::link(Yii::t('AdminModule.admin', 'Выход'), array('/admin/auth/logout'), array(
+				<?php echo CHtml::link(Yii::t('AdminModule.admin', 'Выход ({name})', array('{name}'=>Yii::app()->user->model->username)), array('/admin/auth/logout'), array(
 					'confirm'=>Yii::t('StoreModule.admin','Завершить сеанс?')
 				)) ?>
 			</div>
