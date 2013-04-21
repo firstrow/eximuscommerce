@@ -135,7 +135,7 @@ class SystemModules extends BaseModel
 	 * Get not installed modules
 	 * @return array List of modules available to install.
 	 */
-	public function getAvailable()
+	public static function getAvailable()
 	{
 		$result = array();
 		$files = glob(Yii::getPathOfAlias('application.modules.*') . '/*/config/info.php');
@@ -170,7 +170,7 @@ class SystemModules extends BaseModel
 	 * @param string $name module name
 	 * @return boolean
 	 */
-	public function install($name)
+	public static function install($name)
 	{
 		$model = new SystemModules;
 		$model->name = $name;
