@@ -21,6 +21,7 @@ class DefaultController extends SAdminController
 		$lang     = Yii::app()->language;
 		$record   = ProductNotifications::model()->findAllByAttributes(array('product_id'=>$_GET['product_id']));
 		$siteName = Yii::app()->settings->get('core', 'siteName');
+		$host     = $_SERVER['HTTP_HOST'];
 
 		foreach ($record as $row)
 		{
@@ -32,8 +33,8 @@ class DefaultController extends SAdminController
 			));
 
 			$mailer           = Yii::app()->mail;
-			$mailer->From     = 'robot@'.Yii::app()->params['adminEmail'];
-			$mailer->FromName = Yii::app()->settings->get('core', 'siteName');;
+			$mailer->From     = 'robot@'.$host;
+			$mailer->FromName = Yii::app()->settings->get('core', 'siteName');
 			$mailer->Subject  = $theme;
 			$mailer->Body     = $this->renderFile(
 				Yii::getPathOfAlias("application.emails.$lang").'/product_notification.php',
