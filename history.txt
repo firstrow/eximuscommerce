@@ -5,6 +5,7 @@ Version 1.4 Work in progress
     Bug: Fixed submitting form by pressing `Enter` in notifications module.
     Bug: Fixed payment system config form render in admin panel.
     Bug: Fixed reply email address in notifier module.
+    Bug: Fixed file uploading bug.
     Enh: Added E_STRICT to dev mode.
     Enh: Updated Yii to 1.1.13.
     Enh: Added ajax counters for orders and comments.

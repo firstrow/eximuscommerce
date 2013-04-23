@@ -96,6 +96,7 @@ return array(
 			'noCsrfValidationRoutes'=>array(
 				'/processPayment',
 				'/accounting1c/default/',
+				'/filemanager/connector',
 			)
 		),
 		'errorHandler'=>array(
