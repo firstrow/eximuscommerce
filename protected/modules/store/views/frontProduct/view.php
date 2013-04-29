@@ -68,6 +68,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			</div>
 		</div>
 		<div class="additional">
+			<ul>
 			<?php
 			// Display additional images
 			foreach($model->imagesNoMain as $image)
@@ -77,6 +78,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				echo CHtml::closeTag('li');
 			}
 			?>
+			</ul>
 		</div>
 	</div>
 

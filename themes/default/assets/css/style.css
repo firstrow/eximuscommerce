@@ -702,6 +702,13 @@ h1 span.light {
     min-height:250px;
     float:left;
 }
+.product .images .additional ul {
+    list-style: none;
+}
+.product .images .additional img {
+    width: 60px;
+    margin-left: 5px;
+}
 
 .product .info {
     float:left;
