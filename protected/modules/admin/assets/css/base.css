@@ -224,3 +224,11 @@ select {
     display: none;
     margin-top: 3px;
 }
+.small-footer-text {
+    text-align: center;
+    color: #a6a6a8;
+    font-size: 11px;
+}
+.small-footer-text a {
+    color: #79797f
+}
