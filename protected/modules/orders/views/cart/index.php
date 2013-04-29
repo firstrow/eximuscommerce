@@ -138,7 +138,7 @@ if(empty($items))
 						?>
 						<span><?php echo CHtml::encode($delivery->name) ?></span>
 					</label>
-					<p><?=CHtml::encode($delivery->description)?></p>
+					<p><?=$delivery->description?></p>
 				</li>
 				<?php endforeach; ?>
 		</div>
