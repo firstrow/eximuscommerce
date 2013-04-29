@@ -233,11 +233,11 @@ class CartController extends Controller
 			$ordered_product->save();
 		}
 
-		// All products added. Update delivery price
-		$order->updateDeliveryPrice();
-
 		// Reload order data.
 		$order->refresh();
+
+		// All products added. Update delivery price.
+		$order->updateDeliveryPrice();
 
 		// Send email to user.
 		$this->sendEmail($order);
