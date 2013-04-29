@@ -1126,3 +1126,12 @@ table.compareTable .attr {
 .notify_link {
     margin-right: 20px;;
 }
+.all_news {
+    text-align: right;
+    clear: both;
+    margin-right: 20px;
+}
+
+.pages-list div.description {
+    margin-bottom: 10px;
+}

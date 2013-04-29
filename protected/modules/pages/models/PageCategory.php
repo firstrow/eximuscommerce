@@ -282,6 +282,32 @@ class PageCategory extends BaseModel
         return parent::beforeDelete();
     }
 
+    public function afterDelete()
+    {
+        Yii::app()->cache->delete(__CLASS__.$this->url);
+    }
+
+    public static function countByPath($pathInfo)
+    {
+        $count=Yii::app()->cache->get(__CLASS__.$pathInfo);
+
+        if($count===false)
+        {
+            $model = PageCategory::model()
+                ->withFullUrl($pathInfo)
+                ->find();
+            if($model)
+            {
+                $count=1;
+                Yii::app()->cache->set(__CLASS__.$model->url, 1, 3600);
+            }
+
+            return 0;
+        }
+
+        return $count;
+    }
+
     /**
      * Generate admin link to edit category.
      * @return type
@@ -300,8 +326,12 @@ class PageCategory extends BaseModel
         return Yii::app()->createUrl('pages/pages/list', array('url'=>$this->full_url));
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;
     }
+
 }

@@ -9,13 +9,25 @@ Yii::import('application.modules.pages.models.PageCategory');
 class CategoryUrlRule extends CBaseUrlRule
 {
     public $connectionID = 'db';
-    public $urlSuffix = '';
+    public $urlSuffix    = '';
  
     public function createUrl($manager,$route,$params,$ampersand)
     {
-        if ($route==='pages/pages/list')
+        if($route==='pages/pages/list')
         {
-            return $params['url'].$this->urlSuffix;
+            $url=trim($params['url'],'/');
+            unset($params['url']);
+
+            $parts=array();
+            if(!empty($params))
+            {
+                foreach ($params as $key=>$val)
+                    $parts[]=$key.'/'.$val;
+
+                $url .= '/'.implode('/', $parts);
+            }
+
+            return $url.$this->urlSuffix;;
         }
         return false;
     }
@@ -25,15 +37,21 @@ class CategoryUrlRule extends CBaseUrlRule
         if ($this->urlSuffix)
             $pathInfo = strtr($pathInfo, array($this->urlSuffix=>''));
 
-        $check = PageCategory::model()
-            ->withFullUrl($pathInfo)
-            ->count();
+        $parts    = explode('/', $pathInfo);
+        $pathInfo = $parts[0];
 
-        if ($check)
+        if(isset($parts[1], $parts[2]))
+        {
+            if('page'===$parts[1])
+                $_GET['page']=$parts[2];
+        }
+
+        if(PageCategory::countByPath($pathInfo))
         {
             $_GET['url'] = $pathInfo;
             return 'pages/pages/list';
         }
         return false;
     }
+
 }

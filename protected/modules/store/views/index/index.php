@@ -58,6 +58,7 @@
 <div class="centered">
 	<div class="wide_line">
 		<span>Новости</span>
+
 	</div>
 
 	<ul class="news">
@@ -69,5 +70,9 @@
 		</li>
 		<?php endforeach; ?>
 	</ul>
+
+	<div class="all_news">
+		<a href="<?=$n->category->viewUrl?>">Все новости</a>
+	</div>
 </div>
 <?php $this->endClip(); ?>
