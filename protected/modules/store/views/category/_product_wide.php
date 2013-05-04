@@ -12,7 +12,7 @@
 				$imgSource = $data->mainImage->getUrl('150x150');
 			else
 				$imgSource = 'http://placehold.it/150x150';
-			echo CHtml::link(CHtml::image($imgSource), array('frontProduct/view', 'url'=>$data->url), array('class'=>'thumbnail'));
+			echo CHtml::link(CHtml::image($imgSource, $data->mainImageTitle), array('frontProduct/view', 'url'=>$data->url), array('class'=>'thumbnail'));
 			?>
 		</div>
 	</div>

@@ -832,6 +832,17 @@ class StoreProduct extends BaseModel
 	}
 
 	/**
+	 * Method to get main image title.
+	 *
+	 * @return string
+	 */
+	public function getMainImageTitle()
+	{
+		if($this->mainImage)
+			return $this->mainImage->title;
+	}
+
+	/**
 	 * Check if product is on warehouse.
 	 *
 	 * @return bool
