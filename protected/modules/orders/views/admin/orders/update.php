@@ -100,6 +100,12 @@ Yii::app()->clientScript->registerScript('deliveryMetohds', strtr('
 						</div>
 
 						<div class="row">
+							<?php echo CHtml::activeLabel($model,'discount'); ?>
+							<?php echo CHtml::activeTextField($model,'discount'); ?>
+							<div class="hint"><?php echo Yii::t('OrdersModule.admin', 'Применить скидку для общей суммы заказа'); ?></div>
+						</div>
+
+						<div class="row">
 							<?php echo CHtml::activeLabel($model,'user_name', array('required'=>true)); ?>
 							<?php echo CHtml::activeTextField($model,'user_name'); ?>
 						</div>

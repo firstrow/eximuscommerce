@@ -23,6 +23,7 @@ Yii::import('application.modules.orders.OrdersModule');
  * @property string $ip_address
  * @property string $created
  * @property string $updated
+ * @property string $discount
  */
 class Order extends BaseModel
 {
@@ -51,7 +52,7 @@ class Order extends BaseModel
 	{
 		return array(
 			array('user_name, user_email, delivery_id', 'required'),
-			array('user_name, user_email', 'length', 'max'=>100),
+			array('user_name, user_email, discount', 'length', 'max'=>100),
 			array('user_phone', 'length', 'max'=>30),
 			array('user_email', 'email'),
 			array('user_comment', 'length', 'max'=>500),
@@ -106,6 +107,7 @@ class Order extends BaseModel
 			'ip_address'     => Yii::t('OrdersModule.core','IP адрес'),
 			'created'        => Yii::t('OrdersModule.core','Дата создания'),
 			'updated'        => Yii::t('OrdersModule.core','Дата обновления'),
+			'discount'       => Yii::t('OrdersModule.core','Скидка'),
 		);
 	}
 
@@ -244,7 +246,19 @@ class Order extends BaseModel
 	public function getFull_price()
 	{
 		if(!$this->isNewRecord)
-			return $this->total_price + $this->delivery_price;
+		{
+			$result = $this->total_price + $this->delivery_price;
+			if($this->discount)
+			{
+				$sum = $this->discount;
+				if('%'===substr($this->discount,-1,1))
+					$sum=$result * (int)$this->discount / 100;
+				$result -= $sum;
+			}
+			return $result;
+		}
+
+		return 0;
 	}
 
 	/**

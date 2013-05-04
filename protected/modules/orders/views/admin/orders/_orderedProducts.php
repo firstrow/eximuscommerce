@@ -62,7 +62,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			</tr>
 			<tr align="right" style="font-size: 14px;">
 				<td><b><?php echo Yii::t('OrdersModule.admin','К оплате') ?>:</b></td>
-				<td><span id="orderSummary"><?php echo StoreProduct::formatPrice($model->total_price + $model->delivery_price) ?></span><?php echo Yii::app()->currency->main->symbol ?></td>
+				<td><span id="orderSummary"><?php echo StoreProduct::formatPrice($model->full_price) ?></span><?php echo Yii::app()->currency->main->symbol ?></td>
 			</tr>
 		</tbody>
 	</table>
