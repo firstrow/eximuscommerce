@@ -81,7 +81,7 @@ class ActionLog extends BaseModel
 	/**
 	 * @return array
 	 */
-	public function getEventNames()
+	public static function getEventNames()
 	{
 		return array(
 			self::ACTION_CREATE=>Yii::t('LoggerModule.admin', 'Создание'),
