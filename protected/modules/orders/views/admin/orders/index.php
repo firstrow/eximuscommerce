@@ -60,8 +60,8 @@ $this->widget('ext.sgridview.SGridView', array(
 		),
 		array(
 			'type'=>'raw',
-			'name'=>'total_price',
-			'value'=>'StoreProduct::formatPrice($data->total_price)',
+			'name'=>'full_price',
+			'value'=>'StoreProduct::formatPrice($data->full_price)',
 		),
 		'created',
 		// Buttons

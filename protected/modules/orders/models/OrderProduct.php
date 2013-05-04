@@ -79,13 +79,19 @@ class OrderProduct extends BaseModel
 	public function afterSave()
 	{
 		$this->order->updateTotalPrice();
+		$this->order->updateDeliveryPrice();
+
 		return parent::afterSave();
 	}
 
 	public function afterDelete()
 	{
 		if($this->order)
+		{
 			$this->order->updateTotalPrice();
+			$this->order->updateDeliveryPrice();
+		}
+
 		return parent::afterDelete();
 	}
 
