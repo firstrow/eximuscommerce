@@ -27,3 +27,7 @@ table.attributesTable thead {
 table.attributesTable thead td {
     padding: 5px;
 }
+div.form input[type=text].order_quantity_short {
+    width: 28px;
+    padding: 1px;
+}

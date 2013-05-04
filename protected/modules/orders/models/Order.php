@@ -303,4 +303,17 @@ class Order extends BaseModel
 			'sort'     => $sort
 		));
 	}
+
+	public function setProductQuantities(array $data)
+	{
+		foreach($this->products as $product)
+		{
+			if(isset($data[$product->id]))
+			{
+				$product->quantity = (int)$data[$product->id];
+				$product->save();
+			}
+		}
+	}
+
 }

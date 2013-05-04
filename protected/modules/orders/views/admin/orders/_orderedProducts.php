@@ -1,11 +1,13 @@
 <?php
-
 /**
  * List of order products
  *
  * @var $model Order
  * @var $this OrdersController
  */
+
+Yii::import('application.modules.orders.components.OrderQuantityColumn');
+
 
 Yii::app()->clientScript->registerScript('qustioni18n', '
 	var deleteQuestion = "'.Yii::t('OrdersModule.admin', 'Вы действительно удалить запись?').'";
@@ -25,7 +27,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'type'=>'raw',
 			'header'=>Yii::t('OrdersModule.admin', 'Название')
 		),
-		'quantity',
+		array(
+			'class'=>'OrderQuantityColumn',
+			'name'=>'quantity',
+			'header'=>Yii::t('OrdersModule.admin', 'Кол.')
+		),
 		'sku',
 		array(
 			'name'=>'price',

@@ -59,7 +59,14 @@ class OrdersController extends SAdminController {
 			if($model->validate())
 			{
 				$model->save();
+
+				// Update quantities
+				if(sizeof(Yii::app()->request->getPost('quantity', array())))
+					$model->setProductQuantities(Yii::app()->request->getPost('quantity'));
+
 				$model->updateDeliveryPrice();
+				$model->updateTotalPrice();
+
 				$this->setFlashMessage(Yii::t('OrdersModule.admin', 'Изменения успешно сохранены'));
 
 				if(isset($_POST['REDIRECT']))
