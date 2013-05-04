@@ -49,7 +49,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				<?php
 					// Main product image
 					if($model->mainImage)
-						echo CHtml::link(CHtml::image($model->mainImage->getUrl('340x250', 'resize')), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
+						echo CHtml::link(CHtml::image($model->mainImage->getUrl('340x250', 'resize'), $model->mainImage->title), $model->mainImage->getUrl(), array('class'=>'thumbnail'));
 					else
 						echo CHtml::link(CHtml::image('http://placehold.it/340x250'), '#', array('class'=>'thumbnail'));
 				?>
@@ -74,7 +74,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			foreach($model->imagesNoMain as $image)
 			{
 				echo CHtml::openTag('li', array('class'=>'span2'));
-				echo CHtml::link(CHtml::image($image->getUrl('160x120')), $image->getUrl(), array('class'=>'thumbnail'));
+				echo CHtml::link(CHtml::image($image->getUrl('160x120'), $image->title), $image->getUrl(), array('class'=>'thumbnail'));
 				echo CHtml::closeTag('li');
 			}
 			?>

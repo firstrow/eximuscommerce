@@ -10,6 +10,7 @@
  * @property integer $is_main
  * @property integer $uploaded_by
  * @property string $date_uploaded
+ * @property string $title
  */
 class StoreProductImage extends BaseModel
 {
@@ -99,6 +100,7 @@ class StoreProductImage extends BaseModel
 			'author'        => Yii::t('StoreModule.admin', 'Автор'),
 			'uploaded_by'   => Yii::t('StoreModule.admin', 'Автор'),
 			'date_uploaded' => Yii::t('StoreModule.admin', 'Дата загрузки'),
+			'title'         => Yii::t('StoreModule.admin', 'Название'),
 		);
 	}
 

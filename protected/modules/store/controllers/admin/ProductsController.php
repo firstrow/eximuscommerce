@@ -134,6 +134,9 @@ class ProductsController extends SAdminController
 					StoreProductImage::model()->updateByPk(Yii::app()->request->getPost('mainImageId'),array('is_main'=>1));
 				}
 
+				// Update image titles
+				$this->updateImageTitles();
+
 				$model->save();
 
 				$this->setFlashMessage(Yii::t('StoreModule.admin', 'Изменения успешно сохранены'));
@@ -433,4 +436,21 @@ class ProductsController extends SAdminController
 
 		echo $attributeOption->id;
 	}
+
+	/**
+	 * Updates image titles
+	 */
+	public function updateImageTitles()
+	{
+		if(sizeof(Yii::app()->request->getPost('image_titles', array())))
+		{
+			foreach(Yii::app()->request->getPost('image_titles', array()) as $id=>$title)
+			{
+				StoreProductImage::model()->updateByPk($id, array(
+					'title'=>$title
+				));
+			}
+		}
+	}
+
 }
