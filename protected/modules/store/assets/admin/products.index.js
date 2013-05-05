@@ -85,3 +85,67 @@ function setProductsStatus(status_id, el)
     });
     return false;
 }
+
+/**
+ * Display window with all categories list.
+ *
+ * @param el_clicked
+ */
+function showCategoryAssignWindow(el_clicked)
+{
+    if($("#set_categories_dialog").length == 0)
+    {
+        var div =  $('<div id="set_categories_dialog"/>');
+        $(div).css('max-height',$(window).height()-110+'px');
+        $(div).attr('title', 'Назначить категории');
+        $('body').append(div)
+    }
+
+    $('body').scrollTop(30);
+
+    var dialog = $("#set_categories_dialog");
+    dialog.load('/admin/store/products/renderCategoryAssignWindow');
+
+    dialog.dialog({
+        position:'top',
+        modal: true,
+        buttons: {
+            "Переместить": function() {
+                var checked = $("#CategoryAssignTreeDialog .jstree-checked");
+                var ids = [];
+
+                checked.each(function(key,el){
+                    var id = $(el).attr('id').replace('CategoryAssignTreeDialogNode_', '');
+                    ids.push(id);
+                });
+
+                if($("#CategoryAssignTreeDialog .jstree-clicked").parent().length == 0)
+                {
+                    $.jGrowl("На выбрана 'главная' категория. Кликните на название категории, чтобы сделать ее главной.",{position:"bottom-right"});
+                    return;
+                }
+
+                $.ajax('/admin/store/products/assignCategories', {
+                    type:"post",
+                    data:{
+                        YII_CSRF_TOKEN: $(el_clicked).attr('data-token'),
+                        category_ids: ids,
+                        main_category: $("#CategoryAssignTreeDialog .jstree-clicked").parent().attr('id').replace('CategoryAssignTreeDialogNode_', ''),
+                        product_ids: $.fn.yiiGridView.getSelection('productsListGrid')
+                    },
+                    success: function(){
+                        $(dialog).dialog("close");
+                        $.jGrowl("Изменения сохранены",{position:"bottom-right"});
+                    },
+                    error: function(){
+                        $.jGrowl("Ошибка", {position:"bottom-right"});
+                    }
+                });
+            },
+            "Отмена": function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
+
+}

@@ -453,4 +453,29 @@ class ProductsController extends SAdminController
 		}
 	}
 
+	/**
+	 * Render popup window
+	 */
+	public function actionRenderCategoryAssignWindow()
+	{
+		$this->renderPartial('category_assign_window');
+	}
+
+	/**
+	 * Assign categories to products
+	 */
+	public function actionAssignCategories()
+	{
+		$categories = Yii::app()->request->getPost('category_ids');
+		$products   = Yii::app()->request->getPost('product_ids');
+
+		if(empty($categories) || empty($products))
+			return;
+
+		$products = StoreProduct::model()->findAllByPk($products);
+
+		foreach ($products as $p)
+			$p->setCategories($categories, Yii::app()->request->getPost('main_category'));
+	}
+
 }

@@ -61,6 +61,13 @@ $this->widget('ext.sgridview.SGridView', array(
 			'linkOptions'=>array(
 				'onClick'=>'return setProductsStatus(0, this);',
 			),
+		),
+		array(
+			'label'=>Yii::t('StoreModule.admin', 'Назначить категории'),
+			'url'=>'#',
+			'linkOptions'=>array(
+				'onClick'=>'return showCategoryAssignWindow(this);',
+			),
 		)
 	 ),
 	'columns'=>array(
