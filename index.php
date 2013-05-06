@@ -1,6 +1,6 @@
 <?php
 
-define('VERSION', 'dev');
+define('VERSION', '{EXIMUS_VERSION');
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/framework/yii.php';
