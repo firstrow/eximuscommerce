@@ -36,8 +36,14 @@ class RightsFilter extends CFilter
 			if( ($module = $controller->getModule())!==null )
 				$authItem .= ucfirst($module->id).'.';
 
+			$controllerName = $controller->id;
+
+			$parts = explode('/', $controllerName);
+			if(isset($parts[1]))
+				$controllerName = $parts[1];
+
 			// Append the controller id to the authorization item name
-			$authItem .= ucfirst($controller->id);
+			$authItem .= ucfirst($controllerName);
 
 			// Check if user has access to the controller
 			if( $user->checkAccess($authItem.'.*')!==true )
