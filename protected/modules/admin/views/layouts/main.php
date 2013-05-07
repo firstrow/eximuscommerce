@@ -5,6 +5,7 @@
 	$assetsManager = Yii::app()->clientScript;
 	$assetsManager->registerCoreScript('jquery');
 	$assetsManager->registerCoreScript('jquery.ui');
+	$assetsManager->registerCoreScript('jquery.ui');
 
 	// Disable jquery-ui default theme
 	$assetsManager->scriptMap=array(
@@ -28,6 +29,7 @@
 	// Init script
 	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
 	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/red_circles.js');
+	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/jquery-datepicker-russian.js');
 ?>
 <!doctype html>
 <html>
