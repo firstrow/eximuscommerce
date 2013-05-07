@@ -38,7 +38,7 @@ class C1ProductImage extends CUploadedFile
 	 * @param string $file
 	 * @return bool
 	 */
-	public function saveAs($file)
+	public function saveAs($file, $deleteTempFile=true)
 	{
 		return copy($this->_tempName, $file);
 	}
