@@ -38,7 +38,7 @@ $this->widget('ext.sgridview.SGridView', array(
 		array(
 			'name'  => 'name',
 			'type'  => 'raw',
-			'value' => 'CHtml::link(CHtml::encode($data->name), array("update", "id"=>$data->id))',
+			'value' => 'CHtml::link(CHtml::encode($data->name), array("/comments/admin/comments/update", "id"=>$data->id))',
 		),
 		array(
 			'name'=>'email',
