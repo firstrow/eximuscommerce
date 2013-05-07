@@ -41,6 +41,11 @@
 				'name'=>'created_at',
 			),
 			array(
+				'name'=>'banned',
+				'filter'=>array(1=>Yii::t('UsersModule.admin', 'Да'), 0=>Yii::t('UsersModule.admin', 'Нет')),
+				'value'=>'$data->banned ? Yii::t("UsersModule.admin", "Да") : Yii::t("UsersModule.admin", "Нет")'
+			),
+			array(
 				'name'=>'last_login',
 			),
 			array(

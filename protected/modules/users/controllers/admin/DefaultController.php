@@ -11,6 +11,7 @@ class DefaultController extends SAdminController
 	public function actionIndex()
 	{
 		$model = new User('search');
+		$model->unsetAttributes();
 
 		if (!empty($_GET['User']))
 			$model->attributes = $_GET['User'];

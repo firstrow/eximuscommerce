@@ -34,6 +34,9 @@ return array(
 				'new_password'=>array(
 					'type'=>'password',
 				),
+				'banned'=>array(
+					'type'=>'checkbox'
+				),
 			),
 		),
 		'profile'=>array(

@@ -16,6 +16,7 @@ Yii::import('application.modules.users.models.UserProfile');
  * @property string $recovery_key // Password recovery key
  * @property string $recovery_password
  * @property string $discount
+ * @property boolean $banned
  * @property UserProfile $profile
  */
 class User extends BaseModel
@@ -48,6 +49,7 @@ class User extends BaseModel
 		return array(
 			array('username, email', 'required'),
 			array('username, email', 'checkIfAvailable'),
+			array('banned', 'boolean'),
 			array('password', 'required', 'on'=>'register'),
 			array('email', 'email'),
 			array('created_at', 'required', 'on'=>'update'),
@@ -56,7 +58,7 @@ class User extends BaseModel
 			array('new_password', 'length', 'min'=>4, 'max'=>40, 'on'=>'update'),
 			array('password', 'length', 'min'=>4, 'max'=>40),
 			// Search
-			array('id, username, email, created_at, last_login', 'safe', 'on'=>'search'),
+			array('id, username, email, created_at, last_login, banned', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -100,6 +102,7 @@ class User extends BaseModel
 			'login_ip'     => Yii::t('UsersModule.core', 'IP Адрес'),
 			'new_password' => Yii::t('UsersModule.core', 'Новый пароль'),
 			'discount'     => Yii::t('UsersModule.core', 'Персональная скидка'),
+			'banned'       => Yii::t('UsersModule.core', 'Бан'),
 		);
 	}
 
@@ -116,6 +119,7 @@ class User extends BaseModel
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('created_at',$this->created_at, true);
 		$criteria->compare('last_login',$this->last_login);
+		$criteria->compare('banned',$this->banned);
 
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
