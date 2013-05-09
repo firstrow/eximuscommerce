@@ -231,6 +231,9 @@ class SystemModules extends BaseModel
 		return require(Yii::getPathofAlias('application.modules.'.$name.'.config.info').'.php');
 	}
 
+	/**
+	 * Load or build if not exists all events file.
+	 */
 	public static function loadEventsFile()
 	{
 		$path = self::allEventsFilePath();
@@ -244,6 +247,9 @@ class SystemModules extends BaseModel
 		}
 	}
 
+	/**
+	 * Find all events files and saves them in protected/all_events.php
+	 */
 	public static function buildEventsFile()
 	{
 		$contents = '<?php ';

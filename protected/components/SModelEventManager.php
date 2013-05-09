@@ -4,6 +4,9 @@
  * Implements `global` application events.
  * Helps to attach events to any BaseModel class.
  *
+ * All events are stored in protected/all_events.php.
+ * This file rebuilds on add/remove modules from admin panel or just simply delete all_events.php to rebuild.
+ *
  * Usage:
  * 1. Create events class in module config directory and name it like {module}ModuleEvents.php
  * 2. Events class must have method named `getEvents` that describes events.
