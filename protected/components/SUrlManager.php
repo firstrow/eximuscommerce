@@ -54,6 +54,7 @@ class SUrlManager extends CUrlManager {
 
 		if(YII_DEBUG || !$rules)
 		{
+			$rules      = array();
 			$moduleDirs = array();
 			$modules    = SystemModules::getEnabled();
 
