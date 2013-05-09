@@ -238,6 +238,9 @@ class SystemModules extends BaseModel
 	{
 		$path = self::allEventsFilePath();
 
+		if(YII_DEBUG)
+			self::buildEventsFile();
+
 		if(file_exists($path))
 			require $path;
 		else
