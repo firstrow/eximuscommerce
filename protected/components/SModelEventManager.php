@@ -41,14 +41,14 @@ class SModelEventManager
 	public static function init()
 	{
 		self::$initialized = true;
+		SystemModules::loadEventsFile();
 
 		foreach(SystemModules::getInstalled() as $module)
 		{
 			$className = ucfirst($module->name).'ModuleEvents';
-			$path = Yii::getPathOfAlias('application.modules.'.$module->name.'.config.'.$className).'.php';
 
-			if(file_exists($path))
-				self::loadEventsFile($path, $className);
+			if(class_exists($className, false))
+				self::loadEventsClass($className);
 		}
 	}
 
@@ -73,14 +73,13 @@ class SModelEventManager
 	/**
 	 * Load and process events class
 	 * @static
-	 * @param string $filePath path to event class
 	 * @param $className
 	 */
-	public static function loadEventsFile($filePath, $className)
+	public static function loadEventsClass($className)
 	{
-		require $filePath;
 		$eventsClass = new $className;
-		$events = $eventsClass->getEvents();
+		$events      = $eventsClass->getEvents();
+
 		if(empty($events))
 			return;
 
