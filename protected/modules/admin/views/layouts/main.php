@@ -5,7 +5,6 @@
 	$assetsManager = Yii::app()->clientScript;
 	$assetsManager->registerCoreScript('jquery');
 	$assetsManager->registerCoreScript('jquery.ui');
-	$assetsManager->registerCoreScript('jquery.ui');
 
 	// Disable jquery-ui default theme
 	$assetsManager->scriptMap=array(
