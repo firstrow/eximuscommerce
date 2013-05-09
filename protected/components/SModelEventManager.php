@@ -35,7 +35,6 @@ class SModelEventManager
 	/**
 	 * Initialize class.
 	 * Search all events in modules and cache them.
-	 * TODO: Cache events in production mode
 	 * @static
 	 */
 	public static function init()
