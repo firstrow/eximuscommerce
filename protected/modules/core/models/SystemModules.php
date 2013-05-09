@@ -186,6 +186,7 @@ class SystemModules extends BaseModel
 		}
 
 		self::deleteCaches();
+		self::buildEventsFile();
 
 		return true;
 	}
@@ -197,6 +198,7 @@ class SystemModules extends BaseModel
 	{
 		self::loadModuleClass($this->name)->afterRemove();
 		self::deleteCaches();
+		self::buildEventsFile();
 		return parent::afterDelete();
 	}
 
@@ -229,6 +231,52 @@ class SystemModules extends BaseModel
 		return require(Yii::getPathofAlias('application.modules.'.$name.'.config.info').'.php');
 	}
 
+	public static function loadEventsFile()
+	{
+		$path = self::allEventsFilePath();
+
+		if(file_exists($path))
+			require $path;
+		else
+		{
+			self::buildEventsFile();
+			require $path;
+		}
+	}
+
+	public static function buildEventsFile()
+	{
+		$contents = '<?php ';
+
+		foreach(self::getInstalled() as $module)
+		{
+			$className = ucfirst($module->name).'ModuleEvents';
+			$path      = Yii::getPathOfAlias('application.modules.'.$module->name.'.config.'.$className).'.php';
+
+			if(file_exists($path))
+			{
+				$a = file_get_contents($path);
+				$a = str_replace('<?php', '', $a);
+				$contents .= $a;
+			}
+		}
+
+		file_put_contents(self::allEventsFilePath(), $contents);
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function allEventsFilePath()
+	{
+		return Yii::getPathOfAlias('application.runtime.all_events').'.php';
+	}
+
+	/**
+	 * Check if info file exists
+	 *
+	 * @return bool
+	 */
 	public function infoFileExists()
 	{
 		return file_exists(Yii::getPathofAlias('application.modules.'.$this->name.'.config.info').'.php');
