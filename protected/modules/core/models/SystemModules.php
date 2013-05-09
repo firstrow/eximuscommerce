@@ -56,7 +56,6 @@ class SystemModules extends BaseModel
 		);
 	}
 
-
 	public function scopes()
 	{
 		return array(
@@ -216,15 +215,32 @@ class SystemModules extends BaseModel
 		return require(Yii::getPathofAlias('application.modules.'.$name.'.config.info').'.php');
 	}
 
+	public function infoFileExists()
+	{
+		return file_exists(Yii::getPathofAlias('application.modules.'.$this->name.'.config.info').'.php');
+	}
+
 	/**
 	 * Get module description
 	 * @return string
 	 */
 	public function getInfo()
 	{
-		if ($this->info)
+		if($this->info)
 			return $this->info;
-		$this->info = (object) self::loadInfoFile($this->name);
+
+		if($this->infoFileExists())
+			$this->info = (object) self::loadInfoFile($this->name);
+		else
+		{
+			$this->info = (object) array(
+				'name'        => $this->name,
+				'author'      => '',
+				'version'     => '',
+				'description' => Yii::t('CoreModule.core', 'Описание недоступно'),
+				'url'         => '',
+			);
+		}
 
 		if(!isset($this->info->config_url))
 			$this->info->config_url = false;
