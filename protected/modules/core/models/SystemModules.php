@@ -185,13 +185,27 @@ class SystemModules extends BaseModel
 			return false;
 		}
 
+		self::deleteCaches();
+
 		return true;
 	}
 
+	/**
+	 * After delete module
+	 */
 	public function afterDelete()
 	{
 		self::loadModuleClass($this->name)->afterRemove();
+		self::deleteCaches();
 		return parent::afterDelete();
+	}
+
+	/**
+	 * Deletes cache
+	 */
+	public static function deleteCaches()
+	{
+		Yii::app()->cache->delete('url_manager_urls');
 	}
 
 	/**

@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('application.modules.pages.models.PageTranslate');
+Yii::import('application.modules.pages.models.PageCategory');
 
 /**
  * This is the model class for table "Pages".

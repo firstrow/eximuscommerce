@@ -49,19 +49,33 @@ class SUrlManager extends CUrlManager {
 	 */
 	protected function _loadModuleUrls()
 	{
-		$moduleDirs = array();
-		$modules = SystemModules::getEnabled();
+		$cacheKey = 'url_manager_urls';
+		$rules    = Yii::app()->cache->get($cacheKey);
 
-		foreach($modules as $m)
-			array_push($moduleDirs, $m->name);
+		if(YII_DEBUG || !$rules)
+		{
+			$moduleDirs = array();
+			$modules    = SystemModules::getEnabled();
 
-		$pattern = strtr(':fullPath/{:enabledModules}/config/routes.php', array(
-			':fullPath'=>Yii::getPathOfAlias('application.modules'),
-			':enabledModules'=>implode(',', $moduleDirs),
-		));
+			foreach($modules as $m)
+				array_push($moduleDirs, $m->name);
 
-		foreach(glob($pattern, GLOB_BRACE) as $route)
-			$this->rules = array_merge(require($route), $this->rules);
+			$pathParts = array(
+				Yii::getPathOfAlias('application.modules'),
+				'{'.implode(',', $moduleDirs).'}',
+				'config',
+				'routes.php'
+			);
+
+			$pattern = implode(DIRECTORY_SEPARATOR, $pathParts);
+
+			foreach(glob($pattern, GLOB_BRACE) as $route)
+				$rules = array_merge(require($route), $rules);
+
+			Yii::app()->cache->set($cacheKey, $rules, 3600);
+		}
+
+		$this->rules = array_merge($rules, $this->rules);
 	}
 
 }
