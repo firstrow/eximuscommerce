@@ -138,14 +138,15 @@ class SystemModules extends BaseModel
 	public static function getAvailable()
 	{
 		$result = array();
-		$files = glob(Yii::getPathOfAlias('application.modules.*') . '/*/config/info.php');
+		$DS     = DIRECTORY_SEPARATOR;
+		$files  = glob(Yii::getPathOfAlias('application.modules.*') . "{$DS}*{$DS}config{$DS}info.php");
 
 		if (!sizeof($files))
 			return array();
 
 		foreach ($files as $file)
 		{
-			$parts = explode(DIRECTORY_SEPARATOR, $file);
+			$parts      = explode(DIRECTORY_SEPARATOR, $file);
 			$moduleName = $parts[sizeof($parts)-3];
 			if (!self::isModuleInstalled($moduleName))
 				$result[$moduleName] = require($file);

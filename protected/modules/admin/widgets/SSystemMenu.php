@@ -68,7 +68,7 @@ class SSystemMenu extends CWidget {
 
 		foreach($installedModules as $module)
 		{
-			$filePath = Yii::getPathOfAlias('application.modules.'.$module->name.'.config').'/menu.php';
+			$filePath = Yii::getPathOfAlias('application.modules.'.$module->name.'.config').DIRECTORY_SEPARATOR.'menu.php';
 			if (file_exists($filePath))
 				$result = CMap::mergeArray($result, require($filePath));
 		}
