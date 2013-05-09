@@ -261,9 +261,8 @@ class SystemModules extends BaseModel
 
 			if(file_exists($path))
 			{
-				$a = file_get_contents($path);
-				$a = str_replace('<?php', '', $a);
-				$contents .= $a;
+				$code      = file_get_contents($path);
+				$contents .= str_replace('<?php', '', $code);
 			}
 		}
 
