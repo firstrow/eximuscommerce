@@ -14,6 +14,7 @@ Version 1.4 Work in progress
     Bug: Fixed link to comment edit on product update.
     Bug: Fixed default datepicker language.
     Bug: Fixed rights module preFilter.
+    Bug: Fixed build path on windows system in systemModules and systemMenu classes.
     Enh: Added E_STRICT to dev mode.
     Enh: Updated Yii to 1.1.13.
     Enh: Added ajax counters for orders and comments.
