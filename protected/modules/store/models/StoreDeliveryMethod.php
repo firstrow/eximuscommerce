@@ -60,7 +60,7 @@ class StoreDeliveryMethod extends BaseModel
 	{
 		$alias = $this->getTableAlias();
 		return array(
-			'active'              => array('order'=>$alias.'.active=1'),
+			'active'              => array('condition'=>$alias.'.active=1'),
 			'orderByPosition'     => array('order'=>$alias.'.position ASC'),
 			'orderByPositionDesc' => array('order'=>$alias.'.position DESC'),
 			'orderByName'         => array(
