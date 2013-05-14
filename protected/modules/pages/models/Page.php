@@ -131,7 +131,7 @@ class Page extends BaseModel
 	public function rules()
 	{
 		return array(
-			array('short_description, full_description, category_id', 'type'),
+			array('short_description, full_description, category_id', 'type', 'type'=>'string'),
 			array('status', 'in', 'range'=>array_keys(self::statuses())),
 			array('title, status, publish_date', 'required'),
 			array('url', 'LocalUrlValidator'),

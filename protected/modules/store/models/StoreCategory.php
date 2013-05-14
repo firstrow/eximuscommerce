@@ -66,7 +66,7 @@ class StoreCategory extends BaseModel
 			array('name', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('name, url, meta_keywords, meta_title, meta_description, layout, view', 'length', 'max'=>255),
-			array('description', 'type'),
+			array('description', 'type', 'type'=>'string'),
 			// Search
 			array('id, name, url', 'safe', 'on'=>'search'),
 		);

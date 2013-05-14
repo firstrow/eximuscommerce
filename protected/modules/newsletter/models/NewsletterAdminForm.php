@@ -19,7 +19,7 @@ class NewsletterAdminForm extends CFormModel
 			array('subject, sender_name, sender_email, body', 'required'),
 			array('sender_email', 'email'),
 			array('useHtml', 'boolean'),
-			array('test', 'type'),
+			array('test', 'type', 'type'=>'string'),
 		);
 	}
 

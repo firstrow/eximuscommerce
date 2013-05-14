@@ -77,7 +77,7 @@ class PageCategory extends BaseModel
 	public function rules()
 	{
 		return array(
-			array('description, layout, view', 'type'),
+			array('description, layout, view', 'type', 'type'=>'string'),
 			array('name', 'required'),
 			array('url', 'LocalUrlValidator'),
 			array('parent_id, page_size', 'numerical', 'integerOnly'=>true),
