@@ -80,7 +80,7 @@ if(empty($items))
 						echo CHtml::openTag('span', array('class'=>'cartProductOptions'));
 						foreach($attributeModels as $attribute)
 						{
--							$method = 'eav_'.$attribute->name;
+							$method = 'eav_'.$attribute->name;
 							echo ' - '.$attribute->title.': '.$product['configurable_model']->$method.'<br/>';
 						}
 						echo CHtml::closeTag('span');
