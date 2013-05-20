@@ -787,6 +787,7 @@ class StoreProduct extends BaseModel
 	{
 		Yii::import('application.modules.store.components.StoreUploadedImage');
 		Yii::import('ext.phpthumb.PhpThumbFactory');
+		Yii::import('application.modules.store.components.StoreImagesConfig');
 
 		$name = StoreUploadedImage::createName($this, $image);
 		$fullPath = StoreUploadedImage::getSavePath().'/'.$name;
@@ -809,9 +810,9 @@ class StoreProduct extends BaseModel
 
 		// Resize if needed
 		$thumb  = PhpThumbFactory::create($fullPath);
-		$sizes  = Yii::app()->params['storeImages']['sizes'];
-		$method = $sizes['resizeMethod'];
-		$thumb->$method($sizes['maximum'][0],$sizes['maximum'][1])->save($fullPath);
+		$sizes  = StoreImagesConfig::get('maximum_image_size');
+		$method = StoreImagesConfig::get('resizeMethod');
+		$thumb->$method($sizes[0], $sizes[0])->save($fullPath);
 	}
 
 	/**

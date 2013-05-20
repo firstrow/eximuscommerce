@@ -22,17 +22,6 @@ $config=array(
 		),
 	),
 	'params'=>array(
-		'storeImages'=>array(
-			'path'=>'webroot.uploads.product',
-			'maxFileSize'=>10*1024*1024,
-			'extensions'=>array('jpg', 'jpeg','png', 'gif'),
-			'types'=>array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
-			'sizes'=>array(
-				'resizeMethod'=>'resize', // resize/adaptiveResize
-				'resizeThumbMethod'=>'resize', // resize/adaptiveResize
-				'maximum'=>array(800, 600), // All uploaded images
-			)
-		)
 	),
 );
 

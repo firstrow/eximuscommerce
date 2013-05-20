@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.store.components.StoreImagesConfig');
+
 /**
  * This is the model class for table "StoreProductImage".
  *
@@ -62,12 +64,12 @@ class StoreProductImage extends BaseModel
 	{
 		if($size !== false)
 		{
-			$thumbPath = Yii::getPathOfAlias(Yii::app()->params['storeImages']['thumbPath']).'/'.$size;
+			$thumbPath = Yii::getPathOfAlias(StoreImagesConfig::get('thumbPath')).'/'.$size;
 			if(!file_exists($thumbPath))
 				mkdir($thumbPath);
 
 			// Path to source image
-			$fullPath  = Yii::getPathOfAlias(Yii::app()->params['storeImages']['path']).'/'.$this->name;
+			$fullPath  = Yii::getPathOfAlias(StoreImagesConfig::get('path')).'/'.$this->name;
 			// Path to thumb
 			$thumbPath = $thumbPath.'/'.$this->name;
 
@@ -79,16 +81,16 @@ class StoreProductImage extends BaseModel
 				$thumb  = PhpThumbFactory::create($fullPath);
 
 				if($resizeMethod === false)
-					$resizeMethod = Yii::app()->params['storeImages']['sizes']['resizeThumbMethod'];
+					$resizeMethod = StoreImagesConfig::get('resizeThumbMethod');
 				$thumb->$resizeMethod($sizes[0],$sizes[1])->save($thumbPath);
 			}
 
-			return Yii::app()->params['storeImages']['thumbUrl'].$size.'/'.$this->name;
+			return StoreImagesConfig::get('thumbUrl').$size.'/'.$this->name;
 		}
 
 		if ($random === true)
-			return Yii::app()->params['storeImages']['url'].$this->name.'?'.rand(1, 10000);
-		return Yii::app()->params['storeImages']['url'].$this->name;
+			return StoreImagesConfig::get('url').$this->name.'?'.rand(1, 10000);
+		return StoreImagesConfig::get('url').$this->name;
 	}
 
 	public function attributeLabels()
@@ -110,7 +112,7 @@ class StoreProductImage extends BaseModel
 	public function afterDelete()
 	{
 		// Delete file
-		$fullPath = Yii::getPathOfAlias(Yii::app()->params['storeImages']['path']).'/'.$this->name;
+		$fullPath = Yii::getPathOfAlias(StoreImagesConfig::get('path')).'/'.$this->name;
 		if (file_exists($fullPath))
 			unlink($fullPath);
 

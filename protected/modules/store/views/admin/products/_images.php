@@ -3,6 +3,7 @@
  * Images tabs
  */
 Yii::import('ext.jqPrettyPhoto');
+Yii::import('application.modules.store.components.StoreImagesConfig');
 
 // Register view styles
 Yii::app()->getClientScript()->registerCss('infoStyles', "
@@ -25,7 +26,7 @@ echo CHtml::label(Yii::t('StoreModule.admin', 'Выберите изображе
 		'name'=>'StoreProductImages',
 		'model'=>$model,
 		'attribute'=>'files',
-		'accept'=>implode('|', Yii::app()->params['storeImages']['extensions']),
+		'accept'=>implode('|', StoreImagesConfig::get('extensions')),
 	));
 echo CHtml::closeTag('div');
 

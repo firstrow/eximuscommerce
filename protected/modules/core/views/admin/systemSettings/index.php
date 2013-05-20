@@ -17,5 +17,5 @@ $this->breadcrumbs = array(
 ?>
 
 <div class="form wide padding-all">
-	<?php echo $form->render(); ?>
+	<?php echo $form->asTabs(); ?>
 </div>

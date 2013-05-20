@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.modules.store.components.StoreImagesConfig');
+
 /**
  * Validate uploaded product image.
  * Create unique image name.
@@ -13,7 +15,7 @@ class StoreUploadedImage
 	 */
 	public static function isAllowedSize(CUploadedFile $image)
 	{
-		return ($image->getSize() <= Yii::app()->params['storeImages']['maxFileSize']);
+		return ($image->getSize() <= StoreImagesConfig::get('maxFileSize'));
 	}
 
 	/**
@@ -22,7 +24,7 @@ class StoreUploadedImage
 	 */
 	public static function isAllowedExt(CUploadedFile $image)
 	{
-		return in_array(strtolower($image->getExtensionName()), Yii::app()->params['storeImages']['extensions']);
+		return in_array(strtolower($image->getExtensionName()),  StoreImagesConfig::get('extensions'));
 	}
 
 	/**
@@ -34,7 +36,7 @@ class StoreUploadedImage
 		$type = CFileHelper::getMimeType($image->getTempName());
 		if(!$type)
 			$type = CFileHelper::getMimeTypeByExtension($image->getName());
-		return in_array($type, Yii::app()->params['storeImages']['types']);
+		return in_array($type,  StoreImagesConfig::get('types'));
 	}
 
 	/**
@@ -51,7 +53,7 @@ class StoreUploadedImage
 	 */
 	public static function getSavePath()
 	{
-		return Yii::getPathOfAlias(Yii::app()->params['storeImages']['path']);
+		return Yii::getPathOfAlias(StoreImagesConfig::get('path'));
 	}
 
 	/**
