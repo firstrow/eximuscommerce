@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(0);
+
 return CMap::mergeArray(
 	require(dirname(__FILE__).'/main.php'),
 	array(

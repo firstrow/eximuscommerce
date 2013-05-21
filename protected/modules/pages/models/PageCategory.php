@@ -330,11 +330,13 @@ class PageCategory extends BaseModel
 	public function afterSave()
 	{
 		Yii::app()->cache->delete('page_category_'.$this->url);
+		return parent::afterSave();
 	}
 
 	public function afterDelete()
 	{
 		Yii::app()->cache->delete('page_category_'.$this->url);
+		return parent::afterSave();
 	}
 
 	/**

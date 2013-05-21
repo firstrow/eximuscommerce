@@ -10,9 +10,9 @@ class PagesUnitTest extends CDbTestCase
 {
 
 	public $fixtures = array(
-		'Page'=>'Page',
-		'PageTranslate'=>'PageTranslate',
-		'PageCategory'=>'PageCategory',
+		'Page'                 =>'Page',
+		'PageTranslate'        =>'PageTranslate',
+		'PageCategory'         =>'PageCategory',
 		'PageCategoryTranslate'=>'PageCategoryTranslate'
 	);
 
@@ -78,14 +78,14 @@ class PagesUnitTest extends CDbTestCase
 		// Create page with url that exists
 		$page = new Page;
 		$page->setAttributes(array(
-			'category_id'  =>'1',
-			'publish_date' =>'2011-12-01 18:55:06',
-			'status'       =>'published',
+			'category_id'  => '1',
+			'publish_date' => '2011-12-01 18:55:06',
+			'status'       => 'published',
 			// Translate able fields
-			'title'=>'Page Test Urls Unique',
-			'url'=>'page-1',
+			'title'        => 'Page Test Urls Unique',
+			'url'          => 'page-1',
 		));
-		$this->assertTrue($page->save(false));
+		$this->assertTrue($page->save());
 		$this->assertEquals('page-1'.'-'.date('YmdHis'), $page->url);
 	}
 
@@ -94,13 +94,13 @@ class PagesUnitTest extends CDbTestCase
 		// Test create new category
 		$category = new PageCategory;
 		$category->setAttributes(array(
-			'name' => 'Тест тест',
-			'description' => 'Category test desc',
-			'layout' => '',
-			'view' =>  '',
-			'meta_title' => '',
+			'name'             => 'Тест тест',
+			'description'      => 'Category test desc',
+			'layout'           => '',
+			'view'             =>  '',
+			'meta_title'       => '',
 			'meta_description' => '',
-			'meta_keywords' =>  '',
+			'meta_keywords'    =>  '',
 		));
 
 		$this->assertTrue($category->save(false));
@@ -117,16 +117,18 @@ class PagesUnitTest extends CDbTestCase
 	{
 		// Create new category with existing url
 		$category = new PageCategory;
-		$category->setAttributes(array(
+		$category->attributes = array(
 			'name'        => 'Тест тест 2',
 			'description' => 'Category test desc',
 			'parent_id'   => $this->PageCategory['PageCategory_2']['parent_id'],
 			'url'         => $this->PageCategory['PageCategory_2']['url'],
-		));
+		);
 
-		$this->assertTrue($category->save(false));
+		$this->assertTrue($category->save());
+
 		$category = PageCategory::model()->findByPk($category->id);
 
+		$this->assertTrue($category instanceof PageCategory);
 		$this->assertEquals('fantastika-'.date('YmdHis'), $category->url);
 	}
 
