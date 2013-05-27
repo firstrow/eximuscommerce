@@ -83,22 +83,17 @@ class SitemapModule extends BaseModule
 	 */
 	public function populateUrls($route, $records, $changefreq='daily', $priority='1.0')
 	{
-		$curdate = date('Y-m-d');
-
 		foreach($records as $p)
 		{
 			$url = Yii::app()->createAbsoluteUrl($route, array('url'=>$p['url']));
 
-			if(isset($p['date']))
-				$date = date('Y-m-d', strtotime($p['date']));
-			else
-				$date=$curdate;
-
 			$this->urls[$url] = array(
 				'changefreq' => $changefreq,
-				'lastmod'    => $date,
 				'priority'   => $priority
 			);
+
+			if(isset($p['date']) && strtotime($p['date']))
+				$this->urls[$url]['lastmod'] = date('Y-m-d', strtotime($p['date']));
 		}
 	}
 }
