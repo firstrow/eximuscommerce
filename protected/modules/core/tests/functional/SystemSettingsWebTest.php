@@ -22,8 +22,7 @@ class SystemSettingsWebTest extends WebTestCase
 		$this->assertEquals($model->core_siteName, $siteName);
 		$this->assertEquals($model->core_productsPerPage, $pp);
 		$this->assertEquals($model->core_productsPerPageAdmin, $ppa);
-		$this->assertEquals(Yii::app()->s
-		ettings->get('core', 'siteName'), $siteName);
+		$this->assertEquals(Yii::app()->settings->get('core', 'siteName'), $siteName);
 		$this->assertEquals(Yii::app()->settings->get('core', 'editorHeight'), 150);
 	}
 
