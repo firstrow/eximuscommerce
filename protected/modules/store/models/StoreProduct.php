@@ -4,7 +4,7 @@ Yii::import('application.modules.store.StoreModule');
 Yii::import('application.modules.store.models.StoreProductTranslate');
 Yii::import('application.modules.store.models.StoreProductCategoryRef');
 Yii::import('application.modules.store.models.StoreProductImage');
-
+Yii::import('application.modules.store.models.components.StoreProductImageSaver');
 /**
  * This is the model class for table "StoreProduct".
  *
@@ -785,54 +785,7 @@ class StoreProduct extends BaseModel
 	 */
 	public function addImage(CUploadedFile $image)
 	{
-		Yii::import('application.modules.store.components.StoreUploadedImage');
-		Yii::import('ext.phpthumb.PhpThumbFactory');
-		Yii::import('application.modules.store.components.StoreImagesConfig');
-
-		$name = StoreUploadedImage::createName($this, $image);
-		$fullPath = StoreUploadedImage::getSavePath().'/'.$name;
-		$image->saveAs($fullPath);
-		@chmod($fullPath, 0666);
-
-		// Check if product has main image
-		$is_main = (int) StoreProductImage::model()->countByAttributes(array(
-			'product_id' => $this->id,
-			'is_main'    => 1
-		));
-
-		$imageModel = new StoreProductImage;
-		$imageModel->product_id    = $this->id;
-		$imageModel->name          = $name;
-		$imageModel->is_main       = ($is_main == 0) ? true : false;
-		$imageModel->uploaded_by   = Yii::app()->user->getId();
-		$imageModel->date_uploaded = date('Y-m-d H:i:s');
-		$imageModel->save();
-
-		// Resize if needed
-		$thumb  = PhpThumbFactory::create($fullPath);
-		$sizes  = StoreImagesConfig::get('maximum_image_size');
-		$method = StoreImagesConfig::get('resizeMethod');
-		$thumb->$method($sizes[0], $sizes[0])->save($fullPath);
-
-		// Add watermark;
-		if(StoreImagesConfig::get('watermark_active'))
-		{
-			$pic = PhpThumbFactory::create($fullPath);
-
-			try {
-				$watermark = PhpThumbFactory::create(Yii::getPathOfAlias('webroot.uploads') . '/watermark.png');
-				$pic->addWatermark(
-					$watermark,
-					StoreImagesConfig::get('watermark_position_vertical').StoreImagesConfig::get('watermark_position_horizontal'),
-					StoreImagesConfig::get('watermark_opacity'),
-					0,
-					0
-				);
-				$pic->save($fullPath);
-			} catch(Exception $e) {
-				// pass
-			};
-		}
+		new StoreProductImageSaver($this, $image);
 	}
 
 	/**
