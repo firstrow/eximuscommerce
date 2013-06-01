@@ -24,6 +24,10 @@ $clear=array(
 $truncate = array(
 	'accounting1c',
 	'grid_view_filter',
+	'user',
+	'user_profile',
+	'notifications',
+	'grid_view_filter',
 );
 
 foreach($clear as $class)

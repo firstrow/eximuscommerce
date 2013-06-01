@@ -22,6 +22,8 @@ class StoreImagesConfig
 			'types'              => array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
 			'resizeMethod'       =>'resize', // resize/adaptiveResize
 			'resizeThumbMethod'  =>'resize', // resize/adaptiveResize
+			'watermark_active'   => 0,
+			'watermark_opacity'  => 1,
 		);
 
 	/**

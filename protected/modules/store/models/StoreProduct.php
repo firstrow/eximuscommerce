@@ -813,6 +813,26 @@ class StoreProduct extends BaseModel
 		$sizes  = StoreImagesConfig::get('maximum_image_size');
 		$method = StoreImagesConfig::get('resizeMethod');
 		$thumb->$method($sizes[0], $sizes[0])->save($fullPath);
+
+		// Add watermark;
+		if(StoreImagesConfig::get('watermark_active'))
+		{
+			$pic = PhpThumbFactory::create($fullPath);
+
+			try {
+				$watermark = PhpThumbFactory::create(Yii::getPathOfAlias('webroot.uploads') . '/watermark.png');
+				$pic->addWatermark(
+					$watermark,
+					StoreImagesConfig::get('watermark_position_vertical').StoreImagesConfig::get('watermark_position_horizontal'),
+					StoreImagesConfig::get('watermark_opacity'),
+					0,
+					0
+				);
+				$pic->save($fullPath);
+			} catch(Exception $e) {
+				// pass
+			};
+		}
 	}
 
 	/**

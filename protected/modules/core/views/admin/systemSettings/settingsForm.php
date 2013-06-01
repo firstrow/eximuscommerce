@@ -3,9 +3,20 @@
 $themes=Yii::app()->themeManager->themeNames;
 $themes=array_combine($themes, $themes);
 
+function titleRow($title)
+{
+	return '
+	<div class="row">
+		<label>&nbsp;</label>
+		<h3>'.$title.'</h3>
+	</div>
+	';
+}
+
 return array(
 	'id'=>'systemSettingsForm',
 	'showErrorSummary'=>true,
+	'enctype'=>'multipart/form-data',
 	'elements'=>array(
 		'main'=>array(
 			'type'=>'form',
@@ -21,11 +32,7 @@ return array(
 					'type'=>'dropdownlist',
 					'items'=>$themes
 				),
-				'	<div class="row">
-					<label>&nbsp;</label>
-					<h3>Настройки WYSIWYG редактора</h3>
-					</div>
-				',
+				titleRow('Настройки WYSIWYG редактора'),
 				'core_editorTheme'=>array(
 					'type'=>'dropdownlist',
 					'items'=>array(
@@ -54,6 +61,28 @@ return array(
 				'images_maximum_image_size' => array(
 					'type'=>'text',
 					'hint'=>Yii::t('CoreModule.admin', 'Изображения превышающие этот размер, будут изменены.')
+				),
+				titleRow('Водяной знак'),
+				'images_watermark_active' => array(
+					'type'=>'checkbox',
+				),
+				'images_watermark_image' => array(
+					'type'=>'file',
+				),
+				'<div class="row">
+				<label></label>
+				'.$this->model->renderWatermarkImageTag().'
+				</div>',
+				'images_watermark_position_vertical' => array(
+					'type'=>'dropdownlist',
+					'items'=>$this->model->getImageVerticalPositions()
+				),
+				'images_watermark_position_horizontal' => array(
+					'type'=>'dropdownlist',
+					'items'=>$this->model->getImageHorizontalPositions()
+				),
+				'images_watermark_opacity' => array(
+					'type'=>'text'
 				),
 			)
 		)
