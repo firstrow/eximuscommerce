@@ -64,7 +64,7 @@ class StoreProductImageSaver
 		if(StoreImagesConfig::get('watermark_active'))
 		{
 			$pic = PhpThumbFactory::create($fullPath);
-			$pos = StoreImagesConfig::get('watermark_position_vertical').StoreImagesConfig::get('watermark_position_horizontal')
+			$pos = StoreImagesConfig::get('watermark_position_vertical').StoreImagesConfig::get('watermark_position_horizontal');
 
 			try {
 				$watermark = PhpThumbFactory::create(Yii::getPathOfAlias('webroot.uploads') . '/watermark.png');
@@ -79,7 +79,7 @@ class StoreProductImageSaver
 				$pic->save($fullPath);
 			} catch(Exception $e) {
 				// pass
-			};
+			}
 		}
 	}
 }
