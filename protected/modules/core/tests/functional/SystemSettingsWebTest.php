@@ -14,7 +14,7 @@ class SystemSettingsWebTest extends WebTestCase
 		$this->type('id=SystemSettingsForm_core_productsPerPage', $pp);
 		$this->type('id=SystemSettingsForm_core_productsPerPageAdmin', $ppa);
 		$this->type('id=SystemSettingsForm_core_editorHeight', 150);
-		$this->type('id=SystemSettingsForm_images_watermark_active', 1);
+		$this->check('id=SystemSettingsForm_images_watermark_active');
 		$this->clickAndWait('css=#save_topLink > span.ui-button-text');
 
 		Yii::import('application.modules.core.models.SystemSettingsForm');
@@ -25,7 +25,7 @@ class SystemSettingsWebTest extends WebTestCase
 		$this->assertEquals($model->core_productsPerPageAdmin, $ppa);
 		$this->assertEquals(Yii::app()->settings->get('core', 'siteName'), $siteName);
 		$this->assertEquals(Yii::app()->settings->get('core', 'editorHeight'), 150);
-		$this->assertEquals(Yii::app()->settings->get('images', 'watermark'), '1');
+		$this->assertEquals(Yii::app()->settings->get('images', 'watermark_active'), 1);
 	}
 
 	public function testTitle()
