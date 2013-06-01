@@ -109,7 +109,7 @@
 				url: "/admin/core/GridView/saveFilterData",
 				type: "POST",
 				data: {
-					YII_CSRF_TOKEN: $("#"+gridId+"saveFilterDialog").dialog("option", "YII_CSRF_TOKEN"),
+					YII_CSRF_TOKEN: $("#"+gridId+"saveFilterDialog").data("token"),
 					gridId: gridId,
 					filterName: filterName,
 					filterJsonData: filterJsonData
@@ -124,3 +124,19 @@
 		$("#"+gridId+"saveFilterDialog").dialog("close");
 		return false;
 	}
+
+    function initializeSaveFilterModal(grid_id)
+    {
+        $('#'+grid_id+'saveFilterDialog').dialog({
+            'title':'Сохранить фильтр',
+            'modal':true,
+            'resizable':false,
+            'draggable':false,
+            'autoOpen':false,
+            'YII_CSRF_TOKEN': $('#SGridViewFilter_'+grid_id).data('token'),
+            'buttons':{
+                'Сохранить':function(){saveSGridViewFilter(grid_id)},
+                'Отмена':function(){$(this).dialog('close');}
+            }
+        });
+    }

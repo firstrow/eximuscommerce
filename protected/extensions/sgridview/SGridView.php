@@ -283,6 +283,7 @@ class SGridView extends CGridView {
 			));
 		echo CHtml::openTag('div', array(
 			'id'=>$this->getId().'saveFilterDialog',
+			'data-token'=>Yii::app()->request->csrfToken
 		));
 		echo '
 			<div class="form">
@@ -294,29 +295,8 @@ class SGridView extends CGridView {
 		';
 		echo CHtml::closeTag('div');
 
-		echo $this->createSaveDialog();
+		Yii::app()->getClientScript()->registerScript('initializeSaveFilterModal', 'initializeSaveFilterModal("'.$this->getId().'");',CClientScript::POS_READY);
 	}
-
-	/**
-	 * Create jquery.ui dialog to save custom filters
-	 * @return string
-	 */
-	protected function createSaveDialog()
-	{
-		return Chtml::script("jQuery('#".$this->getId()."saveFilterDialog').dialog({
-			'title':'".Yii::t('SGridView.core','Сохранить фильтр')."',
-			'modal':true,
-			'resizable':false,
-			'draggable':false,
-			'autoOpen':false,
-			'YII_CSRF_TOKEN': '".Yii::app()->request->csrfToken."',
-			'buttons':{
-				'".Yii::t('SGridView.core','Сохранить')."':function(){saveSGridViewFilter('".$this->getId()."')},
-				'".Yii::t('SGridView.core','Отмена')."':function(){\$(this).dialog('close');}
-			}
-		});");
-	}
-
 }
 
 /**

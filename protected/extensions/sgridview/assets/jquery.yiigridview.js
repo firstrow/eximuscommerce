@@ -188,7 +188,6 @@
 					}
 				} else {
                     $.fn.yiiGridView.showActions(id);
-                    $(document).on('click.yiiGridView', '#' + id + ' .select-on-check', false);
 				}
 			});
 		},
@@ -256,20 +255,19 @@
 					url: $grid.yiiGridView('getUrl'),
 					success: function (data) {
 						var $data = $('<div>' + data + '</div>');
-						$grid.removeClass(settings.loadingClass);
+                        $grid.removeClass(settings.loadingClass);
 						$.each(settings.ajaxUpdate, function (i, el) {
 							var updateId = '#' + el;
-							// $(updateId).replaceWith($(updateId, $data));
+							$(updateId).replaceWith($(updateId, $data));
                             // Added by firstrow@gmail.com
-                            $(updateId).html(data);
-						});
+                            initializeSaveFilterModal(el);
+                        });
 						if (settings.afterAjaxUpdate !== undefined) {
 							settings.afterAjaxUpdate(id, data);
 						}
 						if (settings.selectableRows > 0) {
 							selectCheckedRows(id);
 						}
-
                         // Added by firstrow@gmail.com
                         gridViewDropdownInit();
 					},
