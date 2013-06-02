@@ -30,7 +30,7 @@ class STabbedForm extends CForm {
 
 	public function render()
 	{
-		$result = $this->renderBegin();
+		$result  = $this->renderBegin();
 		$result .= $this->renderElements();
 		$result .= $this->renderEnd();
 
@@ -75,7 +75,7 @@ class STabbedForm extends CForm {
 	 */
 	public function renderElements()
 	{
-		$output='';
+		$output = '';
 		foreach($this->getElements() as $element)
 		{
 			if (isset($element->title))
