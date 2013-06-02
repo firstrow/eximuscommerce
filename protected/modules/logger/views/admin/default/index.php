@@ -13,10 +13,11 @@ $this->breadcrumbs = array(
 );
 
 $this->widget('ext.sgridview.SGridView', array(
-	'dataProvider'=>$dataProvider,
-	'id'=>'loggerListGrid',
-	'afterAjaxUpdate'=>"function(){registerFilterDatePickers()}",
-	'filter'=>$model,
+	'dataProvider'    => $dataProvider,
+	'id'              => 'loggerListGrid',
+	'afterAjaxUpdate' => "function(){registerFilterDatePickers()}",
+	'filter'          => $model,
+	'enableHistory'   => true,
 	'columns'=>array(
 		array(
 			'class'=>'CCheckBoxColumn',
