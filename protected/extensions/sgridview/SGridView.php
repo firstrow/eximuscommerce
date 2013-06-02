@@ -295,7 +295,7 @@ class SGridView extends CGridView {
 		';
 		echo CHtml::closeTag('div');
 
-		Yii::app()->getClientScript()->registerScript('initializeSaveFilterModal', 'initializeSaveFilterModal("'.$this->getId().'");',CClientScript::POS_READY);
+		Yii::app()->getClientScript()->registerScript('grid-modal-'.$this->getId(), 'initializeSaveFilterModal("'.$this->getId().'");',CClientScript::POS_READY);
 	}
 }
 
