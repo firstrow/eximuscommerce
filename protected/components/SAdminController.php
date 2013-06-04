@@ -85,12 +85,12 @@ class SAdminController extends RController
 	 */
 	public function smartRedirect($model)
 	{
-		if (!isset($_POST['REDIRECT']) OR Yii::app()->request->isAjaxRequest === true)
+		if (!isset($_POST['REDIRECT']) || Yii::app()->request->isAjaxRequest === true)
 			return;
 
-		if (substr($_POST['REDIRECT'], 0) == '/')
+		if (substr($_POST['REDIRECT'], 0) === '/')
 			$this->redirect($_POST['REDIRECT']);
-		elseif ($_POST['REDIRECT'] == 'update')
+		elseif ($_POST['REDIRECT'] === 'update')
 			$this->redirect($this->createUrl($_POST['REDIRECT'], array('id' => $model->primaryKey)));
 		else
 			$this->redirect($this->createUrl($_POST['REDIRECT']));
