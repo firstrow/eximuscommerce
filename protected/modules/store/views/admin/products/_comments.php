@@ -27,6 +27,7 @@ $this->widget('ext.sgridview.SGridView', array(
 	'id'           => 'productCommentsListGrid',
 	'filter'       => $comments,
 	'ajaxUrl'      => Yii::app()->createUrl('/store/admin/products/applyCommentsFilter', array('id'=>$model->id)),
+	'enableHistory'=>false,
 	'columns' => array(
 		array(
 			'class'=>'CCheckBoxColumn',

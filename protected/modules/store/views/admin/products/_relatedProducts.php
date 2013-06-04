@@ -41,15 +41,16 @@ $dataProvider->sort->route = 'applyProductsFilter';
 $dataProvider->pagination->route = 'applyProductsFilter';
 
 $this->widget('ext.sgridview.SGridView', array(
-	'dataProvider'=>$dataProvider,
-	'ajaxUrl'=>Yii::app()->createUrl('/store/admin/products/applyProductsFilter', array('exclude'=>$exclude)),
-	'id'=>'RelatedProductsGrid',
-	'template'=>'{items}{summary}{pager}',
-	'enableCustomActions'=>false,
-	'extended'=>true,
-	'selectableRows'=>0,
-	'filter'=>$model,
-	'columns'=>array(
+	'dataProvider'       => $dataProvider,
+	'ajaxUrl'            => Yii::app()->createUrl('/store/admin/products/applyProductsFilter', array('exclude'=>$exclude)),
+	'id'                 => 'RelatedProductsGrid',
+	'template'           => '{items}{summary}{pager}',
+	'enableCustomActions'=> false,
+	'extended'           => true,
+	'enableHistory'      => false,
+	'selectableRows'     => 0,
+	'filter'             => $model,
+	'columns' => array(
 		array(
 			'name'=>'id',
 			'type'=>'text',
