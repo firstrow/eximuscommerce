@@ -35,6 +35,8 @@ class SGridView extends CGridView {
 	 */
 	public $enableCustomActions = true;
 
+	public $enableHistory=true;
+
 	/**
 	 * Initializes the grid view.
 	 */

@@ -60,6 +60,10 @@ $this->widget('ext.jstree.SJsTree', array(
 
 // Category id to select in sidebar.
 $activeCategoryId = Yii::app()->request->getQuery('category', 0);
+
+if(is_array($activeCategoryId))
+	$activeCategoryId=0;
+
 Yii::app()->getClientScript()->registerScript('insertAllCategory', '
 $("#StoreCategoryTreeFilter").bind("loaded.jstree", function (event, data) {
 	$(this).jstree("create",-1,false,{attr:{id:"StoreCategoryTreeFilterNode_0"}, data:{title:"'.Yii::t('StoreModule.admin', 'Все категории').'"}},false,true);

@@ -45,7 +45,7 @@ $this->topButtons = $this->widget('application.modules.admin.widgets.SAdminTopBu
 $this->widget('ext.sgridview.SGridView', array(
 	'dataProvider'  => $dataProvider,
 	'id'            => 'productsListGrid',
-	'ajaxUpdate'    => false,
+	'ajaxUpdate'    => true,
 	'filter'        => $model,
 	'customActions' => array(
 		array(
