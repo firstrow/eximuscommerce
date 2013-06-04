@@ -91,10 +91,17 @@ class DefaultController extends SAdminController
 	{
 		if (Yii::app()->request->isPostRequest)
 		{
-			$model = User::model()->findByPk($_GET['id']);
+			$ids    = $_POST['id'];
+			$models = User::model()->findAllByPk($ids);
 
-			if ($model && ($model->id != Yii::app()->user->id))
-				$model->delete();
+			if(!empty($models))
+			{
+				foreach ($models as $user)
+				{
+					if ($user && ($user->id != Yii::app()->user->id))
+						$user->delete();
+				}
+			}
 
 			if (!Yii::app()->request->isAjaxRequest)
 				$this->redirect('index');
