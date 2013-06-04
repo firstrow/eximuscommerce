@@ -91,7 +91,7 @@ $this->breadcrumbs = array(
 
 		<div class="importDescription">
 			<ul>
-				<li><?php echo Yii::t('CsvModule.admin','Превой строкой файла должны быть указаны колонки для импорта.')?></li>
+				<li><?php echo Yii::t('CsvModule.admin','Первой строкой файла должны быть указаны колонки для импорта.')?></li>
 				<li><?php echo Yii::t('CsvModule.admin','Разделитель поля - точка с запятой(;).')?></li>
 				<li><?php echo Yii::t('CsvModule.admin','Колонки name, category, type, price - обязательны.')?></li>
 				<li><?php echo Yii::t('CsvModule.admin','Файл должен иметь кодировку UTF-8 или CP1251.')?></li>
