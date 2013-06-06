@@ -3,12 +3,19 @@
 /**
  * SHttpRequest
  */
-class SHttpRequest extends CHttpRequest {
+class SHttpRequest extends CHttpRequest
+{
 
 	private $_pathInfo;
+
+	/**
+	 * @var array of rules whan to disable csrf validation
+	 */
 	public $noCsrfValidationRoutes;
 
 	/**
+	 * @return string
+	 * @throws CHttpException
 	 * @return string Parsed path info without lang prefix.
 	 */
 	public function getPathInfo()
@@ -16,10 +23,10 @@ class SHttpRequest extends CHttpRequest {
 		$langCode = null;
 		$pathInfo = parent::getPathInfo();
 
-		if($this->_pathInfo===null)
+		if(null === $this->_pathInfo)
 		{
 			$pathInfo = parent::getPathInfo();
-			$parts = explode('/', $pathInfo);
+			$parts    = explode('/', $pathInfo);
 
 			if (in_array($parts[0], Yii::app()->languageManager->getCodes()))
 			{
@@ -36,16 +43,18 @@ class SHttpRequest extends CHttpRequest {
 			}
 
 			$this->_pathInfo = $pathInfo;
-		}
 
-		// Activate language by code
-		Yii::app()->languageManager->setActive($langCode);
+			// Activate language by code
+			Yii::app()->languageManager->setActive($langCode);
+		}
 
 		return $pathInfo;
 	}
 
 	/**
 	 * Add param to current url. Url is based on $data and $_GET arrays
+	 *
+	 * @param $route
 	 * @param $data array of the data to add to the url.
 	 * @param $selectMany
 	 * @return string
@@ -66,6 +75,8 @@ class SHttpRequest extends CHttpRequest {
 
 	/**
 	 * Delete param/value from current
+	 *
+	 * @param string $route
 	 * @param string $key to remove from query
 	 * @param null $value If not value - delete whole key
 	 * @return string new url
