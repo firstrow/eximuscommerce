@@ -16,7 +16,7 @@ a {
     outline: none;
     cursor: pointer;
 }
-a:link, a:visited {
+a:link, a:visited, a.light {
     color: #309bbf;
 }
 a:hover, a:active, a.selected {

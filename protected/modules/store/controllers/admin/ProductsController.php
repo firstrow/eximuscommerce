@@ -462,6 +462,27 @@ class ProductsController extends SAdminController
 	}
 
 	/**
+	 * Render popup windows
+	 */
+	public function actionRenderDuplicateProductsWindow()
+	{
+		$this->renderPartial('duplicate_products_window');
+	}
+
+	/**
+	 * Duplicate products
+	 */
+	public function actionDuplicateProducts()
+	{
+		//TODO: return ids to find products
+		$product_ids = Yii::app()->request->getPost('products', array());
+		parse_str(Yii::app()->request->getPost('duplicate'), $duplicates);
+
+		$duplicator = new SProductsDuplicator;
+		$duplicator->createCopy($product_ids, $duplicates);
+	}
+
+	/**
 	 * Assign categories to products
 	 */
 	public function actionAssignCategories()

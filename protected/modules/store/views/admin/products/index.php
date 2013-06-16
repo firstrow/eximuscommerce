@@ -68,6 +68,13 @@ $this->widget('ext.sgridview.SGridView', array(
 			'linkOptions'=>array(
 				'onClick'=>'return showCategoryAssignWindow(this);',
 			),
+		),
+		array(
+			'label'=>Yii::t('StoreModule.admin', 'Копировать'),
+			'url'=>'#',
+			'linkOptions'=>array(
+				'onClick'=>'return showDuplicateProductsWindow(this);',
+			),
 		)
 	 ),
 	'columns'=>array(

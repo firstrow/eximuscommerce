@@ -98,7 +98,7 @@ function showCategoryAssignWindow(el_clicked)
         var div =  $('<div id="set_categories_dialog"/>');
         $(div).css('max-height',$(window).height()-110+'px');
         $(div).attr('title', 'Назначить категории');
-        $('body').append(div)
+        $('body').append(div);
     }
 
     $('body').scrollTop(30);
@@ -147,5 +147,48 @@ function showCategoryAssignWindow(el_clicked)
             }
         }
     });
+}
 
+function showDuplicateProductsWindow(link_clicked)
+{
+    if($("#duplicate_products_dialog").length == 0)
+    {
+        var div =  $('<div id="duplicate_products_dialog"/>');
+        $(div).attr('title', 'Копировать');
+        $('body').append(div);
+    }
+
+    var dialog = $("#duplicate_products_dialog");
+    dialog.load('/admin/store/products/renderDuplicateProductsWindow');
+
+    dialog.dialog({
+        modal: true,
+        buttons: {
+            "Копировать": function() {
+                $.ajax('/admin/store/products/duplicateProducts', {
+                    type:"post",
+                    data: {
+                        YII_CSRF_TOKEN: $(link_clicked).attr('data-token'),
+                        products: $.fn.yiiGridView.getSelection('productsListGrid'),
+                        duplicate: $("#duplicate_products_dialog form").serialize()
+                    },
+                    success: function(){
+                        $(dialog).dialog("close");
+                        $.jGrowl("Изменения сохранены",{position:"bottom-right"});
+                    },
+                    error: function(){
+                        $.jGrowl("Ошибка", {position:"bottom-right"});
+                    }
+                });
+            },
+            "Отмена": function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
+}
+
+function checkAllDuplicateAttributes()
+{
+    $('#duplicate_products_dialog form input').attr('checked', true);
 }
