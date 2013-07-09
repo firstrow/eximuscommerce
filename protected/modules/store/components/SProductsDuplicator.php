@@ -38,13 +38,14 @@ class SProductsDuplicator extends CComponent
 	 */
 	public function createCopy(array $ids, array $duplicate=array())
 	{
+		$this->duplicate = $duplicate;
+
 		foreach($ids as $id)
 		{
 			$model = StoreProduct::model()->findByPk($id);
+
 			if($model)
-			{
 				$this->duplicateProduct($model);
-			}
 		}
 	}
 
@@ -72,6 +73,7 @@ class SProductsDuplicator extends CComponent
 			foreach ($features as $feature)
 			{
 				$method_name = 'copy'.ucfirst($feature);
+
 				if(method_exists($this, $method_name))
 					$this->$method_name($model, $product);
 			}
@@ -83,6 +85,8 @@ class SProductsDuplicator extends CComponent
 	}
 
 	/**
+	 * Creates copy of product images
+	 *
 	 * @param StoreProduct $original
 	 * @param StoreProduct $copy
 	 */
