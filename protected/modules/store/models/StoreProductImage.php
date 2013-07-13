@@ -112,9 +112,8 @@ class StoreProductImage extends BaseModel
 	public function afterDelete()
 	{
 		// Delete file
-		$fullPath = Yii::getPathOfAlias(StoreImagesConfig::get('path')).'/'.$this->name;
-		if (file_exists($fullPath))
-			unlink($fullPath);
+		if (file_exists($this->filePath))
+			unlink($this->filePath);
 
 		// If main image was deleted
 		if ($this->is_main)
@@ -129,6 +128,15 @@ class StoreProductImage extends BaseModel
 		}
 
 		return parent::afterDelete();
+	}
+
+	/**
+	 * @return string
+	 *
+	 */
+	public function getFilePath()
+	{
+		return Yii::getPathOfAlias(StoreImagesConfig::get('path')).'/'.$this->name;
 	}
 
 }

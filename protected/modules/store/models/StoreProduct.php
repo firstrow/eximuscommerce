@@ -324,7 +324,15 @@ class StoreProduct extends BaseModel
 			$criteria->mergeWith($manufacturerCr);
 		}
 
-		$criteria->compare('t.id',$this->id);
+		$ids=$this->id;
+		// Addsability to accepts id as "1,2,3" string
+		if(false !== strpos($ids, ','))
+		{
+			$ids = explode(',', $this->id);
+			$ids = array_map('trim', $ids);
+		}
+
+		$criteria->compare('t.id', $ids);
 		$criteria->compare('translate.name',$this->name,true);
 		$criteria->compare('t.url',$this->url,true);
 		$criteria->compare('t.price',$this->price);
