@@ -478,8 +478,12 @@ class ProductsController extends SAdminController
 		$product_ids = Yii::app()->request->getPost('products', array());
 		parse_str(Yii::app()->request->getPost('duplicate'), $duplicates);
 
+		if(!isset($duplicates['copy']))
+			$duplicates['copy']=array();
+
 		$duplicator = new SProductsDuplicator;
-		$duplicator->createCopy($product_ids, $duplicates);
+		$ids = $duplicator->createCopy($product_ids, $duplicates['copy']);
+		echo '/admin/store/products/?StoreProduct[id]='.implode(',', $ids);
 	}
 
 	/**

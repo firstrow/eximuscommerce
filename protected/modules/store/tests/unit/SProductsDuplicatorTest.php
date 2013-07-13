@@ -6,7 +6,7 @@ class SProductsDuplicatorTest extends  CTestCase
 {
 	public function testProductDuplicate()
 	{
-		$model = StoreProduct::model()->find();
+		$model      = StoreProduct::model()->find();
 		$duplicator = new SProductsDuplicator();
 
 		$clone = $duplicator->duplicateProduct($model);

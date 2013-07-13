@@ -16,11 +16,6 @@ class SProductsDuplicator extends CComponent
 	private $duplicate;
 
 	/**
-	 * @var array of features to copy
-	 */
-	public $available_features = array('images', 'attributes', 'variants', 'related_products');
-
-	/**
 	 * @var string to be appended to the end of product name
 	 */
 	private $_suffix;
@@ -35,28 +30,31 @@ class SProductsDuplicator extends CComponent
 	 *
 	 * @param array $ids of products to make copy
 	 * @param array $duplicate list of product parts to copy: images, variants, etc...
+	 * @return array of new product ids
 	 */
 	public function createCopy(array $ids, array $duplicate=array())
 	{
 		$this->duplicate = $duplicate;
+		$new_ids             = array();
 
 		foreach($ids as $id)
 		{
 			$model = StoreProduct::model()->findByPk($id);
 
 			if($model)
-				$this->duplicateProduct($model);
+				$new_ids[] = $this->duplicateProduct($model)->id;
 		}
+
+		return $new_ids;
 	}
 
 	/**
 	 * Duplicate one product and return model
 	 *
 	 * @param StoreProduct $model
-	 * @param array $features
-	 * @return bool|StoreProduct
+	 * @return StoreProduct
 	 */
-	public function duplicateProduct(StoreProduct $model, array $features = array())
+	public function duplicateProduct(StoreProduct $model)
 	{
 		$product = new StoreProduct;
 		$product->attributes = $model->attributes;
@@ -70,7 +68,7 @@ class SProductsDuplicator extends CComponent
 
 		if($product->save())
 		{
-			foreach ($features as $feature)
+			foreach ($this->duplicate as $feature)
 			{
 				$method_name = 'copy'.ucfirst($feature);
 
@@ -92,7 +90,69 @@ class SProductsDuplicator extends CComponent
 	 */
 	protected function copyImages(StoreProduct $original, StoreProduct $copy)
 	{
+		$images = $original->images;
+		if(!empty($images))
+		{
+			foreach($images as $image)
+			{
+				$image_copy = new StoreProductImage();
+				$image_copy->product_id    = $copy->id;
+				$image_copy->name          = $image->name.'_'.$copy->id;
+				$image_copy->is_main       = $image->is_main;
+				$image_copy->uploaded_by   = $image->uploaded_by;
+				$image_copy->title         = $image->title;
+				$image_copy->date_uploaded = date('Y-m-d H:i:s');
+				if($image_copy->save())
+				{
+					copy($image->filePath, $image_copy->filePath);
+				}
+			}
+		}
+	}
 
+	/**
+	 * Creates copy of EAV attributes
+	 *
+	 * @param StoreProduct $original
+	 * @param StoreProduct $copy
+	 */
+	protected function copyAttributes(StoreProduct $original, StoreProduct $copy)
+	{
+		$attributes = $original->getEavAttributes();
+
+		if(!empty($attributes))
+		{
+			foreach ($attributes as $key=>$val)
+			{
+				Yii::app()->db->createCommand()->insert('StoreProductAttributeEAV', array(
+					'entity'=>$copy->id,
+					'attribute'=>$key,
+					'value'=>$val
+				));
+			}
+		}
+	}
+
+	/**
+	 * Copy related products
+	 *
+	 * @param StoreProduct $original
+	 * @param StoreProduct $copy
+	 */
+	protected function copyRelated(StoreProduct $original, StoreProduct $copy)
+	{
+		$related = $original->related;
+
+		if(!empty($related))
+		{
+			foreach ($related as $p)
+			{
+				$model = new StoreRelatedProduct();
+				$model->product_id = $copy->id;
+				$model->related_id = $p->related_id;
+				$model->save();
+			}
+		}
 	}
 
 	/**

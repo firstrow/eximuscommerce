@@ -172,9 +172,9 @@ function showDuplicateProductsWindow(link_clicked)
                         products: $.fn.yiiGridView.getSelection('productsListGrid'),
                         duplicate: $("#duplicate_products_dialog form").serialize()
                     },
-                    success: function(){
+                    success: function(data){
                         $(dialog).dialog("close");
-                        $.jGrowl("Изменения сохранены",{position:"bottom-right"});
+                        $.jGrowl("Изменения сохранены. <a href='"+data+"'>Просмотреть копии продуктов.</a>",{position:"bottom-right"});
                     },
                     error: function(){
                         $.jGrowl("Ошибка", {position:"bottom-right"});
@@ -188,7 +188,16 @@ function showDuplicateProductsWindow(link_clicked)
     });
 }
 
-function checkAllDuplicateAttributes()
+function checkAllDuplicateAttributes(el)
 {
-    $('#duplicate_products_dialog form input').attr('checked', true);
+    if($(el).prev().attr('checked'))
+    {
+        $('#duplicate_products_dialog form input').attr('checked', false);
+        $(el).prev().attr('checked', false);
+    }
+    else
+    {
+        $('#duplicate_products_dialog form input').attr('checked', true);
+        $(el).prev().attr('checked', true);
+    }
 }
