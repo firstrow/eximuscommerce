@@ -20,6 +20,7 @@ Yii::import('application.modules.orders.OrdersModule');
  * @property string $user_address
  * @property string $user_phone
  * @property string $user_comment
+ * @property string $admin_comment
  * @property string $ip_address
  * @property string $created
  * @property string $updated
@@ -55,7 +56,7 @@ class Order extends BaseModel
 			array('user_name, user_email, discount', 'length', 'max'=>100),
 			array('user_phone', 'length', 'max'=>30),
 			array('user_email', 'email'),
-			array('user_comment', 'length', 'max'=>500),
+			array('user_comment, admin_comment', 'length', 'max'=>500),
 			array('user_address', 'length', 'max'=>255),
 			array('delivery_id', 'validateDelivery'),
 			array('status_id', 'validateStatus'),
@@ -104,6 +105,7 @@ class Order extends BaseModel
 			'user_address'   => Yii::t('OrdersModule.core','Адрес доставки'),
 			'user_phone'     => Yii::t('OrdersModule.core','Телефон'),
 			'user_comment'   => Yii::t('OrdersModule.core','Комментарий пользователя'),
+			'admin_comment'  => Yii::t('OrdersModule.core','Комментарий администратора'),
 			'ip_address'     => Yii::t('OrdersModule.core','IP адрес'),
 			'created'        => Yii::t('OrdersModule.core','Дата создания'),
 			'updated'        => Yii::t('OrdersModule.core','Дата обновления'),

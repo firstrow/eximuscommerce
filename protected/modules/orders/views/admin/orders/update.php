@@ -129,6 +129,11 @@ Yii::app()->clientScript->registerScript('deliveryMetohds', strtr('
 							<?php echo CHtml::activeLabel($model,'user_comment'); ?>
 							<?php echo CHtml::activeTextArea($model,'user_comment'); ?>
 						</div>
+						<div class="row">
+							<?php echo CHtml::activeLabel($model,'admin_comment'); ?>
+							<?php echo CHtml::activeTextArea($model,'admin_comment'); ?>
+							<div class="hint"><?php echo Yii::t('OrdersModule.admin', 'Этот текст не виден для пользователя'); ?></div>
+						</div>
 					</div>
 				</td>
 				<td>
