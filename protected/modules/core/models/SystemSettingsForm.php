@@ -178,14 +178,14 @@ class SystemSettingsForm extends CFormModel
 	/**
 	 * Validates uploaded watermark file
 	 */
-	public function validateWatermarkFile()
+	public function validateWatermarkFile($attr)
 	{
-//		$file = CUploadedFile::getInstance($this,'images_watermark_image');
-//		if($file)
-//		{
-//			$allowedExts = array('jpg', 'gif', 'png');
-////			if(!in_array($file->getExtensionName(), $allowedExts))
-////				$this->addError($attr, 'Ошибка. Водяной знак не изображение.');
-//		}
+		$file = CUploadedFile::getInstance($this,'images_watermark_image');
+		if($file)
+		{
+			$allowedExts = array('jpg', 'gif', 'png');
+			if(!in_array($file->getExtensionName(), $allowedExts))
+				$this->addError($attr, 'Ошибка. Водяной знак не изображение.');
+		}
 	}
 }
