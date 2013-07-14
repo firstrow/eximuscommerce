@@ -29,6 +29,7 @@
 	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/init.scripts.js');
 	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/red_circles.js');
 	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/jquery-datepicker-russian.js');
+	$assetsManager->registerScriptFile($adminAssetsUrl.'/scripts/jquery.hotkeys.js');
 ?>
 <!doctype html>
 <html>
