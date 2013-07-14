@@ -325,6 +325,8 @@ class SAdminTopButtons extends CWidget {
 				submitForm.submit();
 				return false;
 			}
+			// Add to each form hidden submit fix submit by pressing enter.
+			$('#{$this->formId}').append('<input type=submit style=\"visibility: hidden;height: 1px; width: 1px\">');
 		", CClientScript::POS_END);
 
 		// Register stuff dropDown button scripts
