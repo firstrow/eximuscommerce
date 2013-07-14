@@ -7,9 +7,9 @@
  */
 
 $this->topButtons = $this->widget('admin.widgets.SAdminTopButtons', array(
-	'form'=>$form,
-	'deleteAction'=>$this->createUrl('/comments/admin/comments/delete', array('id'=>$model->id)),
-	'template'=>array('history_back','save','delete')
+	'form'         => $form,
+	'deleteAction' => $this->createUrl('/comments/admin/comments/delete', array('id'=>$model->id)),
+	'template'     => array('history_back','save','delete')
 ));
 
 $title = Yii::t('CommentsModule.admin', 'Редактирование комментария');
