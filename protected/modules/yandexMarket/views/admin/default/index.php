@@ -46,6 +46,11 @@ $this->breadcrumbs = array(
 		<span class="required"> *</span>
 	</div>
 
+	<div class="row">
+		<label></label>
+		<a href="/yandex-market.xml">Просмотреть файл</a>
+	</div>
+
 	<div class="row submit">
 		<label>&nbsp;</label>
 		<?php echo CHtml::submitButton(Yii::t('YandexMarketModule.admin', 'Сохранить')); ?>
