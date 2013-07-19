@@ -160,15 +160,41 @@ class YandexMarketXML
 	{
 		foreach($products as $p)
 		{
-			$this->renderOffer($p, array(
-				'url'         => Yii::app()->createAbsoluteUrl('/store/frontProduct/view', array('url'=>$p->url)),
-				'price'       => Yii::app()->currency->convert($p->price, $this->_config['currency_id']),
-				'currencyId'  => $this->currencyIso,
-				'categoryId'  => $p->mainCategory->id,
-				'picture'     => $p->mainImage ? Yii::app()->createAbsoluteUrl($p->mainImage->getUrl()) : null,
-				'name'        => CHtml::encode($p->name),
-				'description' => $this->clearText($p->short_description),
-			));
+			if(!count($p->variants))
+			{
+				$this->renderOffer($p, array(
+					'url'         => Yii::app()->createAbsoluteUrl('/store/frontProduct/view', array('url'=>$p->url)),
+					'price'       => Yii::app()->currency->convert($p->price, $this->_config['currency_id']),
+					'currencyId'  => $this->currencyIso,
+					'categoryId'  => $p->mainCategory->id,
+					'picture'     => $p->mainImage ? Yii::app()->createAbsoluteUrl($p->mainImage->getUrl()) : null,
+					'name'        => CHtml::encode($p->name),
+					'description' => $this->clearText($p->short_description),
+				));
+			}
+			else
+			{
+				foreach($p->variants as $v)
+				{
+					$name = strtr('{product}({attr} {option})', array(
+						'{product}' => $p->name,
+						'{attr}'    => $v->attribute->title,
+						'{option}'  => $v->option->value
+					));
+
+					$hashtag = '#'.$v->attribute->name.':'.$v->option->id;
+
+					$this->renderOffer($p, array(
+						'url'         => Yii::app()->createAbsoluteUrl('/store/frontProduct/view', array('url'=>$p->url)).$hashtag,
+						'price'       => Yii::app()->currency->convert(StoreProduct::calculatePrices($p, $p->variants, 0), $this->_config['currency_id']),
+						'currencyId'  => $this->currencyIso,
+						'categoryId'  => $p->mainCategory->id,
+						'picture'     => $p->mainImage ? Yii::app()->createAbsoluteUrl($p->mainImage->getUrl()) : null,
+						'name'        => CHtml::encode($name),
+						'description' => $this->clearText($p->short_description),
+					));
+				}
+			}
 		}
 	}
 
@@ -178,10 +204,12 @@ class YandexMarketXML
 	 */
 	public function renderOffer(StoreProduct $p, array $data)
 	{
-		$available=($p->availability==1) ? 'true' : 'false';
+		$available = ($p->availability==1) ? 'true' : 'false';
 		$this->write('<offer id="'.$p->id.'" available="'.$available.'">');
+
 		foreach($data as $key=>$val)
 			$this->write("<$key>".$val."</$key>\n");
+
 		$this->write('</offer>'."\n");
 	}
 
