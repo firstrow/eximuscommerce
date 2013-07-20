@@ -38,7 +38,7 @@ class StoreProductVariant extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('attribute_id, option_id, product_id, price, price_type, sku', 'required'),
+			array('attribute_id, option_id, product_id, price, price_type', 'required'),
 			array('attribute_id, option_id, product_id, price_type', 'numerical', 'integerOnly'=>true),
 			array('price', 'numerical'),
 			array('sku', 'length', 'max'=>255),

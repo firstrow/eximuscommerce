@@ -35,7 +35,7 @@ class SProductsDuplicator extends CComponent
 	public function createCopy(array $ids, array $duplicate=array())
 	{
 		$this->duplicate = $duplicate;
-		$new_ids             = array();
+		$new_ids         = array();
 
 		foreach($ids as $id)
 		{
@@ -91,6 +91,7 @@ class SProductsDuplicator extends CComponent
 	protected function copyImages(StoreProduct $original, StoreProduct $copy)
 	{
 		$images = $original->images;
+
 		if(!empty($images))
 		{
 			foreach($images as $image)
@@ -102,10 +103,9 @@ class SProductsDuplicator extends CComponent
 				$image_copy->uploaded_by   = $image->uploaded_by;
 				$image_copy->title         = $image->title;
 				$image_copy->date_uploaded = date('Y-m-d H:i:s');
+
 				if($image_copy->save())
-				{
 					copy($image->filePath, $image_copy->filePath);
-				}
 			}
 		}
 	}
@@ -151,6 +151,32 @@ class SProductsDuplicator extends CComponent
 				$model->product_id = $copy->id;
 				$model->related_id = $p->related_id;
 				$model->save();
+			}
+		}
+	}
+
+	/**
+	 * Copy product variants
+	 *
+	 * @param StoreProduct $original
+	 * @param StoreProduct $copy
+	 */
+	public function copyVariants(StoreProduct $original, StoreProduct $copy)
+	{
+		$variants = $original->variants;
+
+		if(!empty($variants))
+		{
+			foreach($variants as $v)
+			{
+				$record = new StoreProductVariant();
+				$record->product_id   = $copy->id;
+				$record->attribute_id = $v->attribute_id;
+				$record->option_id    = $v->option_id;
+				$record->price        = $v->price;
+				$record->price_type   = $v->price_type;
+				$record->sku          = $v->sku;
+				$record->save() ;
 			}
 		}
 	}
