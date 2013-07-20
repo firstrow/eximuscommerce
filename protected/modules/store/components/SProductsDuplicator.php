@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('application.modules.store.models.StoreProduct');
+Yii::import('application.modules.store.models.*');
 
 class SProductsDuplicator extends CComponent
 {
@@ -125,9 +125,9 @@ class SProductsDuplicator extends CComponent
 			foreach ($attributes as $key=>$val)
 			{
 				Yii::app()->db->createCommand()->insert('StoreProductAttributeEAV', array(
-					'entity'=>$copy->id,
-					'attribute'=>$key,
-					'value'=>$val
+					'entity'    => $copy->id,
+					'attribute' => $key,
+					'value'     => $val
 				));
 			}
 		}
