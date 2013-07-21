@@ -63,9 +63,9 @@ class CommentsController extends SAdminController
 
 	public function actionUpdateStatus()
 	{
-		$ids       = Yii::app()->request->getPost('ids');
-		$status    = Yii::app()->request->getPost('status');
-		$models    = Comment::model()->findAllByPk($ids);
+		$ids    = Yii::app()->request->getPost('ids');
+		$status = Yii::app()->request->getPost('status');
+		$models = Comment::model()->findAllByPk($ids);
 
 		if(!array_key_exists($status, Comment::getStatuses()))
 			throw new CHttpException(404, Yii::t('CommentsModule.admin', 'Ошибка проверки статуса.'));

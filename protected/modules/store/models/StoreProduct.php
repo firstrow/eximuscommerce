@@ -759,12 +759,13 @@ class StoreProduct extends BaseModel
 	 */
 	public function priceRange()
 	{
-		$price = Yii::app()->currency->convert($this->price);
+		$price     = Yii::app()->currency->convert($this->price);
 		$max_price = Yii::app()->currency->convert($this->max_price);
-		$symbol = Yii::app()->currency->active->symbol;
+		$symbol    = Yii::app()->currency->active->symbol;
 
 		if($this->use_configurations && $max_price > 0)
 			return self::formatPrice($price).' '.$symbol.' - '.self::formatPrice($max_price).' '.$symbol;
+		
 		return self::formatPrice($price).' '.$symbol;
 	}
 

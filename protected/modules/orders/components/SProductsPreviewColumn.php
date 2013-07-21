@@ -16,8 +16,14 @@ class SProductsPreviewColumn extends CGridColumn
 	 */
 	public function init()
 	{
+		$this->baseUrl = Yii::app()->getAssetManager()->publish(
+				Yii::getPathOfAlias('application.modules.orders.assets'),
+				false,
+				-1,
+				YII_DEBUG
+			).'/previewColumn';
+
 		$cs=Yii::app()->clientScript;
-		$this->baseUrl=$this->grid->owner->module->assetsUrl.'/previewColumn';
 		$cs->registerScriptFile($this->baseUrl.'/core.js', CClientScript::POS_END);
 		$cs->registerCssFile($this->baseUrl.'/style.css', CClientScript::POS_HEAD);
 	}
@@ -31,8 +37,8 @@ class SProductsPreviewColumn extends CGridColumn
 	{
 		$order=$this->grid->dataProvider->data[$row];
 		echo CHtml::image($this->baseUrl.'/trolley.png', '', array(
-			'id'=>$order->id,
-			'class'=>'productPreview',
+			'id'    => $order->id,
+			'class' => 'productPreview',
 		));
 	}
 }

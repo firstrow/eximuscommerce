@@ -40,8 +40,8 @@
 {
     color: #444;
     height: 27px;
-    text-align: center;
-    padding: 0px;
+    /*text-align: center;*/
+    padding: 0px 0px 0px 3px;
     font-weight:bold;
     zoom: 1;
 }
