@@ -307,7 +307,7 @@ class CartController extends Controller
 	 */
 	private function sendEmail(Order $order)
 	{
-		$theme=Yii::t('OrdersModule', 'Ваш заказ №').$this->id;
+		$theme=Yii::t('OrdersModule', 'Ваш заказ №').$order->id;
 
 		$lang=Yii::app()->language;
 		$emailBodyFile=Yii::getPathOfAlias("application.emails.$lang").DIRECTORY_SEPARATOR.'new_order.php';
