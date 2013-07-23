@@ -780,7 +780,9 @@ class StoreProduct extends BaseModel
 
 	/**
 	 * Convert price to currenct currency
-	 * @return float
+	 *
+	 * @param string $attr
+	 * @return mixed
 	 */
 	public function toCurrentCurrency($attr='price')
 	{
