@@ -70,9 +70,7 @@ class OrdersController extends SAdminController {
 				$this->setFlashMessage(Yii::t('OrdersModule.admin', 'Изменения успешно сохранены'));
 
 				if(isset($_POST['REDIRECT']))
-				{
 					$this->smartRedirect($model);
-				}
 				else
 					$this->redirect(array('index'));
 			}
@@ -90,8 +88,8 @@ class OrdersController extends SAdminController {
 	 */
 	public function actionAddProductList()
 	{
-		$order_id=Yii::app()->request->getQuery('id');
-		$model = $this->_loadModel($order_id);
+		$order_id     = Yii::app()->request->getQuery('id');
+		$model        = $this->_loadModel($order_id);
 		$dataProvider = new StoreProduct('search');
 
 		if(isset($_GET['StoreProduct']))
@@ -112,7 +110,7 @@ class OrdersController extends SAdminController {
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			$order = $this->_loadModel($_POST['order_id']);
+			$order   = $this->_loadModel($_POST['order_id']);
 			$product = StoreProduct::model()->findByPk($_POST['product_id']);
 
 			if(!$product)
