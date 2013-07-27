@@ -47,7 +47,7 @@ function addProductToOrder(el, order_id, token)
  * @param order_id
  * @param token
  */
-function deleteOrderedProduct(product_id, order_id, token)
+function deleteOrderedProduct(id, order_id, token)
 {
     if(confirm(deleteQuestion))
     {
@@ -56,7 +56,8 @@ function deleteOrderedProduct(product_id, order_id, token)
             type: "POST",
             data: {
                 YII_CSRF_TOKEN: token,
-                product_id: product_id
+                id: id,
+                order_id: order_id
             },
             dataType: "html",
             success: function(){

@@ -114,12 +114,14 @@ class OrderProduct extends BaseModel
 
 		return new CActiveDataProvider($this, array(
 			'criteria'   => $criteria,
-			'pagination' => false // By default disable pagination to show all products in amdin panel
+			'pagination' => false // By default disable pagination to show all products in admin panel
 		));
 	}
 
 	/**
 	 * Render full name to present product on order view
+	 *
+	 * @param bool $appendConfigurableName
 	 * @return string
 	 */
 	public function getRenderFullName($appendConfigurableName=true)
@@ -136,6 +138,7 @@ class OrderProduct extends BaseModel
 
 		if(!is_array($variants))
 			$variants=array();
+
 		if(!is_array($this->configurable_data))
 			$this->configurable_data=array();
 
@@ -144,9 +147,7 @@ class OrderProduct extends BaseModel
 		if(!empty($variants))
 		{
 			foreach($variants as $key=>$value)
-			{
 				$result .= "<br/> - {$key}: {$value}";
-			}
 		}
 
 		return $result;

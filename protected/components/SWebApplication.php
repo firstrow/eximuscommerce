@@ -2,6 +2,7 @@
 
 /**
  * Main application class.
+ *
  * @package app.components
  */
 class SWebApplication extends CWebApplication

@@ -78,11 +78,26 @@ class Order extends BaseModel
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function scopes()
 	{
 		$alias = $this->getTableAlias(true);
 		return array(
 			'new'=>array('condition'=>$alias.'.status_id=1'),
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function behaviors()
+	{
+		return array(
+			'historical' => array(
+				'class' => 'application.modules.orders.behaviors.HistoricalBehavior',
+			)
 		);
 	}
 
@@ -202,7 +217,7 @@ class Order extends BaseModel
 	 */
 	public function updateDeliveryPrice()
 	{
-		$result = 0;
+		$result         = 0;
 		$deliveryMethod = StoreDeliveryMethod::model()->findByPk($this->delivery_id);
 
 		if($deliveryMethod)
@@ -262,6 +277,80 @@ class Order extends BaseModel
 	}
 
 	/**
+	 * Add product to existing order
+	 *
+	 * @param StoreProduct $product
+	 * @param integer $quantity
+	 * @param float $price
+	 */
+	public function addProduct($product, $quantity, $price)
+	{
+		if(!$this->isNewRecord)
+		{
+			$ordered_product = new OrderProduct;
+			$ordered_product->order_id   = $this->id;
+			$ordered_product->product_id = $product->id;
+			$ordered_product->name       = $product->name;
+			$ordered_product->quantity   = $quantity;
+			$ordered_product->sku        = $product->sku;
+			$ordered_product->price      = $price;
+			$ordered_product->save();
+
+			// Raise event
+			$event = new CModelEvent($this, array(
+				'product_model'   => $product,
+				'ordered_product' => $ordered_product,
+				'quantity'        => $quantity
+			));
+			$this->onProductAdded($event);
+		}
+	}
+
+	/**
+	 * Delete ordered product from order
+	 *
+	 * @param $id
+	 */
+	public function deleteProduct($id)
+	{
+		$model = OrderProduct::model()->findByPk($id);
+
+		if($model)
+		{
+			$model->delete();
+
+			$event = new CModelEvent($this, array(
+				'ordered_product' => $model
+			));
+			$this->onProductDeleted($event);
+		}
+	}
+
+	/**
+	 * @param $event
+	 */
+	public function onProductAdded($event)
+	{
+		$this->raiseEvent('onProductAdded', $event);
+	}
+
+	/**
+	 * @param $event
+	 */
+	public function onProductDeleted($event)
+	{
+		$this->raiseEvent('onProductDeleted', $event);
+	}
+
+	/**
+	 * @param $event
+	 */
+	public function onProductQuantityChanged($event)
+	{
+		$this->raiseEvent('onProductQuantityChanged', $event);
+	}
+
+	/**
 	 * @return CActiveDataProvider
 	 */
 	public function getOrderedProducts()
@@ -270,6 +359,31 @@ class Order extends BaseModel
 		$products->order_id = $this->id;
 		return $products->search();
 	}
+
+	/**
+	 * @param array $data
+	 */
+	public function setProductQuantities(array $data)
+	{
+		foreach($this->products as $product)
+		{
+			if(isset($data[$product->id]))
+			{
+				if((int)$product->quantity !== (int)$data[$product->id])
+				{
+					$event = new CModelEvent($this, array(
+						'ordered_product' => $product,
+						'new_quantity'    => (int)$data[$product->id]
+					));
+					$this->onProductQuantityChanged($event);
+				}
+
+				$product->quantity = (int)$data[$product->id];
+				$product->save();
+			}
+		}
+	}
+
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -304,16 +418,18 @@ class Order extends BaseModel
 		));
 	}
 
-	public function setProductQuantities(array $data)
+	/**
+	 * Load history
+	 *
+	 * @return array
+	 */
+	public function getHistory()
 	{
-		foreach($this->products as $product)
-		{
-			if(isset($data[$product->id]))
-			{
-				$product->quantity = (int)$data[$product->id];
-				$product->save();
-			}
-		}
-	}
+		$cr        = new CDbCriteria;
+		$cr->order = 'created ASC';
 
+		return OrderHistory::model()->findAllByAttributes(array(
+			'order_id'=>$this->id,
+		),$cr);
+	}
 }

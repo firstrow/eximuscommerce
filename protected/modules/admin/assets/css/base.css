@@ -232,3 +232,25 @@ select {
 .small-footer-text a {
     color: #79797f
 }
+
+table.orderHistory span.date {
+    color: #969696;
+    font-size: 11px;
+}
+table.orderHistory thead {
+    font-weight: bold;
+}
+table.orderHistory tr td {
+    border: 1px solid #c0c0c0;
+}
+table.orderHistory tbody tr:hover {
+    background-color: #cfd6e3;
+    cursor: pointer;
+}
+table.orderHistory tr td {
+    padding: 5px;
+    vertical-align: top;
+}
+table.orderHistory tr.even {
+    background: #F9F9F9;
+}

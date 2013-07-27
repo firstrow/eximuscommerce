@@ -52,7 +52,7 @@ class OrdersController extends SAdminController {
 		else
 			$model = $this->_loadModel($_GET['id']);
 
-		if (Yii::app()->request->isPostRequest)
+		if(Yii::app()->request->isPostRequest)
 		{
 			$model->attributes = $_POST['Order'];
 
@@ -116,15 +116,7 @@ class OrdersController extends SAdminController {
 			if(!$product)
 				throw new CHttpException(404, Yii::t('OrdersModule.admin', 'Ошибка. Продукт не найден.'));
 
-			$ordered_product = new OrderProduct;
-			$ordered_product->order_id        = $order->id;
-			$ordered_product->product_id      = $product->id;
-			$ordered_product->name            = $product->name;
-			$ordered_product->quantity        = $_POST['quantity'];
-			$ordered_product->sku             = $product->sku;
-			$ordered_product->price           = $_POST['price'];
-			//$ordered_product->price           = StoreProduct::calculatePrices($product, array(), 0);
-			$ordered_product->save();
+			$order->addProduct($product, $_POST['quantity'], $_POST['price']);
 		}
 	}
 
@@ -145,8 +137,9 @@ class OrdersController extends SAdminController {
 	 */
 	public function actionJsonOrderedProducts()
 	{
-		$model=$this->_loadModel(Yii::app()->request->getQuery('id'));
-		$data=array();
+		$model = $this->_loadModel(Yii::app()->request->getQuery('id'));
+		$data  = array();
+
 		foreach($model->getOrderedProducts()->getData() as $product)
 		{
 			$data[]=array(
@@ -155,6 +148,7 @@ class OrdersController extends SAdminController {
 				'price'    => StoreProduct::formatPrice($product->price),
 			);
 		}
+
 		echo CJSON::encode($data);
 	}
 
@@ -169,7 +163,7 @@ class OrdersController extends SAdminController {
 		$model = Order::model()->findByPk($id);
 
 		if (!$model)
-			throw new CHttpException(404, Yii::t('OrdersModule.admin', 'Заказ не найден.'));
+			$this->error404();
 
 		return $model;
 	}
@@ -200,9 +194,35 @@ class OrdersController extends SAdminController {
 	 */
 	public function actionDeleteProduct()
 	{
-		$model = OrderProduct::model()->findByPk($_POST['product_id']);
-		if($model)
-			$model->delete();
+		$order = Order::model()->findByPk(Yii::app()->request->getPost('order_id'));
+
+		if(!$order)
+			$this->error404();
+
+		$order->deleteProduct(Yii::app()->request->getPost('id'));
 	}
 
+	/**
+	 * Render order history tab
+	 */
+	public function actionHistory()
+	{
+		$id    = Yii::app()->request->getQuery('id');
+		$model = Order::model()->findByPk($id);
+
+		if(!$model)
+			$this->error404();
+
+		$this->render('_history', array(
+			'model'=>$model
+		));
+	}
+
+	/**
+	 * @throws CHttpException
+	 */
+	public function error404()
+	{
+		throw new CHttpException(404, Yii::t('OrdersModule.admin', 'Заказ не найден.'));
+	}
 }
