@@ -57,12 +57,12 @@ class OrdersWebTest extends WebTestCase
 	public function testCreateOrderFromAdminPanel()
 	{
 		$this->adminLogin();
-
 		$this->open('admin/orders/orders/index');
 		$this->assertTrue($this->isTextPresent('Заказы'));
+		$this->assertTrue($this->isTextPresent('Способ доставки'));
 
-		// Create new order. Click to Save&Edit
-		$this->clickAtAndWait('css=span.ui-button-text');
+		//Create new order. Click to Save&Edit
+		$this->clickAtAndWait('id=create_topLink');
 		$this->assertTrue($this->isTextPresent('Создание заказа'));
 		$this->type('id=Order_user_name','tester');
 		$this->type('id=Order_user_email','tester@localhost.loc');
