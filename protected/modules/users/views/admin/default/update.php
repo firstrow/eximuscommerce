@@ -15,6 +15,9 @@
 	);
 
 	$this->pageHeader = $title;
+	$this->sidebarContent = $this->renderPartial('_sidebar', array(
+		'model'=>$model,
+	), true);
 ?>
 
 <div class="form wide padding-all">

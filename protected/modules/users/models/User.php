@@ -1,6 +1,8 @@
 <?php
 
 Yii::import('application.modules.users.models.UserProfile');
+Yii::import('application.modules.orders.models.Order');
+Yii::import('application.modules.comments.models.Comment');
 
 /**
  * This is the model class for table "user".
@@ -82,8 +84,11 @@ class User extends BaseModel
 	public function relations()
 	{
 		return array(
-			'profile'=>array(self::HAS_ONE, 'UserProfile', 'user_id'),
-			'orders' =>array(self::HAS_MANY, 'Order', 'user_id')
+			'profile'       => array(self::HAS_ONE, 'UserProfile', 'user_id'),
+			'orders'        => array(self::HAS_MANY, 'Order', 'user_id'),
+			'ordersCount'   => array(self::STAT, 'Order', 'user_id'),
+			'comments'      => array(self::HAS_MANY, 'Comment', 'user_id'),
+			'commentsCount' => array(self::STAT, 'Comment', 'user_id')
 		);
 	}
 
@@ -195,5 +200,18 @@ class User extends BaseModel
 		$user->recovery_password='';
 		$user->save(false);
 		return true;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getOrdersTotalPrice()
+	{
+		$result = 0;
+
+		foreach ($this->orders as $order)
+			$result += $order->full_price;
+
+		return $result;
 	}
 }

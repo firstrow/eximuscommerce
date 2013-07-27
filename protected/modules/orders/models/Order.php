@@ -157,6 +157,9 @@ class Order extends BaseModel
 			$this->secret_key = $this->createSecretKey();
 			$this->ip_address = Yii::app()->request->userHostAddress;
 			$this->created    = date('Y-m-d H:i:s');
+
+			if(!Yii::app()->user->isGuest)
+				$this->user_id = Yii::app()->user->id;
 		}
 		$this->updated = date('Y-m-d H:i:s');
 

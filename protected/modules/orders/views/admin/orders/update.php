@@ -53,6 +53,7 @@ $tabs = array(
 
 if(!$model->isNewRecord)
 {
+	// Add history tab
 	$tabs[Yii::t('OrdersModule.admin', 'История')] = array(
 		'ajax'=>$this->createUrl('history', array('id'=>$model->id))
 	);
