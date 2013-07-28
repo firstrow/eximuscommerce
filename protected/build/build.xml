@@ -15,6 +15,7 @@
         <delete dir="${eximus.build_dir}/protected/build" includeemptydirs="true" />
         <delete dir="${eximus.build_dir}/protected/runtime" includeemptydirs="true" />
         <mkdir dir="${eximus.build_dir}/protected/runtime" mode="0777" />
+        <mkdir dir="${eximus.build_dir}/protected/runtime/cache" mode="0777" />
     </target>
 
     <!-- Write db conn settings to build_db -->
