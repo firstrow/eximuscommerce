@@ -82,7 +82,7 @@ class HistoricalBehavior extends CActiveRecordBehavior
 	}
 
 	/**
-	 * @param CEvent $event
+	 * @param CModelEvent $event
 	 */
 	public function afterFind($event)
 	{
@@ -96,6 +96,16 @@ class HistoricalBehavior extends CActiveRecordBehavior
 	{
 		$this->saveHistory($this->_old_order, $this->owner);
 		$this->_old_order = clone $this->owner;
+	}
+
+	/**
+	 * @param CModelEvent $event
+	 */
+	public function afterDelete($event)
+	{
+		OrderHistory::model()->deleteAllByAttributes(array(
+			'order_id'=>$event->sender->id
+		));
 	}
 
 	/**
