@@ -29,9 +29,6 @@ $truncate = array(
 	'user_profile',
 	'notifications',
 	'grid_view_filter',
-	'OrderHistory',
-	'Order',
-	'StoreProduct'
 );
 
 foreach($clear as $class)

@@ -525,7 +525,7 @@ class CsvImporter extends CComponent
 		if($this->fileHandler!==null)
 		{
 			fclose($this->fileHandler);
-			unlink($this->file);
+			//unlink($this->file);
 		}
 	}
 }

@@ -32,7 +32,8 @@ class StoreImagesConfig
 	public static function initialize()
 	{
 		self::$initialized = true;
-		self::$db_settings = Yii::app()->settings->get(self::$settings_key);
+		if(Yii::app()->settings)
+			self::$db_settings = Yii::app()->settings->get(self::$settings_key);
 	}
 
 	/**
@@ -54,7 +55,11 @@ class StoreImagesConfig
 			return self::$db_settings[$key];
 		}
 		elseif(array_key_exists($key, self::$defaults))
+		{
+			if('maximum_image_size'===$key)
+				return explode('x', self::$defaults[$key]);
 			return self::$defaults[$key];
+		}
 		else
 			throw new CException('Unsupported key '.$key, 503);
 	}

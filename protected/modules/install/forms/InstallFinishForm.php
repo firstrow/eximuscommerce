@@ -38,37 +38,41 @@ class InstallFinishForm extends CFormModel
 		$conn->charset='utf8';
 		Yii::app()->setComponent('db', $conn);
 
-		$model=User::model()->findByPk(1);
-		$model->username=$this->adminLogin;
-		$model->email=$this->adminEmail;
-		$model->password=User::encodePassword($this->adminPassword);
-		$model->created_at=date('Y-m-d H:i:s');
-		$model->last_login=date('Y-m-d H:i:s');
+		$model             = User::model()->findByPk(1);
+
+		if($model)
+			$model = new User();
+
+		$model->username   = $this->adminLogin;
+		$model->email      = $this->adminEmail;
+		$model->password   = User::encodePassword($this->adminPassword);
+		$model->created_at = date('Y-m-d H:i:s');
+		$model->last_login = date('Y-m-d H:i:s');
 		$model->save(false);
 
 		// Translate attributes
 		$attrsData=array(
-			'Rms power'=>'Суммарная мощность',
-			'Monitor dimension'=>'Разрешение',
-			'Corpus material'=>'Материал',
-			'View angle'=>'Угол обзора',
-			'Sound type'=>'Тип',
-			'Manufacturer'=>'Производитель',
-			'Processor manufacturer'=>'Тип процессора',
-			'Phone platform'=>'Платформа',
-			'Freq'=>'Частота процессора',
-			'Phone weight'=>'Вес',
-			'Memmory'=>'Объем памяти',
-			'Phone display'=>'Диагональ',
-			'Memmory type'=>'Тип памяти',
-			'Phone camera'=>'Камера',
-			'Screen'=>'Диагональ',
-			'Tablet screen size'=>'Диагональ',
-			'Video'=>'Видео',
-			'Memmory size'=>'Объем памяти',
-			'Screen dimension'=>'Разрешение',
-			'Monitor diagonal'=>'Диагональ',
-			'Weight'=>'Вес',
+			'Rms power'              => 'Суммарная мощность',
+			'Monitor dimension'      => 'Разрешение',
+			'Corpus material'        => 'Материал',
+			'View angle'             => 'Угол обзора',
+			'Sound type'             => 'Тип',
+			'Manufacturer'           => 'Производитель',
+			'Processor manufacturer' => 'Тип процессора',
+			'Phone platform'         => 'Платформа',
+			'Freq'                   => 'Частота процессора',
+			'Phone weight'           => 'Вес',
+			'Memmory'                => 'Объем памяти',
+			'Phone display'          => 'Диагональ',
+			'Memmory type'           => 'Тип памяти',
+			'Phone camera'           => 'Камера',
+			'Screen'                 => 'Диагональ',
+			'Tablet screen size'     => 'Диагональ',
+			'Video'                  => 'Видео',
+			'Memmory size'           => 'Объем памяти',
+			'Screen dimension'       => 'Разрешение',
+			'Monitor diagonal'       => 'Диагональ',
+			'Weight'                 => 'Вес',
 		);
 
 		foreach($attrsData as $key=>$val)
