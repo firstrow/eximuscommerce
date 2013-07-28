@@ -41,7 +41,7 @@ if ($model->type)
 
 			echo CHtml::openTag('div', array('class'=>'row'));
 			echo CHtml::label($a->attr_translate->title.$required, $a->name, array('class'=> $a->required ? 'required' : ''));
-			echo $a->renderField($value);
+			echo '<div class="rowInput" style="width:350px">'.$a->renderField($value).'</div>';
 			echo CHtml::closeTag('div');
 		}
 	}
