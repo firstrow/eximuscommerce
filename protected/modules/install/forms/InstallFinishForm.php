@@ -38,9 +38,9 @@ class InstallFinishForm extends CFormModel
 		$conn->charset='utf8';
 		Yii::app()->setComponent('db', $conn);
 
-		$model             = User::model()->findByPk(1);
+		$model = User::model()->findByPk(1);
 
-		if($model)
+		if(!$model)
 			$model = new User();
 
 		$model->username   = $this->adminLogin;

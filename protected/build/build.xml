@@ -13,6 +13,8 @@
 
     <target name="deleteBuild">
         <delete dir="${eximus.build_dir}/protected/build" includeemptydirs="true" />
+        <delete dir="${eximus.build_dir}/protected/runtime" includeemptydirs="true" />
+        <mkdir dir="${eximus.build_dir}/protected/runtime" mode="0777" />
     </target>
 
     <!-- Write db conn settings to build_db -->
@@ -99,6 +101,7 @@
         <delete dir="${eximus.build_dir}/protected/runtime" includeemptydirs="true"/>
         <delete dir="${eximus.build_dir}/protected/modules/install/importImages" includeemptydirs="true"/>
 
+        <!-- Copy release index file -->
         <copy file="${eximus.source_dir}/protected/build/index.php.release" tofile="${eximus.build_dir}/index.php"/>
 
         <mkdir dir="${eximus.build_dir}/assets" mode="0777" />

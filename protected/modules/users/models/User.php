@@ -157,7 +157,7 @@ class User extends BaseModel
 			$this->login_ip = Yii::app()->request->userHostAddress;
 
 			if(!$this->hasErrors())
-				$this->password=$this->encodePassword($this->password);
+				$this->password=User::encodePassword($this->password);
 		}
 		return parent::beforeSave();
 	}
