@@ -200,7 +200,7 @@ class SFilterRenderer extends CWidget
 	{
 		$cr = new CDbCriteria;
 		$cr->select = 't.manufacturer_id, t.id';
-		$cr->group = 't.manufacturer_id';
+		$cr->group  = 't.manufacturer_id';
 		$cr->addCondition('t.manufacturer_id IS NOT NULL');
 
 		//@todo: Fix manufacturer translation
@@ -213,19 +213,19 @@ class SFilterRenderer extends CWidget
 						'productsCount'=>array(
 							'scopes'=>array(
 								'active',
-								'applyCategories'=>array($this->model, null),
-								'applyAttributes'=>array($this->getOwner()->activeAttributes),
-								'applyMinPrice'=>array($this->convertCurrency(Yii::app()->request->getQuery('min_price'))),
-								'applyMaxPrice'=>array($this->convertCurrency(Yii::app()->request->getQuery('max_price'))),
+								'applyCategories' => array($this->model, null),
+								'applyAttributes' => array($this->getOwner()->activeAttributes),
+								'applyMinPrice'   => array($this->convertCurrency(Yii::app()->request->getQuery('min_price'))),
+								'applyMaxPrice'   => array($this->convertCurrency(Yii::app()->request->getQuery('max_price'))),
 							))
 					),
 				)))
 			->findAll($cr);
 
 		$data = array(
-			'title'=>Yii::t('StoreModule.core', 'Производитель'),
-			'selectMany'=>true,
-			'filters'=>array()
+			'title'      => Yii::t('StoreModule.core', 'Производитель'),
+			'selectMany' => true,
+			'filters'    => array()
 		);
 
 		if($manufacturers)
@@ -235,9 +235,18 @@ class SFilterRenderer extends CWidget
 				$m = $m->manufacturer;
 				if($m)
 				{
+					$model = new StoreProduct(null);
+					$model->attachBehaviors($model->behaviors());
+					$model->active()
+						->applyCategories($this->model)
+						->applyMinPrice($this->convertCurrency(Yii::app()->request->getQuery('min_price')))
+						->applyMaxPrice($this->convertCurrency(Yii::app()->request->getQuery('max_price')))
+						->applyAttributes($this->getOwner()->activeAttributes)
+						->applyManufacturers($m->id);
+
 					$data['filters'][] = array(
 						'title'      => $m->name,
-						'count'      => $m->productsCount,
+						'count'      => $model->count(),
 						'queryKey'   => 'manufacturer',
 						'queryParam' => $m->id,
 					);
