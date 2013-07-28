@@ -14,6 +14,7 @@ $clear=array(
 	'StoreAttribute',
 	'StoreManufacturer',
 	'Order',
+	'OrderHistory',
 	'ActionLog',
 	'StoreWishlist',
 	'Comment',
@@ -28,6 +29,9 @@ $truncate = array(
 	'user_profile',
 	'notifications',
 	'grid_view_filter',
+	'OrderHistory',
+	'Order',
+	'StoreProduct'
 );
 
 foreach($clear as $class)
@@ -56,7 +60,6 @@ function ClearData_deleteCategory(array $cats)
 		else
 			$c->deleteNode();
 	}
-
 }
 
 /**
