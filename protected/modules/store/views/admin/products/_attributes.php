@@ -39,10 +39,10 @@ if ($model->type)
 			}else
 				$addOptionLink = null;
 
-			echo CHtml::openTag('div', array('class'=>'row')),
-					CHtml::label($a->attr_translate->title.$required, $a->name, array('class'=> $a->required ? 'required' : '')),
-					'<div class="rowInput">'.$a->renderField($value).$addOptionLink.'</div>',
-				CHtml::closeTag('div');
+			echo CHtml::openTag('div', array('class'=>'row'));
+			echo CHtml::label($a->attr_translate->title.$required, $a->name, array('class'=> $a->required ? 'required' : ''));
+			echo $a->renderField($value);
+			echo CHtml::closeTag('div');
 		}
 	}
 
