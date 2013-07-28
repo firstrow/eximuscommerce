@@ -46,7 +46,7 @@
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" value="<?php echo Yii::t('InstallModule.core','Установить') ?>">
+		<input type="submit" value="<?php echo Yii::t('InstallModule.core','Установить') ?>" onclick="this.disabled=true;this.value='Установка...';this.form.submit();">
 	</div>
 
 	<?php $this->endWidget(); ?>

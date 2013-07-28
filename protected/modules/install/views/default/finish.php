@@ -1,9 +1,3 @@
-<?php
-
-// last step
-
-?>
-
 <div class="progress">
 	1→2→<span class="active">3</span>→4
 </div>

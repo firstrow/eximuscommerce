@@ -1,5 +1,3 @@
-
-
 <div class="progress">
 	1→2→3→<span class="active">4</span>
 </div>
