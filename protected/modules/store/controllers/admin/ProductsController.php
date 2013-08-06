@@ -301,10 +301,12 @@ class ProductsController extends SAdminController
 		));
 	}
 
+	/**
+	 * @throws CHttpException
+	 */
 	public function actionRenderVariantTable()
 	{
 		$attribute = StoreAttribute::model()
-			->with('options')
 			->findByPk($_GET['attr_id']);
 
 		if(!$attribute)
