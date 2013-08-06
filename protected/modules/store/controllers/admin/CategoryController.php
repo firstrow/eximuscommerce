@@ -57,7 +57,7 @@ class CategoryController extends SAdminController {
 				if (isset($_POST['REDIRECT']))
 					$this->smartRedirect($model);
 				else
-					$this->redirect('create');
+					$this->redirect(array('create'));
 			}
 		}
 
