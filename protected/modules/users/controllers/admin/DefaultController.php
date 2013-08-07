@@ -91,7 +91,7 @@ class DefaultController extends SAdminController
 	{
 		if (Yii::app()->request->isPostRequest)
 		{
-			$ids    = Yii::app()->request->getQuery('id');
+			$ids    = Yii::app()->request->getParam("id");
 			$models = User::model()->findAllByPk($ids);
 
 			if(!empty($models))
