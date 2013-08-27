@@ -43,12 +43,19 @@ class InstallFinishForm extends CFormModel
 		if(!$model)
 			$model = new User();
 
+		// Set user data
 		$model->username   = $this->adminLogin;
 		$model->email      = $this->adminEmail;
 		$model->password   = $this->adminPassword;
 		$model->created_at = date('Y-m-d H:i:s');
 		$model->last_login = date('Y-m-d H:i:s');
 		$model->save(false);
+
+		// Create user profile
+		$profile = new UserProfile;
+		$profile->user_id   = $model->id;
+		$profile->full_name = $model->username;
+		$profile->save();
 
 		// Translate attributes
 		$attrsData=array(

@@ -1,6 +1,7 @@
 Version 1.4.1 2013-08-27
-    Removed empty line in OrderHistory.php
-    Fixed SSystemLanguage.php
+    Bug: Removed empty line in OrderHistory.php
+    Bug: Fixed SSystemLanguage.php
+    Bug: Fixed admin profile creation after install.
 
 Version 1.4 2013-08-06
     Bug: Fixed auto_decrease_quantity import.
