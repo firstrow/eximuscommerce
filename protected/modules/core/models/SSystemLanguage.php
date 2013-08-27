@@ -105,14 +105,15 @@ class SSystemLanguage extends BaseModel
     {
         Yii::import('system.utils.CFileHelper');
         $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
-        $flagsPath = 'application.modules.admin.assets.images.flags.png';
+        $flagsPath      = 'application.modules.admin.assets.images.flags.png';
 
         $result = array();
         $flags = CFileHelper::findFiles(Yii::getPathOfAlias($flagsPath));
 
         foreach($flags as $f)
         {
-            $fileName = end(explode(DIRECTORY_SEPARATOR, $f));
+            $parts    = explode(DIRECTORY_SEPARATOR, $f);
+            $fileName = end($parts);
             $result[$fileName] = $fileName;
         }
 
