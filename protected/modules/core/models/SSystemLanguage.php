@@ -104,16 +104,15 @@ class SSystemLanguage extends BaseModel
     public static function getFlagImagesList()
     {
         Yii::import('system.utils.CFileHelper');
-        $adminAssetsUrl = Yii::app()->getModule('admin')->assetsUrl;
-        $flagsPath      = 'application.modules.admin.assets.images.flags.png';
+        $flagsPath = 'application.modules.admin.assets.images.flags.png';
 
         $result = array();
-        $flags = CFileHelper::findFiles(Yii::getPathOfAlias($flagsPath));
+        $flags  = CFileHelper::findFiles(Yii::getPathOfAlias($flagsPath));
 
         foreach($flags as $f)
         {
-            $parts    = explode(DIRECTORY_SEPARATOR, $f);
-            $fileName = end($parts);
+            $parts             = explode(DIRECTORY_SEPARATOR, $f);
+            $fileName          = end($parts);
             $result[$fileName] = $fileName;
         }
 
