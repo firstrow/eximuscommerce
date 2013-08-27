@@ -137,11 +137,11 @@ class InstallFinishForm extends CFormModel
 			return;
 
 		Yii::app()->db->createCommand()->insert('Discount', array(
-			'name'=>'Скидка на всю технику Apple',
-			'active'=>1,
-			'sum'=>'5%',
-			'start_date'=>'2012-01-01 12:00:00',
-			'end_date'=>'2013-01-01 12:00:00',
+			'name'      => 'Скидка на всю технику Apple',
+			'active'    => 1,
+			'sum'       => '5%',
+			'start_date'=> date('Y-m-d H:i:s'),
+			'end_date'  => ((int)date('Y')+1).'-01-01 12:00:00',
 		));
 		$discountId=Yii::app()->db->getLastInsertID();
 
