@@ -98,6 +98,7 @@
         <delete file="${eximus.build_dir}/index-test.php" />
         <delete file="${eximus.build_dir}/index.php" />
         <delete dir="${eximus.build_dir}/assets" includeemptydirs="true"/>
+        <delete dir="${eximus.build_dir}/protected/data" includeemptydirs="true"/>
         <delete dir="${eximus.build_dir}/uploads/product" includeemptydirs="true"/>
         <delete dir="${eximus.build_dir}/protected/runtime" includeemptydirs="true"/>
         <delete dir="${eximus.build_dir}/protected/modules/install/importImages" includeemptydirs="true"/>

@@ -16,7 +16,7 @@ class StoreImagesConfig
 			'url'                => '/uploads/product/', // With ending slash
 			'thumbUrl'           => '/assets/productThumbs/', // With ending slash
 			'maxFileSize'        => 10485760, //10*1024*1024,
-			'maximum_image_size' => '800x800',
+			'maximum_image_size' => '800x600',
 			// Not overrided
 			'extensions'         => array('jpg', 'jpeg','png', 'gif'),
 			'types'              => array('image/gif','image/jpeg', 'image/pjpeg', 'image/png',  'image/x-png'),
@@ -33,7 +33,7 @@ class StoreImagesConfig
 	{
 		self::$initialized = true;
 
-		if(property_exists(Yii::app(),'settings'))
+		if(isset(Yii::app()->settings) && Yii::app()->settings instanceof SSystemSettings)
 			self::$db_settings = Yii::app()->settings->get(self::$settings_key);
 		else
 			self::$db_settings = self::$defaults;

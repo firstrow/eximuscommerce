@@ -8,7 +8,7 @@ class StoreImagesConfigTest extends CTestCase
 
 		$this->assertEquals(StoreImagesConfig::get('path'), 'webroot.uploads.product');
 
-		// Test loaging from db
+		// Test loading from db
 		$r1=rand(800,2000);
 		$r2=rand(800,2000);
 
