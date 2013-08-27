@@ -132,7 +132,7 @@ class InstallFinishForm extends CFormModel
 			->where(array('and', 'name="Apple"'))
 			->queryRow();
 
-		// TODO: Rafactor. Check if user install test data.
+		// TODO: Refactor. Check if user install test data.
 		if(!$manufacturer)
 			return;
 
