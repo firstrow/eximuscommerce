@@ -61,16 +61,21 @@ class SUrlManager extends CUrlManager {
 			foreach($modules as $m)
 				array_push($moduleDirs, $m->name);
 
-			$pathParts = array(
-				Yii::getPathOfAlias('application.modules'),
-				'{'.implode(',', $moduleDirs).'}',
-				'config',
-				'routes.php'
-			);
+			$routeFiles = array();
+			foreach($moduleDirs AS $dir){
+				if(file_exists(Yii::getPathOfAlias('application.modules').DIRECTORY_SEPARATOR.$dir.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'routes.php')){
+					$routeFiles[] = 
+						Yii::getPathOfAlias('application.modules')
+							.DIRECTORY_SEPARATOR
+							.$dir
+							.DIRECTORY_SEPARATOR
+							.'config'
+							.DIRECTORY_SEPARATOR
+							.'routes.php';
+				}
+			}
 
-			$pattern = implode(DIRECTORY_SEPARATOR, $pathParts);
-
-			foreach(glob($pattern, GLOB_BRACE) as $route)
+			foreach($routeFiles as $route)
 				$rules = array_merge(require($route), $rules);
 
 			Yii::app()->cache->set($cacheKey, $rules, 3600);
