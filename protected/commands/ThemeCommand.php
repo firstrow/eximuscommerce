@@ -9,8 +9,8 @@ class ThemeCommand extends CConsoleCommand
 {
 	public function run($args=null)
 	{
-		$theme=$args[0];
-		$themePath=realpath(dirname(__FILE__).'/../../themes').DIRECTORY_SEPARATOR.$theme;
+		$theme     = $args[0];
+		$themePath = realpath(dirname(__FILE__).'/../../themes').'/'.$theme;
 
 		if(!file_exists($themePath))
 		{
@@ -19,21 +19,26 @@ class ThemeCommand extends CConsoleCommand
 		}
 
 		// Find all modules views and copy to theme directory
-		$files=glob(realpath(dirname(__FILE__).'/../').'/modules/*', GLOB_ONLYDIR);
+		$files = glob(realpath(dirname(__FILE__).'/../').'/modules/*', GLOB_ONLYDIR);
 		foreach($files as $file)
 		{
-			$parts=explode('/', $file);
-			$module=end($parts);
-			$moduleThemePath=$themePath.'/views/'.$module;
+			$parts  = explode('/', $file);
+			$module = end($parts);
 
-			$moduleViews=glob($file.'/views/*',GLOB_ONLYDIR);
+			// Don't copy next modules to theme dir.
+			if(in_array($module, array('admin', 'install', 'rights')))
+				continue;
+
+			$moduleThemePath = $themePath.'/views/'.$module;
+			$moduleViews     = glob($file.'/views/*',GLOB_ONLYDIR);
+
 			foreach($moduleViews as $viewsDirPath)
 			{
-				$parts=explode('/', $viewsDirPath);
-				if(end($parts)!='admin')
+				$parts = explode('/', $viewsDirPath);
+				if(end($parts) != 'admin')
 				{
 					if(!file_exists($moduleThemePath))
-						mkdir($moduleThemePath);
+						mkdir($moduleThemePath, 0777, true);
 					CFileHelper::copyDirectory($viewsDirPath, $moduleThemePath.'/'.end($parts));
 				}
 			}

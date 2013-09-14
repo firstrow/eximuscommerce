@@ -3,7 +3,7 @@
 <project name="releaseBuilder" basedir="." default="build">
     <property file="./build.properties" />
 
-    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall,clearDbConnSettings,removeDebugToolbarFromLogging, deleteBuild, writeVersion" />
+    <target name="build" depends="clean,copy,writeDbSettings,copyDb,clearTablesData,copyDbToInstall,clearDbConnSettings,removeDebugToolbarFromLogging,deleteBuild,writeVersion,createTheme" />
 
     <!-- Clean build dir -->
     <target name="clean">
@@ -45,6 +45,10 @@
     <!-- Copy cleared db to install directory -->
     <target name="copyDbToInstall">
         <exec command="php DbDumpTask.php" dir="${eximus.build_dir}/protected/build/tasks" passthru="true"/>
+    </target>
+
+    <target name="createTheme">
+        <exec command="php protected/yiic.php theme default" dir="${eximus.build_dir}" passthru="true"/>
     </target>
 
     <target name="clearDbConnSettings" description="Clear db connection settings in main.php file">
