@@ -3,7 +3,8 @@
 /**
  * Manager urls
  */
-class SUrlManager extends CUrlManager {
+class SUrlManager extends CUrlManager
+{
 
 	/**
 	 * Init
@@ -35,10 +36,6 @@ class SUrlManager extends CUrlManager {
 				$result = '/'.$langPrefix.$result;
 		}
 
-		// Add training slash to urls
-//		if('/' !== $result{strlen($result) - 1})
-//			$result .= '/';
-
 		return $result;
 	}
 
@@ -54,29 +51,20 @@ class SUrlManager extends CUrlManager {
 
 		if(YII_DEBUG || !$rules)
 		{
-			$rules      = array();
-			$moduleDirs = array();
-			$modules    = SystemModules::getEnabled();
+			$rules       = array();
+			$moduleDirs  = array();
+			$modules     = SystemModules::getEnabled();
+			$modulesPath = Yii::getPathOfAlias('application.modules');
 
 			foreach($modules as $m)
 				array_push($moduleDirs, $m->name);
 
-			$routeFiles = array();
-			foreach($moduleDirs AS $dir){
-				if(file_exists(Yii::getPathOfAlias('application.modules').DIRECTORY_SEPARATOR.$dir.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'routes.php')){
-					$routeFiles[] = 
-						Yii::getPathOfAlias('application.modules')
-							.DIRECTORY_SEPARATOR
-							.$dir
-							.DIRECTORY_SEPARATOR
-							.'config'
-							.DIRECTORY_SEPARATOR
-							.'routes.php';
-				}
+			foreach($moduleDirs as $dir)
+			{
+				$configFilePath = implode(DIRECTORY_SEPARATOR, array($modulesPath,$dir,'config','routes.php'));
+				if(file_exists($configFilePath))
+					$rules = array_merge(require($configFilePath), $rules);
 			}
-
-			foreach($routeFiles as $route)
-				$rules = array_merge(require($route), $rules);
 
 			Yii::app()->cache->set($cacheKey, $rules, 3600);
 		}
