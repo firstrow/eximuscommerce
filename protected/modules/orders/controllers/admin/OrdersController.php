@@ -41,9 +41,6 @@ class OrdersController extends SAdminController {
 	 */
 	public function actionUpdate($new = false)
 	{
-		if(SLicenseChecker::check() === false && SLicenseChecker::isOnLocalhost() === false)
-			throw new CHttpException(404, 'В ознакомительной версии редактирование заказов недоступно.');
-
 		if ($new === true)
 		{
 			$model = new Order;
