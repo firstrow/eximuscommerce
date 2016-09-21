@@ -16,28 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ActionLog`
---
-
-DROP TABLE IF EXISTS `ActionLog`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ActionLog` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `event` tinyint(255) NOT NULL,
-  `model_name` varchar(50) NOT NULL,
-  `model_title` text NOT NULL,
-  `datetime` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `username` (`username`),
-  KEY `event` (`event`),
-  KEY `datetime` (`datetime`),
-  KEY `model_name` (`model_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=442 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `ActionLog`
 --
 
@@ -47,21 +25,6 @@ INSERT INTO `ActionLog` VALUES (1,'admin',1,'StoreAttribute','simple_product','2
 /*!40000 ALTER TABLE `ActionLog` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `AuthAssignment`
---
-
-DROP TABLE IF EXISTS `AuthAssignment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `AuthAssignment` (
-  `itemname` varchar(64) NOT NULL,
-  `userid` varchar(64) NOT NULL,
-  `bizrule` text,
-  `data` text,
-  PRIMARY KEY (`itemname`,`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `AuthAssignment`
@@ -74,23 +37,6 @@ INSERT INTO `AuthAssignment` VALUES ('Admin','1',NULL,NULL),('Authenticated','57
 UNLOCK TABLES;
 
 --
--- Table structure for table `AuthItem`
---
-
-DROP TABLE IF EXISTS `AuthItem`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `AuthItem` (
-  `name` varchar(64) NOT NULL,
-  `type` int(11) NOT NULL,
-  `description` text,
-  `bizrule` text,
-  `data` text,
-  PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `AuthItem`
 --
 
@@ -101,21 +47,6 @@ INSERT INTO `AuthItem` VALUES ('Admin',2,NULL,NULL,'N;'),('Authenticated',2,NULL
 UNLOCK TABLES;
 
 --
--- Table structure for table `AuthItemChild`
---
-
-DROP TABLE IF EXISTS `AuthItemChild`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `AuthItemChild` (
-  `parent` varchar(64) NOT NULL,
-  `child` varchar(64) NOT NULL,
-  PRIMARY KEY (`parent`,`child`),
-  KEY `child` (`child`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `AuthItemChild`
 --
 
@@ -123,31 +54,6 @@ LOCK TABLES `AuthItemChild` WRITE;
 /*!40000 ALTER TABLE `AuthItemChild` DISABLE KEYS */;
 /*!40000 ALTER TABLE `AuthItemChild` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `Comments`
---
-
-DROP TABLE IF EXISTS `Comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `class_name` varchar(100) NOT NULL,
-  `object_pk` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `text` text NOT NULL,
-  `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
-  `ip_address` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `class_name_index` (`class_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Comments`
@@ -160,28 +66,6 @@ INSERT INTO `Comments` VALUES (9,1,'application.modules.store.models.StoreProduc
 UNLOCK TABLES;
 
 --
--- Table structure for table `Discount`
---
-
-DROP TABLE IF EXISTS `Discount`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Discount` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `sum` varchar(10) NOT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
-  `roles` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `active` (`active`),
-  KEY `start_date` (`start_date`),
-  KEY `end_date` (`end_date`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `Discount`
 --
 
@@ -190,23 +74,6 @@ LOCK TABLES `Discount` WRITE;
 INSERT INTO `Discount` VALUES (3,'Скидка на всю технику Apple',1,'5%','2012-07-01 13:03:20','2013-07-01 13:03:20','[\"Authenticated\"]');
 /*!40000 ALTER TABLE `Discount` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `DiscountCategory`
---
-
-DROP TABLE IF EXISTS `DiscountCategory`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `DiscountCategory` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `discount_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `discount_id` (`discount_id`),
-  KEY `category_id` (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=195 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `DiscountCategory`
@@ -219,23 +86,6 @@ INSERT INTO `DiscountCategory` VALUES (191,3,218),(190,3,217),(189,3,219),(188,3
 UNLOCK TABLES;
 
 --
--- Table structure for table `DiscountManufacturer`
---
-
-DROP TABLE IF EXISTS `DiscountManufacturer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `DiscountManufacturer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `discount_id` int(11) NOT NULL,
-  `manufacturer_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `discount_id` (`discount_id`),
-  KEY `manufacturer_id` (`manufacturer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `DiscountManufacturer`
 --
 
@@ -244,39 +94,6 @@ LOCK TABLES `DiscountManufacturer` WRITE;
 INSERT INTO `DiscountManufacturer` VALUES (15,3,6);
 /*!40000 ALTER TABLE `DiscountManufacturer` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `Order`
---
-
-DROP TABLE IF EXISTS `Order`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Order` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `secret_key` varchar(10) NOT NULL,
-  `delivery_id` int(11) NOT NULL,
-  `delivery_price` float(10,2) NOT NULL,
-  `total_price` float(10,2) NOT NULL,
-  `status_id` int(11) NOT NULL,
-  `paid` tinyint(1) NOT NULL,
-  `user_name` varchar(100) NOT NULL,
-  `user_email` varchar(100) NOT NULL,
-  `user_address` varchar(255) NOT NULL COMMENT 'delivery address',
-  `user_phone` varchar(30) NOT NULL,
-  `user_comment` varchar(500) NOT NULL,
-  `ip_address` varchar(50) NOT NULL,
-  `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
-  `discount` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `secret_key` (`secret_key`),
-  KEY `delivery_id` (`delivery_id`),
-  KEY `status_id` (`status_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Order`
@@ -288,32 +105,6 @@ LOCK TABLES `Order` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `OrderProduct`
---
-
-DROP TABLE IF EXISTS `OrderProduct`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `OrderProduct` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `configurable_id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `configurable_name` text NOT NULL COMMENT 'Store name of configurable product',
-  `configurable_data` text NOT NULL,
-  `variants` text NOT NULL,
-  `quantity` smallint(6) NOT NULL,
-  `sku` varchar(255) NOT NULL,
-  `price` float(10,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `order_id` (`order_id`),
-  KEY `product_id` (`product_id`),
-  KEY `configurable_id` (`configurable_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `OrderProduct`
 --
 
@@ -321,22 +112,6 @@ LOCK TABLES `OrderProduct` WRITE;
 /*!40000 ALTER TABLE `OrderProduct` DISABLE KEYS */;
 /*!40000 ALTER TABLE `OrderProduct` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `OrderStatus`
---
-
-DROP TABLE IF EXISTS `OrderStatus`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `OrderStatus` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `position` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `position` (`position`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `OrderStatus`
@@ -349,35 +124,6 @@ INSERT INTO `OrderStatus` VALUES (1,'Новый',0);
 UNLOCK TABLES;
 
 --
--- Table structure for table `Page`
---
-
-DROP TABLE IF EXISTS `Page`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Page` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `url` varchar(255) NOT NULL,
-  `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
-  `publish_date` datetime NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `layout` varchar(2555) NOT NULL,
-  `view` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `category_id` (`category_id`),
-  KEY `url` (`url`),
-  KEY `created` (`created`),
-  KEY `updated` (`updated`),
-  KEY `publish_date` (`publish_date`),
-  KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `Page`
 --
 
@@ -386,31 +132,6 @@ LOCK TABLES `Page` WRITE;
 INSERT INTO `Page` VALUES (8,1,NULL,'help','2012-06-10 22:35:51','2012-07-07 11:47:09','2012-06-10 22:35:29','published','',''),(9,1,NULL,'how-to-create-order','2012-06-10 22:36:50','2012-07-07 11:45:53','2012-06-10 22:36:27','published','',''),(10,1,NULL,'garantiya','2012-06-10 22:37:06','2012-07-07 11:45:38','2012-06-10 22:36:50','published','',''),(11,1,NULL,'dostavka-i-oplata','2012-06-10 22:37:18','2012-07-07 11:41:49','2012-06-10 22:37:07','published','',''),(12,1,7,'samsung-pitaetsya-izbezhat-zapreta-na-galaxy-nexus-v-shtatah-pri-pomoshi-patcha','2012-07-07 12:08:50','2012-07-07 12:09:33','2012-07-07 12:06:19','published','',''),(13,1,7,'za-85-mesyacev-android-40-popal-na-11-ustroistv','2012-07-07 12:19:44','2012-07-07 12:33:48','2012-07-07 12:14:48','published','',''),(14,1,7,'google-prezentoval-svoi-ochki-dopolnennoi-realnosti','2012-07-07 12:26:11','2012-07-07 12:26:11','2012-07-07 12:25:48','published','','');
 /*!40000 ALTER TABLE `Page` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `PageCategory`
---
-
-DROP TABLE IF EXISTS `PageCategory`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `PageCategory` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) DEFAULT NULL,
-  `url` varchar(255) NOT NULL,
-  `full_url` text NOT NULL,
-  `layout` varchar(255) NOT NULL,
-  `view` varchar(255) NOT NULL,
-  `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
-  `page_size` smallint(6) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `parent_id` (`parent_id`),
-  KEY `url` (`url`),
-  KEY `created` (`created`),
-  KEY `updated` (`updated`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `PageCategory`
@@ -423,28 +144,6 @@ INSERT INTO `PageCategory` VALUES (7,NULL,'news','news','','','2012-07-07 12:06:
 UNLOCK TABLES;
 
 --
--- Table structure for table `PageCategoryTranslate`
---
-
-DROP TABLE IF EXISTS `PageCategoryTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `PageCategoryTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text,
-  `meta_title` varchar(255) DEFAULT NULL,
-  `meta_description` varchar(255) DEFAULT NULL,
-  `meta_keywords` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `PageCategoryTranslate`
 --
 
@@ -453,29 +152,6 @@ LOCK TABLES `PageCategoryTranslate` WRITE;
 INSERT INTO `PageCategoryTranslate` VALUES (13,7,1,'Новости','','','',''),(14,7,9,'Новости','','','',''),(15,11,1,'sdfsdf','','','',''),(16,11,9,'sdfsdf','','','',''),(17,12,1,'Тесстовя2','','','',''),(18,12,9,'Тесстовя2','','','','');
 /*!40000 ALTER TABLE `PageCategoryTranslate` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `PageTranslate`
---
-
-DROP TABLE IF EXISTS `PageTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `PageTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `short_description` text,
-  `full_description` text,
-  `meta_title` varchar(255) DEFAULT NULL,
-  `meta_keywords` varchar(255) DEFAULT NULL,
-  `meta_description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `PageTranslate`
@@ -488,21 +164,6 @@ INSERT INTO `PageTranslate` VALUES (22,11,9,'Доставка и оплата','
 UNLOCK TABLES;
 
 --
--- Table structure for table `Rights`
---
-
-DROP TABLE IF EXISTS `Rights`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Rights` (
-  `itemname` varchar(64) NOT NULL,
-  `type` int(11) NOT NULL,
-  `weight` int(11) NOT NULL,
-  PRIMARY KEY (`itemname`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `Rights`
 --
 
@@ -510,34 +171,6 @@ LOCK TABLES `Rights` WRITE;
 /*!40000 ALTER TABLE `Rights` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Rights` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreAttribute`
---
-
-DROP TABLE IF EXISTS `StoreAttribute`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreAttribute` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `type` tinyint(4) NOT NULL,
-  `display_on_front` tinyint(1) NOT NULL DEFAULT '1',
-  `use_in_filter` tinyint(1) NOT NULL,
-  `use_in_variants` tinyint(1) NOT NULL,
-  `use_in_compare` tinyint(1) NOT NULL DEFAULT '0',
-  `select_many` tinyint(1) NOT NULL,
-  `position` int(11) DEFAULT '0',
-  `required` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `use_in_filter` (`use_in_filter`),
-  KEY `display_on_front` (`display_on_front`),
-  KEY `position` (`position`),
-  KEY `use_in_variants` (`use_in_variants`),
-  KEY `use_in_compare` (`use_in_compare`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreAttribute`
@@ -550,23 +183,6 @@ INSERT INTO `StoreAttribute` VALUES (1,'simple_product',3,1,1,1,0,0,0,0),(2,'col
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreAttributeOption`
---
-
-DROP TABLE IF EXISTS `StoreAttributeOption`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreAttributeOption` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `attribute_id` int(11) NOT NULL,
-  `position` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `attribute_id` (`attribute_id`),
-  KEY `position` (`position`)
-) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreAttributeOption`
 --
 
@@ -575,24 +191,6 @@ LOCK TABLES `StoreAttributeOption` WRITE;
 INSERT INTO `StoreAttributeOption` VALUES (1,1,0),(2,1,1),(3,1,2),(4,1,3),(5,2,1),(6,2,0),(7,2,2),(8,3,0),(9,4,0),(10,5,0),(11,6,0),(12,7,0),(13,8,0),(14,9,0),(15,3,0),(16,4,0),(17,4,0),(18,8,0),(19,4,0),(20,3,0),(21,4,0),(22,5,0),(23,8,0),(24,9,0),(25,4,0),(26,8,0),(27,9,0),(28,5,0),(29,7,1),(30,8,0),(31,3,0),(32,4,0),(33,7,2),(34,8,0),(35,4,0),(36,8,0),(37,7,0),(38,7,0),(39,7,0),(40,7,0),(41,5,0),(42,5,0),(43,5,0),(44,5,0),(45,5,0),(46,6,0),(47,6,0),(48,7,0),(49,7,0),(50,11,0),(51,12,0),(52,13,0),(53,14,0),(54,14,0),(55,11,0),(56,12,0),(57,15,0),(58,15,0);
 /*!40000 ALTER TABLE `StoreAttributeOption` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreAttributeOptionTranslate`
---
-
-DROP TABLE IF EXISTS `StoreAttributeOptionTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreAttributeOptionTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language_id` int(11) NOT NULL,
-  `object_id` int(11) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `language_id` (`language_id`),
-  KEY `object_id` (`object_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreAttributeOptionTranslate`
@@ -605,24 +203,6 @@ INSERT INTO `StoreAttributeOptionTranslate` VALUES (1,1,1,'s1'),(2,9,1,''),(3,1,
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreAttributeTranslate`
---
-
-DROP TABLE IF EXISTS `StoreAttributeTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreAttributeTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreAttributeTranslate`
 --
 
@@ -631,32 +211,6 @@ LOCK TABLES `StoreAttributeTranslate` WRITE;
 INSERT INTO `StoreAttributeTranslate` VALUES (1,1,1,'Simple attr'),(2,1,9,'Simple product'),(3,2,1,'Color'),(4,2,9,'Color'),(5,3,1,'Processor manufacturer'),(6,3,9,'Processor manufacturer'),(7,4,1,'Freq'),(8,4,9,'Freq'),(9,5,1,'Memmory'),(10,5,9,'Memmory'),(11,6,1,'Memmory type'),(12,6,9,'Memmory type'),(13,7,1,'Screen'),(14,7,9,'Screen'),(15,8,1,'Video'),(16,8,9,'Video'),(17,9,1,'Screen dimension'),(18,9,9,'Screen dimension'),(19,10,1,'textbox'),(20,10,9,'textbox'),(21,11,1,'Vesbrutto'),(22,11,9,'Vesbrutto'),(23,12,1,'Vesnetto'),(24,12,9,'Vesnetto'),(25,13,1,'Kolvovtranspupak'),(26,13,9,'Kolvovtranspupak'),(27,14,1,'Individualupak'),(28,14,9,'Individualupak'),(29,15,1,'Additional type'),(30,15,9,'Additional type');
 /*!40000 ALTER TABLE `StoreAttributeTranslate` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreCategory`
---
-
-DROP TABLE IF EXISTS `StoreCategory`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreCategory` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `lft` int(10) unsigned NOT NULL,
-  `rgt` int(10) unsigned NOT NULL,
-  `level` smallint(5) unsigned NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `full_path` varchar(255) NOT NULL,
-  `layout` varchar(255) NOT NULL,
-  `view` varchar(255) NOT NULL,
-  `description` text,
-  PRIMARY KEY (`id`),
-  KEY `lft` (`lft`),
-  KEY `rgt` (`rgt`),
-  KEY `level` (`level`),
-  KEY `url` (`url`),
-  KEY `full_path` (`full_path`)
-) ENGINE=MyISAM AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreCategory`
@@ -669,29 +223,6 @@ INSERT INTO `StoreCategory` VALUES (1,1,30,1,'root','','','',NULL),(212,10,15,2,
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreCategoryTranslate`
---
-
-DROP TABLE IF EXISTS `StoreCategoryTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreCategoryTranslate` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `description` text,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreCategoryTranslate`
 --
 
@@ -700,25 +231,6 @@ LOCK TABLES `StoreCategoryTranslate` WRITE;
 INSERT INTO `StoreCategoryTranslate` VALUES (1,1,1,'root','','','',NULL),(9,212,9,'Ноутбуки','','','','this is desc in eng'),(8,212,1,'Ноутбуки','','','','this is test description'),(10,213,1,'Бюджетный','','','',''),(11,213,9,'Бюджетный','','','',NULL),(12,214,1,'Игровой','','','',NULL),(13,214,9,'Игровой','','','',NULL),(14,215,1,'Компьютеры','','','',NULL),(15,215,9,'Компьютеры','','','',NULL),(16,216,1,'Компьютерная акустика','','','',NULL),(17,216,9,'Компьютерная акустика','','','',NULL),(18,217,1,'Мониторы','','','',NULL),(19,217,9,'Мониторы','','','',NULL),(20,218,1,'Телефоны','','','',NULL),(21,218,9,'Телефоны','','','',NULL),(22,219,1,'Планшеты','','','',NULL),(23,219,9,'Планшеты','','','',NULL),(24,220,1,'Ассортимент','','','',NULL),(25,220,9,'Ассортимент','','','',NULL),(26,221,1,'Категория 1','','','',NULL),(27,221,9,'Категория 1','','','',NULL);
 /*!40000 ALTER TABLE `StoreCategoryTranslate` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreCurrency`
---
-
-DROP TABLE IF EXISTS `StoreCurrency`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreCurrency` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `iso` varchar(10) NOT NULL,
-  `symbol` varchar(10) NOT NULL,
-  `rate` float(10,3) NOT NULL,
-  `main` tinyint(1) DEFAULT NULL,
-  `default` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreCurrency`
@@ -731,24 +243,6 @@ INSERT INTO `StoreCurrency` VALUES (1,'Доллары','USD','$',1.000,1,1),(2,'
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreDeliveryMethod`
---
-
-DROP TABLE IF EXISTS `StoreDeliveryMethod`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreDeliveryMethod` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `price` float(10,2) NOT NULL DEFAULT '0.00',
-  `free_from` float(10,2) NOT NULL DEFAULT '0.00',
-  `position` smallint(6) NOT NULL,
-  `active` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `position` (`position`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreDeliveryMethod`
 --
 
@@ -758,24 +252,6 @@ INSERT INTO `StoreDeliveryMethod` VALUES (14,10.00,1000.00,0,1),(15,0.00,0.00,1,
 /*!40000 ALTER TABLE `StoreDeliveryMethod` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `StoreDeliveryMethodTranslate`
---
-
-DROP TABLE IF EXISTS `StoreDeliveryMethodTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreDeliveryMethodTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreDeliveryMethodTranslate`
@@ -788,21 +264,6 @@ INSERT INTO `StoreDeliveryMethodTranslate` VALUES (1,14,1,'Курьером','')
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreDeliveryPayment`
---
-
-DROP TABLE IF EXISTS `StoreDeliveryPayment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreDeliveryPayment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `delivery_id` int(11) NOT NULL,
-  `payment_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COMMENT='Saves relations between delivery and payment methods ';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreDeliveryPayment`
 --
 
@@ -811,23 +272,6 @@ LOCK TABLES `StoreDeliveryPayment` WRITE;
 INSERT INTO `StoreDeliveryPayment` VALUES (24,12,14),(23,10,16),(22,10,13),(21,10,14),(34,11,16),(33,11,13),(25,12,15),(26,12,16),(78,14,21),(77,14,19),(76,14,20),(75,14,18),(82,15,20),(81,15,18),(55,16,17),(56,16,18),(57,16,20),(58,16,19),(74,14,17);
 /*!40000 ALTER TABLE `StoreDeliveryPayment` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreManufacturer`
---
-
-DROP TABLE IF EXISTS `StoreManufacturer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreManufacturer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) NOT NULL,
-  `layout` varchar(255) NOT NULL,
-  `view` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `url` (`url`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreManufacturer`
@@ -839,27 +283,6 @@ INSERT INTO `StoreManufacturer` VALUES (1,'lenovo','',''),(2,'asus','',''),(3,'d
 /*!40000 ALTER TABLE `StoreManufacturer` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `StoreManufacturerTranslate`
---
-
-DROP TABLE IF EXISTS `StoreManufacturerTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreManufacturerTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreManufacturerTranslate`
@@ -872,24 +295,6 @@ INSERT INTO `StoreManufacturerTranslate` VALUES (1,1,1,'Lenovo','','','',''),(2,
 UNLOCK TABLES;
 
 --
--- Table structure for table `StorePaymentMethod`
---
-
-DROP TABLE IF EXISTS `StorePaymentMethod`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StorePaymentMethod` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `currency_id` int(11) NOT NULL,
-  `active` tinyint(1) DEFAULT NULL,
-  `payment_system` varchar(100) NOT NULL,
-  `position` smallint(6) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `currency_id` (`currency_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StorePaymentMethod`
 --
 
@@ -899,24 +304,6 @@ INSERT INTO `StorePaymentMethod` VALUES (17,1,1,'webmoney',0),(18,2,1,'',2),(19,
 /*!40000 ALTER TABLE `StorePaymentMethod` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `StorePaymentMethodTranslate`
---
-
-DROP TABLE IF EXISTS `StorePaymentMethodTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StorePaymentMethodTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StorePaymentMethodTranslate`
@@ -929,49 +316,6 @@ INSERT INTO `StorePaymentMethodTranslate` VALUES (1,17,1,'WebMoney','WebMoney �
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreProduct`
---
-
-DROP TABLE IF EXISTS `StoreProduct`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProduct` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `manufacturer_id` int(11) DEFAULT NULL,
-  `type_id` int(11) NOT NULL,
-  `use_configurations` tinyint(1) NOT NULL DEFAULT '0',
-  `url` varchar(255) NOT NULL,
-  `price` float(10,2) NOT NULL,
-  `max_price` float(10,2) NOT NULL DEFAULT '0.00',
-  `is_active` tinyint(1) NOT NULL,
-  `layout` varchar(255) DEFAULT NULL,
-  `view` varchar(255) DEFAULT NULL,
-  `sku` varchar(255) DEFAULT NULL,
-  `quantity` int(11) DEFAULT '0',
-  `availability` tinyint(2) NOT NULL DEFAULT '1',
-  `auto_decrease_quantity` tinyint(2) NOT NULL DEFAULT '1',
-  `views_count` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
-  `added_to_cart_count` int(11) NOT NULL,
-  `votes` int(11) NOT NULL,
-  `rating` int(11) NOT NULL,
-  `discount` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `manufacturer_id` (`manufacturer_id`),
-  KEY `type_id` (`type_id`),
-  KEY `price` (`price`),
-  KEY `max_price` (`max_price`),
-  KEY `is_active` (`is_active`),
-  KEY `sku` (`sku`),
-  KEY `created` (`created`),
-  KEY `updated` (`updated`),
-  KEY `added_to_cart_count` (`added_to_cart_count`),
-  KEY `views_count` (`views_count`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreProduct`
 --
 
@@ -981,22 +325,6 @@ INSERT INTO `StoreProduct` VALUES (34,8,2,0,'acer-aspire-5943g-7748g75twiss',235
 /*!40000 ALTER TABLE `StoreProduct` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `StoreProductAttributeEAV`
---
-
-DROP TABLE IF EXISTS `StoreProductAttributeEAV`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductAttributeEAV` (
-  `entity` int(11) unsigned NOT NULL,
-  `attribute` varchar(250) NOT NULL,
-  `value` text NOT NULL,
-  KEY `ikEntity` (`entity`),
-  KEY `attribute` (`attribute`),
-  KEY `value` (`value`(50))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreProductAttributeEAV`
@@ -1009,25 +337,6 @@ INSERT INTO `StoreProductAttributeEAV` VALUES (29,'memmory','22'),(29,'freq','21
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreProductCategoryRef`
---
-
-DROP TABLE IF EXISTS `StoreProductCategoryRef`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductCategoryRef` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product` int(11) NOT NULL,
-  `category` int(11) NOT NULL,
-  `is_main` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category` (`category`),
-  KEY `product` (`product`),
-  KEY `is_main` (`is_main`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreProductCategoryRef`
 --
 
@@ -1036,20 +345,6 @@ LOCK TABLES `StoreProductCategoryRef` WRITE;
 INSERT INTO `StoreProductCategoryRef` VALUES (57,33,212,0),(56,33,214,1),(32,19,1,1),(37,23,212,0),(36,23,213,1),(43,26,212,0),(42,26,213,1),(41,25,212,0),(40,25,213,1),(39,24,212,0),(38,24,213,1),(51,30,212,0),(50,30,214,1),(49,29,212,0),(48,29,214,1),(47,28,212,0),(46,28,213,1),(45,27,212,0),(44,27,213,1),(59,34,212,0),(58,34,214,1),(55,32,212,0),(54,32,214,1),(53,31,212,0),(52,31,214,1),(65,36,215,1),(68,37,1,1),(62,35,215,1),(63,35,216,0),(64,35,219,0),(66,36,216,0),(67,36,219,0);
 /*!40000 ALTER TABLE `StoreProductCategoryRef` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreProductConfigurableAttributes`
---
-
-DROP TABLE IF EXISTS `StoreProductConfigurableAttributes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductConfigurableAttributes` (
-  `product_id` int(11) NOT NULL COMMENT 'Attributes available to configure product',
-  `attribute_id` int(11) NOT NULL,
-  UNIQUE KEY `product_attribute_index` (`product_id`,`attribute_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreProductConfigurableAttributes`
@@ -1061,20 +356,6 @@ LOCK TABLES `StoreProductConfigurableAttributes` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreProductConfigurations`
---
-
-DROP TABLE IF EXISTS `StoreProductConfigurations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductConfigurations` (
-  `product_id` int(11) NOT NULL COMMENT 'Saves relations beetwen product and configurations',
-  `configurable_id` int(11) NOT NULL,
-  UNIQUE KEY `idsunique` (`product_id`,`configurable_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreProductConfigurations`
 --
 
@@ -1082,25 +363,6 @@ LOCK TABLES `StoreProductConfigurations` WRITE;
 /*!40000 ALTER TABLE `StoreProductConfigurations` DISABLE KEYS */;
 /*!40000 ALTER TABLE `StoreProductConfigurations` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreProductImage`
---
-
-DROP TABLE IF EXISTS `StoreProductImage`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductImage` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `is_main` tinyint(1) DEFAULT '0',
-  `uploaded_by` int(11) NOT NULL,
-  `date_uploaded` datetime NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreProductImage`
@@ -1113,29 +375,6 @@ INSERT INTO `StoreProductImage` VALUES (18,23,'23_2845451760.jpg',1,1,'2013-04-1
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreProductTranslate`
---
-
-DROP TABLE IF EXISTS `StoreProductTranslate`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductTranslate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `short_description` text,
-  `full_description` text,
-  `meta_title` varchar(255) DEFAULT NULL,
-  `meta_keywords` varchar(255) DEFAULT NULL,
-  `meta_description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `object_id` (`object_id`),
-  KEY `language_id` (`language_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreProductTranslate`
 --
 
@@ -1144,22 +383,6 @@ LOCK TABLES `StoreProductTranslate` WRITE;
 INSERT INTO `StoreProductTranslate` VALUES (65,33,1,'Sony VAIO VPC-F13S8R','Core i5, 2660 МГц, 4096 Мб, 640 Гб, 16.4 дюйм, NVIDIA GeForce GT 425M, Blu-Ray, Wi-Fi, Bluetooth, 3.1 кг','','','',''),(37,19,1,'Крестовина ВАЗ 2101','Поставляется в индивидуальной упаковке',NULL,NULL,NULL,NULL),(38,19,9,'Крестовина ВАЗ 2101','Поставляется в индивидуальной упаковке',NULL,NULL,NULL,NULL),(46,23,9,'Lenovo B570','Celeron / Pentium, 1500-2200 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, Intel GMA HD, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.35 кг',NULL,NULL,NULL,NULL),(45,23,1,'Lenovo B570','Celeron / Pentium, 1500-2200 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, Intel GMA HD, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.35 кг',NULL,NULL,NULL,NULL),(47,24,1,'Lenovo G570','Celeron / Pentium, 1500-2200 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, ATI Radeon HD 6370M, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.43 кг','','','',''),(48,24,9,'Lenovo G570','Celeron / Pentium, 1500-2200 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, ATI Radeon HD 6370M, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.43 кг',NULL,NULL,NULL,NULL),(49,25,1,'ASUS K53U','C-60 / E-240 / E-450, 1000-1650 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.6 кг',NULL,NULL,NULL,NULL),(50,25,9,'ASUS K53U','C-60 / E-240 / E-450, 1000-1650 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.6 кг',NULL,NULL,NULL,NULL),(51,26,1,'ASUS X54C','Celeron / Pentium, 1500-2200 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, Intel HD Graphics 3000, DVD-RW, Wi-Fi, Bluetooth, 2.6 кг',NULL,NULL,NULL,NULL),(52,26,9,'ASUS X54C','Celeron / Pentium, 1500-2200 МГц, 2048-4096 Мб, 320-500 Гб, 15.6 дюйм, Intel HD Graphics 3000, DVD-RW, Wi-Fi, Bluetooth, 2.6 кг',NULL,NULL,NULL,NULL),(53,27,1,'DELL INSPIRON N5050','Celeron, 1500-1700 МГц, 2048 Мб, 320-500 Гб, 15.6 дюйм, Intel HD Graphics 3000, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.37 кг',NULL,NULL,NULL,NULL),(54,27,9,'DELL INSPIRON N5050','Celeron, 1500-1700 МГц, 2048 Мб, 320-500 Гб, 15.6 дюйм, Intel HD Graphics 3000, DVD-RW, Wi-Fi, Bluetooth (опционально), 2.37 кг',NULL,NULL,NULL,NULL),(55,28,1,'Fujitsu LIFEBOOK AH531','Celeron / Pentium, 1500-2200 МГц, 2048 Мб, 320 Гб, 15.6 дюйм, Intel HD Graphics 3000, DVD-RW, Wi-Fi, Bluetooth, 2.5 кг',NULL,NULL,NULL,NULL),(56,28,9,'Fujitsu LIFEBOOK AH531','Celeron / Pentium, 1500-2200 МГц, 2048 Мб, 320 Гб, 15.6 дюйм, Intel HD Graphics 3000, DVD-RW, Wi-Fi, Bluetooth, 2.5 кг',NULL,NULL,NULL,NULL),(57,29,1,'HP EliteBook 8560w','Core i7, 2500 МГц, 8192 Мб, 750 Гб, 15.6 дюйм, NVIDIA Quadro 2000M, BD-RE, Wi-Fi, Bluetooth, 3 кг',NULL,NULL,NULL,NULL),(58,29,9,'HP EliteBook 8560w','Core i7, 2500 МГц, 8192 Мб, 750 Гб, 15.6 дюйм, NVIDIA Quadro 2000M, BD-RE, Wi-Fi, Bluetooth, 3 кг',NULL,NULL,NULL,NULL),(59,30,1,'DELL ALIENWARE M17x','Core i7, 2200-2400 МГц, 8192-16384 Мб, 750-1500 Гб, 17 дюйм, AMD Radeon HD 6990M, BD-RE / Blu-Ray / DVD-RW, Wi-Fi, Bluetooth, 5.3 кг',NULL,NULL,NULL,NULL),(60,30,9,'DELL ALIENWARE M17x','Core i7, 2200-2400 МГц, 8192-16384 Мб, 750-1500 Гб, 17 дюйм, AMD Radeon HD 6990M, BD-RE / Blu-Ray / DVD-RW, Wi-Fi, Bluetooth, 5.3 кг',NULL,NULL,NULL,NULL),(61,31,1,'Apple MacBook Pro 15 Late 2011','Core i7, 2200-2400 МГц, 4096 Мб, 500-750 Гб, 15.4 дюйм, ATI Radeon HD 6750M / ATI Radeon HD 6770М, DVD-RW, Wi-Fi, Bluetooth, 2.54 кг','','','',''),(62,31,9,'Apple MacBook Pro 15 Late 2011','Core i7, 2200-2400 МГц, 4096 Мб, 500-750 Гб, 15.4 дюйм, ATI Radeon HD 6750M / ATI Radeon HD 6770М, DVD-RW, Wi-Fi, Bluetooth, 2.54 кг',NULL,NULL,NULL,NULL),(63,32,1,'Lenovo THINKPAD W520','Core i7 / Core i7 Extreme, 2000-2700 МГц, 4096-8192 Мб, 160-580 Гб, 15.6 дюйм, NVIDIA Quadro 2000M, DVD-RW, Wi-Fi, Bluetooth, 2.45 кг','','','',''),(64,32,9,'Lenovo THINKPAD W520','Core i7 / Core i7 Extreme, 2000-2700 МГц, 4096-8192 Мб, 160-580 Гб, 15.6 дюйм, NVIDIA Quadro 2000M, DVD-RW, Wi-Fi, Bluetooth, 2.45 кг',NULL,NULL,NULL,NULL),(66,33,9,'Sony VAIO VPC-F13S8R','Core i5, 2660 МГц, 4096 Мб, 640 Гб, 16.4 дюйм, NVIDIA GeForce GT 425M, Blu-Ray, Wi-Fi, Bluetooth, 3.1 кг',NULL,NULL,NULL,NULL),(67,34,1,'Acer ASPIRE 5943G-7748G75TWiss','Core i7, 1730 МГц, 8192 Мб, 750 Гб, 15.6 дюйм, ATI Mobility Radeon HD 5850, BD-RE, Wi-Fi, Bluetooth, 3.3 кг','','','',''),(68,34,9,'Acer ASPIRE 5943G-7748G75TWiss','Core i7, 1730 МГц, 8192 Мб, 750 Гб, 15.6 дюйм, ATI Mobility Radeon HD 5850, BD-RE, Wi-Fi, Bluetooth, 3.3 кг',NULL,NULL,NULL,NULL),(69,35,1,'Продукт 1','','','','',''),(70,35,9,'Продукт 1',NULL,NULL,NULL,NULL,NULL),(71,36,1,'Продукт 2','','','','',''),(72,36,9,'Продукт 2',NULL,NULL,NULL,NULL,NULL),(73,37,1,'test','','','','',''),(74,37,9,'test','','','','','');
 /*!40000 ALTER TABLE `StoreProductTranslate` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreProductType`
---
-
-DROP TABLE IF EXISTS `StoreProductType`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductType` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `categories_preset` text NOT NULL,
-  `main_category` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreProductType`
@@ -1172,28 +395,6 @@ INSERT INTO `StoreProductType` VALUES (1,'Simple Product','',0),(2,'laptop','',0
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreProductVariant`
---
-
-DROP TABLE IF EXISTS `StoreProductVariant`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreProductVariant` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `attribute_id` int(11) NOT NULL,
-  `option_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `price` float(10,2) NOT NULL DEFAULT '0.00',
-  `price_type` tinyint(1) NOT NULL,
-  `sku` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `attribute_id` (`attribute_id`),
-  KEY `option_id` (`option_id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreProductVariant`
 --
 
@@ -1203,22 +404,6 @@ LOCK TABLES `StoreProductVariant` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreRelatedProduct`
---
-
-DROP TABLE IF EXISTS `StoreRelatedProduct`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreRelatedProduct` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `related_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Handle related products';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreRelatedProduct`
 --
 
@@ -1226,20 +411,6 @@ LOCK TABLES `StoreRelatedProduct` WRITE;
 /*!40000 ALTER TABLE `StoreRelatedProduct` DISABLE KEYS */;
 /*!40000 ALTER TABLE `StoreRelatedProduct` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `StoreTypeAttribute`
---
-
-DROP TABLE IF EXISTS `StoreTypeAttribute`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreTypeAttribute` (
-  `type_id` int(11) NOT NULL,
-  `attribute_id` int(11) NOT NULL,
-  PRIMARY KEY (`type_id`,`attribute_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `StoreTypeAttribute`
@@ -1252,23 +423,6 @@ INSERT INTO `StoreTypeAttribute` VALUES (1,1),(1,2),(2,3),(2,4),(2,5),(2,6),(2,7
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreWishlist`
---
-
-DROP TABLE IF EXISTS `StoreWishlist`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreWishlist` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` varchar(10) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `key` (`key`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreWishlist`
 --
 
@@ -1279,25 +433,6 @@ INSERT INTO `StoreWishlist` VALUES (4,'ju9gvr5cyd',1);
 UNLOCK TABLES;
 
 --
--- Table structure for table `StoreWishlistProducts`
---
-
-DROP TABLE IF EXISTS `StoreWishlistProducts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StoreWishlistProducts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `wishlist_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `wishlist_id` (`wishlist_id`),
-  KEY `product_id` (`product_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `StoreWishlistProducts`
 --
 
@@ -1305,25 +440,6 @@ LOCK TABLES `StoreWishlistProducts` WRITE;
 /*!40000 ALTER TABLE `StoreWishlistProducts` DISABLE KEYS */;
 /*!40000 ALTER TABLE `StoreWishlistProducts` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `SystemLanguage`
---
-
-DROP TABLE IF EXISTS `SystemLanguage`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SystemLanguage` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `code` varchar(25) NOT NULL,
-  `locale` varchar(100) NOT NULL,
-  `default` tinyint(1) NOT NULL,
-  `flag_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `code` (`code`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `SystemLanguage`
@@ -1336,22 +452,6 @@ INSERT INTO `SystemLanguage` VALUES (1,'Русский','ru','ru',1,'ru.png'),(9
 UNLOCK TABLES;
 
 --
--- Table structure for table `SystemModules`
---
-
-DROP TABLE IF EXISTS `SystemModules`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SystemModules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `SystemModules`
 --
 
@@ -1360,24 +460,6 @@ LOCK TABLES `SystemModules` WRITE;
 INSERT INTO `SystemModules` VALUES (7,'users',1),(9,'pages',1),(11,'core',1),(12,'rights',1),(16,'orders',1),(15,'store',1),(17,'comments',1),(37,'feedback',1),(38,'discounts',1),(39,'newsletter',1),(40,'csv',1),(41,'logger',1),(52,'accounting1c',1),(53,'yandexMarket',1),(54,'notifier',1),(55,'statistics',1),(56,'sitemap',1),(57,'programm',1);
 /*!40000 ALTER TABLE `SystemModules` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `SystemSettings`
---
-
-DROP TABLE IF EXISTS `SystemSettings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SystemSettings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category` varchar(255) NOT NULL,
-  `key` varchar(255) NOT NULL,
-  `value` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category` (`category`),
-  KEY `key` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `SystemSettings`
@@ -1390,24 +472,6 @@ INSERT INTO `SystemSettings` VALUES (9,'feedback','max_message_length','1000'),(
 UNLOCK TABLES;
 
 --
--- Table structure for table `accounting1c`
---
-
-DROP TABLE IF EXISTS `accounting1c`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accounting1c` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object_id` int(11) DEFAULT NULL,
-  `object_type` int(11) DEFAULT NULL,
-  `external_id` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `object_type` (`object_type`),
-  KEY `external_id` (`external_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `accounting1c`
 --
 
@@ -1417,23 +481,6 @@ LOCK TABLES `accounting1c` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `grid_view_filter`
---
-
-DROP TABLE IF EXISTS `grid_view_filter`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `grid_view_filter` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `grid_id` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `data` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `grid_view_filter`
 --
 
@@ -1441,22 +488,6 @@ LOCK TABLES `grid_view_filter` WRITE;
 /*!40000 ALTER TABLE `grid_view_filter` DISABLE KEYS */;
 /*!40000 ALTER TABLE `grid_view_filter` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `notifications`
---
-
-DROP TABLE IF EXISTS `notifications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notifications` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `notifications`
@@ -1469,53 +500,6 @@ INSERT INTO `notifications` VALUES (1,11,'firstrow@gmail.com'),(2,31,'sdfsdf@sdf
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_migration`
---
-
-DROP TABLE IF EXISTS `tbl_migration`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_migration` (
-  `version` varchar(255) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_migration`
---
-
-LOCK TABLES `tbl_migration` WRITE;
-/*!40000 ALTER TABLE `tbl_migration` DISABLE KEYS */;
-INSERT INTO `tbl_migration` VALUES ('m000000_000000_base',1361214193),('m130218_190341_add_description_to_store_category',1361214373),('m130218_190818_add_description_to_store_category_translate',1361214547),('m130420_194012_add_roles_to_discounts',1366487103),('m130420_204956_add_personal_discount_to_user',1366491054),('m130421_095545_add_personal_discount_to_product',1366538394),('m130504_170119_add_discout_to_order',1367686940),('m130504_183903_add_title_to_store_product_image',1367692811),('m130507_103455_add_banned_to_user',1367923070),('m130507_104810_unban_all_users',1367923771);
-/*!40000 ALTER TABLE `tbl_migration` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `last_login` datetime NOT NULL,
-  `login_ip` varchar(255) NOT NULL,
-  `recovery_key` varchar(20) NOT NULL,
-  `recovery_password` varchar(100) NOT NULL,
-  `discount` varchar(255) DEFAULT NULL,
-  `banned` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='Saves user accounts';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `user`
 --
 
@@ -1524,24 +508,6 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES (1,'admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@localhost.loc','2011-08-21 10:17:15','2013-05-27 21:25:31','127.0.0.1','PXKMUEHFNK','01A2QOPJE1KIYRP','',0),(56,'tester','ab4d8d2a5f480a137067da17100271cd176607a1','tester@localhodst.loc','2013-04-09 19:54:42','2013-05-07 19:09:40','127.0.0.1','','',NULL,0),(57,'tester2','5e86e8cdc7188d53916fcd1d7294cee4611c7c49','tester2@loc.loc','2013-04-20 23:49:05','2013-04-20 23:49:05','127.0.0.1','','','',0),(58,'tester3','97898ea0f2dea62149cdae4f073b442ff123aaf6','tester3@tester3.loc','2013-04-20 23:49:21','2013-04-20 23:49:21','127.0.0.1','','',NULL,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `user_profile`
---
-
-DROP TABLE IF EXISTS `user_profile`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_profile` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `full_name` varchar(255) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `delivery_address` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `user_profile`
