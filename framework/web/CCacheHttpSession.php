@@ -4,7 +4,7 @@
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @link http://www.yiiframework.com/
- * @copyright Copyright &copy; 2008-2011 Yii Software LLC
+ * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
 
@@ -97,7 +97,7 @@ class CCacheHttpSession extends CHttpSession
 	 */
 	public function destroySession($id)
 	{
-	    return $this->_cache->delete($this->calculateKey($id));
+		return $this->_cache->delete($this->calculateKey($id));
 	}
 
 	/**
@@ -107,6 +107,6 @@ class CCacheHttpSession extends CHttpSession
 	 */
 	protected function calculateKey($id)
 	{
-	    return self::CACHE_KEY_PREFIX.$id;
+		return self::CACHE_KEY_PREFIX.$id;
 	}
 }

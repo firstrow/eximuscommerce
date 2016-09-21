@@ -229,9 +229,10 @@ class CsvImporter extends CComponent
 			if(isset($data['image']) && !empty($data['image']))
 			{
 				$image=CsvImage::create($data['image']);
-				if($image && $model->mainImage===null)
-					$model->addImage($image);
+				if($image)
+                    $model->mainImage = $model->addImage($image);
 			}
+            $model->save();
 		}
 		else
 		{

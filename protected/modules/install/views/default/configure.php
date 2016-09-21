@@ -38,7 +38,7 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'dbPassword'); ?>
-		<?php echo $form->textField($model,'dbPassword') ?>
+		<?php echo $form->passwordField($model,'dbPassword') ?>
 	</div>
 
 	<div class="row buttons">
