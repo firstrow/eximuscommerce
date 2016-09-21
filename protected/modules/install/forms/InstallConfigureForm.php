@@ -111,7 +111,7 @@ class InstallConfigureForm extends CFormModel
 	 */
 	private function importSqlDump()
 	{
-		$sqlDumpPath = Yii::getPathOfAlias('application.modules.install.data').DIRECTORY_SEPARATOR.'dump.sql';
+		$sqlDumpPath = Yii::getPathOfAlias('application.data').DIRECTORY_SEPARATOR.'dump.sql';
 		$sqlRows=preg_split("/--\s*?--.*?\s*--\s*/", file_get_contents($sqlDumpPath));
 
 		$connection=new CDbConnection($this->getDsn(), $this->dbUserName, $this->dbPassword);
@@ -149,10 +149,10 @@ class InstallConfigureForm extends CFormModel
 		return array(
 			'siteName'        => Yii::t('InstallModule.core', 'Название сайта'),
 			'installDemoData' => Yii::t('InstallModule.core', 'Установить демонстрационные данные'),
-			'dbHost'          => Yii::t('InstallModule.core', 'Хост'),
-			'dbName'          => Yii::t('InstallModule.core', 'Название'),
-			'dbUserName'      => Yii::t('InstallModule.core', 'Имя пользователя'),
-			'dbPassword'      => Yii::t('InstallModule.core', 'Пароль'),
+			'dbHost'          => Yii::t('InstallModule.core', 'Хост базы данных'),
+			'dbName'          => Yii::t('InstallModule.core', 'Имя базы данных'),
+			'dbUserName'      => Yii::t('InstallModule.core', 'Имя пользователя базы данных для создания таблиц'),
+			'dbPassword'      => Yii::t('InstallModule.core', 'Пароль пользователя'),
 		);
 	}
 

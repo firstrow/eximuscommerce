@@ -46,7 +46,7 @@ class InstallFinishForm extends CFormModel
 		// Set user data
 		$model->username   = $this->adminLogin;
 		$model->email      = $this->adminEmail;
-		$model->password   = $this->adminPassword;
+		$model->password   = $model->encodePassword($this->adminPassword);
 		$model->created_at = date('Y-m-d H:i:s');
 		$model->last_login = date('Y-m-d H:i:s');
 		$model->save(false);
