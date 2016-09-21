@@ -30,7 +30,7 @@ class CsvImage extends CUploadedFile
 	 */
 	public static function create($image)
 	{
-		$tmpName=Yii::getPathOfAlias('webroot.uploads.importImages').DIRECTORY_SEPARATOR.$image;
+		$tmpName=Yii::getPathOfAlias('application.modules.install.importImages').DIRECTORY_SEPARATOR.$image;
 
 		if(!file_exists($tmpName))
 			return false;

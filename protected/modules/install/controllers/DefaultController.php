@@ -41,6 +41,7 @@ class DefaultController extends CController
 	public function actionConfigure()
 	{
 		$model=new InstallConfigureForm;
+        $model->getDefaultConnect();
 
 		if(Yii::app()->request->isPostRequest && isset($_POST['InstallConfigureForm']))
 		{

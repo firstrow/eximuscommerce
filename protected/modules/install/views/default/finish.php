@@ -33,7 +33,7 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'adminPassword'); ?>
-		<?php echo $form->textField($model,'adminPassword') ?>
+		<?php echo $form->passwordField($model,'adminPassword') ?>
 		<span class="required"> *</span>
 	</div>
 

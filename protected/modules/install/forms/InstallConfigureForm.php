@@ -156,4 +156,20 @@ class InstallConfigureForm extends CFormModel
 		);
 	}
 
+    public function getDefaultConnect()
+    {
+        $configFile=Yii::getPathOfAlias('application.config').DIRECTORY_SEPARATOR.'main.php';
+        $configData = include $configFile;
+
+        $this->dbHost = 'localhost';
+        $this->dbName = '';
+        $this->dbUserName = $configData['components']['db']['username'];
+        $this->dbPassword = $configData['components']['db']['password'];
+
+        preg_match_all("/mysql:host=(.+);dbname=(.+)/", $configData['components']['db']['connectionString'], $connectData);
+        if (isset($connectData[1][0]) && isset($connectData[2][0])) {
+            $this->dbHost = $connectData[1][0];
+            $this->dbName = $connectData[2][0];
+        }
+    }
 }
